@@ -340,7 +340,7 @@ export function ContactContent() {
 
           {/* CTA Card */}
           <div className="p-8 bg-linear-to-br from-brand-blue-light/10 to-brand-purple/10 rounded-2xl border border-brand-blue-light/20 flex flex-col gap-4">
-            <h3 className="text-white font-bold text-2xl">¿Preferís una demo en vivo?</h3>
+            <h3 className="text-white font-bold text-2xl">¿Prefieres una demo en vivo?</h3>
             <p className="text-text-secondary text-base">
               Agenda una reunión personalizada con nuestro equipo para conocer YiQi en profundidad.
             </p>
