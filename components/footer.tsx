@@ -85,9 +85,7 @@ export function Footer() {
             Contacto
           </a>
           <a
-            href="https://calendly.com/javierperez/meet-30-demo"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:cv@yiqi.com.ar"
             className="text-text-primary hover:text-brand-blue transition-colors text-base font-normal"
           >
             Trabaja con nosotros

@@ -17,7 +17,7 @@ export function HeroSection() {
             />
           </div>
           <h1 className="text-center ty-title-hero">
-            <span className="text-text-secondary block sm:inline">El ERP mas completo</span>
+            <span className="text-text-secondary block sm:inline">El ERP más completo</span>
             <span className="text-text-secondary block sm:inline">
               {" "}
               del mercado<span className="text-text-primary">.</span>

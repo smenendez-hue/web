@@ -10,7 +10,7 @@ const navLinks = [
   { href: "/faq", label: "Preguntas frecuentes" },
   { href: "/contacto", label: "Contacto" },
   {
-    href: "https://calendly.com/javierperez/meet-30-demo",
+    href: "mailto:cv@yiqi.com.ar",
     label: "Trabaja con nosotros",
     external: true,
   },
