@@ -5,8 +5,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 
-const navLinks = [
-  { href: "/blog", label: "Blog" },
+import { BLOG_ENABLE } from "@/lib/blog-settings"
+
+const baseNavLinks = [
   { href: "/faq", label: "Preguntas frecuentes" },
   { href: "/contacto", label: "Contacto" },
   {
@@ -14,6 +15,11 @@ const navLinks = [
     label: "Trabaja con nosotros",
     external: true,
   },
+]
+
+const navLinks = [
+  ...(BLOG_ENABLE ? [{ href: "/blog", label: "Blog" }] : []),
+  ...baseNavLinks,
 ]
 
 export function Header() {

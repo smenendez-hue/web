@@ -1,6 +1,8 @@
 import Image from "next/image"
 import { Youtube, Linkedin, PhoneCall, Mail, MessageCircle } from "lucide-react"
 
+import { BLOG_ENABLE } from "@/lib/blog-settings"
+
 export function Footer() {
   return (
     <footer className="w-full py-12 bg-[#1A1A1A]">
@@ -66,12 +68,14 @@ export function Footer() {
         </div>
 
         <nav className="flex flex-col gap-4 text-left md:text-right">
-          <a
-            href="/blog"
-            className="text-text-primary hover:text-brand-blue transition-colors text-base font-normal"
-          >
-            Blog
-          </a>
+          {BLOG_ENABLE && (
+            <a
+              href="/blog"
+              className="text-text-primary hover:text-brand-blue transition-colors text-base font-normal"
+            >
+              Blog
+            </a>
+          )}
           <a
             href="/faq"
             className="text-text-primary hover:text-brand-blue transition-colors text-base font-normal"
