@@ -7,7 +7,7 @@
     "dev": "next dev",
     "lint": "eslint .",
     "test": "vitest run",
-    "start": "next start"
+    "start": "node ./node_modules/next/dist/bin/next start"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.2.8",
