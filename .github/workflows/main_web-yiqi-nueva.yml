@@ -39,15 +39,7 @@ jobs:
           if [ -d public ]; then
             cp -R public deploy/
           fi
-          cat <<'EOF' > deploy/package.json
-          {
-            "name": "web-yiqi-nueva",
-            "private": true,
-            "scripts": {
-              "start": "node server.js"
-            }
-          }
-          EOF
+          cp package.json deploy/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
