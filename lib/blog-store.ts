@@ -2,7 +2,7 @@ import { remark } from "remark"
 import remarkGfm from "remark-gfm"
 import remarkHtml from "remark-html"
 
-import { getSqlPool } from "./db"
+import { getMissingDbEnv, getSqlPool } from "./db"
 import { buildImageSource } from "./image-utils"
 import type { BlogPost } from "./blog-types"
 
@@ -176,6 +176,14 @@ const mapRecordToBlogPost = async (record: BlogRecord): Promise<BlogPost> => {
 }
 
 export const getAllBlogPosts = async (): Promise<BlogPost[]> => {
+  const missingEnv = getMissingDbEnv()
+  if (missingEnv.length > 0) {
+    console.warn(
+      `Blog data unavailable. Missing database environment variables: ${missingEnv.join(", ")}`
+    )
+    return []
+  }
+
   const pool = await getSqlPool()
   const result = await pool.request().query(SQL_QUERY)
   const records = (result.recordset ?? []) as BlogRecord[]
