@@ -1,4 +1,4 @@
-import { getSqlPool } from "./db"
+import { getMissingDbEnv, getSqlPool } from "./db"
 
 export interface FAQEntry {
   id: string
@@ -37,6 +37,14 @@ const normalizeText = (value: unknown) => {
 }
 
 export const getFaqEntries = async (): Promise<FAQEntry[]> => {
+  const missingEnv = getMissingDbEnv()
+  if (missingEnv.length > 0) {
+    console.warn(
+      `FAQ data unavailable. Missing database environment variables: ${missingEnv.join(", ")}`
+    )
+    return []
+  }
+
   const pool = await getSqlPool()
   const result = await pool.request().query(FAQ_QUERY)
 
