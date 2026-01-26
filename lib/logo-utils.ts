@@ -1,4 +1,4 @@
-import { getSqlPool } from "./db"
+import { getMissingDbEnv, getSqlPool } from "./db"
 import { buildImageSource } from "./image-utils"
 
 export interface LogoRecord {
@@ -56,6 +56,14 @@ const cacheKey = (query: string, fallbackName: string) =>
   `${query.trim()}|${fallbackName.trim()}`
 
 export const loadLogoItems = async (query: string, fallbackName: string): Promise<LogoItem[]> => {
+  const missingEnv = getMissingDbEnv()
+  if (missingEnv.length > 0) {
+    console.warn(
+      `Logo data unavailable. Missing database environment variables: ${missingEnv.join(", ")}`
+    )
+    return []
+  }
+
   const key = cacheKey(query, fallbackName)
   const now = Date.now()
   const cached = logoCache.get(key)
