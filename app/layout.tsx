@@ -26,7 +26,7 @@ const jsonLd = [
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "YiQi - El ERP mas completo del mercado",
+    default: "YiQi - El ERP más completo del mercado",
     template: "%s | YiQi ERP",
   },
   description:
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "YiQi - El ERP mas completo del mercado",
+    title: "YiQi - El ERP más completo del mercado",
     description:
       "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
     url: siteUrl,
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "YiQi - El ERP mas completo del mercado",
+    title: "YiQi - El ERP más completo del mercado",
     description:
       "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
     images: ["/images/logoheader.png"],

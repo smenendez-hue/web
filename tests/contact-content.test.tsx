@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { ContactContent } from "@/components/contact-content"
 
-const RECAPTCHA_ERROR_MESSAGE = "Ocurrio un error al enviar el mensaje. Intenta nuevamente."
+const RECAPTCHA_ERROR_MESSAGE = "Ocurrió un error al enviar el mensaje. Intenta nuevamente."
 
 const fillRequiredFields = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.type(screen.getByLabelText(/Nombre/i), "Juan Perez")

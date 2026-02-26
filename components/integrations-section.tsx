@@ -8,7 +8,7 @@ export async function IntegrationsSection() {
     <section className="w-full py-[clamp(48px,8vw,88px)] flex flex-col items-center overflow-hidden gap-4 sm:gap-6">
       <div className="page-shell flex flex-col items-center gap-3 text-center">
         <h3 className="text-center text-base sm:text-xl font-extrabold leading-6 sm:leading-7 text-zinc-100 opacity-60">
-          Multiples integraciones
+          Múltiples integraciones
         </h3>
       </div>
 

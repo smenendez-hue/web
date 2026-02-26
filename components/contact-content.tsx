@@ -161,7 +161,7 @@ export function ContactContent() {
       startCooldown()
     } catch (error) {
       setSubmitStatus("error")
-      setErrorMessage("Ocurrio un error al enviar el mensaje. Intenta nuevamente.")
+      setErrorMessage("Ocurrió un error al enviar el mensaje. Intenta nuevamente.")
     } finally {
       setIsSubmitting(false)
     }
@@ -347,7 +347,7 @@ export function ContactContent() {
             {submitStatus === "error" && (
               <div className="p-4 bg-brand-orange/10 border border-brand-orange/30 rounded-2xl">
                 <p className="text-brand-orange text-sm text-center">
-                  {errorMessage ?? "Ocurrio un error al enviar el mensaje. Intenta nuevamente."}
+                  {errorMessage ?? "Ocurrió un error al enviar el mensaje. Intenta nuevamente."}
                 </p>
               </div>
             )}

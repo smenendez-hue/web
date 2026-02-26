@@ -20,7 +20,7 @@ export function ModulesSection() {
   return (
     <section className="w-full page-shell max-w-[920px] py-[clamp(48px,8vw,96px)] flex flex-col items-center gap-6 sm:gap-8">
       <h2 className="ty-h1 text-center opacity-90 w-full">
-        <span className="brand-orange-text">Modulos</span>
+        <span className="brand-orange-text">Módulos</span>
         <span className="night-text-secondary">.</span>
       </h2>
 
