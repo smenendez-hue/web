@@ -1,5 +1,6 @@
 import sql from "mssql"
 import { NextResponse } from "next/server"
+import { createHash } from "node:crypto"
 
 import { getSqlPool } from "@/lib/db"
 
@@ -18,13 +19,63 @@ const MAX_EMAIL_LENGTH = 320
 const MAX_PHONE_LENGTH = 40
 const MAX_COMPANY_LENGTH = 120
 const MAX_MESSAGE_LENGTH = 2000
+const MAX_RECAPTCHA_TOKEN_LENGTH = 4096
+const RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
+const RECAPTCHA_TIMEOUT_MS = 3000
+const DEFAULT_RECAPTCHA_ALLOWED_HOSTNAMES = "www.yiqi.com.ar,yiqi.com.ar,localhost,127.0.0.1"
+const USER_AGENT_MAX_LOG_LENGTH = 160
+
+const parseIntegerEnv = (value: string | undefined, fallback: number) => {
+  const parsed = Number.parseInt(value ?? "", 10)
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback
+}
+
+const parseScoreEnv = (value: string | undefined, fallback: number) => {
+  const parsed = Number.parseFloat(value ?? "")
+  return Number.isFinite(parsed) && parsed >= 0 && parsed <= 1 ? parsed : fallback
+}
+
+const CONTACT_RATE_LIMIT_MAX = parseIntegerEnv(process.env.CONTACT_RATE_LIMIT_MAX, 5)
+const CONTACT_RATE_LIMIT_WINDOW_MS = parseIntegerEnv(process.env.CONTACT_RATE_LIMIT_WINDOW_MS, 600_000)
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY ?? ""
+const RECAPTCHA_EXPECTED_ACTION = process.env.RECAPTCHA_EXPECTED_ACTION ?? "contact_submit"
+const RECAPTCHA_MIN_SCORE = parseScoreEnv(process.env.RECAPTCHA_MIN_SCORE, 0.5)
+
+const normalizeOrigin = (value: string) => {
+  if (!value) return ""
+  try {
+    return new URL(value).origin
+  } catch {
+    return ""
+  }
+}
+
+const normalizeHostname = (value: string) => {
+  if (!value) return ""
+  const candidate = value.trim()
+  if (!candidate) return ""
+
+  try {
+    const withScheme = candidate.includes("://") ? candidate : `https://${candidate}`
+    return new URL(withScheme).hostname.toLowerCase()
+  } catch {
+    return ""
+  }
+}
 
 const ALLOWED_ORIGINS = (process.env.CONTACT_ALLOWED_ORIGINS ??
   process.env.NEXT_PUBLIC_SITE_URL ??
   process.env.SITE_URL ??
   "")
   .split(",")
-  .map((value) => value.trim())
+  .map((value) => normalizeOrigin(value.trim()))
+  .filter(Boolean)
+
+const RECAPTCHA_ALLOWED_HOSTNAMES = (
+  process.env.RECAPTCHA_ALLOWED_HOSTNAMES ?? DEFAULT_RECAPTCHA_ALLOWED_HOSTNAMES
+)
+  .split(",")
+  .map((value) => normalizeHostname(value))
   .filter(Boolean)
 
 const normalizeText = (value: unknown) => (typeof value === "string" ? value.trim() : "")
@@ -32,6 +83,74 @@ const normalizeText = (value: unknown) => (typeof value === "string" ? value.tri
 const isWithinLimit = (value: string, max: number) => value.length <= max
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+
+type SecurityReasonCode = "origin_blocked" | "captcha_invalid" | "captcha_unavailable" | "rate_limited"
+
+const RATE_LIMIT_STORE = new Map<string, { count: number; resetAt: number }>()
+
+const getClientIp = (headers: Headers) => {
+  const xForwardedFor = headers.get("x-forwarded-for")
+  if (xForwardedFor) {
+    const firstForwarded = xForwardedFor
+      .split(",")
+      .map((value) => value.trim())
+      .find(Boolean)
+    if (firstForwarded) return firstForwarded
+  }
+
+  const xRealIp = headers.get("x-real-ip")?.trim()
+  if (xRealIp) return xRealIp
+
+  const cfConnectingIp = headers.get("cf-connecting-ip")?.trim()
+  if (cfConnectingIp) return cfConnectingIp
+
+  return "unknown"
+}
+
+const hashIp = (ip: string) => createHash("sha256").update(ip).digest("hex").slice(0, 16)
+
+const truncate = (value: string, max: number) => (value.length <= max ? value : value.slice(0, max))
+
+const logSecurityEvent = (reasonCode: SecurityReasonCode, headers: Headers, details?: Record<string, unknown>) => {
+  const clientIp = getClientIp(headers)
+  const origin = normalizeOrigin(extractOrigin(headers))
+  const userAgent = truncate(normalizeText(headers.get("user-agent") ?? ""), USER_AGENT_MAX_LOG_LENGTH)
+
+  console.info("[contact-api] blocked request", {
+    reason_code: reasonCode,
+    ip_hash: hashIp(clientIp),
+    origin: origin || "unknown",
+    user_agent: userAgent || "unknown",
+    ...details,
+  })
+}
+
+const isRateLimited = (ip: string, now: number) => {
+  if (RATE_LIMIT_STORE.size > 5000) {
+    for (const [key, entry] of RATE_LIMIT_STORE.entries()) {
+      if (entry.resetAt <= now) {
+        RATE_LIMIT_STORE.delete(key)
+      }
+    }
+  }
+
+  const bucket = ip || "unknown"
+  const current = RATE_LIMIT_STORE.get(bucket)
+  if (!current || now >= current.resetAt) {
+    RATE_LIMIT_STORE.set(bucket, {
+      count: 1,
+      resetAt: now + CONTACT_RATE_LIMIT_WINDOW_MS,
+    })
+    return false
+  }
+
+  if (current.count >= CONTACT_RATE_LIMIT_MAX) {
+    return true
+  }
+
+  current.count += 1
+  return false
+}
 
 const escapeHtml = (value: string) =>
   value.replace(/[&<>"']/g, (char) => {
@@ -57,8 +176,80 @@ interface ContactPayload {
   phone: string
   company: string
   message: string
+  recaptchaToken?: string
   website?: string
   startedAt?: number
+}
+
+interface RecaptchaVerifyResponse {
+  success?: boolean
+  score?: number
+  action?: string
+  hostname?: string
+  ["error-codes"]?: string[]
+}
+
+const verifyRecaptcha = async ({ token, ip }: { token: string; ip: string }) => {
+  if (!RECAPTCHA_SECRET_KEY) {
+    return { status: "unavailable" as const, details: { missingSecret: true } }
+  }
+
+  const payload = new URLSearchParams()
+  payload.set("secret", RECAPTCHA_SECRET_KEY)
+  payload.set("response", token)
+  if (ip !== "unknown") {
+    payload.set("remoteip", ip)
+  }
+
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), RECAPTCHA_TIMEOUT_MS)
+
+  try {
+    const response = await fetch(RECAPTCHA_VERIFY_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: payload.toString(),
+      cache: "no-store",
+      signal: controller.signal,
+    })
+
+    if (!response.ok) {
+      return { status: "unavailable" as const, details: { httpStatus: response.status } }
+    }
+
+    const data = (await response.json()) as RecaptchaVerifyResponse
+    const success = data.success === true
+    const score = typeof data.score === "number" ? data.score : 0
+    const action = normalizeText(data.action)
+    const hostname = normalizeHostname(normalizeText(data.hostname))
+    const hostnameAllowed = RECAPTCHA_ALLOWED_HOSTNAMES.includes(hostname)
+
+    if (!success || score < RECAPTCHA_MIN_SCORE || action !== RECAPTCHA_EXPECTED_ACTION || !hostnameAllowed) {
+      return {
+        status: "invalid" as const,
+        details: {
+          success,
+          score,
+          action,
+          hostname,
+          hostnameAllowed,
+        },
+      }
+    }
+
+    return { status: "valid" as const }
+  } catch (error) {
+    return {
+      status: "unavailable" as const,
+      details: {
+        message: error instanceof Error ? error.message : "unknown_error",
+      },
+    }
+  } finally {
+    clearTimeout(timeoutId)
+  }
 }
 
 const formatOptional = (value: string) => (value ? value : "No informado")
@@ -92,17 +283,8 @@ const extractOrigin = (headers: Headers) => {
   return headers.get("referer") ?? ""
 }
 
-const parseOrigin = (value: string) => {
-  if (!value) return ""
-  try {
-    return new URL(value).origin
-  } catch {
-    return ""
-  }
-}
-
 const isOriginAllowed = (headers: Headers) => {
-  const originValue = parseOrigin(extractOrigin(headers))
+  const originValue = normalizeOrigin(extractOrigin(headers))
   if (!originValue) {
     return false
   }
@@ -166,6 +348,7 @@ VALUES (
 
 export async function POST(req: Request) {
   if (!isOriginAllowed(req.headers)) {
+    logSecurityEvent("origin_blocked", req.headers)
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
@@ -198,6 +381,7 @@ export async function POST(req: Request) {
   const phone = normalizeText(body.phone)
   const company = normalizeText(body.company)
   const message = normalizeText(body.message)
+  const recaptchaToken = normalizeText(body.recaptchaToken)
   const website = normalizeText(body.website)
   const startedAtRaw = body.startedAt
   const startedAt = typeof startedAtRaw === "number" ? startedAtRaw : Number(startedAtRaw)
@@ -230,6 +414,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid message length" }, { status: 400 })
   }
 
+  if (!recaptchaToken || !isWithinLimit(recaptchaToken, MAX_RECAPTCHA_TOKEN_LENGTH)) {
+    return NextResponse.json({ error: "Invalid payload" }, { status: 400 })
+  }
+
   if (website) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 })
   }
@@ -240,6 +428,27 @@ export async function POST(req: Request) {
 
   if (Date.now() - startedAt < MIN_FORM_COMPLETION_MS) {
     return NextResponse.json({ error: "Too fast" }, { status: 400 })
+  }
+
+  const clientIp = getClientIp(req.headers)
+  const recaptchaStatus = await verifyRecaptcha({
+    token: recaptchaToken,
+    ip: clientIp,
+  })
+
+  if (recaptchaStatus.status === "invalid") {
+    logSecurityEvent("captcha_invalid", req.headers, recaptchaStatus.details)
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+  }
+
+  if (recaptchaStatus.status === "unavailable") {
+    logSecurityEvent("captcha_unavailable", req.headers, recaptchaStatus.details)
+    return NextResponse.json({ error: "Service unavailable" }, { status: 503 })
+  }
+
+  if (isRateLimited(clientIp, Date.now())) {
+    logSecurityEvent("rate_limited", req.headers)
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 })
   }
 
   const mailBody = buildMailBody({ name, email, phone, company, message })

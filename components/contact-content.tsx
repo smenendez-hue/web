@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
+import Script from "next/script"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
@@ -14,6 +15,7 @@ const MAX_PHONE_LENGTH = 40
 const MAX_COMPANY_LENGTH = 120
 const MAX_MESSAGE_LENGTH = 2000
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const RECAPTCHA_ACTION = "contact_submit"
 
 const FORM_FIELDS = ["name", "email", "phone", "company", "message", "website"] as const
 
@@ -27,7 +29,39 @@ type ContactFormState = {
   startedAt: number
 }
 
+type GrecaptchaClient = {
+  ready: (callback: () => void) => void
+  execute: (siteKey: string, options: { action: string }) => Promise<string>
+}
+
+declare global {
+  interface Window {
+    grecaptcha?: GrecaptchaClient
+  }
+}
+
+const getRecaptchaToken = async (siteKey: string) => {
+  if (!siteKey || typeof window === "undefined") return ""
+  const recaptcha = window.grecaptcha
+  if (!recaptcha || typeof recaptcha.ready !== "function" || typeof recaptcha.execute !== "function") {
+    return ""
+  }
+
+  return new Promise<string>((resolve) => {
+    recaptcha.ready(async () => {
+      try {
+        const token = await recaptcha.execute(siteKey, { action: RECAPTCHA_ACTION })
+        resolve(token || "")
+      } catch {
+        resolve("")
+      }
+    })
+  })
+}
+
 export function ContactContent() {
+  const recaptchaSiteKey = (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "").trim()
+
   const [formData, setFormData] = useState<ContactFormState>({
     name: "",
     email: "",
@@ -93,12 +127,20 @@ export function ContactContent() {
     setErrorMessage(null)
 
     try {
+      const recaptchaToken = await getRecaptchaToken(recaptchaSiteKey)
+      if (!recaptchaToken) {
+        throw new Error("Missing recaptcha token")
+      }
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken,
+        }),
       })
 
       if (!response.ok) {
@@ -144,6 +186,13 @@ export function ContactContent() {
 
   return (
     <div className="w-full max-w-7xl px-8 py-16 flex flex-col items-center gap-16">
+      {recaptchaSiteKey ? (
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(recaptchaSiteKey)}`}
+          strategy="afterInteractive"
+        />
+      ) : null}
+
       {/* Header Section */}
       <div className="w-full flex flex-col items-center gap-6 text-center">
         <div className="inline-flex items-center px-4 py-2 rounded-full border border-brand-blue-light/30 gap-2">

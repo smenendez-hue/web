@@ -263,9 +263,14 @@
   }
 
   /* Asegurar que el contenido aparezca sobre el fondo */
-  body>* {
+  body>*:not(.grecaptcha-badge) {
     position: relative;
     z-index: 1;
+  }
+
+  /* Keep Google reCAPTCHA badge visible above fixed/sticky UI layers. */
+  .grecaptcha-badge {
+    z-index: 2147483647 !important;
   }
 
   /* Utilidades de color con la misma nomenclatura del diseño */
