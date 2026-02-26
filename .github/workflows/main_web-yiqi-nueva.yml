@@ -39,7 +39,15 @@ jobs:
           if [ -d public ]; then
             cp -R public deploy/
           fi
-          cp package.json deploy/
+          cat > deploy/package.json <<'EOF'
+          {
+            "name": "my-v0-project",
+            "private": true,
+            "scripts": {
+              "start": "node server.js"
+            }
+          }
+          EOF
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
