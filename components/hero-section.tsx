@@ -9,7 +9,7 @@ export function HeroSection() {
           <div className="rounded-2xl shadow-sm flex items-center justify-center">
             <Image
               src="/images/logo/Property1_Dark.svg"
-              alt="yiQi Logo"
+              alt="YiQi Logo"
               width={450}
               height={300}
               className="w-[clamp(180px,60vw,260px)] h-auto"

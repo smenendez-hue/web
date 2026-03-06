@@ -13,7 +13,7 @@ export function Footer() {
             <div className="w-20 h-10 relative">
               <Image
                 src="/images/logo/Property1_Dark.svg"
-                alt="yiQi"
+                alt="YiQi"
                 width={80}
                 height={40}
                 className="w-full h-full object-contain"

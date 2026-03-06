@@ -112,6 +112,16 @@ const createSlug = (title: string, id: string) => {
   return title
 }
 
+const extractSlugId = (slug: string) => {
+  const parts = slug
+    .trim()
+    .toLowerCase()
+    .split("-")
+    .filter(Boolean)
+
+  return parts.length > 1 ? parts[parts.length - 1] : ""
+}
+
 const normalizeDate = (value: unknown) => {
   if (value instanceof Date && !Number.isNaN(value.getTime())) {
     return value.toISOString()
@@ -192,7 +202,19 @@ export const getAllBlogPosts = async (): Promise<BlogPost[]> => {
 
 export const getBlogPostBySlug = async (slug: string): Promise<BlogPost | undefined> => {
   const posts = await getAllBlogPosts()
-  return posts.find((post) => post.slug === slug)
+  const normalizedSlug = slug.trim().toLowerCase()
+  const exactMatch = posts.find((post) => post.slug === normalizedSlug)
+
+  if (exactMatch) {
+    return exactMatch
+  }
+
+  const slugId = extractSlugId(normalizedSlug)
+  if (!slugId) {
+    return undefined
+  }
+
+  return posts.find((post) => slugifyValue(post.id) === slugId)
 }
 
 export const getBlogCategories = (posts: BlogPost[]) => {

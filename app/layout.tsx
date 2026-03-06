@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | YiQi ERP",
   },
   description:
-    "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
+    "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta áreas y te da control total en tiempo real.",
   generator: "Gabriel Farias",
   applicationName: "YiQi ERP",
   alternates: {
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "YiQi - El ERP más completo del mercado",
     description:
-      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
+      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta áreas y te da control total en tiempo real.",
     url: siteUrl,
     siteName: "YiQi",
     locale: "es_AR",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "YiQi - El ERP más completo del mercado",
     description:
-      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
+      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta áreas y te da control total en tiempo real.",
     images: ["/images/logoheader.png"],
   },
   robots: {

@@ -18,7 +18,7 @@ export function BenefitsSection() {
       iconSrc: "/images/beneficios/ChartLineUp.svg",
       iconAlt: "Escalabilidad",
       title: "Escalabilidad",
-      description: "Crecemos contigo, de PYME a gran corporación",
+      description: "Crecemos contigo, de pyme a gran corporación",
     },
   ]
 

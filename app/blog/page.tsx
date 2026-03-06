@@ -7,19 +7,19 @@ import { getAllBlogPosts, getBlogCategories } from "@/lib/blog-store"
 import { BLOG_ENABLE } from "@/lib/blog-settings"
 
 export const metadata = {
-  title: "Blog - YiQi ERP",
-  description: "Ultimas noticias, actualizaciones y recursos sobre gestion empresarial y tecnologia ERP.",
+  title: "Blog",
+  description: "Últimas noticias, actualizaciones y recursos sobre gestión empresarial y tecnología ERP.",
   alternates: {
     canonical: "/blog",
   },
   openGraph: {
-    title: "Blog - YiQi ERP",
-    description: "Ultimas noticias, actualizaciones y recursos sobre gestion empresarial y tecnologia ERP.",
+    title: "Blog",
+    description: "Últimas noticias, actualizaciones y recursos sobre gestión empresarial y tecnología ERP.",
     url: "/blog",
   },
   twitter: {
-    title: "Blog - YiQi ERP",
-    description: "Ultimas noticias, actualizaciones y recursos sobre gestion empresarial y tecnologia ERP.",
+    title: "Blog",
+    description: "Últimas noticias, actualizaciones y recursos sobre gestión empresarial y tecnología ERP.",
   },
 }
 

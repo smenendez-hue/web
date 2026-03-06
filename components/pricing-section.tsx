@@ -52,7 +52,7 @@ export function PricingSection() {
           <div className="w-fit h-fit">
             <Image
               src="/images/logo/Property1_Dark.svg"
-              alt="yiQi"
+              alt="YiQi"
               width={150}
               height={286}
               className="w-[clamp(96px,28vw,150px)] h-auto object-contain"

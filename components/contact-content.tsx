@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import Script from "next/script"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
+import { Mail, MessageCircle, Send } from "lucide-react"
 
 const COOLDOWN_MS = 5000
 const MAX_NAME_LENGTH = 120
@@ -102,11 +102,10 @@ export function ContactContent() {
     if (!data.name.trim()) return "Completa tu nombre."
     if (data.name.length > MAX_NAME_LENGTH) return "El nombre es demasiado largo."
     if (!data.email.trim()) return "Completa tu email."
-    if (!EMAIL_PATTERN.test(data.email)) return "El email no es valido."
+    if (!EMAIL_PATTERN.test(data.email)) return "El email no es válido."
     if (data.email.length > MAX_EMAIL_LENGTH) return "El email es demasiado largo."
-    if (data.phone && data.phone.length > MAX_PHONE_LENGTH) return "El telefono es demasiado largo."
+    if (data.phone && data.phone.length > MAX_PHONE_LENGTH) return "El teléfono es demasiado largo."
     if (data.company && data.company.length > MAX_COMPANY_LENGTH) return "La empresa es demasiado larga."
-    if (!data.message.trim()) return "Completa tu mensaje."
     if (data.message.length > MAX_MESSAGE_LENGTH) return "El mensaje es demasiado largo."
     return null
   }
@@ -296,12 +295,11 @@ export function ContactContent() {
 
             <div className="flex flex-col gap-2">
               <label htmlFor="message" className="text-text-primary text-sm font-medium">
-                Mensaje *
+                Mensaje
               </label>
               <Textarea
                 id="message"
                 name="message"
-                required
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Cuéntanos cómo podemos ayudarte..."
@@ -331,10 +329,12 @@ export function ContactContent() {
               ) : (
                 <>
                   <Send className="w-5 h-5" />
-                  Enviar mensaje
+                  Enviar
                 </>
               )}
             </button>
+
+            <p className="text-sm text-text-secondary text-center">Te contactaremos a la brevedad.</p>
 
             {submitStatus === "success" && (
               <div className="p-4 bg-brand-mint/10 border border-brand-mint/30 rounded-2xl">
@@ -375,12 +375,17 @@ export function ContactContent() {
 
             <div className="p-6 bg-bg-elevated rounded-2xl border border-white/10 flex items-start gap-4 hover:border-brand-orange/30 transition-all">
               <div className="w-12 h-12 bg-brand-orange/10 rounded-xl flex items-center justify-center shrink-0">
-                <Phone className="w-6 h-6 text-brand-orange" />
+                <MessageCircle className="w-6 h-6 text-brand-orange" />
               </div>
               <div className="flex flex-col gap-1">
-                <h3 className="text-text-primary font-semibold text-lg">Teléfono</h3>
-                <a href="tel:+541170799474" className="text-text-secondary hover:text-brand-orange transition-colors">
-                  +54 11 7079-9474
+                <h3 className="text-text-primary font-semibold text-lg">WhatsApp</h3>
+                <a
+                  href="https://api.whatsapp.com/send?phone=5491123727422"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-secondary hover:text-brand-orange transition-colors"
+                >
+                  +54 9 11 2372-7422
                 </a>
               </div>
             </div>

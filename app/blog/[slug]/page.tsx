@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   if (!post) {
     return {
-      title: "Post no encontrado",
+      title: "Artículo no encontrado",
       robots: {
         index: false,
         follow: false,
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
-  const title = post.title + " | YiQi Blog"
+  const title = post.title
   const canonical = "/blog/" + post.slug
 
   return {

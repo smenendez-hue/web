@@ -25,7 +25,7 @@ export function ValueProposition() {
         <div className="w-full max-w-[520px] sm:max-w-[860px] -mt-12 sm:-mt-24 relative px-2 sm:px-4">
           <Image
             src="/images/design-mode/image(2).png"
-            alt="Dashboard yiQi"
+            alt="Dashboard YiQi"
             width={821}
             height={661}
             className="w-full h-auto rounded-2xl shadow-none"

@@ -207,6 +207,20 @@ describe("contact route", () => {
     expect(res.status).toBe(400)
   })
 
+  it("accepts payloads without message and omits the message block in the mail body", async () => {
+    const { POST } = await loadRoute()
+    const { inputSpy } = await setupDbMock()
+    mockRecaptchaResponse()
+
+    const req = buildRequest(buildPayload({ message: "" }))
+    const res = await POST(req)
+    expect(res.status).toBe(200)
+
+    const bodyCall = inputSpy.mock.calls.find((call) => call[0] === "cuerpo")
+    expect(bodyCall).toBeTruthy()
+    expect(String(bodyCall?.[2] ?? "")).not.toContain("<strong>Mensaje:</strong>")
+  })
+
   it("rejects missing recaptcha token", async () => {
     const { POST } = await loadRoute()
     const { getSqlPool } = await setupDbMock()

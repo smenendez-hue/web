@@ -198,7 +198,7 @@ export function TransformSection() {
                 <button
                   key={`${feature.title}-dot`}
                   type="button"
-                  aria-label={`Ir al item ${index + 1}`}
+                  aria-label={`Ir al ítem ${index + 1}`}
                   onClick={() => setActiveIndex(index)}
                   className="w-6 h-6 flex items-center justify-center"
                 >

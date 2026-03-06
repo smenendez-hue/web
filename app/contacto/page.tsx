@@ -3,19 +3,19 @@ import { Footer } from "@/components/footer"
 import { ContactContent } from "@/components/contact-content"
 
 export const metadata = {
-  title: "Contacto - YiQi ERP",
-  description: "Ponte en contacto con el equipo de YiQi. Estamos aqui para ayudarte a transformar la gestion de tu empresa.",
+  title: "Contacto",
+  description: "Ponte en contacto con el equipo de YiQi. Estamos aquí para ayudarte a transformar la gestión de tu empresa.",
   alternates: {
     canonical: "/contacto",
   },
   openGraph: {
-    title: "Contacto - YiQi ERP",
-    description: "Ponte en contacto con el equipo de YiQi. Estamos aqui para ayudarte a transformar la gestion de tu empresa.",
+    title: "Contacto",
+    description: "Ponte en contacto con el equipo de YiQi. Estamos aquí para ayudarte a transformar la gestión de tu empresa.",
     url: "/contacto",
   },
   twitter: {
-    title: "Contacto - YiQi ERP",
-    description: "Ponte en contacto con el equipo de YiQi. Estamos aqui para ayudarte a transformar la gestion de tu empresa.",
+    title: "Contacto",
+    description: "Ponte en contacto con el equipo de YiQi. Estamos aquí para ayudarte a transformar la gestión de tu empresa.",
   },
 }
 

@@ -4,22 +4,22 @@ import { FAQPageContent } from "@/components/faq-page-content"
 import { loadFaqCategories } from "@/lib/faq-store"
 
 export const metadata = {
-  title: "Preguntas Frecuentes - YiQi ERP",
+  title: "Preguntas frecuentes",
   description:
-    "Encuentra respuestas a las preguntas mas comunes sobre YiQi ERP, el sistema de gestion empresarial completo en la nube.",
+    "Encuentra respuestas a las preguntas más comunes sobre YiQi ERP, el sistema de gestión empresarial completo en la nube.",
   alternates: {
     canonical: "/faq",
   },
   openGraph: {
-    title: "Preguntas Frecuentes - YiQi ERP",
+    title: "Preguntas frecuentes",
     description:
-      "Encuentra respuestas a las preguntas mas comunes sobre YiQi ERP, el sistema de gestion empresarial completo en la nube.",
+      "Encuentra respuestas a las preguntas más comunes sobre YiQi ERP, el sistema de gestión empresarial completo en la nube.",
     url: "/faq",
   },
   twitter: {
-    title: "Preguntas Frecuentes - YiQi ERP",
+    title: "Preguntas frecuentes",
     description:
-      "Encuentra respuestas a las preguntas mas comunes sobre YiQi ERP, el sistema de gestion empresarial completo en la nube.",
+      "Encuentra respuestas a las preguntas más comunes sobre YiQi ERP, el sistema de gestión empresarial completo en la nube.",
   },
 }
 

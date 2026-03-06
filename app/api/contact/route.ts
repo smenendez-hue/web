@@ -259,16 +259,20 @@ const buildMailBody = (data: ContactPayload) => {
   const safeEmail = escapeHtml(data.email)
   const safePhone = escapeHtml(formatOptional(data.phone))
   const safeCompany = escapeHtml(formatOptional(data.company))
-  const safeMessage = escapeHtml(data.message).replace(/\r?\n/g, "<br />")
-
-  return [
+  const lines = [
     "<p>Nuevo contacto desde el sitio web.</p>",
     `<p><strong>Nombre:</strong> ${safeName}</p>`,
     `<p><strong>Email:</strong> ${safeEmail}</p>`,
     `<p><strong>Telefono:</strong> ${safePhone}</p>`,
     `<p><strong>Empresa:</strong> ${safeCompany}</p>`,
-    `<p><strong>Mensaje:</strong><br />${safeMessage}</p>`,
-  ].join("")
+  ]
+
+  if (data.message) {
+    const safeMessage = escapeHtml(data.message).replace(/\r?\n/g, "<br />")
+    lines.push(`<p><strong>Mensaje:</strong><br />${safeMessage}</p>`)
+  }
+
+  return lines.join("")
 }
 
 const buildSubject = (name: string) => {
@@ -386,7 +390,7 @@ export async function POST(req: Request) {
   const startedAtRaw = body.startedAt
   const startedAt = typeof startedAtRaw === "number" ? startedAtRaw : Number(startedAtRaw)
 
-  if (!name || !email || !message) {
+  if (!name || !email) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
   }
 

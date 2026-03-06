@@ -15,20 +15,20 @@ import { loadFaqCategories } from "@/lib/faq-store"
 export const metadata = {
   title: "YiQi - El ERP más completo del mercado",
   description:
-    "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
+    "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta áreas y te da control total en tiempo real.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "YiQi - El ERP más completo del mercado",
     description:
-      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
+      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta áreas y te da control total en tiempo real.",
     url: "/",
   },
   twitter: {
     title: "YiQi - El ERP más completo del mercado",
     description:
-      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta areas y te da control total en tiempo real.",
+      "Gestiona tu empresa con un ERP inteligente que automatiza tareas, conecta áreas y te da control total en tiempo real.",
   },
 }
 

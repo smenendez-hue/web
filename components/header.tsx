@@ -43,7 +43,7 @@ export function Header() {
             <Link href="/" className="flex items-center">
               <Image
                 src="/images/logo/Property1_Dark.svg"
-                alt="yiQi Logo"
+                alt="YiQi Logo"
                 width={80}
                 height={32}
                 className="w-auto max-h-15"
@@ -79,7 +79,7 @@ export function Header() {
             <button
               type="button"
               className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 text-text-secondary hover:text-night-text transition-colors"
-              aria-label={isMenuOpen ? "Cerrar menu" : "Abrir menu"}
+              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen((open) => !open)}
             >
@@ -116,15 +116,15 @@ export function Header() {
         style={{ backgroundColor: "#000" }}
         role="dialog"
         aria-modal="true"
-        aria-label="Menu principal"
+        aria-label="Menú principal"
         aria-hidden={!isMenuOpen}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-          <span className="text-sm font-semibold text-text-secondary">Menu</span>
+          <span className="text-sm font-semibold text-text-secondary">Menú</span>
           <button
             type="button"
             className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-white/10 text-text-secondary hover:text-night-text transition-colors"
-            aria-label="Cerrar menu"
+            aria-label="Cerrar menú"
             onClick={closeMenu}
           >
             <X className="w-4 h-4" />

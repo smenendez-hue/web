@@ -10,7 +10,6 @@ const RECAPTCHA_ERROR_MESSAGE = "Ocurrió un error al enviar el mensaje. Intenta
 const fillRequiredFields = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.type(screen.getByLabelText(/Nombre/i), "Juan Perez")
   await user.type(screen.getByLabelText(/Email/i), "juan@example.com")
-  await user.type(screen.getByLabelText(/Mensaje/i), "Necesito mas informacion.")
 }
 
 const mockFetchResponse = (status: number) =>
@@ -52,7 +51,7 @@ describe("ContactContent", () => {
     fireEvent.change(screen.getByLabelText(/Mensaje/i), {
       target: { value: longMessage },
     })
-    await user.click(screen.getByRole("button", { name: /Enviar mensaje/i }))
+    await user.click(screen.getByRole("button", { name: /Enviar/i }))
 
     expect(screen.getByText(/mensaje es demasiado largo/i)).toBeTruthy()
     expect(fetchSpy).not.toHaveBeenCalled()
@@ -64,7 +63,7 @@ describe("ContactContent", () => {
     render(<ContactContent />)
 
     await fillRequiredFields(user)
-    await user.click(screen.getByRole("button", { name: /Enviar mensaje/i }))
+    await user.click(screen.getByRole("button", { name: /Enviar/i }))
 
     await screen.findByText(RECAPTCHA_ERROR_MESSAGE)
     expect(fetchSpy).not.toHaveBeenCalled()
@@ -77,7 +76,7 @@ describe("ContactContent", () => {
     render(<ContactContent />)
 
     await fillRequiredFields(user)
-    await user.click(screen.getByRole("button", { name: /Enviar mensaje/i }))
+    await user.click(screen.getByRole("button", { name: /Enviar/i }))
 
     await waitFor(() => expect(fetchSpy).toHaveBeenCalledTimes(1))
     const payload = JSON.parse(String(fetchSpy.mock.calls[0]?.[1]?.body ?? "{}"))
@@ -91,7 +90,7 @@ describe("ContactContent", () => {
     render(<ContactContent />)
 
     await fillRequiredFields(user)
-    await user.click(screen.getByRole("button", { name: /Enviar mensaje/i }))
+    await user.click(screen.getByRole("button", { name: /Enviar/i }))
 
     await screen.findByText(RECAPTCHA_ERROR_MESSAGE)
   })
@@ -110,5 +109,28 @@ describe("ContactContent", () => {
     expect(phoneInput.maxLength).toBe(40)
     expect(companyInput.maxLength).toBe(120)
     expect(messageInput.maxLength).toBe(2000)
+  })
+
+  it("submits successfully without a message", async () => {
+    const user = userEvent.setup()
+    const fetchSpy = mockFetchResponse(200)
+    mockGrecaptcha("token-123")
+    render(<ContactContent />)
+
+    await fillRequiredFields(user)
+    await user.click(screen.getByRole("button", { name: /Enviar/i }))
+
+    await waitFor(() => expect(fetchSpy).toHaveBeenCalledTimes(1))
+    const payload = JSON.parse(String(fetchSpy.mock.calls[0]?.[1]?.body ?? "{}"))
+    expect(payload.message).toBe("")
+  })
+
+  it("shows the static follow-up text and WhatsApp contact card", () => {
+    render(<ContactContent />)
+
+    expect(screen.getByText(/Te contactaremos a la brevedad\./i)).toBeTruthy()
+    expect(screen.getByRole("heading", { name: /WhatsApp/i })).toBeTruthy()
+    const whatsappLink = screen.getByRole("link", { name: /\+54 9 11 2372-7422/i })
+    expect(whatsappLink.getAttribute("href")).toBe("https://api.whatsapp.com/send?phone=5491123727422")
   })
 })
