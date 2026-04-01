@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Youtube, Linkedin, PhoneCall, Mail, MessageCircle } from "lucide-react"
+import { Youtube, Linkedin, PhoneCall, Mail, MessageCircle, Instagram } from "lucide-react"
 
 import { BLOG_ENABLE } from "@/lib/blog-settings"
 
@@ -49,6 +49,15 @@ export function Footer() {
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.instagram.com/yiqisa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-secondary hover:text-text-primary transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-5 h-5" />
             </a>
             <a
               href="mailto:comercial@yiqi.com.ar"
