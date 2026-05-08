@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="system">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DS v1.2.6 — Dynamic Background</title>
+
+<style>
+:root {
+  --bg: #0a0a0b;
+  --bg-dynamic: none;
+}
+
+/* Light mode */
+:root[data-theme="light"] {
+  --bg: #eeece7;
+}
+
+/* Base */
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: sans-serif;
+
+  background:
+    var(--bg-dynamic),
+    radial-gradient(circle at 20% 30%, rgba(0,204,255,.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(0,204,255,.06), transparent 50%),
+    var(--bg);
+
+  transition: background 2s linear;
+}
+
+/* Demo UI */
+.center {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 24px;
+  letter-spacing: -.02em;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="center">
+  YiQi DS v1.2.6 — Dynamic Background
+</div>
+
+<script>
+// ─────────────────────────────
+// TIME → 0–1
+// ─────────────────────────────
+function getTimeProgress() {
+  const now = new Date();
+  const seconds =
+    now.getHours() * 3600 +
+    now.getMinutes() * 60 +
+    now.getSeconds();
+
+  return seconds / 86400;
+}
+
+// ─────────────────────────────
+// COLOR LERP
+// ─────────────────────────────
+function lerpColor(a, b, t) {
+  const ah = parseInt(a.replace("#", ""), 16);
+  const bh = parseInt(b.replace("#", ""), 16);
+
+  const ar = ah >> 16, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
+  const br = bh >> 16, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
+
+  const rr = Math.round(ar + (br - ar) * t);
+  const rg = Math.round(ag + (bg - ag) * t);
+  const rb = Math.round(ab + (bb - ab) * t);
+
+  return `rgb(${rr}, ${rg}, ${rb})`;
+}
+
+// ─────────────────────────────
+// THEME DETECTION
+// ─────────────────────────────
+function isLightMode() {
+  const theme = document.documentElement.dataset.theme;
+
+  if (theme === "light") return true;
+  if (theme === "dark") return false;
+
+  return window.matchMedia('(prefers-color-scheme: light)').matches;
+}
+
+// ─────────────────────────────
+// TIMELINES (DS SAFE)
+// ─────────────────────────────
+const darkTimeline = [
+  { t: 0.0, colors: ["#0a0a0b", "#0f1013"] },
+  { t: 0.25, colors: ["#0a1a22", "#0f2a33"] },
+  { t: 0.5, colors: ["#0a2028", "#10323d"] },
+  { t: 0.75, colors: ["#1a1a1a", "#2a2a2a"] },
+  { t: 1.0, colors: ["#0a0a0b", "#0f1013"] }
+];
+
+const lightTimeline = [
+  { t: 0.0, colors: ["#eeece7", "#f6f4ef"] },
+  { t: 0.25, colors: ["#e6f4f8", "#f0fbff"] },
+  { t: 0.5, colors: ["#eafcff", "#f7feff"] },
+  { t: 0.75, colors: ["#f5efe6", "#fffaf3"] },
+  { t: 1.0, colors: ["#eeece7", "#f6f4ef"] }
+];
+
+// ─────────────────────────────
+// GRADIENT ENGINE
+// ─────────────────────────────
+function getDynamicGradient() {
+  const t = getTimeProgress();
+  const timeline = isLightMode() ? lightTimeline : darkTimeline;
+
+  let i = 0;
+  while (i < timeline.length - 1 && t > timeline[i + 1].t) i++;
+
+  const current = timeline[i];
+  const next = timeline[i + 1];
+
+  const localT = (t - current.t) / (next.t - current.t);
+
+  const maxStops = Math.max(current.colors.length, next.colors.length);
+  const colors = [];
+
+  for (let j = 0; j < maxStops; j++) {
+    const c1 = current.colors[j % current.colors.length];
+    const c2 = next.colors[j % next.colors.length];
+    colors.push(lerpColor(c1, c2, localT));
+  }
+
+  return `linear-gradient(135deg, ${colors.join(", ")})`;
+}
+
+// ─────────────────────────────
+// APPLY
+// ─────────────────────────────
+function updateBackground() {
+  const gradient = getDynamicGradient();
+  document.documentElement.style.setProperty('--bg-dynamic', gradient);
+}
+
+// init
+updateBackground();
+
+// refresh cada minuto
+setInterval(updateBackground, 60000);
+
+</script>
+
+</body>
+</html>

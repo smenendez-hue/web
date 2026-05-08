@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html data-theme="system" lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YiQi Design System — Auditoría v1.2.5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Tokens DS v1.2.5 ── */
+:root {
+  --bg:          #0c0c0e;
+  --bg-elev:     #111114;
+  --bg-elev-2:   #18181c;
+  --bg-soft:     rgba(255,255,255,.04);
+  --line:        rgba(255,255,255,.08);
+  --line-strong: rgba(255,255,255,.14);
+  --text:        #f0f1f3;
+  --muted:       #908e8e;
+  --muted-2:     #625f5f;
+  --cyan:        #00ccff;
+  --cyan-soft:   rgba(0,204,255,.12);
+  --cyan-soft-2: rgba(0,204,255,.18);
+  --text-cyan-muted: rgba(0,195,240,.45);
+  --green:       #00c48c;
+  --green-soft:  rgba(0,196,140,.12);
+  --amber:       #f6a623;
+  --amber-soft:  rgba(246,166,35,.12);
+  --red:         #f25f5c;
+  --red-soft:    rgba(242,95,92,.12);
+  --purple:      #a78bfa;
+  --purple-soft: rgba(167,139,250,.12);
+  --radius:      10px;
+  --radius-sm:   7px;
+  --radius-pill: 99px;
+  --shadow-sm:   0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
+  --shadow-md:   0 4px 16px rgba(0,0,0,.4), 0 1px 4px rgba(0,0,0,.2);
+  --sans:        "Inter", system-ui, sans-serif;
+  --display:     "Plus Jakarta Sans", var(--sans);
+  --mono:        "IBM Plex Mono", monospace;
+}
+html[data-theme="light"] {
+  --bg:          #f5f4f0;
+  --bg-elev:     #eeece7;
+  --bg-elev-2:   #e6e4df;
+  --bg-soft:     rgba(0,0,0,.04);
+  --line:        rgba(0,0,0,.08);
+  --line-strong: rgba(0,0,0,.14);
+  --text:        #1a1a1e;
+  --muted:       #6b6e78;
+  --muted-2:     #9b9ea8;
+  --cyan:        #009fc7;
+  --cyan-soft:   rgba(0,159,199,.1);
+  --cyan-soft-2: rgba(0,159,199,.16);
+  --text-cyan-muted: rgba(0,140,175,.48);
+  --green:       #007a58;
+  --green-soft:  rgba(0,122,88,.1);
+  --amber:       #c47c00;
+  --amber-soft:  rgba(196,124,0,.1);
+  --red:         #c93c39;
+  --red-soft:    rgba(201,60,57,.1);
+  --purple:      #7c3aed;
+  --purple-soft: rgba(124,58,237,.1);
+  --shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 8px rgba(0,0,0,.05);
+  --shadow-md:   0 4px 16px rgba(0,0,0,.1), 0 1px 4px rgba(0,0,0,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background:
+    radial-gradient(circle at 72% 8%, rgba(0,204,255,.07), transparent 28%),
+    radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 80px;
+  transition: background .25s, color .25s;
+}
+html[data-theme="light"] body {
+  background:
+    radial-gradient(circle at 72% 8%, rgba(0,159,199,.06), transparent 26%),
+    radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 20%),
+    var(--bg);
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; padding: 0 32px;
+  background: rgba(12,12,14,.82);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+}
+html[data-theme="light"] .topbar { background: rgba(238,236,231,.88); }
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-pill {
+  font: 600 11px var(--mono); letter-spacing: .06em;
+  background: var(--cyan-soft); color: var(--cyan);
+  padding: 3px 10px; border-radius: var(--radius-pill);
+}
+.topbar-title { font: 600 14px var(--sans); color: var(--muted); }
+
+/* ── Theme Toggle ── */
+.theme-toggle {
+  display: inline-flex; align-items: center;
+  background: var(--bg-elev-2); border-radius: var(--radius-pill);
+  padding: 3px; gap: 2px;
+}
+.theme-opt {
+  font: 600 11px var(--mono); letter-spacing: .05em;
+  padding: 5px 12px; border-radius: var(--radius-pill);
+  border: none; background: transparent; color: var(--muted-2);
+  cursor: pointer; transition: all 160ms ease; white-space: nowrap;
+}
+.theme-opt:hover:not(.active) { color: var(--muted); }
+.theme-opt.active { background: var(--bg-elev-2); color: var(--text); }
+
+/* ── Layout ── */
+.page { max-width: 1060px; margin: 0 auto; padding: 48px 24px 0; }
+.page-header { margin-bottom: 40px; }
+.kicker {
+  font: 600 11px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-cyan-muted); margin-bottom: 10px;
+}
+.page-title { font: 800 36px/1.1 var(--display); letter-spacing: -.025em; color: var(--text); margin-bottom: 12px; }
+.page-sub { font: 400 15px var(--sans); color: var(--muted); line-height: 1.6; }
+.date-tag { display: inline-block; font: 500 12px var(--mono); color: var(--muted-2); margin-top: 10px; }
+code { font-family: var(--mono); font-size: .9em; background: var(--bg-elev-2); padding: 1px 5px; border-radius: 4px; color: var(--text); }
+
+/* ── Score summary ── */
+.score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 40px; }
+.score-card { background: var(--bg-elev); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow-sm); }
+.score-card-label { font: 500 11px var(--mono); letter-spacing: .06em; color: var(--muted); margin-bottom: 8px; }
+.score-card-value { font: 700 28px/1 var(--display); }
+.c-red    { color: var(--red); }
+.c-amber  { color: var(--amber); }
+.c-green  { color: var(--green); }
+.c-cyan   { color: var(--cyan); }
+.c-muted  { color: var(--muted); }
+.c-muted2 { color: var(--muted-2); }
+
+/* ── Section ── */
+.section { margin-bottom: 48px; }
+.section-title { font: 700 18px var(--display); color: var(--text); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.section-sub { font: 400 13px var(--sans); color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+
+/* ── File card ── */
+.file-card { background: var(--bg-elev); border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 12px; overflow: hidden; }
+.file-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; gap: 16px; cursor: pointer; transition: background 160ms;
+  list-style: none; user-select: none;
+}
+.file-header:hover { background: var(--bg-soft); }
+.file-path { font: 600 13px var(--mono); color: var(--text); }
+.file-sub  { font: 400 12px var(--sans); color: var(--muted); margin-top: 2px; }
+.file-score-badge {
+  font: 700 11px var(--mono); padding: 3px 10px;
+  border-radius: var(--radius-pill); flex-shrink: 0; letter-spacing: .04em;
+}
+.badge-critical { background: var(--red-soft);    color: var(--red); }
+.badge-high     { background: var(--amber-soft);  color: var(--amber); }
+.badge-medium   { background: rgba(246,166,35,.07); color: var(--amber); }
+.badge-ok       { background: var(--green-soft);  color: var(--green); }
+.badge-muted    { background: var(--bg-elev-2);   color: var(--muted); }
+
+.file-body { padding: 4px 20px 18px; display: none; }
+.file-card.open .file-body { display: block; }
+
+/* ── Tag chips ── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.tag { font: 600 11px var(--mono); letter-spacing: .04em; padding: 3px 9px; border-radius: var(--radius-pill); background: var(--bg-elev-2); color: var(--muted-2); }
+.tag-red    { background: var(--red-soft);    color: var(--red); }
+.tag-amber  { background: var(--amber-soft);  color: var(--amber); }
+.tag-green  { background: var(--green-soft);  color: var(--green); }
+.tag-cyan   { background: var(--cyan-soft);   color: var(--cyan); }
+
+/* ── Issue list ── */
+.issue-list { display: flex; flex-direction: column; gap: 8px; }
+.issue-row { display: flex; align-items: flex-start; gap: 10px; font: 400 13px/1.55 var(--sans); }
+.issue-icon { flex-shrink: 0; font-size: 13px; margin-top: 2px; }
+.c-ok   { color: var(--green); }
+.c-warn { color: var(--amber); }
+.c-err  { color: var(--red); }
+.c-info { color: var(--cyan); }
+
+/* ── Tables ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { text-align: left; font: 600 11px var(--mono); letter-spacing: .06em; color: var(--muted-2); padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--muted); }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--bg-soft); }
+.pri { font: 700 11px var(--mono); }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--line); margin: 40px 0; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <svg width="54" height="18" viewBox="0 0 54 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="0" y="15" font-family="Plus Jakarta Sans,Inter,sans-serif" font-size="17" font-weight="800" fill="currentColor" letter-spacing="-0.04em">Yi<tspan fill="var(--cyan)">Q</tspan>i</text>
+    </svg>
+    <span class="topbar-pill">Repo Audit</span>
+    <span class="topbar-title">DS v1.2.5 · 30 Abril 2026</span>
+  </div>
+  <div class="theme-toggle" role="group" aria-label="Tema">
+    <button class="theme-opt" onclick="setTheme('dark')">Oscuro</button>
+    <button class="theme-opt" onclick="setTheme('system')">Sistema</button>
+    <button class="theme-opt" onclick="setTheme('light')">Claro</button>
+  </div>
+</header>
+
+<main class="page">
+
+  <div class="page-header">
+    <div class="kicker">Design System · Auditoría completa del repo</div>
+    <h1 class="page-title">Auditoría DS v1.2.5</h1>
+    <p class="page-sub">Revisión de <code>yiqi-design-system</code> contra los estándares de la versión 1.2.5: filosofía borderless, toggle 3 pasos, fondo sin grilla, token <code>--text-cyan-muted</code>, SVG inline e iconografía correcta.</p>
+    <span class="date-tag">30/04/2026 · 13 archivos auditados</span>
+  </div>
+
+  <!-- Score cards -->
+  <div class="score-grid">
+    <div class="score-card"><div class="score-card-label">CRÍTICOS</div><div class="score-card-value c-red">2</div></div>
+    <div class="score-card"><div class="score-card-label">ALTA PRIORIDAD</div><div class="score-card-value c-amber">8</div></div>
+    <div class="score-card"><div class="score-card-label">MEDIA PRIORIDAD</div><div class="score-card-value" style="color:var(--amber);opacity:.65">5</div></div>
+    <div class="score-card"><div class="score-card-label">ARCHIVOS OK</div><div class="score-card-value c-green">2</div></div>
+    <div class="score-card"><div class="score-card-label">AUDITADOS</div><div class="score-card-value c-cyan">13</div></div>
+  </div>
+
+  <!-- Priority table -->
+  <div class="section">
+    <div class="section-title">Acciones prioritarias</div>
+    <table class="data-table">
+      <thead><tr><th>#</th><th>PRI</th><th>Archivo</th><th>Issue</th><th>Fix recomendado</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1</td><td><span class="pri c-err">CRÍTICO</span></td>
+          <td><code>system/sdk/foundation/tokens.css</code></td>
+          <td>Solo 3 tokens (<code>--bg</code>, <code>--text</code>, <code>--cyan</code>). Faltan ~80 tokens del DS.</td>
+          <td>Reemplazar con el set completo dark + light del DS v1.2.5</td>
+        </tr>
+        <tr>
+          <td>2</td><td><span class="pri c-err">CRÍTICO</span></td>
+          <td><code>system/sdk/index.css</code></td>
+          <td>Importa <code>../styles/</code> — carpeta que no existe. Rutas rotas.</td>
+          <td>Cambiar a <code>./foundation/tokens.css</code> / <code>base.css</code> / <code>themes.css</code></td>
+        </tr>
+        <tr>
+          <td>3</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>system/sdk/foundation/themes.css</code></td>
+          <td>Solo binary dark/light con 2 variables. Sin sistema 3 pasos ni <code>--text-cyan-muted</code>.</td>
+          <td>Adoptar patrón <code>resolveTheme()</code> + <code>setTheme()</code>; agregar todos los overrides light</td>
+        </tr>
+        <tr>
+          <td>4</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>system/sdk/foundation/base.css</code></td>
+          <td><code>border: 1px solid #333</code> hardcodeado en tabla. Viola borderless y usa hex.</td>
+          <td>Reemplazar con <code>box-shadow: var(--shadow-sm)</code>; si se necesita borde usar <code>var(--line)</code></td>
+        </tr>
+        <tr>
+          <td>5</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>marketplace/index.html</code></td>
+          <td><code>toggleTheme()</code> binario + <code>data-theme="dark"</code> hardcodeado.</td>
+          <td>Migrar a toggle 3 pasos; cambiar a <code>data-theme="system"</code></td>
+        </tr>
+        <tr>
+          <td>6</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>marketplace/index.html</code></td>
+          <td>Footer no incluye versión DS (<code>· Marketplace v1.0</code> solamente).</td>
+          <td>Agregar <code>· DS v1.2.5</code> al footer copy</td>
+        </tr>
+        <tr>
+          <td>7</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>examples/dashboards/index.html</code></td>
+          <td>Grid 52×52px sigue activa en <code>background-size</code> del body.</td>
+          <td>Reemplazar por solo 2 radiales cyan (sin grilla)</td>
+        </tr>
+        <tr>
+          <td>8</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>examples/ecosan/ecosan_informe.html</code></td>
+          <td>Footer dice <code>Design System v1.2.4</code>.</td>
+          <td>Actualizar a <code>v1.2.5</code></td>
+        </tr>
+        <tr>
+          <td>9</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>examples/leads/YiQi_MelCity_ERP_v1.8.html</code></td>
+          <td>Footer <code>DS v1.2.4</code> + 43 instancias <code>border: 1px solid</code> con 0 <code>border: none</code>.</td>
+          <td>Actualizar versión; auditar y aplicar borderless en cards/badges</td>
+        </tr>
+        <tr>
+          <td>10</td><td><span class="pri c-warn">ALTA</span></td>
+          <td><code>content/prompts/execution.md</code></td>
+          <td>Prompt de IA referencia DS v1.2.4 en 4 lugares. Nuevas pantallas generadas usarán reglas viejas.</td>
+          <td>Actualizar a v1.2.5; incorporar reglas borderless, toggle 3 pasos y <code>--text-cyan-muted</code></td>
+        </tr>
+        <tr>
+          <td>11</td><td><span class="pri c-muted">MEDIA</span></td>
+          <td><code>index.html</code> (landing principal)</td>
+          <td>Grid lines en background (<code>background-size: 32px 32px</code>).</td>
+          <td>Remover grilla; solo radiales cyan</td>
+        </tr>
+        <tr>
+          <td>12</td><td><span class="pri c-muted">MEDIA</span></td>
+          <td><code>index.html</code> (landing principal)</td>
+          <td>44 instancias <code>border: 1px solid</code>. 153 hex hardcodeados.</td>
+          <td>Auditar sección por sección; reemplazar borders display con <code>box-shadow</code></td>
+        </tr>
+        <tr>
+          <td>13</td><td><span class="pri c-muted">MEDIA</span></td>
+          <td><code>examples/landing/YiQi_Landing_DS.html</code></td>
+          <td>50 instancias Phosphor <code>&lt;i class="ph"&gt;</code>. DS v1.2.5 prefiere SVG inline en standalone.</td>
+          <td>Migrar íconos visibles a SVG inline; los de apoyo pueden quedar con CDN si hay fallback</td>
+        </tr>
+        <tr>
+          <td>14</td><td><span class="pri c-muted">MEDIA</span></td>
+          <td><code>marketplace/index.html</code></td>
+          <td>71 hex hardcodeados. Sin <code>--text-cyan-muted</code>.</td>
+          <td>Tokenizar hex; agregar y usar <code>--text-cyan-muted</code> donde hay acento cyan</td>
+        </tr>
+        <tr>
+          <td>15</td><td><span class="pri c-muted2">BAJA</span></td>
+          <td><code>examples/design-system/index.html</code></td>
+          <td>2 celdas de tabla dicen <code>v1.2.4</code> (líneas 180 y 186).</td>
+          <td>Verificar si son históricas intencionales o actualizar a <code>v1.2.5</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- File-by-file -->
+  <div class="section">
+    <div class="section-title">Detalle por archivo</div>
+    <p class="section-sub" style="margin-bottom:20px">Hacé clic en cada tarjeta para ver el detalle completo.</p>
+
+    <!-- SDK -->
+    <div class="file-card open">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">system/sdk/ — tokens, themes, base, index</div>
+          <div class="file-sub">Fundación CSS del SDK · 4 archivos</div>
+        </div>
+        <span class="file-score-badge badge-critical">CRÍTICO</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-red">tokens incompletos</span>
+          <span class="tag tag-red">rutas CSS rotas</span>
+          <span class="tag tag-red">border hardcodeado</span>
+          <span class="tag tag-amber">themes binario</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span><code>foundation/tokens.css</code> tiene solo 3 tokens. Todo el sistema de colores, elevaciones, sombras, radius, tipografía y tokens semánticos del DS v1.2.5 está ausente.</span></div>
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span><code>index.css</code> importa desde <code>../styles/</code> que no existe. El SDK no puede cargarse. Rutas correctas: <code>./foundation/tokens.css</code>, <code>./foundation/base.css</code>, <code>./foundation/themes.css</code>.</span></div>
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span><code>foundation/themes.css</code> solo tiene 2 vars para light mode. Falta el sistema 3 pasos, todos los overrides light y el token <code>--text-cyan-muted</code>.</span></div>
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span><code>foundation/base.css</code>: <code>border: 1px solid #333</code> en <code>.yiqi-table td, th</code> — hex hardcodeado y viola filosofía borderless.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span><code>components/form.js</code>: <code>&lt;input&gt;</code> sin clase DS. Debe usar clase <code>input</code>; button debe usar <code>btn btn-primary</code>.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span><code>elements/card.js</code>: Web component vacío. Debe aplicar <code>background: var(--bg-elev)</code>, <code>border-radius: var(--radius)</code>, <code>box-shadow: var(--shadow-sm)</code> — sin border.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- marketplace -->
+    <div class="file-card open">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">marketplace/index.html</div>
+          <div class="file-sub">913 líneas · Marketplace de apps certificadas</div>
+        </div>
+        <span class="file-score-badge badge-high">ALTA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-red">toggle binario</span>
+          <span class="tag tag-red">data-theme="dark" fijo</span>
+          <span class="tag tag-amber">sin versión DS</span>
+          <span class="tag tag-amber">71 hex</span>
+          <span class="tag tag-amber">sin text-cyan-muted</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span>Usa <code>toggleTheme()</code> binario (dark ↔ light). Reemplazar con <code>setTheme(v)</code> y controles Dark / Sistema / Claro.</span></div>
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span><code>data-theme="dark"</code> hardcodeado en <code>&lt;html&gt;</code>. Debe arrancar en <code>"system"</code> para respetar la preferencia del sistema operativo del usuario.</span></div>
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span>Footer: <code>© 2026 YiQi S.A. · Marketplace v1.0</code> — falta <code>· DS v1.2.5</code>.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>71 hex hardcodeados. Varios pueden reemplazarse por tokens semánticos del DS.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Token <code>--text-cyan-muted</code> no declarado. Labels con acento cyan deberían usarlo en lugar de <code>var(--cyan)</code> directo.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- dashboards -->
+    <div class="file-card open">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">examples/dashboards/index.html</div>
+          <div class="file-sub">2266 líneas · Analytics Pro v3</div>
+        </div>
+        <span class="file-score-badge badge-high">ALTA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-red">grid 52px activa</span>
+          <span class="tag tag-amber">sin toggle propio</span>
+          <span class="tag tag-green">DS v1.2.5 ✓</span>
+          <span class="tag tag-green">text-cyan-muted ✓</span>
+          <span class="tag tag-green">SVG inline ✓</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span>Background del body: <code>background-size: auto, auto, 52px 52px, 52px 52px, auto</code> — grilla aún activa. DS v1.2.5 la elimina; solo 2 radiales cyan.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Sin botón de toggle de tema propio. Recibe el tema vía <code>window.postMessage</code> — correcto para iframe embebido, pero abriendo standalone el usuario no puede cambiar tema.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>44 instancias <code>border: 1px solid</code>. Muchas son correctas (controles interactivos), pero cards y badges deberían revisarse.</span></div>
+          <div class="issue-row"><span class="issue-icon c-ok">✓</span><span>Token <code>--text-cyan-muted</code> presente. DS v1.2.5 en footer. Logo SVG inline. <code>data-theme="system"</code> default.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ecosan -->
+    <div class="file-card">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">examples/ecosan/ecosan_informe.html</div>
+          <div class="file-sub">811 líneas · Informe cliente Ecosan</div>
+        </div>
+        <span class="file-score-badge badge-high">ALTA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-red">DS v1.2.4 en footer</span>
+          <span class="tag tag-amber">29 borders</span>
+          <span class="tag tag-amber">sin toggle</span>
+          <span class="tag tag-amber">sin text-cyan-muted</span>
+          <span class="tag tag-green">SVG inline ✓</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span>Footer: <code>Design System v1.2.4</code>. Actualizar a <code>v1.2.5</code>.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>29 instancias <code>border: 1px solid</code>. En tablas es aceptable, pero cards y contenedores de datos deben ser borderless.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Sin toggle de tema. Los informes son documentos estáticos, pero agregar el toggle 3 pasos mejora la UX para clientes que prefieren modo claro.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Token <code>--text-cyan-muted</code> no declarado ni usado.</span></div>
+          <div class="issue-row"><span class="issue-icon c-ok">✓</span><span>Logo SVG inline. Sin grid de fondo. Sin Phosphor CDN.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- leads -->
+    <div class="file-card">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">examples/leads/YiQi_MelCity_ERP_v1.8.html</div>
+          <div class="file-sub">1296 líneas · ERP demo MelCity v1.8</div>
+        </div>
+        <span class="file-score-badge badge-high">ALTA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-red">DS v1.2.4 en footer</span>
+          <span class="tag tag-red">43 borders / 0 border:none</span>
+          <span class="tag tag-amber">71 hex hardcoded</span>
+          <span class="tag tag-amber">sin toggle</span>
+          <span class="tag tag-amber">sin text-cyan-muted</span>
+          <span class="tag tag-green">SVG inline ✓</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span>Footer: <code>DS v1.2.4</code>. Actualizar a <code>v1.2.5</code>.</span></div>
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span>43 instancias <code>border: 1px solid</code> con 0 instancias de <code>border: none</code> — la filosofía borderless no fue aplicada en absoluto. Cards, KPIs y badges muy probablemente usan border de display.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>71 hex hardcodeados — el valor más alto del repo junto a marketplace. Migrar a tokens semánticos del DS.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Sin toggle de tema ni <code>--text-cyan-muted</code>.</span></div>
+          <div class="issue-row"><span class="issue-icon c-ok">✓</span><span>Logo SVG inline (3 variantes). Sin Phosphor CDN. Sin grid de fondo.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- landing -->
+    <div class="file-card">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">examples/landing/YiQi_Landing_DS.html</div>
+          <div class="file-sub">1911 líneas · Landing page</div>
+        </div>
+        <span class="file-score-badge badge-medium">MEDIA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-green">3-step toggle ✓</span>
+          <span class="tag tag-green">DS v1.2.5 ✓</span>
+          <span class="tag tag-green">SVG inline ✓</span>
+          <span class="tag tag-amber">50× Phosphor &lt;i&gt;</span>
+          <span class="tag tag-amber">sin text-cyan-muted</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>50 instancias <code>&lt;i class="ph ph-*"&gt;</code>. DS v1.2.5 especifica SVG stroke inline para standalone. El CDN puede fallar offline o en entornos restringidos.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Token <code>--text-cyan-muted</code> no declarado. Labels activos y subtítulos con acento cyan deberían usarlo.</span></div>
+          <div class="issue-row"><span class="issue-icon c-info">ℹ</span><span>Los <code>&lt;img src="LOGOS CLIENTES/..."&gt;</code> son logos de clientes de terceros — la regla de SVG inline aplica solo al logo YiQi, no a los de terceros.</span></div>
+          <div class="issue-row"><span class="issue-icon c-ok">✓</span><span>Toggle 3 pasos correcto con <code>resolveTheme</code> + <code>setTheme</code>. DS v1.2.5 en footer. <code>data-theme="system"</code> default. Sin grid de fondo. SVG logo inline.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- main index.html -->
+    <div class="file-card">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">index.html</div>
+          <div class="file-sub">4292 líneas · Landing principal YiQi ERP</div>
+        </div>
+        <span class="file-score-badge badge-medium">MEDIA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-green">3-step toggle ✓</span>
+          <span class="tag tag-green">DS v1.2.5 ✓</span>
+          <span class="tag tag-red">grid activa</span>
+          <span class="tag tag-amber">44 borders</span>
+          <span class="tag tag-amber">153 hex hardcoded</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Background incluye grilla de puntos: <code>background-size: 32px 32px</code> (desktop) y <code>38px 38px</code> (mobile). DS v1.2.5 la elimina — solo 2 radiales cyan.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>44 instancias <code>border: 1px solid</code>. Algunas son correctas (inputs, nav), pero secciones de contenido deben revisarse.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>153 hex hardcodeados — el número más alto del repo. Parte proviene de SVG paths (inevitable), pero muchos son colores de texto y fondo tokenizables.</span></div>
+          <div class="issue-row"><span class="issue-icon c-ok">✓</span><span>Toggle 3 pasos correcto. DS v1.2.5 en footer. <code>data-theme="system"</code> default. Logo SVG inline.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- design-system/index.html -->
+    <div class="file-card">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">examples/design-system/ — index.html + styles.css + ds-doc.css</div>
+          <div class="file-sub">HTML de referencia del DS · 3 archivos separados</div>
+        </div>
+        <span class="file-score-badge badge-ok">OK</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-green">3-step toggle ✓</span>
+          <span class="tag tag-green">DS v1.2.5 ✓</span>
+          <span class="tag tag-green">borderless ✓</span>
+          <span class="tag tag-green">SVG inline ✓</span>
+          <span class="tag tag-amber">2 celdas v1.2.4</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Líneas 180 y 186: celdas de tabla muestran <code>v1.2.4</code>. Verificar si son entradas históricas intencionales en la tabla de changelog o deben actualizarse.</span></div>
+          <div class="issue-row"><span class="issue-icon c-info">ℹ</span><span>Usa Phosphor CDN con <code>&lt;i class="ph"&gt;</code> — aceptable en el HTML de referencia del DS donde se demuestra la integración. En producción standalone, preferir SVG inline.</span></div>
+          <div class="issue-row"><span class="issue-icon c-ok">✓</span><span>Toggle 3 pasos correcto. Filosofía borderless aplicada. Tokens <code>--text-cyan-muted</code>, <code>--display</code>, <code>--warm</code> presentes. Solo radiales en fondo. Footer v1.2.5. Estructura HTML + CSS separados.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- informes -->
+    <div class="file-card">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">informes/2026-04-22.html + informes-index.html</div>
+          <div class="file-sub">Work log e índice de informes internos</div>
+        </div>
+        <span class="file-score-badge badge-muted">BAJA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag">sin toggle</span>
+          <span class="tag">sin DS attribution</span>
+          <span class="tag tag-green">sin grid ✓</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-info">ℹ</span><span>Documentos internos de trabajo. Sin toggle de tema ni atribución DS — aceptable para su propósito. Sin grilla de fondo.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span><code>informes-index.html</code> tiene 2 instancias <code>border: 1px solid</code> — revisar si son en display o controles interactivos.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- execution.md -->
+    <div class="file-card">
+      <div class="file-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <div class="file-path">content/prompts/execution.md</div>
+          <div class="file-sub">RTF — Master Recipe + Prompt para IA generadora de pantallas</div>
+        </div>
+        <span class="file-score-badge badge-high">ALTA</span>
+      </div>
+      <div class="file-body">
+        <div class="tag-row">
+          <span class="tag tag-red">referencia DS v1.2.4</span>
+          <span class="tag tag-amber">reglas desactualizadas</span>
+        </div>
+        <div class="issue-list">
+          <div class="issue-row"><span class="issue-icon c-err">✗</span><span>El RTF menciona <code>YiQi Design System v1.2.4</code> en 4 lugares. Las reglas de borderless, toggle 3 pasos y <code>--text-cyan-muted</code> no están en el prompt.</span></div>
+          <div class="issue-row"><span class="issue-icon c-warn">△</span><span>Este es el prompt que se pasa a la IA para generar nuevas pantallas. Sin actualización, todos los futuros outputs seguirán las reglas viejas de v1.2.4.</span></div>
+          <div class="issue-row"><span class="issue-icon c-info">ℹ</span><span>La receta canónica actualizada está en <code>content/design-system/YiQi_DS_v1_2_5_Recipe.md</code> — considerar sincronizar o referenciar desde execution.md.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section detalle -->
+
+  <div class="divider"></div>
+
+  <!-- SDK detail table -->
+  <div class="section">
+    <div class="section-title">SDK — Diagnóstico detallado</div>
+    <p class="section-sub">El SDK (<code>system/sdk/</code>) está severamente desactualizado. Es el issue de mayor impacto porque afecta a cualquier pantalla que lo importe. Las rutas de <code>index.css</code> están rotas — el SDK no puede cargarse en absoluto.</p>
+    <table class="data-table">
+      <thead><tr><th>Archivo</th><th>Estado</th><th>Fix recomendado</th></tr></thead>
+      <tbody>
+        <tr><td><code>foundation/tokens.css</code></td><td class="c-err">3 tokens solamente</td><td>Copiar set completo de tokens del DS v1.2.5 (dark + light, todos los semantic vars)</td></tr>
+        <tr><td><code>foundation/themes.css</code></td><td class="c-err">Solo 2 reglas light</td><td>Agregar todos los overrides light + <code>--text-cyan-muted</code> light variant</td></tr>
+        <tr><td><code>foundation/base.css</code></td><td class="c-warn">border hardcodeado</td><td>Reemplazar <code>border: 1px solid #333</code> con <code>box-shadow: var(--shadow-sm)</code>; si se necesita borde: <code>var(--line)</code></td></tr>
+        <tr><td><code>index.css</code></td><td class="c-err">Rutas rotas</td><td>Cambiar <code>../styles/</code> → <code>./foundation/</code> en los 3 imports</td></tr>
+        <tr><td><code>components/form.js</code></td><td class="c-warn">Sin clases DS</td><td>Input → clase <code>input</code>; label → <code>form-label</code>; button → <code>btn btn-primary</code></td></tr>
+        <tr><td><code>elements/card.js</code></td><td class="c-warn">Web component vacío</td><td>Aplicar: <code>background: var(--bg-elev)</code>, <code>border-radius: var(--radius)</code>, <code>box-shadow: var(--shadow-sm)</code> — sin border</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Skills section -->
+  <div class="section">
+    <div class="section-title">Skills — Estado</div>
+    <p class="section-sub">Los archivos <code>.skill</code> en <code>system/skills/</code> son ZIPs compilados. No se pueden auditar directamente, pero se registra su estado.</p>
+    <table class="data-table">
+      <thead><tr><th>Archivo</th><th>Observación</th></tr></thead>
+      <tbody>
+        <tr><td><code>yiqi-ds-v1_2_5.skill</code></td><td class="c-ok">Existe — skill actualizado a v1.2.5 ✓</td></tr>
+        <tr><td><code>yiqi-ds.skill</code></td><td class="c-warn">Versión anterior — verificar si sigue siendo el que se instala por defecto</td></tr>
+        <tr><td><code>yiqi-charts.skill</code></td><td class="c-muted">Binario — verificar que referencia tokens del DS v1.2.5</td></tr>
+        <tr><td><code>yiqi-dashboard.skill</code></td><td class="c-muted">Binario — verificar borderless y toggle 3 pasos</td></tr>
+        <tr><td><code>yiqi-3d.skill</code></td><td class="c-muted">Binario — verificar tokens de color</td></tr>
+        <tr><td><code>iAready.skill</code></td><td class="c-muted">Binario — no auditado</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Conformity matrix -->
+  <div class="section">
+    <div class="section-title">Matriz de conformidad DS v1.2.5</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Criterio</th>
+          <th>index.html</th>
+          <th>dashboards</th>
+          <th>marketplace</th>
+          <th>landing</th>
+          <th>leads</th>
+          <th>ecosan</th>
+          <th>SDK</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Toggle 3 pasos</td>
+          <td class="c-ok">✓</td>
+          <td class="c-warn">△ postMsg</td>
+          <td class="c-err">✗ binario</td>
+          <td class="c-ok">✓</td>
+          <td class="c-muted">—</td>
+          <td class="c-muted">—</td>
+          <td class="c-err">✗</td>
+        </tr>
+        <tr>
+          <td>data-theme="system" default</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-err">✗ "dark"</td>
+          <td class="c-ok">✓</td>
+          <td class="c-muted">—</td>
+          <td class="c-muted">—</td>
+          <td class="c-err">✗</td>
+        </tr>
+        <tr>
+          <td>Sin grilla de fondo</td>
+          <td class="c-err">✗ 32px</td>
+          <td class="c-err">✗ 52px</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-muted">—</td>
+        </tr>
+        <tr>
+          <td>Filosofía borderless</td>
+          <td class="c-warn">△ parcial</td>
+          <td class="c-warn">△ parcial</td>
+          <td class="c-warn">△ parcial</td>
+          <td class="c-warn">△ parcial</td>
+          <td class="c-err">✗ no aplicado</td>
+          <td class="c-warn">△ 29 borders</td>
+          <td class="c-err">✗</td>
+        </tr>
+        <tr>
+          <td>Token --text-cyan-muted</td>
+          <td class="c-muted">—</td>
+          <td class="c-ok">✓</td>
+          <td class="c-err">✗</td>
+          <td class="c-err">✗</td>
+          <td class="c-err">✗</td>
+          <td class="c-err">✗</td>
+          <td class="c-err">✗</td>
+        </tr>
+        <tr>
+          <td>SVG inline logo YiQi</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-warn">△ texto</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-muted">—</td>
+        </tr>
+        <tr>
+          <td>Versión DS en footer</td>
+          <td class="c-ok">✓ v1.2.5</td>
+          <td class="c-ok">✓ v1.2.5</td>
+          <td class="c-err">✗ sin DS</td>
+          <td class="c-ok">✓ v1.2.5</td>
+          <td class="c-err">✗ v1.2.4</td>
+          <td class="c-err">✗ v1.2.4</td>
+          <td class="c-muted">—</td>
+        </tr>
+        <tr>
+          <td>Sin Phosphor &lt;i&gt; CDN</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-err">✗ 50 íconos</td>
+          <td class="c-ok">✓</td>
+          <td class="c-ok">✓</td>
+          <td class="c-muted">—</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+</main>
+
+<footer style="text-align:center;padding:48px 0 32px;color:var(--muted-2);font:400 12px var(--mono)">
+  © 2026 YiQi S.A. · Auditoría DS v1.2.5 · 30/04/2026
+</footer>
+
+<script>
+/* ── Theme system DS v1.2.5 ── */
+function resolveTheme() {
+  const s = localStorage.getItem('yiqi-theme') || 'system';
+  return s === 'system'
+    ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+    : s;
+}
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  const s = localStorage.getItem('yiqi-theme') || 'system';
+  document.querySelectorAll('.theme-opt').forEach((b, i) =>
+    b.classList.toggle('active', ['dark','system','light'][i] === s));
+}
+function setTheme(v) {
+  localStorage.setItem('yiqi-theme', v);
+  applyTheme(v === 'system' ? resolveTheme() : v);
+  document.querySelectorAll('.theme-opt').forEach((b, i) =>
+    b.classList.toggle('active', ['dark','system','light'][i] === v));
+}
+window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+  if ((localStorage.getItem('yiqi-theme') || 'system') === 'system') applyTheme(resolveTheme());
+});
+applyTheme(resolveTheme());
+</script>
+</body>
+</html>

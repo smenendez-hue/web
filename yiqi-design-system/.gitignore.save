@@ -1,0 +1,9 @@
+clear
+# ignorar markdown globa
+*.md
+Prompt de ejecución.txt
+*.txt
+.DS_Store
+.DS_Store
+.DS_Store
+.DS_Store

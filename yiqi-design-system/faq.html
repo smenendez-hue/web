@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preguntas frecuentes — YiQi ERP</title>
+  <meta name="description" content="Encuentra respuestas a las preguntas más frecuentes sobre YiQi ERP, el sistema de gestión empresarial completo en la nube.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./site.css">
+  <script src="./components/site-header.js" defer></script>
+  <script src="./components/site-footer.js" defer></script>
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  a { text-decoration: none; color: inherit; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --bg:          #0a0a0b;
+    --bg-elev:     #0f1013;
+    --bg-elev-2:   #14161b;
+    --bg-soft:     #181b21;
+    --line:        rgba(255,255,255,.08);
+    --line-strong: rgba(255,255,255,.14);
+    --text:        #f3f5f7;
+    --muted:       #908e8e;
+    --muted-2:     #625f5f;
+    --cyan:        #00ccff;
+    --cyan-soft:   rgba(0,204,255,.10);
+    --cyan-soft-2: rgba(0,204,255,.16);
+    --text-cyan-muted: rgba(0,195,240,.62);
+    --green:       #15d49c;
+    --green-soft:  rgba(21,212,156,.10);
+    --amber:       #ffb020;
+    --red:         #ff637d;
+    --red-soft:    rgba(255,99,125,.10);
+    --fs-placeholder-title: 30px;
+    --fs-section-hero:  24px;
+    --fs-panel-title:   14px;
+    --fs-module-title:  13px;
+    --fs-body:          13px;
+    --fs-meta:          12px;
+    --fs-caption:       11px;
+    --display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:    'IBM Plex Mono', ui-monospace, monospace;
+    --topbar-h:    54px;
+    --radius-xs:   6px;
+    --radius-sm:   10px;
+    --radius:      14px;
+    --radius-pill: 999px;
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.35), 0 1px 2px rgba(0,0,0,.25);
+    --shadow-md:   0 4px 16px rgba(0,0,0,.45);
+    --tr:          180ms ease;
+  }
+  html[data-theme="light"] {
+    --bg:          #eeece7;
+    --bg-elev:     #f6f4ef;
+    --bg-elev-2:   #ffffff;
+    --bg-soft:     #ece9e2;
+    --line:        rgba(0,0,0,.08);
+    --line-strong: rgba(0,0,0,.13);
+    --text:        #17191c;
+    --muted:       #5e5a57;
+    --muted-2:     #8a8580;
+    --cyan:        #009fc7;
+    --cyan-soft:   rgba(0,159,199,.10);
+    --cyan-soft-2: rgba(0,159,199,.14);
+    --text-cyan-muted: rgba(0,140,175,.48);
+    --green:       #0c9b6d;
+    --green-soft:  rgba(12,155,109,.10);
+    --amber:       #c47f00;
+    --red:         #d93048;
+    --red-soft:    rgba(217,48,72,.10);
+  }
+
+  body {
+    font-family: var(--sans);
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(ellipse at 80% 0%,   rgba(0,204,255,.07), transparent 38%),
+      radial-gradient(ellipse at 10% 40%,  rgba(0,204,255,.04), transparent 30%),
+      var(--bg);
+  }
+
+  /* ── Layout ─────────────────────────────── */
+  .page-wrap {
+    flex: 1;
+    max-width: 1120px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 24px 100px;
+  }
+
+  /* ── Hero ────────────────────────────────── */
+  .faq-hero {
+    text-align: left;
+    max-width: 1120px; margin: 0 auto;
+    padding: 72px 0 56px;
+  }
+  .faq-kicker {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px; border-radius: var(--radius-pill);
+    background: var(--cyan-soft); color: var(--cyan);
+    font: 700 10px var(--mono); letter-spacing: .10em;
+    text-transform: uppercase; margin-bottom: 20px; border: none;
+  }
+  .faq-title {
+    font: 800 clamp(32px,5vw,52px)/1.05 var(--display);
+    letter-spacing: -.03em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .faq-title em {
+    font-style: normal;
+    color: inherit;
+  }
+  .faq-sub {
+    font: 400 15px/1.65 var(--sans);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 0 32px;
+  }
+
+  /* ── Search ──────────────────────────────── */
+  /* search input: usa componente canónico de site.css (.search-wrap / .search-input / .search-clear) */
+  .search-wrap { max-width: 520px; margin: 0; }
+
+  /* ── No results ──────────────────────────── */
+  .faq-no-results {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+    font: 400 13px var(--sans);
+  }
+  .faq-no-results.show { display: block; }
+
+  /* ── Categories ──────────────────────────── */
+  .faq-sections { display: flex; flex-direction: column; gap: 40px; margin-top: 48px; }
+
+  .faq-section { display: flex; flex-direction: column; gap: 0; }
+  .faq-section.hidden { display: none; }
+
+  .faq-category {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .faq-category-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--cyan-soft); color: var(--cyan);
+    display: grid; place-items: center; flex-shrink: 0;
+  }
+  .faq-category-label {
+    font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase;
+    color: var(--cyan);
+  }
+
+  /* ── Accordion items ─────────────────────── */
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq-item:first-of-type { border-top: 1px solid var(--line); }
+  .faq-item.hidden { display: none; }
+
+  .faq-q {
+    width: 100%; background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 0;
+    text-align: left;
+    color: var(--text);
+    font: 500 14px/1.5 var(--sans);
+    transition: color var(--tr);
+  }
+  .faq-q:hover { color: var(--cyan); }
+  .faq-q[aria-expanded="true"] { color: var(--cyan); }
+
+  .faq-chev {
+    flex-shrink: 0; color: var(--muted-2);
+    transition: transform .22s ease, color var(--tr);
+  }
+  .faq-q[aria-expanded="true"] .faq-chev {
+    transform: rotate(180deg);
+    color: var(--cyan);
+  }
+
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height .3s ease, padding .3s ease;
+  }
+  .faq-a.open { max-height: 600px; }
+
+  .faq-a-inner {
+    padding: 0 0 20px;
+    font: 400 13px/1.75 var(--sans);
+    color: var(--muted);
+  }
+  .faq-a-inner strong { color: var(--text); font-weight: 600; }
+
+  /* ── CTA ─────────────────────────────────── */
+  .faq-cta {
+    margin-top: 64px;
+    padding: clamp(28px,4vw,44px) clamp(24px,4vw,48px);
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .faq-cta-title {
+    font: 700 18px/1.2 var(--sans);
+    color: var(--text);
+  }
+  .faq-cta-sub {
+    font: 400 13px/1.6 var(--sans);
+    color: var(--muted);
+    max-width: 380px;
+  }
+
+
+  /* ── Responsive ──────────────────────────── */
+  @media (max-width: 600px) {
+    .faq-q { font-size: 13px; padding: 16px 0; }
+  }
+
+  /* ── Botón DS-compliant ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: var(--radius);
+    border: 1px solid transparent; background: var(--bg-elev-2);
+    color: var(--text); font: 600 13px var(--sans);
+    text-decoration: none; cursor: pointer;
+    transition: all var(--tr);
+  }
+  .btn-primary {
+    background: var(--cyan-soft);
+    border-color: rgba(0,204,255,.28);
+    color: var(--cyan);
+  }
+  .btn-primary:hover { background: var(--cyan-soft-2); }
+  </style>
+</head>
+<body>
+
+<site-header base="./" current-page="faq"></site-header>
+
+<main class="page-wrap">
+
+  <!-- Hero -->
+  <div class="faq-hero">
+    <div class="faq-kicker">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Preguntas frecuentes
+    </div>
+    <h1 class="faq-title">Todo lo que necesitás<br>saber sobre <em>YiQi ERP</em></h1>
+    <p class="faq-sub">Encuentra respuestas a las preguntas más frecuentes. Si no encuentras lo que buscas, contáctanos.</p>
+
+    <div class="search-wrap">
+      <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input class="search-input" type="text" id="faqSearch" placeholder="Buscar pregunta…" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="faqClear" aria-label="Limpiar">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- No results -->
+  <div class="faq-no-results" id="faqNoResults">No se encontraron preguntas que coincidan con tu búsqueda.</div>
+
+  <!-- FAQ sections -->
+  <div class="faq-sections" id="faqSections">
+
+    <!-- Aspectos generales -->
+    <section class="faq-section" data-section>
+      <div class="faq-category">
+        <div class="faq-category-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        </div>
+        <span class="faq-category-label">Aspectos generales</span>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Necesito instalar algo en mi PC para utilizar YiQi ERP?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No. YiQi funciona en la nube, en servidores en Internet. Lo único que necesitás es un navegador — recomendamos Google Chrome, pero también funcioná con Safari, Firefox u otros. En el caso de YiQi POS, requiere instalación en la PC del local físico, y sincroniza automáticamente cuando hay conexión.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Puedo unificar la información de los distintos canales de venta?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. Puntos de venta físicos con YiQi POS, carritos propios (WooCommerce, Shopify, Magento, VTEX, Tienda Nube, Tornado) y marketplaces (Mercado Libre, Megatone, Frávega, Provincia Compras): todas tus ventas, publicaciones, precios y stock se sincronizan desde YiQi ERP.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Puedo importar o exportar la información de YiQi?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. Con el perfil adecuado, toda la información de YiQi ERP puede importarse o exportarse en planillas Excel.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Es Multimoneda?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí, es posible operar en varias monedas.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Es Multi-sucursal?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. Se pueden registrar operaciones de diferentes sucursales, franquicias y depósitos, incluyendo los canales de venta online.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Cuál es el límite de usuarios?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">YiQi supera todas las pruebas de estrés. <strong>No hay límite de usuarios.</strong></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Está todo integrado?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. YiQi entiende la importancia de integrar al ERP todas las aplicaciones con las que trabajes, gestionando todo desde un mismo lugar. Es posible integrarlo con e-commerce, WMS, servicios de última milla y otros.</div></div>
+      </div>
+    </section>
+
+    <!-- Accesibilidad -->
+    <section class="faq-section" data-section>
+      <div class="faq-category">
+        <div class="faq-category-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <span class="faq-category-label">Accesibilidad</span>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Puedo acceder a YiQi desde una tablet o un celular?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. YiQi ERP es responsive y se adapta al dispositivo. Usarlo en un celular puede resultar incómodo para cargar muchos datos, pero funciona perfecto como herramienta de consulta y toma de decisión gracias al dashboard configurable con smarties.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Puedo acceder a YiQi si se corta Internet?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Solo para facturar, YiQi provee la aplicación de escritorio offline <strong>YiQi POS</strong>, que te permite seguir facturando con impresora fiscal sin Internet. Al reconectarse, sincroniza automáticamente. YiQi está diseñado para ser muy liviano y consumir poco ancho de banda.</div></div>
+      </div>
+    </section>
+
+    <!-- Implementación -->
+    <section class="faq-section" data-section>
+      <div class="faq-category">
+        <div class="faq-category-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+        </div>
+        <span class="faq-category-label">Implementación</span>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Cómo se implementa YiQi en mi empresa?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">La implementación se realiza con un especialista de YiQi junto a los referentes que se indiquen. Durante el proceso explicamos cómo configurar y subir los datos necesarios (clientes, artículos, plan de cuentas, etc.) y capacitamos a los usuarios para empezar a trabajar.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Cuánto dura la implementación?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">La duración depende de la disponibilidad de los interlocutores, la cantidad de artículos y los módulos contratados.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Puedo instalar YiQi en servidores propios?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí, aunque no lo recomendamos. En cualquier momento podés solicitar la compra de la licencia para instalación en servidores propios.</div></div>
+      </div>
+    </section>
+
+    <!-- E-commerce y facturación -->
+    <section class="faq-section" data-section>
+      <div class="faq-category">
+        <div class="faq-category-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
+        <span class="faq-category-label">E-commerce y facturación</span>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Puedo emitir facturas electrónicas con YiQi?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. YiQi tiene una interfaz directa con AFIP para emitir facturas electrónicas. Al emitir una factura, el sistema se comunica con AFIP, envía los datos y genera el PDF con el número y fecha del CAE asignado. También podés imprimir comprobantes con Controladoras Fiscales en los puntos de venta.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Puedo integrar YiQi con mi e-commerce?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. YiQi se integra con Magento, VTEX, Tienda Nube, Mercado Libre, WooCommerce, Shopify y más. La comunicación entre tiendas virtuales y físicas es bidireccional: centraliza pedidos y stock, maneja múltiples listas de precios y publicaciones.</div></div>
+      </div>
+    </section>
+
+    <!-- Seguridad y acceso -->
+    <section class="faq-section" data-section>
+      <div class="faq-category">
+        <div class="faq-category-icon">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <span class="faq-category-label">Seguridad y acceso</span>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Mis datos están seguros?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Definitivamente. Usamos <strong>tecnología SSL</strong> — la información se transmite encriptada vía HTTPS. En el contrato asumimos la responsabilidad legal de la confidencialidad, y realizamos tareas diarias de backup, seguimiento y prevención. Un servicio en la nube proporciona mayor seguridad digital y física que servidores propios.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          ¿Pueden existir niveles de acceso para las distintas áreas?
+          <svg class="faq-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. Cada persona tiene un usuario único, y cada usuario puede tener uno o varios perfiles de acceso. Por ejemplo: un usuario puede ver solo Ventas, otro solo Compras, y otro ambas.</div></div>
+      </div>
+    </section>
+
+  </div><!-- /faq-sections -->
+
+  <!-- CTA -->
+  <div class="faq-cta">
+    <div>
+      <p class="faq-cta-title">¿No encuentras tu respuesta?</p>
+      <p class="faq-cta-sub">Nuestro equipo está listo para ayudarte con cualquier consulta.</p>
+    </div>
+    <a class="btn btn-primary" href="./contacto.html">
+      Contáctanos
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</main>
+
+<site-footer base="./"></site-footer>
+
+<script>
+  /* ── Accordion ──────────────────────────────────── */
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Close all
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      // Open clicked (toggle)
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.nextElementSibling.classList.add('open');
+      }
+    });
+  });
+
+  /* ── Live search ────────────────────────────────── */
+  const searchInput = document.getElementById('faqSearch');
+  const clearBtn    = document.getElementById('faqClear');
+  const noResults   = document.getElementById('faqNoResults');
+  const sections    = document.querySelectorAll('.faq-section[data-section]');
+
+  function filterFAQ(query) {
+    const q = query.trim().toLowerCase();
+    clearBtn.classList.toggle('visible', q.length > 0);
+    let anyVisible = false;
+
+    sections.forEach(section => {
+      const items = section.querySelectorAll('.faq-item');
+      let sectionVisible = false;
+
+      items.forEach(item => {
+        const text = item.querySelector('.faq-q').textContent.toLowerCase()
+                   + item.querySelector('.faq-a-inner').textContent.toLowerCase();
+        const match = !q || text.includes(q);
+        item.classList.toggle('hidden', !match);
+        if (match) sectionVisible = true;
+      });
+
+      section.classList.toggle('hidden', !sectionVisible);
+      if (sectionVisible) anyVisible = true;
+    });
+
+    noResults.classList.toggle('show', !anyVisible && q.length > 0);
+  }
+
+  searchInput.addEventListener('input', e => filterFAQ(e.target.value));
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    filterFAQ('');
+    searchInput.focus();
+  });
+</script>
+</body>
+</html>

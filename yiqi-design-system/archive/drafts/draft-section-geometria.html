@@ -1,0 +1,36 @@
+<!-- DRAFT — Sección Geometría del Sistema (math3d)
+     Removida del index.html mayo 2026
+     Para restaurar: pegar antes de la sección TESTIMONIALS -->
+
+<!-- ══════════════════════════════════════════
+     SECCIÓN MATEMÁTICA 3D
+══════════════════════════════════════════ -->
+<section class="math3d-section" id="formula">
+  <div class="math3d-inner">
+
+    <div class="math3d-copy">
+      <span class="math3d-kicker">// geometría del sistema</span>
+      <h2 class="math3d-title">Una ecuación.<br>Infinitas formas.</h2>
+      <div class="math3d-eq"><em>a</em> = x² + y² + z²</div>
+      <p class="math3d-desc">La misma ecuación genera formas completamente distintas según el valor de <em>a</em>. Como en YiQi: la misma base modular se adapta a cualquier operación.</p>
+
+      <div class="math3d-slider-wrap">
+        <div class="math3d-slider-label">
+          <span style="color:var(--muted-2)">a =</span>
+          <span id="math3d-val">0.0</span>
+        </div>
+        <input type="range" id="math3d-slider" min="-4" max="4" step="0.05" value="2">
+      </div>
+
+      <div class="math3d-state sphere" id="math3d-state">ESFERA</div>
+    </div>
+
+    <div class="math3d-canvas-wrap" id="math3d-wrap">
+      <canvas id="math3d-canvas"></canvas>
+      <div class="math3d-hint">Arrastrá para rotar · Deslizá el slider</div>
+    </div>
+
+  </div>
+</section>
+
+

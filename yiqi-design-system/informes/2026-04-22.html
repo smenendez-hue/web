@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Semanal — 22 Abr 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --border: #252525;
+    --accent: #c8f53e;
+    --accent2: #ff5f3f;
+    --muted: #555;
+    --text: #e8e8e8;
+    --dim: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    min-height: 100vh;
+    padding: 32px 24px 64px;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-left {}
+  .label-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #0e0e0e;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .header-date {
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .week-badge {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    color: var(--dim);
+    text-align: right;
+  }
+  .week-badge span {
+    display: block;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--border);
+    line-height: 1;
+  }
+
+  /* PROJECTS GRID */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 16px;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+    margin-bottom: 48px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.15s;
+  }
+  .project-card:hover { background: #1c1c1c; }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--bar-color, var(--border));
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    padding-right: 40px;
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--bar-color, var(--muted));
+    transition: width 0.4s ease;
+  }
+
+  .project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pct {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--bar-color, var(--dim));
+    letter-spacing: -0.02em;
+  }
+  .project-num {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* STATUS colors */
+  .s0  { --bar-color: #333; }
+  .s10 { --bar-color: #555; }
+  .s25 { --bar-color: var(--accent2); }
+  .s50 { --bar-color: var(--accent); }
+
+  /* ACTIVITIES */
+  .activities {
+    margin-bottom: 40px;
+  }
+
+  .activity-block {
+    margin-bottom: 2px;
+  }
+
+  .activity-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    border-left: 3px solid var(--border);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .activity-header:hover {
+    background: #1c1c1c;
+    border-left-color: var(--accent);
+  }
+  .activity-header.open {
+    border-left-color: var(--accent);
+    background: #191a16;
+  }
+
+  .act-tag {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    min-width: 120px;
+  }
+  .act-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    flex: 1;
+  }
+  .act-chevron {
+    color: var(--muted);
+    font-size: 10px;
+    transition: transform 0.2s;
+  }
+  .activity-header.open .act-chevron { transform: rotate(90deg); }
+
+  .activity-body {
+    display: none;
+    background: #111;
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+  }
+  .activity-body.open { display: block; }
+
+  .act-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--dim);
+  }
+  .act-row:last-child { border-bottom: none; }
+  .act-row a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .act-row a:hover { opacity: 0.75; }
+  .act-dot {
+    color: var(--accent);
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .act-text { color: var(--text); }
+
+  /* BACKLOG */
+  .backlog {
+    background: var(--surface);
+    border-left: 3px solid #333;
+    padding: 16px 20px;
+  }
+  .backlog-title {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+  .backlog-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 12px;
+    color: #666;
+    border-bottom: 1px solid var(--border);
+  }
+  .backlog-item:last-child { border-bottom: none; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 16px 48px; }
+    .header { flex-direction: column; gap: 16px; }
+    .week-badge { text-align: left; }
+    .week-badge span { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="label-tag">Informe Semanal</div>
+    <h1>Estado<br>de Proyectos</h1>
+    <div class="header-date">Miércoles 22 de abril de 2026</div>
+  </div>
+  <div class="week-badge">
+    Semana<span>17</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section-label">Proyectos y avance</div>
+<div class="projects-grid">
+
+  <div class="project-card s10">
+    <div class="project-name">Capacitaciones</div>
+    <div class="progress-track"><div class="progress-fill" style="width:10%"></div></div>
+    <div class="project-meta"><span class="pct">10%</span><span class="project-num">01</span></div>
+  </div>
+
+  <div class="project-card s10">
+    <div class="project-name">Marketplace</div>
+    <div class="progress-track"><div class="progress-fill" style="width:10%"></div></div>
+    <div class="project-meta"><span class="pct">10%</span><span class="project-num">02</span></div>
+  </div>
+
+  <div class="project-card s10">
+    <div class="project-name">Producto</div>
+    <div class="progress-track"><div class="progress-fill" style="width:10%"></div></div>
+    <div class="project-meta"><span class="pct">10%</span><span class="project-num">03</span></div>
+  </div>
+
+  <div class="project-card s10">
+    <div class="project-name">Campaña iAready Analytics Pro</div>
+    <div class="progress-track"><div class="progress-fill" style="width:10%"></div></div>
+    <div class="project-meta"><span class="pct">10%</span><span class="project-num">04</span></div>
+  </div>
+
+  <div class="project-card s25">
+    <div class="project-name">Web</div>
+    <div class="progress-track"><div class="progress-fill" style="width:25%"></div></div>
+    <div class="project-meta"><span class="pct">25%</span><span class="project-num">05</span></div>
+  </div>
+
+  <div class="project-card s10">
+    <div class="project-name">LinkedIn Ads</div>
+    <div class="progress-track"><div class="progress-fill" style="width:10%"></div></div>
+    <div class="project-meta"><span class="pct">10%</span><span class="project-num">06</span></div>
+  </div>
+
+  <div class="project-card s25">
+    <div class="project-name">Email Marketing</div>
+    <div class="progress-track"><div class="progress-fill" style="width:25%"></div></div>
+    <div class="project-meta"><span class="pct">25%</span><span class="project-num">07</span></div>
+  </div>
+
+  <div class="project-card s50">
+    <div class="project-name">Cotización Comercial</div>
+    <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+    <div class="project-meta"><span class="pct">50%</span><span class="project-num">08</span></div>
+  </div>
+
+  <div class="project-card s0">
+    <div class="project-name">Web Blog</div>
+    <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+    <div class="project-meta"><span class="pct">0%</span><span class="project-num">09</span></div>
+  </div>
+
+  <div class="project-card s0">
+    <div class="project-name">Ayuda ERP</div>
+    <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+    <div class="project-meta"><span class="pct">0%</span><span class="project-num">10</span></div>
+  </div>
+
+  <div class="project-card s0">
+    <div class="project-name">Partners de TiendaNube</div>
+    <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+    <div class="project-meta"><span class="pct">0%</span><span class="project-num">11</span></div>
+  </div>
+
+</div>
+
+<!-- ACTIVITIES -->
+<div class="section-label">Actividades de la semana</div>
+<div class="activities">
+
+  <div class="activity-block">
+    <div class="activity-header open" onclick="toggle(this)">
+      <span class="act-tag">Presencia</span>
+      <span class="act-title">TiendaNube</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body open">
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Gestión de presencia en plataforma TiendaNube</span></div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">Capacitaciones</span>
+      <span class="act-title">Presentación Google Slides</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row">
+        <span class="act-dot">→</span>
+        <a href="https://docs.google.com/presentation/d/1hkPfdkqqRO5G_TRlY7qRUN1fbDQ9BYa5QPijsGFnnxI/edit?slide=id.g3d80e5b64d4_2_2#slide=id.g3d80e5b64d4_2_2" target="_blank">Ver presentación →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">Campaña</span>
+      <span class="act-title">iAready Analytics Pro</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Ver contexto: #CONTEXTO-Campaña-iAready.md</span></div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">Web</span>
+      <span class="act-title">Landing segmentada</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row">
+        <span class="act-dot">→</span>
+        <a href="https://smenendez-hue.github.io/yiqi-design-system/" target="_blank">YiQi Design System →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">Email Marketing</span>
+      <span class="act-title">Landings YiQi ERP</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row">
+        <span class="act-dot">→</span>
+        <span class="act-text">TEYT Envases — </span>
+        <a href="https://teyt.com.ar/" target="_blank">teyt.com.ar</a>
+        <span class="act-text" style="margin-left:4px">/ Sabrina Getino</span>
+      </div>
+      <div class="act-row">
+        <span class="act-dot">→</span>
+        <span class="act-text">Nak Stuff SRL / Axel Kronik</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">General</span>
+      <span class="act-title">Feria del Libro</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Analizar con JP</span></div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">Marketplace</span>
+      <span class="act-title">Design System</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row">
+        <span class="act-dot">→</span>
+        <a href="https://smenendez-hue.github.io/yiqi-design-system/marketplace/" target="_blank">Marketplace examples →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">Producto</span>
+      <span class="act-title">Dashboards & módulos</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row">
+        <span class="act-dot">→</span>
+        <a href="https://smenendez-hue.github.io/yiqi-design-system/examples/dashboards/" target="_blank">Dashboards examples →</a>
+      </div>
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Ayuda ERP</span></div>
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Chat</span></div>
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Panel gerencial — YiQi Analytics Pro</span></div>
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Marketplace</span></div>
+    </div>
+  </div>
+
+  <div class="activity-block">
+    <div class="activity-header" onclick="toggle(this)">
+      <span class="act-tag">Meta Ads</span>
+      <span class="act-title">Definir creatividades</span>
+      <span class="act-chevron">▶</span>
+    </div>
+    <div class="activity-body">
+      <div class="act-row"><span class="act-dot">→</span><span class="act-text">Definición de piezas y creatividades para Meta Ads</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BACKLOG -->
+<div class="section-label">Backlog recurrentes</div>
+<div class="backlog">
+  <div class="backlog-item"><span class="act-dot" style="color:#555">·</span><span>Revisión general de Leads</span></div>
+  <div class="backlog-item"><span class="act-dot" style="color:#555">·</span><span>Revisión de ONs</span></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span>YiQi — Informe interno</span>
+  <span>22.04.2026 · Semana 17</span>
+</div>
+
+<script>
+  function toggle(header) {
+    header.classList.toggle('open');
+    const body = header.nextElementSibling;
+    body.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>

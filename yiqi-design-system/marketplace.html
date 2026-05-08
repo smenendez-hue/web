@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html data-theme="system" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YiQi Marketplace — Apps certificadas para tu ERP</title>
+  <link rel="stylesheet" href="./site.css">
+  <script src="./components/site-header.js" defer></script>
+  <script src="./components/site-footer.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+  /* ═══ TOKENS — Dark ═══ */
+  :root {
+    --bg:          #0a0a0b;
+    --bg-elev:     #0f1013;
+    --bg-elev-2:   #14161b;
+    --bg-soft:     #181b21;
+    --line:        rgba(255,255,255,.08);
+    --line-strong: rgba(255,255,255,.14);
+    --text:        #f3f5f7;
+    --muted:       #908e8e;
+    --muted-2:     #625f5f;
+    --cyan:        #00ccff;
+    --cyan-soft:   rgba(0,204,255,.10);
+    --cyan-soft-2: rgba(0,204,255,.16);
+    --green:       #15d49c;
+    --amber:       #ffb020;
+    --red:         #ff637d;
+    --blue:        #7ab7ff;
+    --purple:      #a78bfa;
+    --display:     'Plus Jakarta Sans', ui-sans-serif, sans-serif;
+    --sans:        'Inter', ui-sans-serif, sans-serif;
+    --mono:        'IBM Plex Mono', ui-monospace, monospace;
+    --radius-xs:   6px;
+    --radius-sm:   10px;
+    --radius:      14px;
+    --radius-lg:   18px;
+    --radius-pill: 999px;
+    --tr:          180ms ease;
+    --shadow-md:   0 4px 24px rgba(0,0,0,.28);
+  }
+  html[data-theme="light"] {
+    --bg:          #eeece7; --bg-elev: #f6f4ef; --bg-elev-2: #ffffff;
+    --bg-soft:     #ece9e2; --line: rgba(0,0,0,.08); --line-strong: rgba(0,0,0,.13);
+    --text:        #17191c; --muted: #5e5a57; --muted-2: #8a8580;
+    --cyan:        #009fc7; --cyan-soft: rgba(0,159,199,.10);
+    --green:       #0c9b6d; --amber: #c78000; --red: #d4485e;
+    --blue:        #347de6; --purple: #7c3aed;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.4; }
+  a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; font-family: inherit; }
+  /* Logo paths */
+  .yql { fill: var(--text); transition: fill var(--tr); }
+  .yqs { fill: var(--cyan); transition: fill var(--tr); }
+
+  /* Theme switch — DS pattern */
+  .theme-switch {
+    display: flex; align-items: center;
+    border-radius: var(--radius-pill); padding: 3px; gap: 1px; flex-shrink: 0;
+  }
+  .theme-opt {
+    width: 28px; height: 26px; border-radius: var(--radius-pill);
+    display: grid; place-items: center;
+    color: var(--muted-2); transition: all var(--tr);
+    background: none; border: none; cursor: pointer;
+  }
+  .theme-opt:hover:not(.active) { color: var(--muted); }
+  .theme-opt.active { background: var(--bg-elev-2); color: var(--text); }
+
+  img, svg { max-width: 100%; }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,11,.88);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    height: 52px; display: flex; align-items: center;
+    padding: 0 24px; gap: 0;
+  }
+  .nav-logo {
+    font: 800 18px var(--display); letter-spacing: -.04em;
+    color: var(--text); display: flex; align-items: center; gap: 2px;
+    margin-right: 8px;
+  }
+  .nav-logo .q { color: var(--cyan); }
+  .nav-marketplace-badge {
+    font: 700 9px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cyan); background: var(--cyan-soft);
+    border-radius: var(--radius-pill); padding: 3px 8px;
+    margin-right: 24px;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2px; flex: 1;
+  }
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+  .nav-btn-ghost {
+    touch-action: manipulation;
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 30px; padding: 0 12px;
+    border: none; background: var(--bg-soft);
+    border-radius: var(--radius-pill);
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    transition: color var(--tr), background var(--tr);
+    white-space: nowrap; flex-shrink: 0; cursor: pointer; text-decoration: none;
+  }
+  .nav-btn-ghost:hover { color: var(--cyan); background: var(--cyan-soft); }
+  .nav-btn-primary {
+    font: 600 13px var(--sans); color: #7ec8e3;
+    background: var(--cyan-soft-2); border-radius: var(--radius-xs);
+    padding: 6px 16px; border: none;
+    transition: all var(--tr);
+  }
+  .nav-btn-primary:hover { background: rgba(0,204,255,.22); }
+  html[data-theme="light"] .nav-btn-primary { color: #2a7a96; }
+
+
+  /* ═══ HERO ═══ */
+  .mkt-hero {
+    background: linear-gradient(180deg,
+      #040810 0%, #060d1c 40%, var(--bg) 100%);
+    padding: 72px 24px 64px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .mkt-hero::before {
+    content: ''; position: absolute; top: -80px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(0,204,255,.08) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .mkt-hero-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+  .mkt-eyebrow {
+    font: 700 9px var(--mono); letter-spacing: .2em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 20px; display: block;
+  }
+  .mkt-hero h1 {
+    font: 800 48px/1.05 var(--display); letter-spacing: -.03em;
+    color: var(--text); margin-bottom: 16px;
+  }
+  .mkt-hero p {
+    font: 400 16px/1.4 var(--sans); color: var(--muted);
+    max-width: 540px; margin: 0 auto 36px;
+  }
+
+  /* Search */
+  .mkt-search {
+    display: flex; gap: 8px; max-width: 520px; margin: 0 auto 28px;
+  }
+  .mkt-search-input {
+    flex: 1; min-width: 0; height: 44px; border-radius: var(--radius-sm);
+    background: var(--bg-soft); border: 1px solid transparent;
+    color: var(--text); font: 400 14px var(--sans);
+    padding: 0 14px 0 40px;
+    transition: border-color var(--tr);
+    outline: none;
+  }
+  .mkt-search-wrap { flex: 1; position: relative; display: flex; align-items: center; }
+  .mkt-search-icon {
+    position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+    color: var(--muted-2); pointer-events: none;
+  }
+  .mkt-search-input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,204,255,.08); }
+  .mkt-search-btn {
+    height: 44px; padding: 0 22px; border-radius: var(--radius-sm);
+    background: var(--cyan-soft-2); color: #7ec8e3;
+    font: 600 13px var(--sans); border: none;
+    transition: all var(--tr); white-space: nowrap; flex-shrink: 0;
+  }
+  .mkt-search-btn:hover { background: rgba(0,204,255,.22); }
+  html[data-theme="light"] .mkt-search-btn { color: #2a7a96; }
+
+  /* Trust badges */
+  .mkt-trust {
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    font: 500 12px var(--sans); color: var(--muted-2);
+  }
+  .mkt-trust-item { display: flex; align-items: center; gap: 5px; }
+  .mkt-trust-item svg { color: var(--cyan); opacity: .7; }
+  .mkt-trust-sep { width: 1px; height: 14px; background: var(--line-strong); }
+
+  /* ═══ SECTION SHARED ═══ */
+  .mkt-section { padding: 64px 24px; }
+  .mkt-section-inner { max-width: 1100px; margin: 0 auto; }
+  .mkt-section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .mkt-eyebrow-sm {
+    font: 700 9px var(--mono); letter-spacing: .18em; text-transform: uppercase;
+    color: var(--cyan); display: block; margin-bottom: 6px;
+  }
+  .mkt-section-title {
+    font: 700 22px/1.2 var(--display); letter-spacing: -.02em; color: var(--text);
+  }
+  .mkt-ver-todas {
+    font: 500 13px var(--sans); color: var(--cyan);
+    display: flex; align-items: center; gap: 4px;
+    transition: gap var(--tr);
+  }
+  .mkt-ver-todas:hover { gap: 8px; }
+
+  /* ═══ APP CARDS ═══ */
+  .app-grid-featured {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .app-card {
+    background: var(--bg-elev-2);
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 2px 14px rgba(0,0,0,.24);
+    transition: border-color var(--tr), transform .22s ease;
+  }
+  .app-card:hover {
+    border-color: rgba(0,204,255,.22);
+    box-shadow: 0 8px 32px rgba(0,0,0,.28);
+    transform: translateY(-3px);
+  }
+  html[data-theme="light"] .app-card { border-color: transparent; box-shadow: 0 1px 8px rgba(0,0,0,.07); }
+
+  /* Thumbnail */
+  .app-thumb {
+    width: 100%; aspect-ratio: 14/5;
+    position: relative; overflow: hidden;
+    background: #060d1c;
+    flex-shrink: 0;
+  }
+  .app-thumb svg { width: 100%; height: 100%; display: block; }
+
+  /* Card body */
+  .app-body { padding: 18px 20px 16px; flex: 1; display: flex; flex-direction: column; }
+  .app-meta {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+  }
+  .app-name {
+    font: 600 15px/1.2 var(--sans); color: var(--text); flex: 1;
+    letter-spacing: -.01em;
+  }
+  .app-rating {
+    display: flex; align-items: center; gap: 3px;
+    font: 600 12px var(--mono); color: var(--amber);
+  }
+  .app-category {
+    font: 700 9px var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 8px;
+  }
+  .app-desc {
+    font: 400 13px/1.4 var(--sans); color: var(--muted); flex: 1; margin-bottom: 16px;
+  }
+  .app-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 12px; border-top: 1px solid var(--line);
+  }
+  .app-installs {
+    display: flex; align-items: center; gap: 5px;
+    font: 500 11px var(--mono); color: var(--muted-2);
+  }
+  /* iaready logo badge */
+  .iaready-badge {
+    display: inline-flex; align-items: center;
+    color: var(--muted-2);
+    transition: color var(--tr);
+  }
+  .app-card:hover .iaready-badge { color: var(--muted); }
+  .iaready-wordmark {
+    flex-shrink: 0; display: block;
+    color: var(--muted-2);
+    transition: color var(--tr);
+  }
+  .app-card:hover .iaready-wordmark { color: var(--muted); }
+
+  /* Install btn */
+  .app-install-btn {
+    font: 600 12px var(--sans); color: var(--cyan);
+    background: var(--cyan-soft); border-radius: var(--radius-xs);
+    padding: 6px 14px; border: none;
+    transition: background var(--tr);
+  }
+  .app-install-btn:hover { background: var(--cyan-soft-2); }
+
+  /* ═══ CATEGORIES ═══ */
+  .cat-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .cat-card {
+    background: var(--bg-elev-2);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    display: flex; flex-direction: column; gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 1px 8px rgba(0,0,0,.2);
+    transition: border-color var(--tr), background var(--tr), transform .2s ease;
+  }
+  .cat-card:hover {
+    border-color: rgba(0,204,255,.22);
+    background: var(--bg-soft);
+    transform: translateY(-2px);
+  }
+  html[data-theme="light"] .cat-card { border-color: transparent; box-shadow: 0 1px 6px rgba(0,0,0,.06); }
+  .cat-icon {
+    width: 36px; height: 36px; border-radius: var(--radius-xs);
+    display: grid; place-items: center;
+    margin-bottom: 4px;
+  }
+  .cat-name { font: 600 14px var(--sans); color: var(--text); }
+  .cat-count { font: 400 12px var(--sans); color: var(--muted-2); }
+  .cat-desc { font: 400 12px/1.4 var(--sans); color: var(--muted); }
+
+  /* ═══ DEVELOPER SECTION ═══ */
+  .dev-section {
+    background: var(--bg-elev);
+    padding: 80px 24px;
+    position: relative; overflow: hidden;
+  }
+  .dev-section::before {
+    content: ''; position: absolute; top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,204,255,.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .dev-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .dev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .dev-eyebrow {
+    font: 700 9px var(--mono); letter-spacing: .2em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 16px; display: block;
+  }
+  .dev-title {
+    font: 700 32px/1.1 var(--display); letter-spacing: -.03em;
+    color: var(--text); margin-bottom: 14px;
+  }
+  .dev-desc {
+    font: 400 15px/1.4 var(--sans); color: var(--muted); margin-bottom: 28px;
+  }
+  .dev-btns { display: flex; gap: 10px; margin-bottom: 0; }
+  .dev-btn-primary {
+    height: 38px; padding: 0 20px; border-radius: var(--radius-sm);
+    background: var(--cyan-soft-2); color: #7ec8e3;
+    font: 600 13px var(--sans); border: none;
+    transition: all var(--tr);
+  }
+  .dev-btn-primary:hover { background: rgba(0,204,255,.22); }
+  html[data-theme="light"] .dev-btn-primary { color: #2a7a96; }
+  .dev-btn-ghost {
+    height: 38px; padding: 0 20px; border-radius: var(--radius-sm);
+    background: none; border: 1px solid var(--line-strong); color: var(--muted);
+    font: 600 13px var(--sans);
+    transition: color var(--tr), border-color var(--tr);
+  }
+  .dev-btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,.2); }
+  /* Dev features list */
+  .dev-features { display: flex; flex-direction: column; gap: 0; }
+  .dev-feat {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .dev-feat:last-child { border-bottom: none; }
+  .dev-feat-icon {
+    width: 34px; height: 34px; border-radius: var(--radius-xs);
+    background: var(--cyan-soft); color: var(--cyan);
+    display: grid; place-items: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .dev-feat-name { font: 600 14px var(--sans); color: var(--text); margin-bottom: 2px; }
+  .dev-feat-sub { font: 400 12px var(--sans); color: var(--muted); }
+
+  /* ═══ FOOTER ═══ */
+  /* footer → site-footer web component (site.css) */
+
+  /* ═══ LLM FAB ═══ */
+  .llm-fab {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    display: grid; place-items: center;
+    width: 40px; height: 40px;
+    background: var(--bg-elev-2); border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    color: var(--muted); cursor: pointer;
+    
+    transition: color var(--tr), border-color var(--tr), background var(--tr);
+  }
+  .llm-fab:hover {
+    color: var(--cyan); border-color: rgba(0,204,255,.28);
+    background: var(--bg-soft);
+    
+  }
+  .llm-fab.copied { color: var(--green); border-color: rgba(21,212,156,.28); }
+  .llm-fab svg { width: 15px; height: 15px; }
+  @media (max-width: 640px) {
+    .llm-fab { bottom: 16px; right: 16px; width: 36px; height: 36px; }
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 820px) {
+    .app-grid-featured { grid-template-columns: 1fr; }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .dev-grid { grid-template-columns: 1fr; gap: 40px; }
+    .mkt-hero h1 { font-size: 34px; }
+  }
+  @media (max-width: 540px) {
+    .cat-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .mkt-hero h1 { font-size: 28px; }
+    .mkt-trust { flex-wrap: wrap; gap: 10px; }
+  }
+
+
+  /* Light mode overrides */
+  html[data-theme="light"] .nav {
+    background: rgba(238,236,231,.9);
+  }
+  html[data-theme="light"] .mkt-hero {
+    background: linear-gradient(180deg, var(--bg-elev) 0%, var(--bg) 100%);
+  }
+  html[data-theme="light"] .mkt-hero::before { display: none; }
+
+  /* ═══ MOBILE NAV ═══ */
+  .mobile-menu-btn {
+    display: none; width: 36px; height: 36px;
+    border-radius: var(--radius-xs); border: none;
+    background: none; color: var(--muted); cursor: pointer;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .mobile-menu-btn svg { width: 16px; height: 16px; }
+  .mkt-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45); z-index: 80;
+    backdrop-filter: blur(2px);
+  }
+  .mkt-overlay.show { display: block; }
+  .mkt-mobile-nav {
+    position: fixed; top: 52px; right: 0;
+    width: min(290px, calc(100vw - 32px));
+    height: calc(100dvh - 52px);
+    background: var(--bg-elev); border-left: 1px solid var(--line);
+    transform: translateX(108%); transition: transform .24s ease;
+    z-index: 90; padding: 20px 12px;
+    display: flex; flex-direction: column; gap: 4px;
+    overflow-y: auto;
+  }
+  .mkt-mobile-nav.open { transform: translateX(0); }
+  .mkt-mobile-nav
+  .mkt-mobile-nav .nav-sep {
+    width: 100%; height: 1px; background: var(--line); margin: 6px 0;
+  }
+  .mkt-mobile-nav .nav-btn-ghost {
+    display: block; padding: 10px 14px;
+    font: 600 14px var(--sans); color: var(--muted);
+    border-radius: var(--radius-pill);
+    background: var(--bg-soft);
+    transition: color var(--tr), background var(--tr);
+  }
+  .mkt-mobile-nav .nav-btn-ghost:hover { color: var(--cyan); background: var(--cyan-soft); }
+  .mkt-mobile-nav .theme-switch {
+    margin-top: 4px; padding: 6px 14px;
+  }
+
+  @media (max-width: 860px) {
+    .nav-links   { display: none; }
+    .nav-btn-ghost, .nav-btn-primary { display: none; }
+    .nav-actions .theme-switch { display: none; }
+    .mobile-menu-btn { display: flex; margin-left: auto; }
+  }
+  </style>
+</head>
+<body>
+<site-header base="./" current-page="marketplace"></site-header>
+
+<!-- ══ HERO ══ -->
+<section class="mkt-hero">
+  <div class="mkt-hero-inner">
+    <span class="mkt-eyebrow">YiQi Platform</span>
+    <h1>Extiende tu negocio<br>con apps certificadas</h1>
+    <p>Conecta YiQi ERP con soluciones especializadas. Analytics, proveedores, inventario y más — construidas por partners certificados sobre la plataforma abierta de YiQi.</p>
+    <div class="mkt-search">
+      <div class="mkt-search-wrap">
+        <svg class="mkt-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="mkt-search-input" type="text" placeholder="Buscar apps, integraciones...">
+      </div>
+      <button class="mkt-search-btn">Buscar</button>
+    </div>
+    <div class="mkt-trust">
+      <div class="mkt-trust-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        120+ apps
+      </div>
+      <div class="mkt-trust-sep"></div>
+      <div class="mkt-trust-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Certificadas
+      </div>
+      <div class="mkt-trust-sep"></div>
+      <div class="mkt-trust-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        50M+ instalaciones
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURED APPS ══ -->
+<section class="mkt-section" style="padding-top:48px; background: var(--bg-elev);">
+  <div class="mkt-section-inner">
+    <div class="mkt-section-header">
+      <div>
+        <span class="mkt-eyebrow-sm">Destacados</span>
+        <div class="mkt-section-title">Apps más populares</div>
+      </div>
+      <a href="#" class="mkt-ver-todas">Ver todas <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="app-grid-featured">
+
+      <!-- Card 1: YiQi Analytics Pro -->
+      <div class="app-card">
+        <div class="app-thumb">
+          <!-- Analytics dashboard SVG thumbnail -->
+          <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <rect width="560" height="200" fill="#060d1c"/>
+            <!-- Sidebar -->
+            <rect x="0" y="0" width="72" height="200" fill="#050b17"/>
+            <rect x="8" y="16" width="56" height="6" rx="3" fill="#0f2040" opacity=".8"/>
+            <rect x="8" y="30" width="40" height="4" rx="2" fill="#0f2040" opacity=".5"/>
+            <rect x="8" y="54" width="56" height="5" rx="2.5" fill="rgba(0,204,255,.15)"/>
+            <rect x="8" y="68" width="48" height="5" rx="2.5" fill="#0f2040" opacity=".5"/>
+            <rect x="8" y="82" width="52" height="5" rx="2.5" fill="#0f2040" opacity=".5"/>
+            <rect x="8" y="96" width="44" height="5" rx="2.5" fill="#0f2040" opacity=".5"/>
+            <!-- KPI row -->
+            <rect x="84" y="12" width="116" height="54" rx="8" fill="#0d1f3a"/>
+            <text x="96" y="34" fill="rgba(0,204,255,.5)" font-size="8" font-family="monospace">INGRESOS HOY</text>
+            <text x="96" y="50" fill="#f3f5f7" font-size="18" font-weight="700" font-family="sans-serif">$2.4M</text>
+            <rect x="208" y="12" width="116" height="54" rx="8" fill="#0d1f3a"/>
+            <text x="220" y="34" fill="rgba(21,212,156,.5)" font-size="8" font-family="monospace">PEDIDOS</text>
+            <text x="220" y="50" fill="#f3f5f7" font-size="18" font-weight="700" font-family="sans-serif">1,847</text>
+            <rect x="332" y="12" width="116" height="54" rx="8" fill="#0d1f3a"/>
+            <text x="344" y="34" fill="rgba(255,176,32,.5)" font-size="8" font-family="monospace">CONVERSIÓN</text>
+            <text x="344" y="50" fill="#f3f5f7" font-size="18" font-weight="700" font-family="sans-serif">3.8%</text>
+            <!-- Area chart -->
+            <rect x="84" y="76" width="464" height="110" rx="8" fill="#0d1f3a"/>
+            <defs>
+              <linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#00ccff" stop-opacity=".22"/>
+                <stop offset="100%" stop-color="#00ccff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <polygon points="84,186 140,155 200,165 260,130 320,140 380,105 440,118 510,88 548,95 548,186" fill="url(#areaG)"/>
+            <polyline points="84,186 140,155 200,165 260,130 320,140 380,105 440,118 510,88 548,95" fill="none" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Grid lines -->
+            <line x1="84" y1="110" x2="548" y2="110" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <line x1="84" y1="130" x2="548" y2="130" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <line x1="84" y1="150" x2="548" y2="150" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <line x1="84" y1="170" x2="548" y2="170" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="app-body">
+          <div class="app-category">Analytics</div>
+          <div class="app-meta">
+            <div class="app-name">YiQi Analytics Pro</div>
+            <div class="app-rating">★ 4.7</div>
+          </div>
+          <div class="app-desc">Dashboards en tiempo real con IA avanzada, segmentación por canal y KPIs.</div>
+          <div class="app-footer">
+            <div class="app-installs">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              11.1k
+            </div>
+            <div class="iaready-badge">
+              <svg class="iaready-wordmark" viewBox="0 0 256 68" width="62" height="17" xmlns="http://www.w3.org/2000/svg" aria-label="iAready">
+              <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/>
+              <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/>
+              <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/>
+              <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/>
+              <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/>
+              <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="#00CCFF"/>
+              <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/>
+            </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Front de Proveedores OCR -->
+      <div class="app-card">
+        <div class="app-thumb">
+          <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <rect width="560" height="200" fill="#080c18"/>
+            <!-- Header -->
+            <rect x="0" y="0" width="560" height="36" fill="#0a1020"/>
+            <rect x="12" y="13" width="90" height="10" rx="5" fill="rgba(0,204,255,.2)"/>
+            <rect x="420" y="11" width="128" height="14" rx="7" fill="rgba(0,204,255,.12)"/>
+            <!-- Split: document panel left + form right -->
+            <rect x="12" y="48" width="248" height="140" rx="8" fill="rgba(255,255,255,.04)"/>
+            <!-- Document lines (OCR scan) -->
+            <rect x="24" y="60" width="110" height="7" rx="3" fill="rgba(255,255,255,.15)"/>
+            <rect x="24" y="73" width="180" height="5" rx="2" fill="rgba(255,255,255,.07)"/>
+            <rect x="24" y="83" width="160" height="5" rx="2" fill="rgba(255,255,255,.07)"/>
+            <rect x="24" y="93" width="190" height="5" rx="2" fill="rgba(255,255,255,.07)"/>
+            <!-- OCR highlight boxes -->
+            <rect x="24" y="108" width="80" height="16" rx="3" fill="rgba(0,204,255,.08)" stroke="rgba(0,204,255,.3)" stroke-width="1"/>
+            <rect x="116" y="108" width="100" height="16" rx="3" fill="rgba(0,204,255,.08)" stroke="rgba(0,204,255,.3)" stroke-width="1"/>
+            <rect x="24" y="130" width="60" height="14" rx="3" fill="rgba(21,212,156,.08)" stroke="rgba(21,212,156,.3)" stroke-width="1"/>
+            <rect x="96" y="130" width="140" height="14" rx="3" fill="rgba(21,212,156,.08)" stroke="rgba(21,212,156,.3)" stroke-width="1"/>
+            <rect x="24" y="152" width="220" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
+            <rect x="24" y="162" width="180" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
+            <rect x="24" y="172" width="100" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
+            <!-- OCR scan line animation visual -->
+            <rect x="12" y="116" width="248" height="1" rx="0.5" fill="rgba(0,204,255,.4)"/>
+            <!-- Right form panel -->
+            <rect x="272" y="48" width="276" height="64" rx="8" fill="rgba(255,255,255,.04)"/>
+            <rect x="284" y="60" width="80" height="7" rx="3" fill="rgba(255,255,255,.12)"/>
+            <rect x="284" y="72" width="240" height="28" rx="5" fill="rgba(255,255,255,.06)"/>
+            <rect x="272" y="120" width="276" height="68" rx="8" fill="rgba(255,255,255,.04)"/>
+            <rect x="284" y="132" width="60" height="6" rx="3" fill="rgba(255,255,255,.12)"/>
+            <rect x="284" y="142" width="116" height="22" rx="5" fill="rgba(255,255,255,.06)"/>
+            <rect x="408" y="142" width="116" height="22" rx="5" fill="rgba(255,255,255,.06)"/>
+            <rect x="284" y="170" width="240" height="10" rx="5" fill="rgba(0,204,255,.18)"/>
+            <text x="355" y="179" fill="rgba(0,204,255,.8)" font-size="7" font-family="monospace">ANALIZAR CON OCR</text>
+          </svg>
+        </div>
+        <div class="app-body">
+          <div class="app-category">Proveedores</div>
+          <div class="app-meta">
+            <div class="app-name">Front de Proveedores OCR</div>
+            <div class="app-rating">★ 4.6</div>
+          </div>
+          <div class="app-desc">Portal web para proveedores con carga de facturas y órdenes de compra mediante reconocimiento óptico de caracteres.</div>
+          <div class="app-footer">
+            <div class="app-installs">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              6.1k
+            </div>
+            <div class="iaready-badge">
+              <svg class="iaready-wordmark" viewBox="0 0 256 68" width="62" height="17" xmlns="http://www.w3.org/2000/svg" aria-label="iAready">
+              <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/>
+              <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/>
+              <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/>
+              <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/>
+              <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/>
+              <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="#00CCFF"/>
+              <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/>
+            </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Inventariado Mobile -->
+      <div class="app-card">
+        <div class="app-thumb">
+          <svg viewBox="0 0 1120 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <rect width="1120" height="200" fill="#060e0d"/>
+            <!-- Left: Mobile device mockup -->
+            <rect x="16" y="12" width="180" height="176" rx="14" fill="#0a1a18" stroke="rgba(21,212,156,.15)" stroke-width="1"/>
+            <!-- Phone screen -->
+            <rect x="24" y="28" width="164" height="148" rx="8" fill="#0d2420"/>
+            <!-- Phone camera notch -->
+            <rect x="76" y="16" width="60" height="8" rx="4" fill="#0a1a18"/>
+            <!-- App header -->
+            <rect x="24" y="28" width="164" height="26" rx="0" fill="rgba(21,212,156,.1)"/>
+            <rect x="32" y="36" width="80" height="8" rx="4" fill="rgba(21,212,156,.4)"/>
+            <rect x="168" y="34" width="12" height="12" rx="3" fill="rgba(21,212,156,.2)"/>
+            <!-- Barcode scanner frame -->
+            <rect x="36" y="62" width="140" height="64" rx="6" fill="rgba(255,255,255,.03)" stroke="rgba(21,212,156,.2)" stroke-width="1" stroke-dasharray="4 3"/>
+            <!-- Scanner corners -->
+            <path d="M36,74 L36,62 L48,62" fill="none" stroke="#15d49c" stroke-width="2" stroke-linecap="round"/>
+            <path d="M164,62 L176,62 L176,74" fill="none" stroke="#15d49c" stroke-width="2" stroke-linecap="round"/>
+            <path d="M36,114 L36,126 L48,126" fill="none" stroke="#15d49c" stroke-width="2" stroke-linecap="round"/>
+            <path d="M176,114 L176,126 L164,126" fill="none" stroke="#15d49c" stroke-width="2" stroke-linecap="round"/>
+            <!-- Scan line -->
+            <line x1="40" y1="94" x2="172" y2="94" stroke="rgba(21,212,156,.7)" stroke-width="1"/>
+            <!-- Product rows below scanner -->
+            <rect x="32" y="136" width="148" height="16" rx="4" fill="rgba(255,255,255,.06)"/>
+            <rect x="36" y="140" width="70" height="7" rx="3" fill="rgba(255,255,255,.12)"/>
+            <rect x="158" y="140" width="18" height="7" rx="3" fill="rgba(21,212,156,.3)"/>
+            <rect x="32" y="156" width="148" height="16" rx="4" fill="rgba(255,255,255,.04)"/>
+            <rect x="36" y="160" width="60" height="7" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="158" y="160" width="18" height="7" rx="3" fill="rgba(255,176,32,.3)"/>
+            <!-- Middle: real-time stock panel -->
+            <rect x="212" y="12" width="460" height="176" rx="10" fill="rgba(255,255,255,.03)"/>
+            <!-- Panel header -->
+            <rect x="224" y="24" width="140" height="9" rx="4" fill="rgba(255,255,255,.15)"/>
+            <rect x="224" y="38" width="80" height="7" rx="3" fill="rgba(255,255,255,.06)"/>
+            <!-- Stock grid -->
+            <rect x="224" y="56" width="100" height="48" rx="8" fill="rgba(21,212,156,.07)" stroke="rgba(21,212,156,.12)" stroke-width="1"/>
+            <text x="236" y="74" fill="rgba(21,212,156,.5)" font-size="8" font-family="monospace">RELEVADOS</text>
+            <text x="236" y="92" fill="#f3f5f7" font-size="18" font-weight="700" font-family="sans-serif">1,248</text>
+            <rect x="332" y="56" width="100" height="48" rx="8" fill="rgba(0,204,255,.06)"/>
+            <text x="344" y="74" fill="rgba(0,204,255,.5)" font-size="8" font-family="monospace">PENDIENTES</text>
+            <text x="344" y="92" fill="#f3f5f7" font-size="18" font-weight="700" font-family="sans-serif">382</text>
+            <rect x="440" y="56" width="100" height="48" rx="8" fill="rgba(255,176,32,.06)"/>
+            <text x="452" y="74" fill="rgba(255,176,32,.5)" font-size="8" font-family="monospace">DIFERENCIAS</text>
+            <text x="452" y="92" fill="#f3f5f7" font-size="18" font-weight="700" font-family="sans-serif">14</text>
+            <!-- Table -->
+            <rect x="224" y="114" width="436" height="18" rx="4" fill="rgba(255,255,255,.06)"/>
+            <rect x="230" y="119" width="80" height="7" rx="3" fill="rgba(255,255,255,.14)"/>
+            <rect x="370" y="119" width="50" height="7" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="480" y="119" width="50" height="7" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="580" y="117" width="70" height="10" rx="5" fill="rgba(21,212,156,.2)"/>
+            <rect x="224" y="136" width="436" height="14" rx="4" fill="rgba(255,255,255,.03)"/>
+            <rect x="230" y="141" width="95" height="5" rx="2" fill="rgba(255,255,255,.08)"/>
+            <rect x="370" y="141" width="44" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
+            <rect x="480" y="141" width="55" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
+            <rect x="580" y="139" width="70" height="10" rx="5" fill="rgba(255,176,32,.18)"/>
+            <rect x="224" y="154" width="436" height="14" rx="4" fill="rgba(255,255,255,.03)"/>
+            <rect x="230" y="159" width="70" height="5" rx="2" fill="rgba(255,255,255,.08)"/>
+            <rect x="370" y="159" width="60" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
+            <rect x="480" y="159" width="40" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
+            <rect x="580" y="157" width="70" height="10" rx="5" fill="rgba(21,212,156,.18)"/>
+            <!-- Sync indicator -->
+            <rect x="224" y="172" width="200" height="8" rx="4" fill="rgba(255,255,255,.04)"/>
+            <rect x="224" y="172" width="148" height="8" rx="4" fill="rgba(21,212,156,.35)"/>
+            <text x="430" y="179" fill="rgba(21,212,156,.5)" font-size="7" font-family="monospace">SYNC OK · hace 3s</text>
+            <!-- Right panel: summary -->
+            <rect x="688" y="12" width="416" height="176" rx="10" fill="rgba(255,255,255,.03)"/>
+            <rect x="700" y="24" width="100" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+            <!-- Progress bars by category -->
+            <rect x="700" y="44" width="60" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="700" y="55" width="380" height="8" rx="4" fill="rgba(255,255,255,.05)"/>
+            <rect x="700" y="55" width="310" height="8" rx="4" fill="rgba(21,212,156,.4)"/>
+            <rect x="700" y="72" width="60" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="700" y="83" width="380" height="8" rx="4" fill="rgba(255,255,255,.05)"/>
+            <rect x="700" y="83" width="220" height="8" rx="4" fill="rgba(0,204,255,.35)"/>
+            <rect x="700" y="100" width="60" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="700" y="111" width="380" height="8" rx="4" fill="rgba(255,255,255,.05)"/>
+            <rect x="700" y="111" width="280" height="8" rx="4" fill="rgba(122,183,255,.3)"/>
+            <rect x="700" y="128" width="60" height="6" rx="3" fill="rgba(255,255,255,.08)"/>
+            <rect x="700" y="139" width="380" height="8" rx="4" fill="rgba(255,255,255,.05)"/>
+            <rect x="700" y="139" width="150" height="8" rx="4" fill="rgba(255,176,32,.3)"/>
+            <!-- Export button -->
+            <rect x="700" y="162" width="380" height="18" rx="9" fill="rgba(21,212,156,.15)"/>
+            <text x="844" y="175" fill="rgba(21,212,156,.8)" font-size="9" font-family="monospace">EXPORTAR A YiQi ERP</text>
+          </svg>
+        </div>
+        <div class="app-body">
+          <div class="app-category">Inventario</div>
+          <div class="app-meta">
+            <div class="app-name">Inventariado Mobile</div>
+            <div class="app-rating">★ 4.5</div>
+          </div>
+          <div class="app-desc">App mobile para relevamiento y control de stock en depósitos: escaneo de códigos, ajustes de inventario y sincronización en tiempo real con YiQi.</div>
+          <div class="app-footer">
+            <div class="app-installs">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              6.4k
+            </div>
+            <div class="iaready-badge">
+              <svg class="iaready-wordmark" viewBox="0 0 256 68" width="62" height="17" xmlns="http://www.w3.org/2000/svg" aria-label="iAready">
+              <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/>
+              <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/>
+              <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/>
+              <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/>
+              <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/>
+              <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="#00CCFF"/>
+              <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/>
+            </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CATEGORIES ══ -->
+<section class="mkt-section">
+  <div class="mkt-section-inner">
+    <div class="mkt-section-header">
+      <div>
+        <span class="mkt-eyebrow-sm">Categorías</span>
+        <div class="mkt-section-title">Explora por solución</div>
+      </div>
+    </div>
+    <div class="cat-grid">
+      <!-- Analytics -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(0,204,255,.08);color:var(--cyan)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div class="cat-name">Analytics</div>
+        <div class="cat-count">34 apps</div>
+        <div class="cat-desc">BI, reportes y visualización</div>
+      </div>
+      <!-- Operaciones -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(122,183,255,.08);color:var(--blue)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 2l-4 5-4-5"/></svg>
+        </div>
+        <div class="cat-name">Operaciones</div>
+        <div class="cat-count">32 apps</div>
+        <div class="cat-desc">Depósito, logística y stock</div>
+      </div>
+      <!-- Finanzas -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(21,212,156,.08);color:var(--green)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="cat-name">Finanzas</div>
+        <div class="cat-count">25 apps</div>
+        <div class="cat-desc">Cobranzas, pagos y tesorería</div>
+      </div>
+      <!-- CRM -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(167,139,250,.08);color:var(--purple)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="cat-name">CRM</div>
+        <div class="cat-count">14 apps</div>
+        <div class="cat-desc">Ventas, clientes y marketing</div>
+      </div>
+      <!-- E-commerce -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(255,176,32,.08);color:var(--amber)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
+        <div class="cat-name">E-commerce</div>
+        <div class="cat-count">15 apps</div>
+        <div class="cat-desc">Integraciones con plataformas</div>
+      </div>
+      <!-- Automatización -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(0,204,255,.08);color:var(--cyan)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="cat-name">Automatización</div>
+        <div class="cat-count">11 apps</div>
+        <div class="cat-desc">Workflows y conectores</div>
+      </div>
+      <!-- Seguridad -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(255,99,125,.08);color:var(--red)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="cat-name">Seguridad</div>
+        <div class="cat-count">52 apps</div>
+        <div class="cat-desc">Compliance y auditoría</div>
+      </div>
+      <!-- Integraciones -->
+      <div class="cat-card">
+        <div class="cat-icon" style="background:rgba(21,212,156,.08);color:var(--green)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>
+        </div>
+        <div class="cat-name">Integraciones</div>
+        <div class="cat-count">16 apps</div>
+        <div class="cat-desc">APIs y conexiones externas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DEVELOPER SECTION ══ -->
+<section class="dev-section">
+  <div class="dev-inner">
+    <div class="dev-grid">
+      <div>
+        <span class="dev-eyebrow">Desarrolladores</span>
+        <div class="dev-title">Construye tu app<br>sobre YiQi Platform</div>
+        <div class="dev-desc">APIs públicas con OAuth, SDKs, documentación completa y entorno sandbox. Accede al ecosistema YiQi y lleva tu solución a miles de empresas.</div>
+        <div class="dev-btns">
+          <button class="dev-btn-primary">Ver documentación</button>
+          <button class="dev-btn-ghost">Certificación</button>
+        </div>
+      </div>
+      <div class="dev-features">
+        <div class="dev-feat">
+          <div class="dev-feat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div>
+            <div class="dev-feat-name">REST APIs</div>
+            <div class="dev-feat-sub">OAuth 2.0 + SDKs para Node, Python y Ruby</div>
+          </div>
+        </div>
+        <div class="dev-feat">
+          <div class="dev-feat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="dev-feat-name">Certificación</div>
+            <div class="dev-feat-sub">Proceso guiado con revisión técnica y de seguridad</div>
+          </div>
+        </div>
+        <div class="dev-feat">
+          <div class="dev-feat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <div>
+            <div class="dev-feat-name">Marketplace</div>
+            <div class="dev-feat-sub">Distribución nativa a 50M+ usuarios de YiQi ERP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<site-footer base="./"></site-footer>
+
+<!-- ══ LLM COPY FAB ══ -->
+<button class="llm-fab" id="llm-fab" onclick="copyForLLM()" aria-label="Copiar contexto para LLM">
+  <svg id="llmFabIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+  </svg>
+</button>
+
+<script>
+
+  /* ── Mobile Nav ── */
+  function toggleMobileNav() {
+    const nav = document.getElementById('mktMobileNav');
+    const overlay = document.getElementById('mktOverlay');
+    const isOpen = nav.classList.toggle('open');
+    overlay.classList.toggle('show', isOpen);
+  }
+  function closeMobileNav() {
+    document.getElementById('mktMobileNav').classList.remove('open');
+    document.getElementById('mktOverlay').classList.remove('show');
+  }
+
+  /* ── Theme — dark | system | light ── */
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  function resolveTheme(v) { return v === 'system' ? (mq.matches ? 'dark' : 'light') : v; }
+  function applyTheme(v)   { document.documentElement.dataset.theme = resolveTheme(v); }
+  function updateSwitch(v) {
+    document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.val === v));
+  }
+  function setTheme(v) {
+    localStorage.setItem('yiqi-theme', v);
+    applyTheme(v); updateSwitch(v);
+  }
+  (function() {
+    const s = localStorage.getItem('yiqi-theme') || 'system';
+    applyTheme(s);
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSwitch(s);
+      document.querySelectorAll('.theme-opt').forEach(btn =>
+        btn.addEventListener('click', () => setTheme(btn.dataset.val))
+      );
+    });
+    mq.addEventListener('change', () => {
+      const c = localStorage.getItem('yiqi-theme') || 'system';
+      if (c === 'system') applyTheme('system');
+    });
+  })();
+
+  /* ── LLM Copy ── */
+  const MKT_CONTEXT = `# YiQi Marketplace
+
+## Apps destacadas
+
+### YiQi Analytics Pro
+- Categoría: Analytics
+- Rating: 4.7 ★
+- Instalaciones: 11.1k
+- Partner: iaready (certificado)
+- Descripción: Dashboards en tiempo real con IA avanzada, segmentación por canal y forecasting automático integrado con el ERP.
+
+### Depósito Smart
+- Categoría: Operaciones
+- Rating: 4.8 ★
+- Instalaciones: 6.1k
+- Partner: iaready (certificado)
+- Descripción: Gestión de inventario con picking inteligente, trazabilidad completa por lote y control de capacidad de depósito.
+
+### Cobranzas 360
+- Categoría: Finanzas
+- Rating: 4.7 ★
+- Instalaciones: 6.4k
+- Partner: iaready (certificado)
+- Descripción: Automatización de cobranzas con recordatorios multicanal, links de pago personalizados y conciliación automática contra cuentas bancarias.
+
+## Categorías disponibles
+- Analytics: 34 apps (BI, reportes, visualización)
+- Operaciones: 32 apps (depósito, logística, stock)
+- Finanzas: 25 apps (cobranzas, pagos, tesorería)
+- CRM: 14 apps (ventas, clientes, marketing)
+- E-commerce: 15 apps (integraciones con plataformas)
+- Automatización: 11 apps (workflows, conectores)
+- Seguridad: 52 apps (compliance, auditoría)
+- Integraciones: 16 apps (APIs, conexiones externas)
+
+## YiQi Platform para desarrolladores
+- APIs REST con OAuth 2.0 + SDKs (Node, Python, Ruby)
+- Proceso de certificación guiado con revisión técnica y de seguridad
+- Distribución nativa a 50M+ usuarios del ecosistema YiQi ERP
+- Entorno sandbox disponible
+
+## Estadísticas del marketplace
+- 120+ apps disponibles
+- Todas las apps son certificadas
+- 50M+ instalaciones acumuladas
+`;
+
+  function copyForLLM() {
+    navigator.clipboard.writeText(MKT_CONTEXT).then(() => {
+      const btn = document.getElementById('llm-fab');
+      btn.classList.add('copied');
+      document.getElementById('llmFabIcon').innerHTML = '<polyline points="20 6 9 17 4 12" stroke-width="2.5"/>';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        document.getElementById('llmFabIcon').innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>';
+      }, 2400);
+    });
+  }
+</script>
+</body>
+</html>
