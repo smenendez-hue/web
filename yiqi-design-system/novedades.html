@@ -44,7 +44,7 @@
   --sans:        'Inter', ui-sans-serif, system-ui, sans-serif;
   --display:     'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   --mono:        'IBM Plex Mono', ui-monospace, monospace;
-  --topbar-h:    54px;
+  --topbar-h:    56px;
   --radius-xs:   6px;
   --radius-sm:   10px;
   --radius:      14px;
@@ -87,7 +87,7 @@ html[data-theme="light"] {
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { overflow-x: hidden; }
+html, body { overflow-x: clip; }
 body {
   font-family: var(--sans);
   color: var(--text);
@@ -96,7 +96,10 @@ body {
     radial-gradient(ellipse at 80% 0%,  rgba(0,204,255,.09), transparent 40%),
     radial-gradient(ellipse at 10% 30%, rgba(0,204,255,.05), transparent 32%),
     radial-gradient(ellipse at 55% 90%, rgba(0,204,255,.04), transparent 28%),
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
     var(--bg);
+  background-size: auto, auto, auto, 52px 52px, 52px 52px, auto;
   min-height: 100vh;
 }
 [data-theme="light"] body {
@@ -104,7 +107,10 @@ body {
     radial-gradient(ellipse at 80% 0%,  rgba(0,159,199,.08), transparent 40%),
     radial-gradient(ellipse at 10% 30%, rgba(0,159,199,.04), transparent 32%),
     radial-gradient(ellipse at 55% 90%, rgba(0,159,199,.03), transparent 28%),
+    linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
     var(--bg);
+  background-size: auto, auto, auto, 52px 52px, 52px 52px, auto;
 }
 
 /* ── Layout ── */
@@ -448,7 +454,9 @@ body {
 <script src="./components/site-footer.js" defer></script>
 
 <script>
-const API = 'https://novedades.yiqi.com.ar/api/YiQi/Novedades';
+// Fallback local mientras el endpoint público no devuelve CORS.
+// Para volver al API en vivo: const API = 'https://novedades.yiqi.com.ar/api/YiQi/Novedades';
+const API = './novedades.json';
 
 const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const TIPO_CLASS = {

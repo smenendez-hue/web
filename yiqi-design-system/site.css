@@ -1,27 +1,72 @@
 /* ============================================================
    YiQi Site CSS — estilos compartidos de landing pages
    Topbar, nav, mobile menu, footer
-   DS v1.2.5
+   DS v1.2.6
    ============================================================ */
+
+/* ── Greycliff CF — display font (DS v1.2.6) ──────────────────────
+   Sustituye a Inter en jerarquías mayores. Solo cargamos Heavy (800)
+   pero declaramos rango 700-900 — el browser usa el archivo para
+   cualquier peso en ese rango. Pesos <700 caen al fallback. */
+@font-face {
+  font-family: "Greycliff CF";
+  src: url("system/fonts/Greycliff-CF-Heavy.otf") format("opentype");
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Token global — Greycliff primero, fallbacks intactos */
+:root {
+  --font-display: "Greycliff CF", "Plus Jakarta Sans", "Inter",
+                  ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Jerarquías mayores: h1, h2 y display titles del DS — usan Greycliff por default.
+   Las páginas individuales que quieran otra cosa pueden override con mayor especificidad. */
+h1,
+h2,
+.hero-headline,
+.section-title,
+.ds-section-title,
+.page-hero-title,
+.ds-pro-title {
+  font-family: var(--font-display);
+}
+
+/* ──────────────────────────────────────────────────────────────── */
+
+
 
 /* ── Topbar ─────────────────────────────────────────────── */
 site-header {
   display: block;
-  position: sticky; top: 0; z-index: 99; /* sticky en el custom-element, no en .topbar */
+  position: sticky; top: 0; z-index: 99;
+  height: var(--topbar-h, 56px);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .topbar, .site-topbar {
   position: relative;
   height: var(--topbar-h, 56px);
   display: flex; align-items: center; gap: 16px; padding: 0 28px;
-  background: rgba(12,12,14,.82);
+  background: rgba(12,12,14,.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  /* tokens fijos para consistencia entre páginas */
+  --radius-sm: 10px;
+  --muted: #908e8e;
+  --muted-2: #625f5f;
+  --fs-body: 13px;
+}
+html[data-theme="light"] site-header {
+  border-bottom-color: rgba(0,0,0,.08);
 }
 html[data-theme="light"] .topbar,
 html[data-theme="light"] .site-topbar {
   background: rgba(238,236,231,.88);
-  border-bottom-color: rgba(0,0,0,.08);
+  --muted: #5e5a57;
+  --muted-2: #8a8580;
 }
 .topbar-logo  { display: flex; align-items: center; flex-shrink: 0; }
 .topbar-spacer { flex: 1; }
@@ -34,8 +79,8 @@ html[data-theme="light"] .site-topbar {
 /* Nav links */
 .nav-link {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: var(--fs-body, 13px); font-weight: 500; color: var(--muted);
-  padding: 6px 12px; border-radius: var(--radius-sm, 7px);
+  font: 500 13px var(--sans); color: var(--muted);
+  padding: 6px 12px; border-radius: var(--radius-sm, 10px);
   text-decoration: none; transition: all var(--tr, 180ms ease);
 }
 .nav-link:hover  { color: var(--cyan); background: transparent; }
@@ -43,13 +88,13 @@ html[data-theme="light"] .site-topbar {
 
 .nav-link-dev {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: var(--fs-body, 13px); font-weight: 500; color: var(--muted);
-  padding: 6px 12px; border-radius: var(--radius-sm, 7px);
+  font: 500 13px var(--sans); color: var(--muted);
+  padding: 6px 12px; border-radius: var(--radius-sm, 10px);
   text-decoration: none; transition: all var(--tr, 180ms ease);
 }
 .nav-link-dev:hover { color: var(--cyan); background: var(--cyan-soft); }
 .nav-link-dev .dev-badge {
-  font-size: var(--fs-caption, 11px); font-weight: 700; letter-spacing: .08em;
+  font: 700 9px var(--mono); letter-spacing: .08em;
   color: var(--cyan); background: var(--cyan-soft);
   padding: 2px 6px; border-radius: var(--radius-pill, 999px); line-height: 1.4;
 }
@@ -60,23 +105,24 @@ html[data-theme="light"] .site-topbar {
 .btn-login {
   touch-action: manipulation;
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px;
+  height: 30px; padding: 0 12px;
   border: none; background: transparent;
-  border-radius: var(--radius-sm, 7px);
-  font-size: var(--fs-body, 13px); font-weight: 500; color: var(--muted);
+  border-radius: var(--radius-sm, 10px);
+  font: 500 13px var(--sans); color: var(--muted);
   transition: color var(--tr, 180ms ease), background var(--tr, 180ms ease);
   white-space: nowrap; flex-shrink: 0; cursor: pointer; text-decoration: none;
 }
-.btn-login:hover { color: var(--text); background: var(--bg-soft); }
+.btn-login:hover { color: var(--cyan); background: var(--cyan-soft); }
 
 /* Theme switch */
 .theme-switch {
   display: flex; align-items: center;
+  background: none; border: none;
   border-radius: var(--radius-pill, 999px); padding: 3px; gap: 1px; flex-shrink: 0;
 }
 .theme-opt {
   width: 28px; height: 26px; border-radius: var(--radius-pill, 999px);
-  display: grid; place-items: center;
+  display: grid; place-items: center; font-size: 13px;
   color: var(--muted-2); transition: all var(--tr, 180ms ease);
   background: none; border: none; cursor: pointer;
 }
@@ -100,15 +146,16 @@ html[data-theme="light"] .site-topbar {
 
 /* Mobile nav — abre desde la derecha */
 .mobile-nav {
-  position: fixed; top: var(--topbar-h, 54px); left: 100%;
+  position: fixed; top: var(--topbar-h, 56px); right: 0; left: auto;
   width: min(290px, calc(100vw - 32px));
-  height: calc(100dvh - var(--topbar-h, 54px));
+  height: calc(100dvh - var(--topbar-h, 56px));
   background: var(--bg-elev); border-left: 1px solid var(--line);
-  transform: translateX(0); transition: transform .24s ease;
-  z-index: 90; padding: 20px 12px; display: flex; flex-direction: column; gap: 4px;
+  transform: translateX(108%); transition: transform .24s ease;
+  z-index: 90; box-shadow: -4px 0 24px rgba(0,0,0,.22);
+  padding: 20px 12px; display: flex; flex-direction: column; gap: 4px;
   overflow-y: auto;
 }
-.mobile-nav.open { transform: translateX(-100%); }
+.mobile-nav.open { transform: translateX(0); }
 .mobile-nav .nav-link     { display: block; font-size: var(--fs-panel-title, 14px); padding: 10px 14px; }
 .mobile-nav .nav-link-dev { display: flex;  font-size: var(--fs-panel-title, 14px); padding: 10px 14px; }
 .mobile-nav .nav-sep      { width: 100%; height: 1px; background: var(--line); margin: 6px 0; }
@@ -144,7 +191,7 @@ html[data-theme="light"] .site-topbar {
 
 /* Col 1 — brand */
 .footer-block--brand { display: flex; flex-direction: column; gap: 24px; }
-.footer-logo-link    { display: inline-flex; text-decoration: none; opacity: .9; transition: opacity var(--tr, 180ms ease); }
+.footer-logo-link    { display: inline-flex; text-decoration: none; opacity: 1; transition: opacity var(--tr, 180ms ease); }
 .footer-logo-link:hover { opacity: 1; }
 .footer-logo-link .yql { fill: var(--text); }
 .footer-logo-link .yqs { fill: var(--cyan); }

@@ -15,6 +15,14 @@
 | CTA canónica | **"Reserva tu demo"** |
 | Copy | Español neutro — sin voseo ni regionalismos |
 
+### Ortografía y sintaxis del copy
+
+- Todo texto visible al usuario debe respetar ortografía en español (acentos, tildes diacríticas y puntuación).
+- Evitar mayúsculas sostenidas en labels de UI salvo siglas (`POS`, `SLA`, `SKU`, `API`).
+- Usar terminología consistente en todos los módulos:
+  - "Facturación", "nota de débito", "nota de crédito", "órdenes", "proyección", "preparación".
+- Si un indicador muestra fórmula o composición, redactar en lenguaje funcional claro y gramaticalmente correcto.
+
 ### Logo
 
 - Siempre como **SVG inline** — nunca `<img src="logo.svg">` ni `<img src="logo.png">`
@@ -985,5 +993,5 @@ applyTheme(resolveTheme());
 
 ---
 
-*YiQi ERP · Design System v1.2.5 · Última actualización: 03/05/2026*
+*YiQi ERP · Design System v1.2.5 · Última actualización: 14/05/2026*
 *Reemplaza todas las versiones anteriores de yiqi-design.md*

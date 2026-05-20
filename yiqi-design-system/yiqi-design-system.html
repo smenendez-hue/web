@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<title>YiQi ERP — Design System v1.2.5</title>
+<title>YiQi ERP — Design System v1.2.6</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -13,9 +13,166 @@
 <link rel="stylesheet" href="ds-doc.css">
 <script src="components/site-footer.js" defer></script>
 <script src="components/llm-fab.js" defer></script>
+<script src="components/analytics-pro-banner.js" defer></script>
+<style>
+/* ─── DS v1.2.6 ─────────────────────────────────────────── */
+
+/* Nav badge (versión / nuevo) */
+.ds-nav-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font: 600 9px var(--mono);
+  letter-spacing: .04em;
+  border-radius: var(--radius-pill);
+  background: var(--cyan-soft);
+  color: var(--cyan);
+  vertical-align: middle;
+}
+.ds-nav-badge-amber {
+  background: var(--amber-soft, rgba(246,166,35,.12));
+  color: var(--amber);
+}
+
+/* xxl breakpoint — grids densos suman columna */
+@media (min-width: 1440px) {
+  .kpi-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .depth-stack-demo-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* Preview takeover */
+.ds-preview-frame {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+}
+.ds-preview-frame.open { display: flex; }
+body.preview-open { overflow: hidden; }
+body.preview-open .ds-topbar,
+body.preview-open .page-hero,
+body.preview-open .ds-layout { display: none !important; }
+
+.ds-preview-topbar {
+  flex: 0 0 auto;
+  height: 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 1;
+}
+.ds-preview-meta { display: flex; align-items: baseline; gap: 10px; }
+.ds-preview-kicker {
+  font: 600 10px var(--mono);
+  letter-spacing: .12em;
+  color: var(--cyan);
+}
+.ds-preview-title {
+  font: 600 13px var(--sans);
+  color: var(--text);
+}
+.ds-preview-close {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font: 500 12px var(--sans);
+  cursor: pointer;
+  transition: all var(--tr);
+}
+.ds-preview-close:hover {
+  color: var(--text);
+  background: var(--cyan-soft);
+  border-color: rgba(0,204,255,.28);
+}
+.ds-preview-iframe {
+  flex: 1 1 auto;
+  width: 100%; height: 100%;
+  border: 0;
+  background: var(--bg);
+}
+
+/* ─── Tipografía v1.2.6: Greycliff CF para headers · IBM Plex Mono tabular para cifras ─── */
+
+/* Si tenés licencia/Adobe Fonts/Typekit, agregá el <link> respectivo en <head>.
+   El fallback es Plus Jakarta Sans, ya en uso para .page-hero-title. */
+
+:root {
+  --font-display: "Greycliff CF", "GreycliffCF", "Plus Jakarta Sans",
+                  "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+.ds-section-title,
+.page-hero-title,
+.ds-section-header .ds-section-title {
+  font-family: var(--font-display) !important;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+
+/* Cifras de KPI cards — IBM Plex Mono con tabular-nums */
+.kpi-value {
+  font-family: "IBM Plex Mono", ui-monospace, "SF Mono", monospace !important;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
+.kpi-label { letter-spacing: .04em; }
+
+/* ─── Marca externa Google (v1.2.6) ─── */
+/* Excepción explícita al DS: usa la paleta oficial de Google.
+   No reutilizar fuera de contextos de integración con Google. */
+.badge-google {
+  background: conic-gradient(from 0deg at 50% 50%,
+              #4285F4 0deg 90deg,
+              #DB4437 90deg 180deg,
+              #F4B400 180deg 270deg,
+              #0F9D58 270deg 360deg);
+  background-clip: border-box;
+  color: #fff;
+  font: 700 9px "Google Sans", "Product Sans", "Plus Jakarta Sans", var(--mono);
+  letter-spacing: .12em;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  border: 0;
+  position: relative;
+  z-index: 0;
+  text-shadow: 0 1px 0 rgba(0,0,0,.18);
+}
+.badge-google::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,.0), rgba(0,0,0,.15));
+  z-index: -1;
+}
+
+
+</style>
+
+<link rel="preload" href="system/fonts/Greycliff-CF-Heavy.otf" as="font" type="font/otf" crossorigin>
 </head>
 <body>
 <div class="ds-overlay" onclick="closeNav()"></div>
+<!-- PREVIEW TAKEOVER (v1.2.6) -->
+<div class="ds-preview-frame" id="ds-preview-frame" aria-hidden="true">
+  <div class="ds-preview-topbar">
+    <div class="ds-preview-meta">
+      <span class="ds-preview-kicker">PREVIEW</span>
+      <span class="ds-preview-title" id="ds-preview-title">Panel Gerencial</span>
+    </div>
+    <button class="ds-preview-close" onclick="closePreview()" aria-label="Cerrar preview">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <span>Volver al DS</span>
+    </button>
+  </div>
+  <iframe class="ds-preview-iframe" id="ds-preview-iframe" title="YiQi Panel Gerencial preview" loading="lazy"></iframe>
+</div>
 <!-- TOPBAR -->
 <header class="ds-topbar">
 <div class="topbar-brand">
@@ -31,7 +188,7 @@
 </g>
 </svg>
 </a>
-<div class="topbar-pill">Design System v1.2.5</div>
+<div class="topbar-pill">Design System v1.2.6</div>
 </div>
 <div class="topbar-search-wrap" id="topbar-search-wrap">
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -65,6 +222,7 @@
 </div>
 </div>
 </div>
+
 <!-- LAYOUT -->
 <div class="ds-layout">
 <!-- NAV -->
@@ -99,19 +257,28 @@
 <span class="ds-nav-label">Layout</span>
 <a class="ds-nav-item" href="#grid">Grid &amp; layout</a>
 <a class="ds-nav-item" href="#bg-grid">Grilla cuadriculada</a>
+<a class="ds-nav-item" href="#depth-stack">Depth stack <span class="ds-nav-badge">v1.2.6</span></a>
 <a class="ds-nav-item" href="#demo-form">Demo form</a>
 <a class="ds-nav-item" href="#llm-fab">LLM FAB</a>
+</div>
+<div class="ds-nav-section">
+<span class="ds-nav-label">Previews</span>
+<a class="ds-nav-item" href="#pro-banner">Analytics Pro <span class="ds-nav-badge ds-nav-badge-amber">PRO</span></a>
+<a class="ds-nav-item ds-nav-preview" href="#preview-panel" data-preview="examples/panel-gerencial.html">Panel Gerencial <span class="ds-nav-badge ds-nav-badge-amber">NEW</span></a>
 </div>
 </div>
 </nav>
 <!-- CONTENT -->
 <main class="ds-content">
+<!-- ─── BANNER ANALYTICS PRO (v1.2.6 — dentro del content para no empujar la sidebar) ─── -->
+<analytics-pro-banner base="./" preview="examples/panel-gerencial.html"></analytics-pro-banner>
+
 <!-- ─── RELEASE NOTES ─── -->
 <section class="ds-section" id="release-notes">
 <div class="ds-section-header">
 <div class="ds-section-kicker">00 · Novedades</div>
-<h2 class="ds-section-title">Novedades · v1.2.5</h2>
-<p class="ds-section-sub">Filosofía borderless, token <code>--text-cyan-muted</code>, iconografía SVG inline, patrón mod-card, filtro por tags, fondo con grilla + radiales y toggle de tema en 3 pasos.</p>
+<h2 class="ds-section-title">Novedades · v1.2.6</h2>
+<p class="ds-section-sub">Patrón <strong>depth stack</strong> para secciones de marketing, breakpoint <code>xxl ≥ 1440px</code> con 5 columnas para grids densos, y preview en sidebar del Panel Gerencial Analytics Pro.</p>
 </div>
 <div class="token-grid-2">
 <div class="card">
@@ -132,6 +299,35 @@
 <tr><th>Versión</th><th>Fecha</th><th>Tipo</th><th>Detalle</th></tr>
 </thead>
 <tbody>
+<tr>
+<td class="mono-cell">v1.2.6</td>
+<td class="mono-cell">15/05/2026</td>
+<td><span class="badge badge-google" title="Marca externa — esquema Google">EXT</span></td>
+<td>Integración visual con paleta <strong style="font-family:'Google Sans','Product Sans','Plus Jakarta Sans',sans-serif">Google</strong> para badges de marca externa. Esquema 4 colores —
+<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#4285F4;vertical-align:middle;margin:0 2px"></span>
+<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#DB4437;vertical-align:middle;margin:0 2px"></span>
+<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#F4B400;vertical-align:middle;margin:0 2px"></span>
+<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#0F9D58;vertical-align:middle;margin:0 2px"></span>
+— para integraciones con Google Workspace, Google Ads y Looker Studio.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.6</td>
+<td class="mono-cell">15/05/2026</td>
+<td><span class="badge badge-green">PATRÓN</span></td>
+<td>Nuevo patrón <strong>depth stack</strong>: 3 capas (grilla con fade radial · radiales spotlight · halo de frame) + cards con multi-shadow. Aplicado a la sección Módulos de la landing.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.6</td>
+<td class="mono-cell">15/05/2026</td>
+<td><span class="badge badge-cyan">RESPONSIVE</span></td>
+<td>Nuevo breakpoint <code>xxl ≥ 1440px</code> — grids densos suman columna. Tablas y módulos pasan de 4 → 5 columnas en monitores anchos.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.6</td>
+<td class="mono-cell">15/05/2026</td>
+<td><span class="badge badge-amber">PREVIEW</span></td>
+<td>Sidebar incluye preview del <strong>Panel Gerencial · Analytics Pro</strong>. Modo takeover: oculta el resto del DS y muestra el panel en full-bleed.</td>
+</tr>
 <tr>
 <td class="mono-cell">v1.2.5</td>
 <td class="mono-cell">07/05/2026</td>
@@ -377,7 +573,7 @@
 <div class="swatch-info">
 <div class="swatch-name">Cyan Soft</div>
 <div class="swatch-token">--cyan-soft</div>
-<div class="swatch-hex">rgba(0,204,255,.10)</div>
+<div class="swatch-hex">rgba(0,204,255,.10) · ≈#091d23</div>
 </div>
 </div>
 <div class="swatch-card">
@@ -385,45 +581,50 @@
 <div class="swatch-info">
 <div class="swatch-name">Cyan Soft 2</div>
 <div class="swatch-token">--cyan-soft-2</div>
-<div class="swatch-hex">rgba(0,204,255,.16)</div>
+<div class="swatch-hex">rgba(0,204,255,.16) · ≈#082932</div>
 </div>
 </div>
 </div>
 <div class="subsection-title">Colores semánticos</div>
-<div class="semantic-row">
-<div class="semantic-chip">
-<div class="semantic-dot" style="background:var(--green)"></div>
-<div>
-<div class="semantic-label">Success / Green</div>
-<div class="semantic-token">--green · #15d49c · #0c9b6d</div>
+<div class="token-grid">
+<div class="swatch-card">
+<div class="swatch-block" style="background:var(--green)"></div>
+<div class="swatch-info">
+<div class="swatch-name">Success / Green</div>
+<div class="swatch-token">--green</div>
+<div class="swatch-hex">#15d49c · #0c9b6d</div>
 </div>
 </div>
-<div class="semantic-chip">
-<div class="semantic-dot" style="background:var(--amber)"></div>
-<div>
-<div class="semantic-label">Warning / Amber</div>
-<div class="semantic-token">--amber · #ffb020 · #c78000</div>
+<div class="swatch-card">
+<div class="swatch-block" style="background:var(--amber)"></div>
+<div class="swatch-info">
+<div class="swatch-name">Warning / Amber</div>
+<div class="swatch-token">--amber</div>
+<div class="swatch-hex">#ffb020 · #c78000</div>
 </div>
 </div>
-<div class="semantic-chip">
-<div class="semantic-dot" style="background:var(--red)"></div>
-<div>
-<div class="semantic-label">Danger / Red</div>
-<div class="semantic-token">--red · #ff637d · #d4485e</div>
+<div class="swatch-card">
+<div class="swatch-block" style="background:var(--red)"></div>
+<div class="swatch-info">
+<div class="swatch-name">Danger / Red</div>
+<div class="swatch-token">--red</div>
+<div class="swatch-hex">#ff637d · #d4485e</div>
 </div>
 </div>
-<div class="semantic-chip">
-<div class="semantic-dot" style="background:var(--blue)"></div>
-<div>
-<div class="semantic-label">Info / Blue</div>
-<div class="semantic-token">--blue · #7ab7ff · #347de6</div>
+<div class="swatch-card">
+<div class="swatch-block" style="background:var(--blue)"></div>
+<div class="swatch-info">
+<div class="swatch-name">Info / Blue</div>
+<div class="swatch-token">--blue</div>
+<div class="swatch-hex">#7ab7ff · #347de6</div>
 </div>
 </div>
-<div class="semantic-chip">
-<div class="semantic-dot" style="background:var(--purple)"></div>
-<div>
-<div class="semantic-label">Accent / Purple</div>
-<div class="semantic-token">--purple · #a78bfa · #7c3aed</div>
+<div class="swatch-card">
+<div class="swatch-block" style="background:var(--purple)"></div>
+<div class="swatch-info">
+<div class="swatch-name">Accent / Purple</div>
+<div class="swatch-token">--purple</div>
+<div class="swatch-hex">#a78bfa · #7c3aed</div>
 </div>
 </div>
 </div>
@@ -433,28 +634,31 @@
 <div class="ds-section-header">
 <div class="ds-section-kicker">03 · Tipografía</div>
 <h2 class="ds-section-title">Escala tipográfica</h2>
-<p class="ds-section-sub">Dos familias: <strong>Inter</strong> para texto de interfaz, <strong>IBM Plex Mono</strong> para labels, tokens, badges y valores numéricos.</p>
+<p class="ds-section-sub">Tres familias: <strong>Greycliff CF</strong> para jerarquías mayores (display titles), <strong>Inter</strong> para texto de interfaz, <strong>IBM Plex Mono</strong> para labels, tokens, badges y valores numéricos.</p>
 </div>
-<div class="subsection-title">Jerarquía — Inter (UI sans)</div>
+<div class="subsection-title">Jerarquía display — Greycliff CF Heavy <span class="badge badge-cyan" style="font:600 9px var(--mono);vertical-align:middle;margin-left:6px">NEW v1.2.6</span></div>
+<p style="font:400 12px/1.55 var(--sans);color:var(--muted);margin:-4px 0 14px;max-width:640px">Único peso cargado: <strong style="color:var(--text)">Heavy</strong> (800). El archivo se declara con <code style="font:600 11px var(--mono);color:var(--cyan)">font-weight: 700 900</code> en <code style="font:600 11px var(--mono);color:var(--cyan)">@font-face</code>, así cubre cualquier display title con peso 700-900. Pesos menores caen al fallback (Plus Jakarta Sans → Inter).</p>
 <div class="type-row">
-<span style="font-size:40px;font-weight:700;letter-spacing:-.04em;line-height:1">Dashboard general</span>
-<div class="type-meta"><div class="type-spec">40px / 700 / ls -.04em</div><div class="type-spec" style="margin-top:3px">Hero title</div></div>
-</div>
-<div class="type-row">
-<span style="font-size:30px;font-weight:700;letter-spacing:-.04em">Configuración</span>
-<div class="type-meta"><div class="type-spec">30px / 700 / ls -.04em</div><div class="type-spec" style="margin-top:3px">Placeholder title</div></div>
+<span style="font-family:var(--font-display);font-size:40px;font-weight:800;letter-spacing:-.028em;line-height:1">Dashboard general</span>
+<div class="type-meta"><div class="type-spec">40px / 800 / ls -.028em</div><div class="type-spec" style="margin-top:3px">Hero title · Greycliff CF Heavy</div></div>
 </div>
 <div class="type-row">
-<span style="font-size:28px;font-weight:700;letter-spacing:-.04em">$2,847,391</span>
-<div class="type-meta"><div class="type-spec">28px / 700 / ls -.04em</div><div class="type-spec" style="margin-top:3px">KPI value</div></div>
+<span style="font-family:var(--font-display);font-size:30px;font-weight:800;letter-spacing:-.028em">Configuración</span>
+<div class="type-meta"><div class="type-spec">30px / 800 / ls -.028em</div><div class="type-spec" style="margin-top:3px">Placeholder title · Greycliff CF Heavy</div></div>
 </div>
 <div class="type-row">
-<span style="font-size:24px;font-weight:700;letter-spacing:-.03em">Facturación mensual</span>
-<div class="type-meta"><div class="type-spec">24px / 700 / ls -.03em</div><div class="type-spec" style="margin-top:3px">Section hero</div></div>
+<span style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:28px;font-weight:700;letter-spacing:-.015em;font-variant-numeric:tabular-nums">$2,847,391</span>
+<div class="type-meta"><div class="type-spec">28px / 700 / tabular-nums</div><div class="type-spec" style="margin-top:3px">KPI value · IBM Plex Mono</div></div>
 </div>
+<div class="type-row">
+<span style="font-family:var(--font-display);font-size:24px;font-weight:800;letter-spacing:-.024em">Facturación mensual</span>
+<div class="type-meta"><div class="type-spec">24px / 800 / ls -.024em</div><div class="type-spec" style="margin-top:3px">Section hero · Greycliff CF Heavy</div></div>
+</div>
+
+<div class="subsection-title" style="margin-top:28px">Jerarquía UI — Inter (UI sans)</div>
 <div class="type-row">
 <span style="font-size:14px;font-weight:700">Panel de análisis</span>
-<div class="type-meta"><div class="type-spec">14px / 700</div><div class="type-spec" style="margin-top:3px">Panel title</div></div>
+<div class="type-meta"><div class="type-spec">14px / 700</div><div class="type-spec" style="margin-top:3px">Panel title · Inter</div></div>
 </div>
 <div class="type-row">
 <span style="font-size:13px;font-weight:600">Módulo Compras</span>
@@ -1333,6 +1537,11 @@
 </thead>
 <tbody>
 <tr>
+<td class="mono-cell"><span class="badge badge-cyan" style="font:600 9px var(--mono)">NEW</span> xxl</td>
+<td class="mono-cell">≥ 1440px</td>
+<td>Grids densos suman columna — módulos pasan a 5 cols, KPIs pueden ir 5–6</td>
+</tr>
+<tr>
 <td class="mono-cell">xl</td>
 <td class="mono-cell">&gt; 1200px</td>
 <td>Layout completo — 4 col KPIs, sidebar expandido</td>
@@ -1473,6 +1682,136 @@ html[data-theme="light"] .bg-grid-demo-fade {
     </div>
     <div style="display:flex;justify-content:space-between;padding:8px 12px;border-radius:var(--radius-sm);background:var(--bg-soft)">
       <span style="color:var(--cyan)">.bg-grid-fade-b/t/c</span><span style="color:var(--muted-2)">máscaras de fade — top / bottom / radial</span>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<!-- ─── DEPTH STACK (v1.2.6) ─── -->
+<section class="ds-section" id="depth-stack">
+<div class="ds-section-header">
+<div class="ds-section-kicker">17 · Patrón</div>
+<h2 class="ds-section-title">Depth stack <span class="badge badge-cyan" style="font:600 10px var(--mono);vertical-align:middle;margin-left:6px">NEW v1.2.6</span></h2>
+<p class="ds-section-sub">Patrón de profundidad para secciones de marketing (landing, leads). Tres capas decorativas no intrusivas + cards con sombra multi-stop. Pensado para grids densos donde el fondo plano se sentía vacío.</p>
+</div>
+
+<div class="subsection-title">Anatomía — 3 capas</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+
+  <div style="position:relative;border-radius:var(--radius-lg);background:var(--bg-elev-2);overflow:hidden;min-height:140px;display:flex;align-items:flex-end;padding:14px">
+    <div style="position:absolute;inset:0;pointer-events:none;
+      background-image:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(180deg,rgba(255,255,255,.05) 1px,transparent 1px);
+      background-size:36px 36px;
+      mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 45%, transparent 82%);
+      -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 45%, transparent 82%)" class="bg-grid-demo"></div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:4px">
+      <span class="logo-label" style="color:var(--cyan)">CAPA 1</span>
+      <span class="swatch-hex">Grilla con fade radial</span>
+    </div>
+  </div>
+
+  <div style="position:relative;border-radius:var(--radius-lg);background:var(--bg-elev-2);overflow:hidden;min-height:140px;display:flex;align-items:flex-end;padding:14px">
+    <div style="position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 38% at 50% -6%, rgba(0,204,255,.22), transparent 62%),
+        radial-gradient(ellipse 85% 50% at 50% 118%, rgba(0,204,255,.12), transparent 68%)"></div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:4px">
+      <span class="logo-label" style="color:var(--cyan)">CAPA 2</span>
+      <span class="swatch-hex">Radiales spotlight</span>
+    </div>
+  </div>
+
+  <div style="position:relative;border-radius:var(--radius-lg);background:var(--bg-elev-2);overflow:hidden;min-height:140px;display:flex;align-items:center;justify-content:center">
+    <div style="position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,204,255,.16), transparent 70%)"></div>
+    <div style="position:relative;display:flex;gap:6px">
+      <div style="width:36px;height:36px;border-radius:8px;background:var(--bg-elev);box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 14px 32px rgba(8,16,32,.40)"></div>
+      <div style="width:36px;height:36px;border-radius:8px;background:var(--bg-elev);box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 14px 32px rgba(8,16,32,.40)"></div>
+      <div style="width:36px;height:36px;border-radius:8px;background:var(--bg-elev);box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 14px 32px rgba(8,16,32,.40)"></div>
+    </div>
+    <span class="logo-label" style="position:absolute;left:14px;bottom:14px;color:var(--cyan)">CAPA 3 · halo del frame</span>
+  </div>
+</div>
+
+<div class="subsection-title">Resultado compuesto</div>
+<div style="position:relative;border-radius:var(--radius-lg);background:var(--bg-elev-2);overflow:hidden;isolation:isolate;padding:36px 28px;margin-bottom:16px;min-height:220px">
+  <div style="position:absolute;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(180deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:52px 52px;
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 45%, transparent 82%);
+    -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 45%, transparent 82%)" class="bg-grid-demo"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 55% 38% at 50% -6%, rgba(0,204,255,.16), transparent 62%),
+      radial-gradient(ellipse 85% 50% at 50% 118%, rgba(0,204,255,.08), transparent 68%)"></div>
+  <div style="position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+      <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">VENTAS</div>
+      <div class="swatch-hex">Omnicanalidad</div>
+    </div>
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+      <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">STOCK</div>
+      <div class="swatch-hex">Tiempo real</div>
+    </div>
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+      <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">CRM</div>
+      <div class="swatch-hex">Pipeline</div>
+    </div>
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+      <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">POS</div>
+      <div class="swatch-hex">Offline</div>
+    </div>
+  </div>
+</div>
+
+<div class="subsection-title">Uso — CSS recomendado</div>
+<div class="card">
+  <div style="background:var(--bg);border-radius:var(--radius);padding:16px;font:400 12px var(--mono);color:var(--muted);line-height:1.85">
+<span style="color:var(--cyan)">.depth-section</span> { position: <span style="color:var(--amber)">relative</span>; overflow: <span style="color:var(--amber)">hidden</span>; isolation: <span style="color:var(--amber)">isolate</span>; }<br><br>
+<span style="color:var(--muted-2)">/* Capa 1 — Grilla con fade radial */</span><br>
+<span style="color:var(--cyan)">.depth-section::before</span> {<br>
+&nbsp;&nbsp;content: <span style="color:var(--green)">""</span>; position: <span style="color:var(--amber)">absolute</span>; inset: <span style="color:var(--amber)">0</span>; pointer-events: <span style="color:var(--amber)">none</span>;<br>
+&nbsp;&nbsp;background:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linear-gradient(rgba(255,255,255,<span style="color:var(--green)">.022</span>) 1px, transparent 1px),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;linear-gradient(<span style="color:var(--amber)">90deg</span>, rgba(255,255,255,<span style="color:var(--green)">.022</span>) 1px, transparent 1px);<br>
+&nbsp;&nbsp;background-size: <span style="color:var(--amber)">52px 52px</span>;<br>
+&nbsp;&nbsp;mask-image: radial-gradient(ellipse <span style="color:var(--amber)">70%</span> <span style="color:var(--amber)">60%</span> at <span style="color:var(--amber)">50%</span> <span style="color:var(--amber)">50%</span>, <span style="color:var(--green)">#000</span>, transparent <span style="color:var(--amber)">82%</span>);<br>
+}<br><br>
+<span style="color:var(--muted-2)">/* Capa 2 — Radiales spotlight */</span><br>
+<span style="color:var(--cyan)">.depth-section::after</span> {<br>
+&nbsp;&nbsp;content: <span style="color:var(--green)">""</span>; position: <span style="color:var(--amber)">absolute</span>; inset: <span style="color:var(--amber)">0</span>; pointer-events: <span style="color:var(--amber)">none</span>;<br>
+&nbsp;&nbsp;background:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;radial-gradient(ellipse <span style="color:var(--amber)">55%</span> <span style="color:var(--amber)">38%</span> at <span style="color:var(--amber)">50%</span> <span style="color:var(--amber)">-6%</span>, rgba(0,204,255,<span style="color:var(--green)">.10</span>), transparent <span style="color:var(--amber)">62%</span>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;radial-gradient(ellipse <span style="color:var(--amber)">85%</span> <span style="color:var(--amber)">50%</span> at <span style="color:var(--amber)">50%</span> <span style="color:var(--amber)">118%</span>, rgba(0,204,255,<span style="color:var(--green)">.045</span>), transparent <span style="color:var(--amber)">68%</span>);<br>
+}<br><br>
+<span style="color:var(--muted-2)">/* Capa 3 — Halo detrás del grid (z-index negativo) */</span><br>
+<span style="color:var(--cyan)">.depth-grid::before</span> {<br>
+&nbsp;&nbsp;content: <span style="color:var(--green)">""</span>; position: <span style="color:var(--amber)">absolute</span>; inset: <span style="color:var(--amber)">-28px -40px</span>; z-index: <span style="color:var(--amber)">-1</span>;<br>
+&nbsp;&nbsp;background: radial-gradient(ellipse <span style="color:var(--amber)">60%</span> <span style="color:var(--amber)">70%</span> at <span style="color:var(--amber)">50%</span> <span style="color:var(--amber)">50%</span>, rgba(0,204,255,<span style="color:var(--green)">.05</span>), transparent <span style="color:var(--amber)">70%</span>);<br>
+}<br><br>
+<span style="color:var(--muted-2)">/* Card con multi-shadow */</span><br>
+<span style="color:var(--cyan)">.depth-card</span> {<br>
+&nbsp;&nbsp;background: linear-gradient(<span style="color:var(--amber)">180deg</span>, rgba(255,255,255,<span style="color:var(--green)">.024</span>), transparent <span style="color:var(--amber)">38%</span>), var(--bg-elev-2);<br>
+&nbsp;&nbsp;<span style="color:var(--muted-2)">/* Sombras tinted navy — DS v1.2.6 evita negro puro */</span><br>
+&nbsp;&nbsp;box-shadow:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--amber)">0 1px 0</span> rgba(255,255,255,<span style="color:var(--green)">.045</span>) inset,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--amber)">0 2px 6px</span> rgba(8,16,32,<span style="color:var(--green)">.28</span>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--amber)">0 14px 32px</span> rgba(8,16,32,<span style="color:var(--green)">.40</span>);<br>
+}
+  </div>
+</div>
+
+<div class="card" style="margin-top:12px">
+  <div style="font:700 13px var(--sans);margin-bottom:10px">Cuándo aplicarlo</div>
+  <div style="display:grid;gap:8px">
+    <div style="display:flex;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--bg-soft)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg>
+      <span style="font:400 12px var(--sans);color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Sí —</strong> secciones de landing con grilla densa (módulos, features, pricing tiers), heroes secundarios, banners de campaña.</span>
+    </div>
+    <div style="display:flex;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--bg-soft)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0;margin-top:2px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <span style="font:400 12px var(--sans);color:var(--muted);line-height:1.6"><strong style="color:var(--text)">No —</strong> dashboards, informes, formularios, tablas largas. El patrón es para marketing, no para producto.</span>
     </div>
   </div>
 </div>
@@ -1881,11 +2220,46 @@ sections.forEach(s => observer.observe(s));
 
 navItems.forEach(item => {
   item.addEventListener('click', e => {
+    /* Preview takeover (v1.2.6) */
+    const previewSrc = item.getAttribute('data-preview');
+    if (previewSrc) {
+      e.preventDefault();
+      openPreview(previewSrc, item.textContent.replace(/NEW.*$/i, '').trim());
+      if (window.innerWidth <= 980) closeNav();
+      return;
+    }
     e.preventDefault();
     const target = document.querySelector(item.getAttribute('href'));
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (window.innerWidth <= 980) closeNav();
   });
+});
+
+/* ── Preview takeover (v1.2.6) ── */
+function openPreview(src, title) {
+  const frame = document.getElementById('ds-preview-frame');
+  const iframe = document.getElementById('ds-preview-iframe');
+  const titleEl = document.getElementById('ds-preview-title');
+  if (!frame || !iframe) return;
+  iframe.src = src;
+  if (titleEl && title) titleEl.textContent = title;
+  frame.classList.add('open');
+  frame.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('preview-open');
+}
+function closePreview() {
+  const frame = document.getElementById('ds-preview-frame');
+  const iframe = document.getElementById('ds-preview-iframe');
+  if (!frame) return;
+  frame.classList.remove('open');
+  frame.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('preview-open');
+  if (iframe) iframe.src = 'about:blank';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.body.classList.contains('preview-open')) {
+    closePreview();
+  }
 });
 
 window.addEventListener('resize', () => {

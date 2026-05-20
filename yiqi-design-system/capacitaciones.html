@@ -65,20 +65,26 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { overflow-x: hidden; }
+html, body { overflow-x: clip; }
 body {
   font-family: var(--sans);
   color: var(--text);
   background:
     radial-gradient(ellipse at 75% 0%,  rgba(0,204,255,.08), transparent 38%),
     radial-gradient(ellipse at 15% 50%, rgba(0,204,255,.04), transparent 30%),
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
     var(--bg);
+  background-size: auto, auto, 52px 52px, 52px 52px, auto;
 }
 [data-theme="light"] body {
   background:
     radial-gradient(ellipse at 75% 0%,  rgba(0,159,199,.07), transparent 38%),
     radial-gradient(ellipse at 15% 50%, rgba(0,159,199,.03), transparent 30%),
+    linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
     var(--bg);
+  background-size: auto, auto, 52px 52px, 52px 52px, auto;
 }
 
 /* ── Hero ── */
@@ -249,6 +255,10 @@ body {
       Últimas capacitaciones
     </div>
     <div class="yt-videos-row">
+      <div class="yt-featured">
+        <iframe src="https://www.youtube.com/embed/rOFjhGefFwc?rel=0&modestbranding=1"
+          title="YiQi ERP - Capacitación general #19" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
       <div class="yt-featured">
         <iframe src="https://www.youtube.com/embed/7BqLuqb8Nw8?rel=0&modestbranding=1"
           title="YiQi ERP - Capacitación general #18 - CRM" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>

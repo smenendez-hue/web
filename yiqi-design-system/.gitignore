@@ -13,3 +13,5 @@ examples/
 
 # PERMITIR contexto
 !content/context/*.md
+*.bak
+*.tmp

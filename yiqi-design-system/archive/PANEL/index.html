@@ -297,6 +297,25 @@ canvas{display:block}
 .donut-leg-val{font:500 10px var(--mono);color:var(--muted-2);flex-shrink:0}
 .donut-alert{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:var(--radius-sm);border:1px solid rgba(255,99,125,.25);background:var(--red-soft);font:400 11px var(--sans);color:var(--red)}
 
+/* CHANNEL CARDS */
+.channel-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:16px 20px 20px;align-content:start}
+.channel-card{padding:12px 14px;background:var(--bg-elev);border:1px solid var(--line);border-radius:var(--radius);display:flex;flex-direction:column;gap:5px;transition:border-color 180ms ease;overflow:hidden}
+.channel-card:hover{border-color:var(--line-strong)}
+.channel-card-top{display:flex;align-items:center;gap:7px}
+.channel-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.channel-name{font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.channel-alert-badge{font:700 9px var(--mono);padding:2px 6px;border-radius:var(--radius-pill);background:var(--red-soft);color:var(--red);border:1px solid rgba(255,99,125,.22);flex-shrink:0;white-space:nowrap}
+.channel-val{font:700 17px var(--sans);letter-spacing:-.03em;color:var(--text);line-height:1}
+.channel-meta{display:flex;align-items:center;justify-content:space-between;gap:4px}
+.channel-pct{font:600 11px var(--mono);color:var(--muted-2)}
+.channel-delta-up{font:600 11px var(--mono);color:var(--green)}
+.channel-delta-down{font:600 11px var(--mono);color:var(--red)}
+.channel-sparkline{display:block;width:100%;height:22px;overflow:visible;margin-top:2px}
+.channel-sparkline polyline{fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.canales-layout{display:flex;min-height:0}
+.canales-donut-col{flex:0 0 auto;border-right:1px solid var(--line)}
+.canales-cards-col{flex:1;min-width:0}
+
 .table-wrap{overflow-x:auto;flex:1}
 .data-table{width:100%;border-collapse:collapse}
 .data-table th{padding:9px 16px;background:var(--bg-elev);font:700 10px var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--muted-2);border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:color 180ms ease}
@@ -1618,9 +1637,11 @@ const PANELS=[
    body:`<div class="heatmap-panel" id="heatmap-container"></div>`,
    modal:{kicker:'Actividad horaria',title:'Heatmap — últimos 7 días',color:'var(--purple)',stats:[{l:'Franja pico',v:'18–20h',s:'31% del volumen'},{l:'Día más activo',v:'Sábado',s:'mayor concentración'},{l:'Hora valle',v:'04–06h',s:'actividad mínima'}],chartType:'bar',chartLabel:'Pedidos por franja horaria (hoy)',chartData:[4,2,1,1,3,8,22,45,67,82,91,88,76,65,58,72,89,112,134,128,95,68,42,18],chartLabels:['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h','22h','23h'],insight:'Las franjas de 8–11h y 18–20h concentran el 62% de los pedidos. Considerar refuerzo de staffing en esos horarios.'}},
 
-  {id:'canales',span:1,kicker:'Canales',title:'Mix de origen de ventas',badge:'<span class="badge badge-muted">Hoy</span>',
-   body:`<div class="donut-panel" id="donut-canales"></div>`,
+  {id:'canales',span:2,kicker:'Canales',title:'Mix de origen de ventas',badge:'<span class="badge badge-muted">Hoy</span>',
+   body:`<div class="canales-layout"><div class="canales-donut-col"><div class="donut-panel" id="donut-canales"></div></div><div class="canales-cards-col"><div class="channel-cards" id="channel-cards"></div></div></div>`,
    modal:{kicker:'Canales',title:'Mix de origen de ventas',color:'var(--cyan)',stats:[{l:'Líder',v:'E-commerce',s:'43% del total'},{l:'2do',v:'WhatsApp',s:'28% — alerta ↓32%'},{l:'Crecimiento',v:'POS',s:'+7% vs ayer'}],chartType:'doughnut',chartLabel:'Participación por canal',chartData:[43,28,19,10],chartLabels:['E-commerce','WhatsApp','POS','Teléfono'],insight:'WhatsApp cayó 32% vs ayer. E-commerce compensa el volumen pero el ticket es 18% menor que POS.'}},
+  {id:'canales-detalle',span:1,kicker:'Evolución',title:'Canales — últimos 7 días',badge:'',
+   body:`<div class="chart-wrap" style="min-height:220px"><canvas id="canales-trend-chart"></canvas></div>`},
 
   {id:'embudo',span:1,kicker:'Conversión',title:'Embudo operativo',badge:'',
    body:`<div class="funnel"><div class="funnel-step"><span>Pedidos ingresados</span><strong>1.284</strong></div><div class="funnel-step"><span>Confirmados</span><strong>1.121</strong></div><div class="funnel-step"><span>Despachados</span><strong>934</strong></div><div class="funnel-step"><span>Entregados</span><strong>881</strong></div></div>`,
@@ -1777,6 +1798,36 @@ function populatePanels(){
   const donutEl=document.getElementById('donut-canales');
   if(donutEl){
     donutEl.innerHTML=`<div class="donut-inner"><div class="donut-chart-wrap"><canvas id="donut-canvas" width="130" height="130" role="img" aria-label="Gráfico de mix de canales de venta"></canvas><div class="donut-center"><span class="donut-center-val">$2.8M</span><span class="donut-center-lbl">facturado</span></div></div><div class="donut-legend">${channels.map(c=>`<div class="donut-leg-item"><div class="donut-leg-bars"><div class="donut-leg-top"><span class="donut-leg-name">${c.label}</span><span class="donut-leg-pct" style="color:${c.alert?'var(--amber)':c.color}">${c.pct}%${c.alert?' ↓':''}</span></div><div class="donut-leg-track"><div class="donut-leg-fill" style="width:${c.pct}%;background:${c.color};opacity:${c.alert?.55:1}"></div></div></div><span class="donut-leg-val">${c.val}</span></div>`).join('')}</div></div><div class="donut-alert"><span class="live-dot" style="background:var(--red);box-shadow:0 0 0 4px rgba(255,99,125,.12)" aria-hidden="true"></span>WhatsApp <strong style="margin:0 3px">↓ 32%</strong> vs ayer — canal con alerta activa</div>`;
+  }
+
+  // ── CANALES: channel cards con sparklines ─────────────────────────────────
+  const chCardsEl=document.getElementById('channel-cards');
+  if(chCardsEl){
+    const chData=[
+      {label:'E-commerce',val:'$1.224K',pct:'43%',delta:'+8%',dir:'up',color:'var(--cyan)',spark:[32,38,35,41,43,45,43],alert:false},
+      {label:'POS sucursal',val:'$883K',pct:'31%',delta:'+5%',dir:'up',color:'var(--green)',spark:[28,29,30,28,31,32,31],alert:false},
+      {label:'WhatsApp',val:'$484K',pct:'17%',delta:'↓ 32%',dir:'down',color:'var(--amber)',spark:[24,26,25,27,26,25,17],alert:true},
+      {label:'Teléfono',val:'$256K',pct:'9%',delta:'+2%',dir:'up',color:'var(--purple)',spark:[8,9,8,9,10,9,9],alert:false}
+    ];
+    chCardsEl.innerHTML=chData.map(ch=>{
+      const sm=ch.spark,mn=Math.min(...sm),mx=Math.max(...sm),rng=mx-mn||1;
+      const pts=sm.map((v,i)=>`${(i/(sm.length-1)*100).toFixed(1)},${((1-(v-mn)/rng)*18+2).toFixed(1)}`).join(' ');
+      return `<div class="channel-card">
+        <div class="channel-card-top">
+          <span class="channel-dot" style="background:${ch.color};box-shadow:0 0 0 3px ${ch.color.replace(')',',').replace('var','rgba').replace(/rgba\(--\w+,/,'rgba(0,0,0,')}.08)"></span>
+          <span class="channel-name">${ch.label}</span>
+          ${ch.alert?'<span class="channel-alert-badge">↓ alerta</span>':''}
+        </div>
+        <div class="channel-val">${ch.val}</div>
+        <div class="channel-meta">
+          <span class="channel-pct">${ch.pct} del total</span>
+          <span class="channel-delta-${ch.dir}">${ch.delta} vs ayer</span>
+        </div>
+        <svg class="channel-sparkline" viewBox="0 0 100 22" preserveAspectRatio="none">
+          <polyline points="${pts}" style="stroke:${ch.color};opacity:${ch.alert?.55:.85}"/>
+        </svg>
+      </div>`;
+    }).join('');
   }
 
   const sl=document.getElementById('signal-list');
@@ -1949,6 +2000,43 @@ function renderCharts(){
     const rawColors=channels.map(c=>getCSSVar(c.color));
     const sorted=sortDonutDesc(rawLabels,rawData,rawColors);
     donutChart=new Chart(donutCanvas,{type:'doughnut',data:{labels:sorted.labels,datasets:[{data:sorted.data,backgroundColor:sorted.colors,borderWidth:3,borderColor:'transparent',hoverOffset:6,borderRadius:3}]},options:{responsive:false,cutout:'68%',rotation:-105,plugins:{legend:{display:false,labels:{color:lbl,font:{family:"'IBM Plex Mono',monospace",size:10},usePointStyle:true}},tooltip:{...tooltipCfg,callbacks:{title:i=>i[0].label,label:i=>` ${i.parsed}%`}}}}});
+  }
+
+  /* Canales trend — evolución 7 días */
+  const cTrend=document.getElementById('canales-trend-chart');
+  if(cTrend){
+    if(window.canalesTrendChart){window.canalesTrendChart.destroy();window.canalesTrendChart=null;}
+    const green=getCSSVar('--green');
+    const amber=getCSSVar('--amber');
+    const purple=getCSSVar('--purple');
+    const mkDataset=(label,data,color,dash=[])=>({
+      label,data,borderColor:color,backgroundColor:'transparent',
+      borderWidth:2,borderDash:dash,pointRadius:3,pointHoverRadius:5,
+      pointBackgroundColor:color,tension:.35
+    });
+    window.canalesTrendChart=new Chart(cTrend,{
+      type:'line',
+      data:{
+        labels:['Lun','Mar','Mié','Jue','Vie','Sáb','Hoy'],
+        datasets:[
+          mkDataset('E-commerce',[32,38,35,41,43,45,43],cyan),
+          mkDataset('POS sucursal',[28,29,30,28,31,32,31],green),
+          mkDataset('WhatsApp',[24,26,25,27,26,25,17],amber,[4,3]),
+          mkDataset('Teléfono',[8,9,8,9,10,9,9],purple,[2,2])
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:true,
+        plugins:{
+          legend:{display:true,position:'bottom',labels:{color:lbl,font:{family:"'IBM Plex Mono',monospace",size:10},usePointStyle:true,pointStyleWidth:8,boxHeight:6,padding:12}},
+          tooltip:{...tooltipCfg,callbacks:{label:i=>` ${i.dataset.label}: ${i.parsed.y}%`}}
+        },
+        scales:{
+          x:{...scalesCfg.x},
+          y:{...scalesCfg.y,ticks:{...scalesCfg.y.ticks,callback:v=>v+'%'},suggestedMin:0,suggestedMax:55}
+        }
+      }
+    });
   }
 
   /* Forecast chart */
