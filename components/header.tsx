@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react"
 import { BLOG_ENABLE } from "@/lib/blog-settings"
 
 const baseNavLinks = [
+  { href: "/novedades", label: "Novedades" },
   { href: "/faq", label: "Preguntas frecuentes" },
   { href: "/contacto", label: "Contacto" },
   {
