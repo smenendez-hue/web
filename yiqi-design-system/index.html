@@ -54,10 +54,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     --purple:      #a78bfa;
     --glow:        0 0 0 1px rgba(0,204,255,.14) inset;
     --text-cyan-muted: rgba(0,195,240,.62);
-    --display:     'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --display:     'Greycliff CF', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     --sans:        'Inter', ui-sans-serif, system-ui, sans-serif;
     --mono:        'IBM Plex Mono', ui-monospace, monospace;
-    --topbar-h:    54px;
+    --topbar-h:    56px;
     --radius-xs:   6px;
     --radius-sm:   10px;
     --radius:      14px;
@@ -114,7 +114,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
      RESET
   ═══════════════════════════════════════════ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { overflow-x: hidden; }
+  html { overflow-x: clip; }
+  body { overflow-x: clip; }
   body {
     font-family: var(--sans); color: var(--text); line-height: 1.4;
     background:
@@ -133,100 +134,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   a      { text-decoration: none; color: inherit; }
   button { cursor: pointer; font-family: inherit; border: none; background: none; }
   img, svg { max-width: 100%; height: auto; }
-
-  /* ═══════════════════════════════════════════
-     LOGO — fills via tokens
-  ═══════════════════════════════════════════ */
-  .yql { fill: var(--text); }
-  .yqs { fill: var(--cyan); }
-
-  /* ═══════════════════════════════════════════
-     TOPBAR
-  ═══════════════════════════════════════════ */
-  .topbar {
-    position: relative;
-    height: var(--topbar-h);
-    display: flex; align-items: center; gap: 16px; padding: 0 28px;
-    background: rgba(12,12,14,.92);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--line);
-  }
-  .topbar-logo { display: flex; align-items: center; flex-shrink: 0; }
-  .topbar-spacer { flex: 1; }
-  .topbar-nav { display: flex; align-items: center; gap: 2px; }
-  .nav-link {
-    font: 500 13px var(--sans); color: var(--muted);
-    padding: 6px 12px; border-radius: var(--radius-sm);
-    transition: all var(--tr);
-  }
-  .nav-link:hover { color: var(--cyan); background: transparent; }
-  .nav-link-dev {
-    display: inline-flex; align-items: center; gap: 6px;
-    font: 500 13px var(--sans); color: var(--muted);
-    padding: 6px 12px; border-radius: var(--radius-sm);
-    transition: all var(--tr);
-  }
-  .nav-link-dev:hover { color: var(--cyan); background: var(--cyan-soft); }
-  .nav-link-dev .dev-badge {
-    font: 700 9px var(--mono); letter-spacing: .08em;
-    color: var(--cyan); background: var(--cyan-soft);
-    padding: 2px 6px; border-radius: var(--radius-pill); line-height: 1.4;
-  }
-  .nav-sep { width: 1px; height: 16px; background: var(--line-strong); margin: 0 4px; flex-shrink: 0; }
-  .mobile-nav .nav-sep { width: 100%; height: 1px; margin: 6px 0; }
-  .mobile-nav .nav-link-dev { display: flex; font-size: 14px; padding: 10px 14px; }
-
-  /* ── Login button ─────────────────────────── */
-  .btn-login {
-    display: inline-flex; align-items: center; gap: 6px;
-    height: 30px; padding: 0 12px;
-    border: none; background: transparent;
-    border-radius: var(--radius-sm);
-    font: 500 var(--fs-body, 13px) var(--sans); color: var(--muted);
-    transition: color var(--tr), background var(--tr);
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .btn-login:hover { color: var(--cyan); background: var(--cyan-soft); }
-  .nav-link-login { color: var(--cyan) !important; }
-
-  /* ── Theme switch ──────────────────────────── */
-  .theme-switch {
-    display: flex; align-items: center;
-    background: none; border: none;
-    border-radius: var(--radius-pill); padding: 3px; gap: 1px; flex-shrink: 0;
-  }
-  .theme-opt {
-    width: 28px; height: 26px; border-radius: var(--radius-pill);
-    display: grid; place-items: center; font-size: 13px;
-    color: var(--muted-2); transition: all var(--tr); cursor: pointer;
-    background: none; border: none;
-  }
-  .theme-opt:hover:not(.active) { color: var(--muted); }
-  .theme-opt.active { background: var(--bg-elev-2); color: var(--text); }
-
-  /* ── Mobile nav ────────────────────────────── */
-  .mobile-menu-btn {
-    display: none; width: 36px; height: 36px;
-    border-radius: var(--radius-sm); border: none;
-    background: none; color: var(--muted);
-    align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;
-  }
-  .ds-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,.45); z-index: 80; backdrop-filter: blur(2px);
-  }
-  .ds-overlay.show { display: block; }
-  .mobile-nav {
-    position: fixed; top: var(--topbar-h); right: 0; left: auto;
-    width: min(290px, calc(100vw - 32px));
-    height: calc(100dvh - var(--topbar-h));
-    background: var(--bg-elev); border-left: 1px solid var(--line);
-    transform: translateX(108%); transition: transform .24s ease;
-    z-index: 90; box-shadow: 22px 0 40px rgba(0,0,0,.22);
-    padding: 20px 12px; display: flex; flex-direction: column; gap: 4px;
-  }
-  .mobile-nav.open { transform: translateX(0); }
-  .mobile-nav .nav-link { display: block; font-size: 14px; padding: 10px 14px; }
 
   /* ═══════════════════════════════════════════
      BOTONES
@@ -307,6 +214,25 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     letter-spacing: -.03em;
     color: var(--text);
     margin-bottom: 16px; max-width: 800px;
+    /* Siempre 2 líneas — no mueve el lockup al cambiar phrase */
+    min-height: 2.24em;
+  }
+  /* Scramble — siempre corre, decodifica entre phrases */
+  .tp-scramble {
+    display: block;
+    height: 1.12em;
+    line-height: 1.12em;
+    white-space: nowrap;
+    overflow: hidden;
+    font-variant-ligatures: none;
+    font-feature-settings: "kern" 0;
+  }
+  .tp-scramble .tp-dud {
+    color: var(--cyan);
+    opacity: .68;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tp-scramble .tp-dud { color: inherit; opacity: 1; }
   }
   .hero-sub {
     font: 400 16px/1.4 var(--sans); color: var(--muted);
@@ -514,7 +440,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* Overrides de alineación */
   .hero-form-wrap, .hero-form-wrap *:not(.hero-form-success):not(.hero-form-success *) { text-align: left; }
   /* Responsive */
-  @media (max-width: 540px) { .hf-row { grid-template-columns: 1fr; } }
+  @media (max-width: 540px) {
+    .hf-row { grid-template-columns: 1fr; gap: 5px; margin-bottom: 5px; }
+    .hf-row .hf-field { margin-bottom: 0; } /* evita doble espaciado con el gap */
+    .hf-step { padding: 10px 16px 0; }
+    .hf-header { padding: 12px 16px 0; }
+    .hf-field { margin-bottom: 5px; }
+    .hf-footer { padding: 8px 16px 12px; }
+  }
 
   /* Panel preview — browser mockup */
   @media (max-width: 640px) {
@@ -572,6 +505,46 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .logo-item img.logo-xl-wide { max-width: 100%; max-height: 100%; }
   .logo-item img:hover { opacity: .8; }
   .logo-divider { width: 1px; height: 24px; background: var(--line); flex-shrink: 0; }
+
+  /* ─── Widescreen (xxl ≥ 1440px) — clientes más grandes, más respiro ─── */
+  @media (min-width: 1440px) {
+    .logo-strip { padding: 56px 0 48px; }
+    .logo-strip-label { font-size: 11px; margin-bottom: 14px; }
+    .logo-marquee-mask {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
+    }
+    .logo-marquee-track { animation-duration: 36s; }
+    .logo-item { width: 200px; height: 56px; padding: 0 36px; }
+    .logo-item.logo-wide { width: 232px; }
+    .logo-item:has(img.logo-xl-tall) { width: 140px; height: 140px; }
+    .logo-item:has(img.logo-xl-wide) { width: 240px; }
+    .logo-divider { height: 28px; }
+  }
+
+  /* ─── Ultra-wide (≥ 1920px) — máximo respiro, container limitado ─── */
+  @media (min-width: 1920px) {
+    .logo-strip { padding: 72px 0 60px; }
+    .logo-strip-label { font-size: 12px; margin-bottom: 20px; }
+    .logo-marquee-mask {
+      max-width: 1760px;
+      margin: 0 auto;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+    }
+    .logo-marquee-track { animation-duration: 42s; }
+    .logo-item { width: 220px; height: 64px; padding: 0 40px; }
+    .logo-item.logo-wide { width: 256px; }
+    .logo-item:has(img.logo-xl-tall) { width: 160px; height: 160px; }
+    .logo-item:has(img.logo-xl-wide) { width: 264px; }
+    .logo-divider { height: 32px; opacity: .8; }
+  }
+
+  /* ─── Reduced motion — track estático con scroll horizontal ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-marquee-track { animation: none; }
+    .logo-marquee-mask { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  }
 
   /* ═══════════════════════════════════════════
      FEATURES
@@ -908,11 +881,60 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .modules-section {
     padding: 96px 32px 112px;
     position: relative; overflow: hidden;
+    isolation: isolate;
   }
-  .modules-section::before,
-  .modules-section::after { display: none; }
+  /* Capa 1 — Cuadrícula sutil (variante landing DS v1.2.5) con fade radial */
+  .modules-section::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+    background-size: 52px 52px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 45%, transparent 82%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 45%, transparent 82%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  html[data-theme="light"] .modules-section::before {
+    background:
+      linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px);
+    background-size: 52px 52px;
+  }
+  /* Capa 2 — Radiales de profundidad: spotlight superior + halo inferior */
+  .modules-section::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 38% at 50% -6%, rgba(0,204,255,.10), transparent 62%),
+      radial-gradient(ellipse 85% 50% at 50% 118%, rgba(0,204,255,.045), transparent 68%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  html[data-theme="light"] .modules-section::after {
+    background:
+      radial-gradient(ellipse 55% 38% at 50% -6%, rgba(0,159,199,.08), transparent 62%),
+      radial-gradient(ellipse 85% 50% at 50% 118%, rgba(0,159,199,.035), transparent 68%);
+  }
   .modules-inner {
     max-width: 1160px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  /* Capa 3 — Glow detrás del grid de cards (frame interior) */
+  .mod-grid {
+    position: relative;
+  }
+  .mod-grid::before {
+    content: ""; position: absolute;
+    inset: -28px -40px -28px -40px;
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,204,255,.05), transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    border-radius: var(--radius-xl);
+  }
+  html[data-theme="light"] .mod-grid::before {
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,159,199,.045), transparent 70%);
   }
   .modules-header {
     text-align: left; margin-bottom: 40px;
@@ -949,6 +971,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     gap: 12px;
     align-items: start;
   }
+  /* xxl breakpoint (DS v1.2.6) — monitores anchos suman columna */
+  @media (min-width: 1440px) {
+    .mod-grid { grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  }
   .mod-grid .mod-card {
     opacity: 0;
     animation-duration: .5s;
@@ -969,50 +995,84 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .mod-grid .mod-card:nth-child(10) { animation-delay: .49s; }
   .mod-grid .mod-card:nth-child(11) { animation-delay: .54s; }
 
-  /* ── Cards — DS v1.2.5 card treatment ── */
+  /* ── Cards — DS v1.2.6 card treatment (profundidad mejorada, sombras tinted navy) ── */
   .modules-section .mod-card {
-    background: var(--bg-elev-2);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.024), transparent 38%),
+      var(--bg-elev-2);
     border: 1px solid transparent;
     border-radius: var(--radius-lg);
-    box-shadow: 0 2px 12px rgba(0,0,0,.22);
-    transition: border-color var(--tr), transform .2s ease, background var(--tr), opacity .3s ease;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.045) inset,
+      0 2px 6px rgba(8,16,32,.28),
+      0 14px 32px rgba(8,16,32,.40);
+    transition: border-color var(--tr), transform .2s ease, background var(--tr), box-shadow var(--tr), opacity .3s ease;
     cursor: pointer;
     touch-action: manipulation;
   }
   @media (hover: hover) {
     .modules-section .mod-card:hover {
-      background: var(--cyan-soft-2);
+      background:
+        linear-gradient(180deg, rgba(0,204,255,.05), transparent 55%),
+        var(--cyan-soft-2);
       border-color: transparent;
-      box-shadow: 0 8px 32px rgba(0,0,0,.28);
-      transform: translateY(-2px);
+      box-shadow:
+        0 1px 0 rgba(0,204,255,.20) inset,
+        0 4px 14px rgba(8,16,32,.32),
+        0 18px 44px rgba(0,204,255,.10),
+        0 22px 56px rgba(8,16,32,.44);
+      transform: translateY(-3px);
     }
     .modules-section .mod-card:hover .mod-icon {
       background: transparent;
     }
   }
   .modules-section .mod-card.open {
-    background: var(--bg-elev-2);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.024), transparent 38%),
+      var(--bg-elev-2);
     border-color: transparent;
-    box-shadow: 0 2px 12px rgba(0,0,0,.22);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.045) inset,
+      0 2px 6px rgba(8,16,32,.28),
+      0 14px 32px rgba(8,16,32,.40);
     transform: none;
   }
   html[data-theme="light"] .modules-section .mod-card {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.55), transparent 40%),
+      var(--bg-elev-2);
     border-color: transparent;
-    box-shadow: 0 1px 8px rgba(0,0,0,.07);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 1px 3px rgba(16,36,54,.06),
+      0 10px 24px rgba(16,36,54,.08);
   }
   @media (hover: hover) {
     html[data-theme="light"] .modules-section .mod-card:hover {
-      background: var(--cyan-soft-2);
+      background:
+        linear-gradient(180deg, rgba(0,159,199,.05), transparent 55%),
+        var(--cyan-soft-2);
       border-color: transparent;
-      box-shadow: 0 8px 28px rgba(0,0,0,.1);
+      box-shadow:
+        0 1px 0 rgba(0,159,199,.18) inset,
+        0 4px 12px rgba(16,36,54,.08),
+        0 18px 36px rgba(0,159,199,.10),
+        0 18px 40px rgba(16,36,54,.12);
     }
     html[data-theme="light"] .modules-section .mod-card:hover .mod-icon {
       background: transparent;
     }
   }
   html[data-theme="light"] .modules-section .mod-card.open {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.55), transparent 40%),
+      var(--bg-elev-2);
     border-color: transparent;
-    box-shadow: 0 1px 8px rgba(0,0,0,.07);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 1px 3px rgba(16,36,54,.06),
+      0 10px 24px rgba(16,36,54,.08);
   }
 
   /* Header */
@@ -2019,12 +2079,24 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 
   
   /* ═══════════════════════════════════════════
-     INTEGRATIONS LOGO STRIP
+     INTEGRATIONS LOGO STRIP — v1.2.6 widescreen-ready
   ═══════════════════════════════════════════ */
   .int-logos-strip {
-    padding: 19px 0 20px;
+    padding: 40px 0 44px;
     overflow: hidden;
     background: transparent;
+    position: relative;
+  }
+  /* Suave separación visual del bloque anterior/siguiente */
+  .int-logos-strip::before {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 100% at 50% 50%, rgba(0,204,255,.025), transparent 70%);
+  }
+  html[data-theme="light"] .int-logos-strip::before {
+    background:
+      radial-gradient(ellipse 60% 100% at 50% 50%, rgba(0,159,199,.035), transparent 70%);
   }
   .int-logos-label {
     text-align: center;
@@ -2033,42 +2105,87 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     text-transform: uppercase;
     color: var(--muted-2);
     margin-bottom: 36px;
+    position: relative; z-index: 1;
   }
   .int-logos-mask {
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0%, black 12%, black 88%, transparent 100%);
+    position: relative; z-index: 1;
+    /* Fade en pixeles fijos — consistente en cualquier viewport */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%);
   }
   .int-logos-track {
     display: flex;
     align-items: center;
     width: max-content;
-    animation: scroll-left 18s linear infinite;
+    animation: scroll-left 24s linear infinite;
   }
   .int-logos-track:hover { animation-play-state: paused; }
   .int-logo-item {
     display: flex; align-items: center; justify-content: center;
-    padding: 0 20px;
-    width: 140px; flex-shrink: 0;
-    transition: opacity .2s;
+    padding: 0 24px;
+    width: 160px; flex-shrink: 0;
+    transition: opacity .2s, transform .25s ease;
   }
-  .int-logo-item:hover .int-logo-img { opacity: .85; }
-  .int-logo-item.int-logo-wide { width: 180px; }
-  .int-logo-img.int-logo-lg { height: 40px; }
+  .int-logo-item:hover { transform: translateY(-2px); }
+  .int-logo-item:hover .int-logo-img { opacity: 1; }
+  .int-logo-item.int-logo-wide { width: 200px; }
+  .int-logo-img.int-logo-lg { height: 44px; }
   .int-logo-img {
-    width: 100%; height: 28px;
+    width: 100%; height: 32px;
     display: block; object-fit: contain;
     filter: brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(162deg) opacity(.55); /* cyan-soft */
-    transition: opacity .2s;
+    transition: opacity .2s, filter .2s;
   }
   html[data-theme="light"] .int-logo-img {
     filter: brightness(0) saturate(100%) invert(38%) sepia(55%) saturate(648%) hue-rotate(162deg) opacity(.65); /* cyan-soft light */
   }
   .int-logo-sep {
     width: 1px;
-    height: 18px;
+    height: 22px;
     background: var(--line-strong);
     flex-shrink: 0;
+    opacity: .55;
+  }
+
+  /* ─── Widescreen (xxl ≥ 1440px) — logos más grandes, más respiro ─── */
+  @media (min-width: 1440px) {
+    .int-logos-strip { padding: 56px 0 60px; }
+    .int-logos-label { font-size: 11px; margin-bottom: 44px; }
+    .int-logos-mask {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
+    }
+    .int-logos-track { animation-duration: 32s; }
+    .int-logo-item { width: 188px; padding: 0 30px; }
+    .int-logo-item.int-logo-wide { width: 232px; }
+    .int-logo-img { height: 38px; }
+    .int-logo-img.int-logo-lg { height: 50px; }
+    .int-logo-sep { height: 28px; }
+  }
+
+  /* ─── Ultra-wide (≥ 1920px) — máximo respiro, container limitado ─── */
+  @media (min-width: 1920px) {
+    .int-logos-strip { padding: 72px 0 76px; }
+    .int-logos-label { font-size: 12px; margin-bottom: 52px; }
+    .int-logos-mask {
+      max-width: 1760px;
+      margin: 0 auto;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+    }
+    .int-logos-track { animation-duration: 38s; }
+    .int-logo-item { width: 208px; padding: 0 34px; }
+    .int-logo-item.int-logo-wide { width: 256px; }
+    .int-logo-img { height: 42px; }
+    .int-logo-img.int-logo-lg { height: 54px; }
+    .int-logo-sep { height: 32px; opacity: .45; }
+  }
+
+  /* ─── Reduced motion — track estático con scroll horizontal ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .int-logos-track { animation: none; }
+    .int-logos-mask { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
   }
 
 
@@ -2189,10 +2306,88 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 
   /* ── Help Drawer ────────────────────────────────────────── */
 
-  </style>
+  
+  /* ─── Capa decorativa "estrellas lejanas" (DS v1.2.6) ─── */
+  .star-field {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+    mix-blend-mode: screen;
+  }
+  html[data-theme="light"] .star-field { mix-blend-mode: multiply; }
+  .star-field::before,
+  .star-field::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background-image:
+      radial-gradient(1px 1px at 12% 8%,   rgba(0,204,255,.55), transparent 60%),
+      radial-gradient(1px 1px at 24% 18%,  rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(1px 1px at 38% 12%,  rgba(0,204,255,.40), transparent 60%),
+      radial-gradient(1px 1px at 47% 28%,  rgba(255,255,255,.30), transparent 60%),
+      radial-gradient(1px 1px at 61% 16%,  rgba(0,204,255,.50), transparent 60%),
+      radial-gradient(1px 1px at 73% 22%,  rgba(255,255,255,.40), transparent 60%),
+      radial-gradient(1px 1px at 86% 8%,   rgba(0,204,255,.35), transparent 60%),
+      radial-gradient(1px 1px at 92% 26%,  rgba(255,255,255,.30), transparent 60%),
+      radial-gradient(1px 1px at 6% 38%,   rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(1px 1px at 18% 48%,  rgba(0,204,255,.45), transparent 60%),
+      radial-gradient(1px 1px at 32% 56%,  rgba(255,255,255,.30), transparent 60%),
+      radial-gradient(1px 1px at 44% 42%,  rgba(0,204,255,.50), transparent 60%),
+      radial-gradient(1px 1px at 56% 62%,  rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(1px 1px at 68% 50%,  rgba(0,204,255,.40), transparent 60%),
+      radial-gradient(1px 1px at 80% 58%,  rgba(255,255,255,.40), transparent 60%),
+      radial-gradient(1px 1px at 94% 46%,  rgba(0,204,255,.55), transparent 60%),
+      radial-gradient(1px 1px at 9% 72%,   rgba(0,204,255,.40), transparent 60%),
+      radial-gradient(1px 1px at 22% 84%,  rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(1px 1px at 36% 78%,  rgba(0,204,255,.50), transparent 60%),
+      radial-gradient(1px 1px at 48% 92%,  rgba(255,255,255,.40), transparent 60%),
+      radial-gradient(1px 1px at 60% 76%,  rgba(0,204,255,.40), transparent 60%),
+      radial-gradient(1px 1px at 74% 88%,  rgba(255,255,255,.35), transparent 60%),
+      radial-gradient(1px 1px at 88% 80%,  rgba(0,204,255,.45), transparent 60%);
+    background-size: 100% 100%;
+    background-repeat: repeat-y;
+    background-position: 0 0;
+    will-change: transform;
+    transition: transform .15s linear;
+  }
+  .star-field::after {
+    /* Capa más lejana — desplazada y desfasada */
+    background-image:
+      radial-gradient(.5px .5px at 14% 22%,  rgba(0,204,255,.30), transparent 60%),
+      radial-gradient(.5px .5px at 30% 6%,   rgba(255,255,255,.22), transparent 60%),
+      radial-gradient(.5px .5px at 52% 32%,  rgba(0,204,255,.28), transparent 60%),
+      radial-gradient(.5px .5px at 68% 14%,  rgba(255,255,255,.20), transparent 60%),
+      radial-gradient(.5px .5px at 80% 30%,  rgba(0,204,255,.25), transparent 60%),
+      radial-gradient(.5px .5px at 16% 54%,  rgba(255,255,255,.25), transparent 60%),
+      radial-gradient(.5px .5px at 38% 68%,  rgba(0,204,255,.30), transparent 60%),
+      radial-gradient(.5px .5px at 58% 44%,  rgba(255,255,255,.22), transparent 60%),
+      radial-gradient(.5px .5px at 74% 60%,  rgba(0,204,255,.28), transparent 60%),
+      radial-gradient(.5px .5px at 90% 70%,  rgba(255,255,255,.20), transparent 60%),
+      radial-gradient(.5px .5px at 20% 90%,  rgba(0,204,255,.25), transparent 60%),
+      radial-gradient(.5px .5px at 42% 84%,  rgba(255,255,255,.22), transparent 60%),
+      radial-gradient(.5px .5px at 64% 96%,  rgba(0,204,255,.30), transparent 60%),
+      radial-gradient(.5px .5px at 84% 88%,  rgba(255,255,255,.20), transparent 60%);
+    background-size: 100% 100%;
+    opacity: .7;
+  }
+  html[data-theme="light"] .star-field::before,
+  html[data-theme="light"] .star-field::after {
+    /* Hue ajustado al ramo light, opacidad reducida */
+    filter: hue-rotate(8deg);
+    opacity: .35;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .star-field::before, .star-field::after { transition: none; }
+  }
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <link rel="preload" href="system/fonts/Greycliff-CF-Heavy.otf" as="font" type="font/otf" crossorigin>
 </head>
 <body>
+<div class="star-field" aria-hidden="true"></div>
 
 <site-header current-page="home" base="./"></site-header>
 
@@ -2209,7 +2404,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   <div class="hero-left">
   <div class="hero-label">
     <span class="hero-label-tag">ERP +15 años de experiencia</span>
-    <a href="contacto.html" class="hero-label-logo" title="iAready — Contacto">
+    <a href="ia-ready.html" class="hero-label-logo" title="IA Ready — Plataforma de integración">
       <svg width="90" height="24" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path class="ia-letters" d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
         <path class="ia-letters" d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z"/>
@@ -2222,7 +2417,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     </a>
   </div>
 
-  <h1 class="hero-headline">Se-conecta-<br>con-todo.</h1>
+  <h1 class="hero-headline" aria-label="Se conecta con todo">
+    <span class="tp-scramble tp-scramble-1" id="tp-scramble-1" aria-hidden="true">Se-conecta-</span>
+    <span class="tp-scramble tp-scramble-2" id="tp-scramble-2" aria-hidden="true">con-todo.</span>
+  </h1>
   <p class="hero-claim"><span class="claim-prefix">//</span><span id="hero-claim-text"></span><span class="claim-cursor" aria-hidden="true"></span></p>
 
   <div class="hero-actions">
@@ -2477,7 +2675,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       </div>
       <div class="showcase-screen" style="height:600px;padding:0;overflow:hidden;position:relative;">
         <iframe
-          src="./erp-panel.html?theme=light"
+          data-src="./erp-panel.html"
           title="YiQi ERP Dashboard"
           style="width:1440px;height:900px;border:none;display:block;pointer-events:none;transform-origin:top left;transform:scale(0.667);"
           scrolling="no"
@@ -2492,19 +2690,34 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
         <div class="phone-island"></div>
         <div class="phone-screen">
           <iframe
-            src="./erp-mobile.html?theme=light"
+            data-src="./erp-mobile.html"
             title="YiQi Mobile"
             style="width:390px;height:844px;border:none;display:block;pointer-events:none;transform-origin:top left;transform:scale(0.5641);"
             scrolling="no"
             tabindex="-1"
             aria-hidden="true">
           </iframe>
+          <!-- Tap area sobre la hora del status bar (v1.2.6 — vuelve arriba) -->
+          <button type="button" class="phone-time-tap" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver al inicio"></button>
         </div>
         <div class="phone-home"></div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  /* Init iframes con tema invertido al sitio (sin flash) */
+  (function() {
+    const stored = localStorage.getItem('yiqi-theme') || 'system';
+    const mq     = window.matchMedia('(prefers-color-scheme: dark)');
+    const resolved = stored === 'system' ? (mq.matches ? 'dark' : 'light') : stored;
+    const inverted = resolved === 'dark' ? 'light' : 'dark';
+    document.querySelectorAll('iframe[data-src]').forEach(iframe => {
+      iframe.src = iframe.dataset.src + '?theme=' + inverted;
+    });
+  })();
+</script>
 
 
 <!-- ══════════════════════════════════════════
@@ -3428,10 +3641,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.val === v));
   }
   function syncIframe(resolved) {
-    // Los mockups del showcase siempre en modo claro, independiente del tema del sitio
+    // Los mockups van con tema invertido al sitio — parent dark → mock light, parent light → mock dark
+    const r = resolved || document.documentElement.dataset.theme;
+    const actual = (r === 'system') ? (mq.matches ? 'dark' : 'light') : r;
+    const inverted = actual === 'dark' ? 'light' : 'dark';
     document.querySelectorAll('.showcase-screen iframe, .phone-screen iframe').forEach(iframe => {
       if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage({ type: 'yiqi-theme', theme: 'light' }, '*');
+        iframe.contentWindow.postMessage({ type: 'yiqi-theme', theme: inverted }, '*');
       }
     });
   }
@@ -4387,6 +4603,26 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     position: relative;
     background: var(--bg);
   }
+  /* Tap area sobre la hora del mockup (DS v1.2.6) */
+  .phone-time-tap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32%;
+    height: 28px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    z-index: 2;
+  }
+  .phone-time-tap:hover {
+    background: linear-gradient(180deg, rgba(0,204,255,.08), transparent);
+  }
+  .phone-time-tap:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: -2px;
+  }
   .phone-home {
     width: 80px;
     height: 4px;
@@ -5082,5 +5318,126 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 }
 </style>
 
+
+<script>
+/* ── Parallax de estrellas (DS v1.2.6) ── */
+(function() {
+  const field = document.querySelector('.star-field');
+  if (!field) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  let ticking = false;
+  function update() {
+    const y = window.scrollY || window.pageYOffset;
+    // Capa cercana: drift -0.15, capa lejana: drift -0.05 (más lenta = más lejana)
+    field.style.setProperty('--star-y-1', (y * -0.15) + 'px');
+    field.style.setProperty('--star-y-2', (y * -0.05) + 'px');
+    field.style.transform = 'translateY(' + (y * -0.10) + 'px)';
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+</script>
+
+<script>
+/* ── Hero title scramble (DS v1.2.6) — 2 líneas paralelas ── */
+(function () {
+  const el1 = document.getElementById('tp-scramble-1');
+  const el2 = document.getElementById('tp-scramble-2');
+  if (!el1 || !el2) return;
+
+  // Cada frase se parte en 2 líneas para que el lockup no se mueva
+  const phrases = [
+    ['Se-conecta-',      'con-todo.'],
+    ['Suma-módulos-',    'sin-fricción.'],
+    ['Crece-',           'a-tu-ritmo.'],
+    ['Tu-operación-',    'en-un-lugar.'],
+    ['Datos-',           'en-tiempo-real.'],
+    ['IA-conectada-',    'a-tu-ERP.']
+  ];
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el1.textContent = phrases[0][0];
+    el2.textContent = phrases[0][1];
+    return;
+  }
+
+  const POOL = '!<>-_\\/[]{}—=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  class Scramble {
+    constructor(node) {
+      this.node = node;
+      this.frame = 0;
+      this.queue = [];
+      this.update = this.update.bind(this);
+    }
+    setText(target) {
+      const old = this.node.textContent;
+      const len = Math.max(old.length, target.length);
+      this.queue = [];
+      for (let i = 0; i < len; i++) {
+        const from = old[i] || '';
+        const to   = target[i] || '';
+        const start = Math.floor(Math.random() * 40);
+        const end   = start + 16 + Math.floor(Math.random() * 32);
+        this.queue.push({ from, to, start, end, char: '' });
+      }
+      cancelAnimationFrame(this.req);
+      this.frame = 0;
+      return new Promise(resolve => { this.resolve = resolve; this.update(); });
+    }
+    update() {
+      let html = '';
+      let done = 0;
+      for (let i = 0; i < this.queue.length; i++) {
+        const item = this.queue[i];
+        if (this.frame >= item.end) {
+          done++;
+          html += escapeHTML(item.to);
+        } else if (this.frame >= item.start) {
+          if (!item.char || Math.random() < 0.28) {
+            item.char = POOL[Math.floor(Math.random() * POOL.length)];
+          }
+          html += '<span class="tp-dud">' + escapeHTML(item.char) + '</span>';
+        } else {
+          html += escapeHTML(item.from);
+        }
+      }
+      this.node.innerHTML = html;
+      if (done === this.queue.length) {
+        this.resolve();
+      } else {
+        this.req = requestAnimationFrame(this.update);
+        this.frame++;
+      }
+    }
+  }
+
+  function escapeHTML(s) {
+    return s.replace(/[&<>]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[c]));
+  }
+
+  const fx1 = new Scramble(el1);
+  const fx2 = new Scramble(el2);
+  let i = 0;
+  const HOLD_MS = 2400;
+  function next() {
+    Promise.all([
+      fx1.setText(phrases[i][0]),
+      fx2.setText(phrases[i][1])
+    ]).then(() => {
+      i = (i + 1) % phrases.length;
+      setTimeout(next, HOLD_MS);
+    });
+  }
+  // Arrancar limpio para que el primer scramble se vea desde el frame 0
+  el1.textContent = '';
+  el2.textContent = '';
+  next();
+})();
+</script>
 </body>
 </html>

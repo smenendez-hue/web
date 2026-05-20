@@ -44,7 +44,7 @@
     --display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     --sans:    'Inter', ui-sans-serif, system-ui, sans-serif;
     --mono:    'IBM Plex Mono', ui-monospace, monospace;
-    --topbar-h:    54px;
+    --topbar-h:    56px;
     --radius-xs:   6px;
     --radius-sm:   10px;
     --radius:      14px;
@@ -83,7 +83,19 @@
     background:
       radial-gradient(ellipse at 80% 0%,   rgba(0,204,255,.07), transparent 38%),
       radial-gradient(ellipse at 10% 40%,  rgba(0,204,255,.04), transparent 30%),
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
       var(--bg);
+    background-size: auto, auto, 52px 52px, 52px 52px, auto;
+  }
+  html[data-theme="light"] body {
+    background:
+      radial-gradient(ellipse at 80% 0%,   rgba(0,159,199,.06), transparent 38%),
+      radial-gradient(ellipse at 10% 40%,  rgba(0,159,199,.04), transparent 30%),
+      linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
+      var(--bg);
+    background-size: auto, auto, 52px 52px, 52px 52px, auto;
   }
 
   /* ── Layout ─────────────────────────────── */

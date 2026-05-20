@@ -6,6 +6,33 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1
 
 ---
 
+## [1.2.6] - 2026-05-15
+
+### 🎯 Focus
+Profundidad para secciones de marketing · breakpoint `xxl` para monitores anchos · preview del Panel Gerencial accesible desde el sidebar del DS.
+
+### ✨ Added
+- **Patrón `depth-stack`:** Nuevo patrón documentado en el DS example (sección 17 · Patrón). Tres capas decorativas no intrusivas para secciones de landing con grids densos:
+  - **Capa 1 —** Grilla 52×52 px con `mask-image` radial para fade hacia los bordes.
+  - **Capa 2 —** Radiales `rgba(0,204,255,…)` posicionados como spotlight superior y halo inferior.
+  - **Capa 3 —** Halo radial detrás del grid de cards (`z-index: -1` dentro de un `isolation: isolate`).
+  - Cards acompañantes con multi-shadow: inset highlight + sombra cercana + sombra de elevación.
+  - Variantes dark y light con valores recalibrados (`rgba(0,159,199,…)` en light).
+- **Aplicación en landing:** La sección Módulos (`#modulos` en `index.html`) ahora usa el patrón `depth-stack` completo.
+- **Breakpoint `xxl ≥ 1440px`:** Documentado en la tabla de breakpoints del DS. Grids densos suman columna en monitores anchos (módulos pasan de 4 → 5 columnas, KPIs pueden ir 5–6).
+- **Preview takeover desde sidebar:** Nueva sección "Previews" en el sidebar del DS example. Item `Panel Gerencial` que al activarse oculta el resto del DS (`body.preview-open`) y muestra el panel en full-bleed dentro de un iframe. Cierre con tecla `Esc` o botón "Volver al DS".
+- **Archivo `examples/panel-gerencial.html`:** Copia versionada del Panel Gerencial Analytics Pro como ejemplo de referencia.
+- **Componente `.ds-nav-badge`:** Badge mono para items del sidebar (`v1.2.6`, `NEW`). Variante ámbar para anuncios.
+
+### 🔧 Changed
+- **Versión:** `<title>` y `topbar-pill` del DS example pasan a `v1.2.6`.
+- **Release notes:** Tres nuevas filas en la tabla de cambios del DS, una por cada add principal.
+
+### 🐛 Fixed
+- N/A — sólo aditivo, sin regresiones.
+
+---
+
 ## [1.2.5] - 2026-05-03 *(actualización)*
 
 ### 🎯 Focus

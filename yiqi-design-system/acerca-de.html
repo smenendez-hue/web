@@ -84,21 +84,27 @@
       --shadow-lg:   0 16px 32px rgba(16,36,54,.16);
     }
 
-    html, body { overflow-x: hidden; }
+    html, body { overflow-x: clip; }
     body {
       font-family: var(--sans);
       color: var(--text);
       background:
         radial-gradient(circle at 72% 8%, rgba(0,204,255,.07), transparent 28%),
         radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
         var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
       min-height: 100vh;
     }
     html[data-theme="light"] body {
       background:
         radial-gradient(circle at 72% 8%, rgba(0,159,199,.06), transparent 28%),
         radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 22%),
+        linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
         var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
     }
 
     /* ── SECTIONS ── */
