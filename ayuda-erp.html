@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="system">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro de Ayuda · YiQi ERP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0c0c0e;
+      --bg-elev:     #111114;
+      --bg-elev-2:   #18181c;
+      --bg-soft:     rgba(255,255,255,.04);
+      --line:        rgba(255,255,255,.08);
+      --line-strong: rgba(255,255,255,.14);
+      --text:        #f0f1f3;
+      --muted:       #8a8d94;
+      --muted-2:     #5a5d66;
+      --cyan:        #00ccff;
+      --cyan-soft:   rgba(0,204,255,.12);
+      --cyan-soft-2: rgba(0,204,255,.18);
+      --cyan-label:  rgba(0,204,255,.52);
+      --text-cyan-muted: rgba(0,195,240,.45);
+      --green:       #00c48c;
+      --green-soft:  rgba(0,196,140,.12);
+      --amber:       #f6a623;
+      --amber-soft:  rgba(246,166,35,.12);
+      --red:         #f25f5c;
+      --red-soft:    rgba(242,95,92,.12);
+      --blue:        #7ab7ff;
+      --purple:      #a78bfa;
+      --purple-soft: rgba(167,139,250,.12);
+      --warm:        #b5a090;
+      --warm-soft:   rgba(181,160,144,.10);
+      --glow:        0 0 0 3px rgba(0,204,255,.22);
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.28);
+      --shadow-lg:   0 8px 32px rgba(0,0,0,.36);
+      --sans:        "Inter", ui-sans-serif, system-ui, sans-serif;
+      --display:     "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+      --mono:        "IBM Plex Mono", ui-monospace, monospace;
+      --topbar-h:    56px;
+      --radius-xs:   5px;
+      --radius-sm:   7px;
+      --radius:      10px;
+      --radius-md:   12px;
+      --radius-lg:   16px;
+      --radius-xl:   20px;
+      --radius-pill: 999px;
+      --tr:          180ms ease;
+    }
+    html[data-theme="light"] {
+      --bg:          #f5f4f0;
+      --bg-elev:     #eeece7;
+      --bg-elev-2:   #e6e4df;
+      --bg-soft:     rgba(0,0,0,.04);
+      --line:        rgba(0,0,0,.08);
+      --line-strong: rgba(0,0,0,.13);
+      --text:        #17191c;
+      --muted:       #586170;
+      --muted-2:     #7f8896;
+      --text-cyan-muted: rgba(0,140,175,.48);
+      --cyan:        #009fc7;
+      --cyan-soft:   rgba(0,159,199,.12);
+      --cyan-soft-2: rgba(0,159,199,.18);
+      --cyan-label:  rgba(0,159,199,.52);
+      --green:       #0c9b6d;
+      --amber:       #c78000;
+      --red:         #d4485e;
+      --blue:        #347de6;
+      --purple:      #7c3aed;
+      --glow:        0 0 0 3px rgba(0,159,199,.22);
+      --shadow-sm:   0 2px 8px rgba(16,36,54,.08);
+      --shadow-md:   0 8px 24px rgba(16,36,54,.12);
+      --shadow-lg:   0 16px 32px rgba(16,36,54,.16);
+    }
+
+    html, body { overflow-x: clip; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 72% 8%, rgba(0,204,255,.07), transparent 28%),
+        radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
+      min-height: 100vh;
+    }
+    html[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 72% 8%, rgba(0,159,199,.06), transparent 28%),
+        radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 22%),
+        linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: relative;
+      height: var(--topbar-h);
+      display: flex; align-items: center;
+      padding: 0 28px; gap: 16px;
+      background: rgba(12,12,14,.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    html[data-theme="light"] .topbar {
+      background: rgba(238,236,231,.88);
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .topbar-logo .yql { fill: var(--text); }
+    .topbar-logo .yqs { fill: var(--cyan); }
+    .topbar-brand {
+      font-family: var(--display);
+      font-size: 15px; font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.01em;
+    }
+    .topbar-sep { width: 1px; height: 20px; background: var(--line); }
+    .topbar-label { font-size: 12px; color: var(--muted); }
+    .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+    .back-btn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: var(--radius);
+      font: 500 12px var(--sans); color: var(--muted);
+      background: transparent; border: 1px solid var(--line);
+      cursor: pointer; text-decoration: none;
+      transition: all var(--tr);
+    }
+    .back-btn:hover { color: var(--text); border-color: var(--line-strong); }
+    .back-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      display: flex; align-items: center;
+      background: var(--bg-elev-2);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      gap: 1px;
+    }
+    .theme-opt {
+      padding: 4px 10px; border-radius: var(--radius-pill);
+      font: 500 11px var(--sans); color: var(--muted);
+      background: transparent; border: none; cursor: pointer;
+      transition: all var(--tr);
+    }
+    .theme-opt.active {
+      background: var(--bg-elev); color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: left;
+      max-width: 1120px; margin: 0 auto;
+      padding: 72px 24px 56px;
+    }
+
+    .landing-kicker { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--cyan-soft); color: var(--cyan); font: 700 10px var(--mono); letter-spacing: .10em; text-transform: uppercase; margin-bottom: 20px; border: none; }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800; letter-spacing: -.025em;
+      line-height: 1.1; color: var(--text);
+      margin-bottom: 12px;
+    }
+    .hero-sub {
+      font-size: 14px; color: var(--muted); line-height: 1.5;
+      margin-bottom: 36px;
+    }
+    /* search input: usa componente canónico de site.css */
+    .search-wrap { max-width: 600px; margin: 0; }
+    .search-input { height: 48px; font-size: 15px; }
+
+    /* ── MAIN ── */
+    .main {
+      max-width: 1120px; margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── QUICK ACCESS ── */
+    .section-label {
+      font: 600 11px var(--sans); letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted-2);
+      margin-bottom: 16px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px; margin-bottom: 56px;
+    }
+    .quick-card {
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 10px; padding: 18px 16px;
+      background: var(--bg-elev);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none; color: var(--text);
+      transition: box-shadow var(--tr), transform var(--tr);
+      cursor: pointer;
+    }
+    .quick-card:hover {
+      box-shadow: 0 0 0 1px rgba(0,204,255,.12) inset, var(--shadow-md);
+      transform: translateY(-1px);
+    }
+    .quick-icon {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-sm);
+      background: var(--cyan-soft);
+    }
+    .quick-icon svg {
+      width: 16px; height: 16px;
+      stroke: var(--cyan); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .quick-icon.green { background: var(--green-soft); }
+    .quick-icon.green svg { stroke: var(--green); }
+    .quick-icon.amber { background: var(--amber-soft); }
+    .quick-icon.amber svg { stroke: var(--amber); }
+    .quick-icon.purple { background: var(--purple-soft); }
+    .quick-icon.purple svg { stroke: var(--purple); }
+    .quick-icon.blue { background: rgba(122,183,255,.12); }
+    .quick-icon.blue svg { stroke: var(--blue); }
+    .quick-icon.warm { background: var(--warm-soft); }
+    .quick-icon.warm svg { stroke: var(--warm); }
+    .quick-label {
+      font: 600 13px var(--sans); color: var(--text);
+    }
+    .quick-count {
+      font: 500 11px var(--sans); color: var(--muted);
+    }
+
+    /* ── MODULES GRID ── */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 12px;
+    }
+
+    /* ── MODULE CARD ── */
+    .module-card {
+      border: none;
+      border-radius: var(--radius-md);
+      background: var(--bg-elev-2);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow var(--tr);
+    }
+    .module-card.open {
+      box-shadow: 0 0 0 1px rgba(0,204,255,.10) inset, var(--shadow-md);
+    }
+    .module-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 18px; cursor: pointer;
+      user-select: none;
+      transition: background var(--tr);
+    }
+    .module-header:hover { background: var(--bg-soft); }
+    .module-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-sm);
+      background: var(--cyan-soft);
+    }
+    .module-icon svg {
+      width: 15px; height: 15px;
+      stroke: var(--cyan); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .module-icon.green { background: var(--green-soft); }
+    .module-icon.green svg { stroke: var(--green); }
+    .module-icon.amber { background: var(--amber-soft); }
+    .module-icon.amber svg { stroke: var(--amber); }
+    .module-icon.purple { background: var(--purple-soft); }
+    .module-icon.purple svg { stroke: var(--purple); }
+    .module-icon.blue { background: rgba(122,183,255,.12); }
+    .module-icon.blue svg { stroke: var(--blue); }
+    .module-icon.red { background: var(--red-soft); }
+    .module-icon.red svg { stroke: var(--red); }
+    .module-icon.warm { background: var(--warm-soft); }
+    .module-icon.warm svg { stroke: var(--warm); }
+    .module-meta { flex: 1; min-width: 0; }
+    .module-title {
+      font: 600 14px var(--sans); color: var(--text);
+      transition: color var(--tr);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .module-card.open .module-title { color: var(--text-cyan-muted); }
+    .module-count { font: 500 11px var(--sans); color: var(--muted); margin-top: 2px; }
+    .module-chevron {
+      width: 16px; height: 16px; flex-shrink: 0;
+      stroke: var(--muted); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform var(--tr), stroke var(--tr);
+    }
+    .module-card.open .module-chevron {
+      transform: rotate(180deg);
+      stroke: var(--text-cyan-muted);
+    }
+    .module-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .3s cubic-bezier(.4,0,.2,1);
+    }
+    .module-card.open .module-body { max-height: 1200px; }
+    .module-divider { height: 1px; background: var(--line); margin: 0 18px; }
+    .article-list { padding: 8px 0 12px; }
+    .article-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 18px;
+      text-decoration: none; color: var(--muted);
+      font: 500 13px var(--sans);
+      transition: color var(--tr), background var(--tr);
+      border-radius: 0;
+    }
+    .article-link:hover {
+      color: var(--text);
+      background: var(--bg-soft);
+    }
+    .article-link svg {
+      width: 12px; height: 12px; flex-shrink: 0;
+      stroke: var(--muted-2); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      transition: stroke var(--tr);
+    }
+    .article-link:hover svg { stroke: var(--cyan); }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      display: none; text-align: center;
+      padding: 64px 24px; color: var(--muted);
+      font-size: 15px; grid-column: 1 / -1;
+    }
+    .no-results.visible { display: block; }
+
+    /* ── SEARCH RESULTS LIST ── */
+    .search-results {
+      display: none;
+      background: var(--bg-elev);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--line-strong);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .search-results.visible { display: block; }
+    .sr-header {
+      padding: 10px 16px;
+      font: 600 11px var(--sans); letter-spacing: .07em;
+      text-transform: uppercase; color: var(--muted-2);
+      border-bottom: 1px solid var(--line);
+    }
+    .sr-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; text-decoration: none; color: var(--text);
+      font: 500 13px var(--sans);
+      transition: background var(--tr);
+    }
+    .sr-item:hover { background: var(--bg-soft); }
+    .sr-item svg {
+      width: 13px; height: 13px; flex-shrink: 0;
+      stroke: var(--muted); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .sr-module {
+      font: 500 11px var(--sans); color: var(--muted);
+      margin-left: auto; flex-shrink: 0;
+    }
+
+    /* ── CARD REVEAL ── */
+    .card-reveal {
+      opacity: 0;
+      transition: opacity .55s cubic-bezier(.22,1,.36,1),
+                  transform .55s cubic-bezier(.22,1,.36,1);
+    }
+    .card-reveal:nth-child(odd)  { transform: translateX(-28px) translateY(8px); }
+    .card-reveal:nth-child(even) { transform: translateX(28px) translateY(8px); }
+    .card-reveal:nth-child(1)  { transition-delay: .00s; }
+    .card-reveal:nth-child(2)  { transition-delay: .04s; }
+    .card-reveal:nth-child(3)  { transition-delay: .08s; }
+    .card-reveal:nth-child(4)  { transition-delay: .12s; }
+    .card-reveal:nth-child(5)  { transition-delay: .16s; }
+    .card-reveal:nth-child(6)  { transition-delay: .20s; }
+    .card-reveal:nth-child(7)  { transition-delay: .24s; }
+    .card-reveal:nth-child(8)  { transition-delay: .28s; }
+    .card-reveal:nth-child(9)  { transition-delay: .32s; }
+    .card-reveal:nth-child(10) { transition-delay: .36s; }
+    .card-reveal:nth-child(11) { transition-delay: .40s; }
+    .card-reveal:nth-child(12) { transition-delay: .44s; }
+    .card-reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .topbar { padding: 0 16px; }
+      .hero { padding: 48px 16px 40px; }
+      .main { padding: 0 16px 60px; }
+      .quick-grid { grid-template-columns: repeat(2, 1fr); }
+      .modules-grid { grid-template-columns: 1fr; }
+    }
+
+  </style>
+  <link rel="stylesheet" href="./site.css">
+  <script src="./components/site-header.js" defer></script>
+</head>
+<body>
+<site-header base="./" current-page="soporte"></site-header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="landing-kicker">// Centro de ayuda</div>
+    <h1 class="hero-title">¿En qué podemos<br>ayudarte?</h1>
+    <p class="hero-sub">Guías, tutoriales y respuestas para sacarle el máximo provecho a YiQi ERP.</p>
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" type="text" id="searchInput" placeholder="Buscar artículos, módulos..." autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="searchClear" aria-label="Limpiar búsqueda">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- SEARCH RESULTS (visible cuando hay query) -->
+    <div class="search-results" id="searchResults">
+      <div class="sr-header" id="srHeader">Resultados</div>
+      <div id="srList"></div>
+    </div>
+
+    <!-- QUICK ACCESS -->
+    <div id="browseSection">
+      <p class="section-label">Acceso rápido</p>
+      <div class="quick-grid">
+        <a class="quick-card card-reveal" href="#" onclick="scrollToModule('uso'); return false;">
+          <div class="quick-icon">
+            <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          </div>
+          <div class="quick-label">Primeros pasos</div>
+          <div class="quick-count">9 artículos</div>
+        </a>
+        <a class="quick-card card-reveal" href="#" onclick="scrollToModule('ventas'); return false;">
+          <div class="quick-icon green">
+            <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="quick-label">Ventas</div>
+          <div class="quick-count">28 artículos</div>
+        </a>
+        <a class="quick-card card-reveal" href="#" onclick="scrollToModule('compras'); return false;">
+          <div class="quick-icon amber">
+            <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </div>
+          <div class="quick-label">Compras</div>
+          <div class="quick-count">21 artículos</div>
+        </a>
+        <a class="quick-card card-reveal" href="#" onclick="scrollToModule('finanzas'); return false;">
+          <div class="quick-icon blue">
+            <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div class="quick-label">Finanzas</div>
+          <div class="quick-count">11 artículos</div>
+        </a>
+        <a class="quick-card card-reveal" href="#" onclick="scrollToModule('contabilidad'); return false;">
+          <div class="quick-icon purple">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="quick-label">Contabilidad</div>
+          <div class="quick-count">18 artículos</div>
+        </a>
+        <a class="quick-card card-reveal" href="#" onclick="scrollToModule('stock'); return false;">
+          <div class="quick-icon warm">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <div class="quick-label">Stock</div>
+          <div class="quick-count">17 artículos</div>
+        </a>
+      </div>
+
+      <!-- MODULES -->
+      <p class="section-label">Todos los módulos</p>
+      <div class="modules-grid" id="modulesGrid"></div>
+    </div>
+
+  </main>
+
+  <script>
+  /* ── THEME ── */
+  const _mq = window.matchMedia('(prefers-color-scheme: dark)');
+  function resolveTheme(v) { return v === 'system' ? (_mq.matches ? 'dark' : 'light') : v; }
+  function applyTheme(v)   { document.documentElement.dataset.theme = resolveTheme(v); }
+  function setTheme(v) {
+    localStorage.setItem('yiqi-theme', v);
+    applyTheme(v);
+    document.querySelectorAll('.theme-opt').forEach(b =>
+      b.classList.toggle('active', b.dataset.val === v));
+  }
+  _mq.addEventListener('change', () => {
+    if ((localStorage.getItem('yiqi-theme') || 'system') === 'system') applyTheme('system');
+  });
+  (function() {
+    const s = localStorage.getItem('yiqi-theme') || 'system';
+    applyTheme(s);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.theme-opt').forEach(b =>
+        b.classList.toggle('active', b.dataset.val === s));
+    });
+  })();
+
+  /* ── MODULES DATA ── */
+  const MODULES = [
+    {
+      id: 'inicio', label: 'Inicio', color: 'cyan',
+      icon: '<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+      articles: [
+        { title: 'Inicio', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/inicio' }
+      ]
+    },
+    {
+      id: 'uso', label: 'Uso de YiQi', color: 'cyan',
+      icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>',
+      articles: [
+        { title: 'Acceso (login)', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/acceso-login' },
+        { title: 'Configurar smarties', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/configurar-smarties' },
+        { title: 'Cómo crear Alertas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/cómo-crear-alertas' },
+        { title: 'Usuarios y perfiles', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/usuarios' },
+        { title: 'Tickets', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/tickets' },
+        { title: 'Programar Llamadas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/programar-llamadas' },
+        { title: 'Guía de configuración de YiQi ERP', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/guia_configuracion_yiqi_erp' },
+        { title: 'Migración de datos iniciales', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/migración-de-datos-inciales' },
+        { title: 'API YiQi', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/uso-de-yiqi/api-yiqi' }
+      ]
+    },
+    {
+      id: 'panel', label: 'Panel de Procesos', color: 'blue',
+      icon: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+      articles: [
+        { title: 'Panel de procesos en ejecución', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/panel-de-procesos-en-ejecución' }
+      ]
+    },
+    {
+      id: 'clientes', label: 'Clientes y Proveedores', color: 'purple',
+      icon: '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      articles: [
+        { title: 'Empresas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/clientes-y-proveedores/empresas' },
+        { title: 'Cambio de CUIT de mi empresa', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/clientes-y-proveedores/empresas/cambio-de-cuit-de-mi-empresa' },
+        { title: 'Saldos de clientes y proveedores', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/clientes-y-proveedores/saldos_clientes_y_proveedores' },
+        { title: 'Tu empresa', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/clientes-y-proveedores/tu-empresa' },
+        { title: 'Unificar cliente', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/clientes-y-proveedores/unificar-cliente' },
+        { title: 'Reporte de Clientes', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/clientes-y-proveedores/reporte-de-clientes' },
+        { title: 'Condición de Venta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/clientes-y-proveedores/condición-de-venta' }
+      ]
+    },
+    {
+      id: 'ventas', label: 'Ventas', color: 'green',
+      icon: '<svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+      articles: [
+        { title: 'Facturas de venta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/facturas-de-venta' },
+        { title: 'Factura de Crédito Electrónica', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/Factura-de-Credito-Electronica' },
+        { title: 'Notificación de Vencimiento', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/notificación-de-vencimiento' },
+        { title: 'Notificación Entrega de Factura', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/Notificacion-Entrega-de-Factura' },
+        { title: 'Alta de Tarjetas de Crédito', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/alta-de-tarjetas-de-crédito' },
+        { title: 'Alta factura electrónica AFIP', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/alta_factura_electronica_afip' },
+        { title: 'Alta factura electrónica AFIP — entidad nueva', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/alta-factura-electrónica-afip-con-entidad-nueva' },
+        { title: 'Nota de crédito de Venta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/nota-de-crédito-de-venta' },
+        { title: 'Gestión de cobranzas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/gestión-de-cobranzas' },
+        { title: 'Recibos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/recibos' },
+        { title: 'Pedido', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/pedido' },
+        { title: 'Mensajes de Pedido', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/pedido/mensajes-de-pedido' },
+        { title: 'Pedido con Devolución', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/pedido/pedido-con-devolución' },
+        { title: 'Cheque recibido', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/cheque_recibido' },
+        { title: 'Cobros Aprobados', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/cobros-aprobados' },
+        { title: 'Lista precios de venta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/lista-precios-de-venta' },
+        { title: 'Liquidación de comisiones', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/liquidación-de-comisiones' },
+        { title: 'Facturación recurrente', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/facturación-recurrente' },
+        { title: 'Daily de Facturación', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/daily-de-facturacion' },
+        { title: 'CMV', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/cmv' },
+        { title: 'Impresión múltiple', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/impresión-múltiple' },
+        { title: 'CRM', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/crm' },
+        { title: 'Notificación de Pedido', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/Notificacion-de-Pedido' },
+        { title: 'Nuevo Punto de Venta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/nuevo-punto-de-venta' },
+        { title: 'Facturación electrónica Uruguay', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/fact-electr-uruguay' },
+        { title: 'Concepto de facturación', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/concepto-de-facturación' },
+        { title: 'Reporte de ventas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/reporte-de-ventas' },
+        { title: 'Costo por zona', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/costo-por-zona' },
+        { title: 'Ofertas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/ofertas' },
+        { title: 'Resolución General 5614/2024 ARCA', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/ventas/resolución-general-56142024-arca' }
+      ]
+    },
+    {
+      id: 'compras', label: 'Compras', color: 'amber',
+      icon: '<svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+      articles: [
+        { title: 'Factura de compra', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/factura-de-compra' },
+        { title: 'Solicitud de Compra', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/solicitud-de-compra' },
+        { title: 'Orden de compra', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/orden-de-compra' },
+        { title: 'Front de Proveedores', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/orden-de-compra/front-de-proveedores' },
+        { title: 'Pagos con cheques', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/pagos-con-cheques' },
+        { title: 'Pagos parciales en Facturas de compra', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/pagos-parciales-en-facturas-de-compra' },
+        { title: 'Plan de Pagos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/plan-de-pagos' },
+        { title: 'Créditos y Cuotas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/creditos_y_cuotas' },
+        { title: 'Importación y despacho', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/importacion-y-despacho' },
+        { title: 'Cheques Propios a debitar', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/cheques-propios-a-debitar' },
+        { title: 'Ajustes: Pagos adelantados', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/ajustes-pagos-adelantados' },
+        { title: 'Pago de resumen de tarjeta de crédito', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/pago-de-resumen-de-tarjeta-de-credito' },
+        { title: 'COMEX - Despacho', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/comex-despacho' },
+        { title: 'Pago de dos o más facturas con una misma OP', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/pago-de-dos-o-mas-facturas-con-una-misma-op' },
+        { title: 'Pago de OP con Cheque propio', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/pago-de-op-con-cheque-propio' },
+        { title: 'Factura de compra en dólares', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/factura-de-compra-en-dolares' },
+        { title: 'Orden de Pago', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/orden-de-pago' },
+        { title: 'Lógica de fechas en Órdenes de Pago', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/orden-de-pago/lógica-de-fechas-en-ordenes-de-pago' },
+        { title: 'Importar desde Mis Comprobantes', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/importar-desde-mis-comprobantes' },
+        { title: 'Impresión de cheques', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/impresión-de-cheques' },
+        { title: 'Reporte de Compra', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/reporte-de-compra' },
+        { title: 'Reporte de Pagos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/compras/reporte-de-pagos' }
+      ]
+    },
+    {
+      id: 'integraciones', label: 'Integraciones', color: 'cyan',
+      icon: '<svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+      articles: [
+        { title: 'Magento', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/magento' },
+        { title: 'WooCommerce', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/woocommerce' },
+        { title: 'Integración Tienda Nube', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/integración-tienda-nube' },
+        { title: 'Magento 2', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/magento-2' },
+        { title: 'Integración Mercado Libre', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/integración-mercado-libre' },
+        { title: 'Shopify', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/shopify' },
+        { title: 'Problemas de sincro', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/problemas-de-sincro' },
+        { title: 'Origen de pedido', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/origen-de-pedido' },
+        { title: 'Regla para asignar listas de precios', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/origen-de-pedido/reglarpara-asignar-listas-de-precios-a-las-publicaciones' },
+        { title: '¿Cómo identifica YiQi a un cliente?', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/como-identifica-yiqi-a-un-cliente' },
+        { title: 'Frávega', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/fravega' },
+        { title: 'Rentabilidad', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/integraciones/rentabilidad' }
+      ]
+    },
+    {
+      id: 'finanzas', label: 'Finanzas', color: 'blue',
+      icon: '<svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>',
+      articles: [
+        { title: 'Cajas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/cajas' },
+        { title: 'Cashflow', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/cashflow' },
+        { title: 'Conciliación bancaria', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/conciliación-bancaria' },
+        { title: 'Movimientos entre cajas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/movimientos-entre-cajas' },
+        { title: 'Tarjeta de Crédito', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/Tarjeta-de-Credito' },
+        { title: 'Preguntas frecuentes', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/preguntas-frecuentes' },
+        { title: 'Profit and Loss', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/profit-and-loss' },
+        { title: 'Liquidación de Cobro Electrónico', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/liquidacion_cobro_electronico' },
+        { title: 'Cuenta bancaria', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/cuenta-bancaria' },
+        { title: 'Cobro electrónico', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/cobro-electrónico' },
+        { title: 'Interbanking', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/finanzas/interbanking' }
+      ]
+    },
+    {
+      id: 'contabilidad', label: 'Contabilidad', color: 'purple',
+      icon: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+      articles: [
+        { title: 'Parametrización de cuentas contables', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/Parametrizacion-de-cuentas-contables' },
+        { title: 'Ejercicio contable', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/ejercicio-contable' },
+        { title: 'Importar movimientos contables desde Excel', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/como-importar-movimientos-contables-desde-excel' },
+        { title: 'Libro IVA Digital', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/libro-iva-digital' },
+        { title: 'Liquidación de Percepciones y Retenciones emitidas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/liquidación-de-percepciones-y-retenciones-emitidas' },
+        { title: 'Liquidación de Percepciones y Retenciones recibidas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/liquidación-de-percepciones-y-retenciones-recibidas' },
+        { title: 'Módulo Retenciones', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/liquidación-de-percepciones-y-retenciones-recibidas/módulo-retenciones' },
+        { title: 'Liquidación de Impuestos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/liquidacion-de-Impuestos' },
+        { title: 'Actualización automática del patrimonio neto', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/actualizacion-automatica-del-patrimonio-neto' },
+        { title: 'Libros de IVA Compras e IVA Ventas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/libros-de-iva-compras-e-iva-ventas' },
+        { title: 'Percepciones y retenciones', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/percepciones-y-retenciones' },
+        { title: 'Escala de retenciones — Honorarios socios', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/escala-de-retenciones-honorarios-socios' },
+        { title: 'IIBB Convenio Multilateral', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/ii-bb-convenio-multilateral' },
+        { title: 'Ajustes por inflación', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/Ajustes-por-inflacion' },
+        { title: 'Contabilidad y Stock', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/contabilidad-y-stock' },
+        { title: 'Asiento contable', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/asiento-contable' },
+        { title: 'Fecha de imputación contable', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/fecha-de-imputación-contable' },
+        { title: 'Buenas prácticas al usar el módulo contable', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/contabilidad/buenas-prácticas-al-usar-el-módulo-contable' }
+      ]
+    },
+    {
+      id: 'rrhh', label: 'RRHH', color: 'warm',
+      icon: '<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+      articles: [
+        { title: 'Liquidación de sueldos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/rrhh/liquidación-de-sueldos' },
+        { title: 'Liquidación de novedades', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/rrhh/liquidación-de-novedades' },
+        { title: 'Parametrización', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/rrhh/parametrización' }
+      ]
+    },
+    {
+      id: 'crm', label: 'Comercial / CRM', color: 'cyan',
+      icon: '<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.18 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+      articles: [
+        { title: 'Oportunidad de Negocio', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/comercialcrm/oportunidad-de-negocio' },
+        { title: 'Acciones Comerciales', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/comercialcrm/acciones-comerciales' },
+        { title: 'Cotizaciones Comerciales', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/comercialcrm/cotizaciones-comerciales' }
+      ]
+    },
+    {
+      id: 'produccion', label: 'Producción', color: 'amber',
+      icon: '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+      articles: [
+        { title: 'Pedido corto', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/producción/pedido-corto' },
+        { title: 'Costos de producción', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/producción/costos-de-producción' },
+        { title: 'BOM', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/producción/bom' },
+        { title: 'Modelo OP', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/producción/modelo-op' },
+        { title: 'Fraccionamiento de un producto', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/producción/fraccionamiento-de-un-producto' }
+      ]
+    },
+    {
+      id: 'stock', label: 'Stock', color: 'warm',
+      icon: '<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+      articles: [
+        { title: 'Ubicación de Stock', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/ubicacion' },
+        { title: 'Artículos y Artículos base', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/articulos-y-articulos-base' },
+        { title: 'Modificando el stock', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/modificando-el-stock' },
+        { title: 'Remito de compra', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/remito-de-compra' },
+        { title: 'Pasos para subir el stock', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/pasos-para-subir-el-stock' },
+        { title: 'Remitos de venta y Facturas de venta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/remitos-de-venta-y-facturas-de-venta' },
+        { title: 'Ingreso de Artículos con Lote', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/ingreso-de-artículos-con-lote' },
+        { title: 'Egreso de Artículos con Lote', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/egreso-de-artículos-con-lote' },
+        { title: 'Anular pedido', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/anular-pedido' },
+        { title: 'Pedido en Quiebre', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/pedido-en-quiebre-2' },
+        { title: 'Template etiqueta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/template-etiqueta' },
+        { title: 'Picking List', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/picking-list' },
+        { title: 'Remito de devolución', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/Remito-de-devolucion-' },
+        { title: 'Punto de Pedido', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/punto-de-pedido' },
+        { title: 'Creación de artículos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/creación-de-artículos' },
+        { title: 'Remito de venta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/remito-de-venta' },
+        { title: 'Remito Interno', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/stock/remito-interno' }
+      ]
+    },
+    {
+      id: 'gestion', label: 'Gestión', color: 'blue',
+      icon: '<svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+      articles: [
+        { title: 'Evaluación Económica de Proyectos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/gestión/eval-económica-de-proyectos' },
+        { title: 'Orden de Servicio', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/gestión/orden-de-servicio' }
+      ]
+    },
+    {
+      id: 'parametros', label: 'Parámetros', color: 'red',
+      icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>',
+      articles: [
+        { title: 'Cobros con tarjeta', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/cobros-con-tarjeta' },
+        { title: 'Transportista Logística', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/transportista-logistica' },
+        { title: 'Parámetros Comercial/CRM', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/parámetros-comercialcrm' },
+        { title: 'Alertas de vencimiento', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/alertas-de-vencimiento' },
+        { title: 'Cargando Marcas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/cargando-marcas' },
+        { title: 'Asociando Métodos de Pago y Cobros', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/asociando-métodos-de-pago-y-cobros' },
+        { title: 'Liq. Derechos de autor', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/liq-derechos-de-autor' },
+        { title: 'Copia de Derechos de autor', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/copia-de-derechos-de-autor' },
+        { title: 'Pedido de tienda', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/Parametros/pedido-de-tienda' }
+      ]
+    },
+    {
+      id: 'pos', label: 'POS', color: 'green',
+      icon: '<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+      articles: [
+        { title: 'Configuración del POS', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/configuración-del-pos' },
+        { title: 'Formas de cobro', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/formas-de-cobro' },
+        { title: 'Artículos', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/artículos' },
+        { title: 'Historial de versiones', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/historial-de-versiones' },
+        { title: 'Cierre de caja', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/cierre-de-caja' },
+        { title: 'Reservas óptica', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/reservas-óptica' },
+        { title: 'Tarjetas recargables', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/tarjetas-recargables' },
+        { title: 'POS: Solución de problemas', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/pos-solución-de-problemas' },
+        { title: 'Instalación Hasar2G', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/instalación-hasar2g' },
+        { title: 'Devoluciones en el POS', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/devoluciones-en-el-pos' },
+        { title: 'Facturación desde el POS', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/pos/facturación-desde-el-pos' }
+      ]
+    },
+    {
+      id: 'portal', label: 'Portal de Proveedores', color: 'purple',
+      icon: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+      articles: [
+        { title: 'Portal de Proveedores', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/portal-de-proveedores' }
+      ]
+    },
+    {
+      id: 'faq', label: 'FAQ', color: 'red',
+      icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+      articles: [
+        { title: 'FAQ', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/faq' },
+        { title: 'EULA TASA', url: 'https://sites.google.com/yiqi.com.ar/ayudaerp/faq/eula-tasa' }
+      ]
+    }
+  ];
+
+  /* ── RENDER MODULES ── */
+  const grid = document.getElementById('modulesGrid');
+  const CHEVRON = `<svg class="module-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>`;
+  const LINK_ICON = `<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
+  MODULES.forEach(m => {
+    const n = m.articles.length;
+    const card = document.createElement('div');
+    card.className = 'module-card card-reveal';
+    card.dataset.id = m.id;
+    card.innerHTML = `
+      <div class="module-header" onclick="toggleModule(this.parentElement)">
+        <div class="module-icon ${m.color}">${m.icon}</div>
+        <div class="module-meta">
+          <div class="module-title">${m.label}</div>
+          <div class="module-count">${n} ${n === 1 ? 'artículo' : 'artículos'}</div>
+        </div>
+        ${CHEVRON}
+      </div>
+      <div class="module-body">
+        <div class="module-divider"></div>
+        <div class="article-list">
+          ${m.articles.map(a => `<a class="article-link" href="${a.url}" target="_blank" rel="noopener">${LINK_ICON}${a.title}</a>`).join('')}
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  /* ── ACCORDION ── */
+  function toggleModule(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.module-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) card.classList.add('open');
+  }
+
+  /* ── SCROLL TO MODULE ── */
+  function scrollToModule(id) {
+    const card = document.querySelector(`[data-id="${id}"]`);
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => { if (!card.classList.contains('open')) toggleModule(card); }, 400);
+  }
+
+  /* ── SEARCH ── */
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const srList = document.getElementById('srList');
+  const srHeader = document.getElementById('srHeader');
+  const browseSection = document.getElementById('browseSection');
+
+  const searchClear = document.getElementById('searchClear');
+  if (searchClear) {
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      searchResults.classList.remove('visible');
+      searchInput.focus();
+    });
+  }
+  searchInput.addEventListener('input', function() {
+    if (searchClear) searchClear.classList.toggle('visible', this.value.length > 0);
+    const q = this.value.trim().toLowerCase();
+    if (!q) {
+      searchResults.classList.remove('visible');
+      browseSection.style.display = '';
+      return;
+    }
+    browseSection.style.display = 'none';
+    const hits = [];
+    MODULES.forEach(m => {
+      m.articles.forEach(a => {
+        if (a.title.toLowerCase().includes(q) || m.label.toLowerCase().includes(q)) {
+          hits.push({ title: a.title, url: a.url, module: m.label });
+        }
+      });
+    });
+    if (hits.length === 0) {
+      srHeader.textContent = 'Sin resultados para “' + this.value.trim() + '”';
+      srList.innerHTML = '<div style="padding:24px 16px;color:var(--muted);font:500 13px var(--sans);">Intenta con otro término o navega por los módulos.</div>';
+    } else {
+      srHeader.textContent = hits.length + ' resultado' + (hits.length !== 1 ? 's' : '');
+      const LINK_ICON2 = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+      srList.innerHTML = hits.map(h =>
+        `<a class="sr-item" href="${h.url}" target="_blank" rel="noopener">${LINK_ICON2}${h.title}<span class="sr-module">${h.module}</span></a>`
+      ).join('');
+    }
+    searchResults.classList.add('visible');
+  });
+
+  /* ── CARD REVEAL ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: .08 });
+    document.querySelectorAll('.card-reveal').forEach(el => obs.observe(el));
+  });
+  </script>
+
+  <site-footer base="./"></site-footer>
+  <script src="./components/site-footer.js" defer></script>
+<script>
+
+</script>
+</body>
+</html>

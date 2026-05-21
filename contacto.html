@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — YiQi</title>
+  <meta name="description" content="Hablá con el equipo de YiQi. Demo, consultas comerciales y soporte.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./site.css">
+  <script src="./components/site-header.js" defer></script>
+  <script src="./components/site-footer.js" defer></script>
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  a { text-decoration: none; color: inherit; }
+  button { cursor: pointer; font: inherit; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --bg:          #0a0a0b;
+    --bg-elev:     #0f1013;
+    --bg-elev-2:   #14161b;
+    --bg-soft:     #181b21;
+    --line:        rgba(255,255,255,.08);
+    --line-strong: rgba(255,255,255,.14);
+    --text:        #f3f5f7;
+    --muted:       #908e8e;
+    --muted-2:     #625f5f;
+    --cyan:        #00ccff;
+    --cyan-soft:   rgba(0,204,255,.10);
+    --cyan-soft-2: rgba(0,204,255,.16);
+    --text-cyan-muted: rgba(0,195,240,.62);
+    --green:       #15d49c;
+    --green-soft:  rgba(21,212,156,.10);
+    --amber:       #ffb020;
+    --red:         #ff637d;
+    --red-soft:    rgba(255,99,125,.10);
+    /* ── Type scale ─────────────────────────── */
+    --fs-placeholder-title: 30px;
+    --fs-section-hero:  24px;
+    --fs-panel-title:   14px;
+    --fs-module-title:  13px;
+    --fs-body:          13px;
+    --fs-meta:          12px;
+    --fs-caption:       11px;
+
+    --display:     'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --sans:        'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono:        'IBM Plex Mono', ui-monospace, monospace;
+    --topbar-h:    56px;
+    --radius-xs:   6px;
+    --radius-sm:   10px;
+    --radius:      14px;
+    --radius-pill: 999px;
+    --tr:          180ms ease;
+  }
+  html[data-theme="light"] {
+    --bg:          #eeece7;
+    --bg-elev:     #f6f4ef;
+    --bg-elev-2:   #ffffff;
+    --bg-soft:     #ece9e2;
+    --line:        rgba(0,0,0,.08);
+    --line-strong: rgba(0,0,0,.13);
+    --text:        #17191c;
+    --muted:       #5e5a57;
+    --muted-2:     #8a8580;
+    --cyan:        #009fc7;
+    --cyan-soft:   rgba(0,159,199,.10);
+    --cyan-soft-2: rgba(0,159,199,.14);
+    --text-cyan-muted: rgba(0,140,175,.48);
+    --green:       #0c9b6d;
+    --green-soft:  rgba(12,155,109,.10);
+    --amber:       #c47f00;
+    --red:         #d93048;
+    --red-soft:    rgba(217,48,72,.10);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 72% 8%, rgba(0,204,255,.07), transparent 28%),
+      radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
+      linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+      var(--bg);
+    background-size: auto, auto, 52px 52px, 52px 52px, auto;
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+  html[data-theme="light"] body {
+    background:
+      radial-gradient(circle at 72% 8%, rgba(0,159,199,.06), transparent 28%),
+      radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 22%),
+      linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
+      var(--bg);
+    background-size: auto, auto, 52px 52px, 52px 52px, auto;
+  }
+
+  /* ── Layout principal ────────────────────── */
+  .page-wrap {
+    flex: 1;
+    max-width: 1120px; margin: 0 auto; width: 100%;
+    padding: 0 24px 80px;
+  }
+
+  /* ── Header ──────────────────────────────── */
+  .page-header {
+    max-width: 1120px; margin: 0 auto;
+    padding: 72px 0 56px;
+    text-align: left;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .pp-cursor, .footer-prompt-cursor { animation: none; opacity: 1; }
+  }
+
+  .page-title {
+    font: 800 clamp(32px,5vw,52px)/1.05 var(--display);
+    letter-spacing: -.03em;
+    margin-bottom: 14px;
+    white-space: nowrap;
+  }
+  .page-title em {
+    font-style: normal;
+    color: var(--text);
+  }
+  .page-sub {
+    font: 400 var(--fs-body)/1.7 var(--sans);
+    color: var(--muted);
+    max-width: 480px;
+  }
+
+  /* ── Layout columna única ─────────────────── */
+  .contact-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── Formulario ──────────────────────────── */
+  .form-card {
+    background: var(--bg-elev);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+  }
+  .form-title {
+    font: 700 var(--fs-panel-title)/1.2 var(--sans);
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .form-row .form-group { margin-bottom: 0; } /* el gap del grid maneja el espaciado interno */
+  .form-group {
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 14px;
+  }
+  .form-group:last-of-type { margin-bottom: 0; }
+
+
+  /* inputs → .ds-input / .ds-textarea / .ds-select en styles.css */
+
+  .form-divider {
+    height: 1px; background: var(--line);
+    margin: 20px 0;
+  }
+
+  /* Submit */
+  .btn-submit {
+    touch-action: manipulation;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--cyan-soft-2);
+    color: var(--cyan);
+    border: 1px solid rgba(0,204,255,.28);
+    border-radius: var(--radius);
+    font: 500 var(--fs-panel-title)/1 var(--sans);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all var(--tr), transform 120ms ease;
+    cursor: pointer;
+  }
+  .btn-submit:hover:not(:disabled) { background: var(--cyan-soft); }
+  .btn-submit:active:not(:disabled) { transform: scale(.98); }
+  .btn-submit:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-submit .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(0,0,0,.25);
+    border-top-color: var(--bg);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    display: none;
+  }
+  .btn-submit.loading .spinner { display: block; }
+  .btn-submit.loading .btn-label { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .form-note {
+    font: 400 var(--fs-caption)/1 var(--sans);
+    color: var(--muted-2);
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  /* Success state */
+  .form-success {
+    display: none;
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; text-align: center;
+    padding: 24px 0;
+  }
+  .form-success.show { display: flex; }
+  .success-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--green-soft);
+    display: grid; place-items: center;
+    color: var(--green);
+  }
+  .success-title { font: 700 var(--fs-panel-title)/1.2 var(--sans); color: var(--text); }
+  .success-sub   { font: 400 var(--fs-body)/1.5 var(--sans); color: var(--muted); }
+
+  /* ── Sidebar derecho ──────────────────────── */
+
+  /* Demo CTA */
+  .demo-cta {
+    touch-action: manipulation;
+    display: flex; align-items: center; gap: 16px;
+    background: var(--bg-elev);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    transition: background var(--tr);
+    text-decoration: none; color: inherit;
+  }
+  .demo-cta:hover {
+    background: var(--bg-elev-2);
+  }
+  .demo-cta-body { flex: 1; min-width: 0; }
+  .demo-cta-icon {
+    width: 40px; height: 40px; border-radius: var(--radius-sm);
+    background: var(--cyan-soft); color: var(--cyan);
+    display: grid; place-items: center; flex-shrink: 0;
+    transition: background var(--tr);
+  }
+  .demo-cta:hover .demo-cta-icon { background: var(--cyan-soft-2); }
+  .demo-badge {
+    display: inline-flex;
+    font: 600 var(--fs-caption)/1 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+    color: var(--green); background: var(--green-soft);
+    padding: 2px 8px; border-radius: var(--radius-pill);
+    margin-bottom: 6px;
+  }
+  .demo-title { font: 700 var(--fs-panel-title)/1.2 var(--sans); color: var(--text); margin-bottom: 4px; }
+  .demo-desc  { font: 400 var(--fs-body)/1.45 var(--sans); color: var(--muted); }
+  .demo-arrow {
+    align-self: center; color: var(--muted-2); flex-shrink: 0;
+    transition: color var(--tr), transform var(--tr);
+  }
+  .demo-cta:hover .demo-arrow { color: var(--cyan); transform: translateX(3px); }
+
+
+
+
+
+  @media (max-width: 640px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+  }
+
+
+    /* ── Responsive ──────────────────────────── */
+  @media (max-width: 860px) {
+    .trust-block { display: none; }
+    .topbar-nav { display: none; }
+    .btn-login { display: none; }
+    .theme-switch { display: none; }
+    .mobile-menu-btn { display: flex; }
+  }
+  @media (max-width: 560px) {
+    .form-row { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+    .page-title { white-space: normal; }
+  }
+
+  /* ── DS Form inputs (extraído de DS v1.2.5) ─────────────── */
+  .ds-input,
+  .ds-textarea,
+  .ds-select {
+    width: 100%;
+    background: var(--bg-soft);
+    border: none;
+    border-radius: 14px;
+    color: var(--text);
+    font: 400 var(--fs-body)/1 var(--sans);
+    outline: none;
+    -webkit-appearance: none;
+    transition: box-shadow var(--tr);
+  }
+  .ds-input,
+  .ds-select {
+    height: 40px;
+    padding: 0 14px;
+  }
+  .ds-input::placeholder,
+  .ds-textarea::placeholder { color: var(--muted-2); }
+  .ds-input:focus,
+  .ds-select:focus,
+  .ds-textarea:focus {
+    box-shadow: 0 0 0 3px var(--cyan-soft);
+  }
+  .ds-input.err,
+  .ds-textarea.err {
+    box-shadow: 0 0 0 3px var(--red-soft);
+  }
+  .ds-textarea {
+    height: auto;
+    padding: 10px 14px;
+    resize: vertical;
+    min-height: 96px;
+    line-height: 1.4;
+  }
+  .ds-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236f7785' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 34px;
+  }
+  .ds-label {
+    display: block;
+    font: 500 var(--fs-meta)/1 var(--sans);
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .ds-label .req { color: var(--cyan); margin-left: 2px; }
+  .field-err { font: 400 11px var(--sans); color: var(--red); display: none; margin-top: 4px; }
+  .field-err.show { display: block; }
+  
+  /* ── CHIPS DE SEGMENTACIÓN ── */
+  .cf-section-label {
+    display: flex; align-items: center; gap: 10px;
+    font: 600 9px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted-2); margin: 20px 0 14px;
+  }
+  .cf-section-label::after { content:''; flex:1; height:1px; background:var(--line); }
+  .cf-sublabel { font: 500 10px var(--sans); color: var(--muted-2); letter-spacing: .02em; margin-bottom: 8px; }
+  .hero-form-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .hero-form-chip {
+    font: 500 11px var(--sans); padding: 5px 11px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-elev-2); color: var(--muted);
+    cursor: pointer; border: none; user-select: none;
+    transition: background .15s ease, color .15s ease;
+  }
+  html[data-theme="light"] .hero-form-chip { background: var(--bg-soft); }
+  .hero-form-chip:hover { color: var(--text); }
+  .hero-form-chip.active { background: var(--cyan-soft); color: var(--cyan); }
+</style>
+</head>
+<body>
+
+<site-header current-page="contacto" base="./"></site-header>
+
+<!-- Main -->
+<main class="page-wrap">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="landing-kicker">Contacto</div>
+<h1 class="page-title">Hablemos de <em>tu&nbsp;operación</em></h1>
+    <p class="page-sub">Cuéntanos qué estás buscando. Te respondemos en menos de 24 hs con una propuesta pensada para tu operación.</p>
+  </div>
+
+  <!-- Layout -->
+  <div class="contact-layout">
+
+    <!-- Demo -->
+      <a href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener" class="demo-cta">
+        <div class="demo-cta-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+        </div>
+        <div class="demo-cta-body">
+          <div class="demo-badge">Recomendado</div>
+          <div class="demo-title">Reserva tu demo</div>
+          <div class="demo-desc">30 min en vivo, adaptada a tu operación.</div>
+        </div>
+        <svg class="demo-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+    <!-- Formulario -->
+    <div class="form-card" role="main">
+      <form id="contactForm" novalidate>
+
+        <!-- Nombre + Apellido -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="ds-label" for="cf-nombre">Nombre <span class="req" aria-hidden="true">*</span></label>
+            <input class="ds-input" type="text" id="cf-nombre" name="nombre" placeholder="Tu nombre" autocomplete="given-name" required>
+            <span class="field-err" id="err-nombre" role="alert">Nombre requerido</span>
+          </div>
+          <div class="form-group">
+            <label class="ds-label" for="cf-apellido">Apellido <span class="req" aria-hidden="true">*</span></label>
+            <input class="ds-input" type="text" id="cf-apellido" name="apellido" placeholder="Tu apellido" autocomplete="family-name" required>
+            <span class="field-err" id="err-apellido" role="alert">Apellido requerido</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="ds-label" for="cf-email">Email de trabajo <span class="req" aria-hidden="true">*</span></label>
+          <input class="ds-input" type="email" id="cf-email" name="email" placeholder="correo@empresa.com" autocomplete="email" required>
+          <span class="field-err" id="err-email" role="alert">Ingresa un email válido</span>
+        </div>
+
+        <!-- Celular + País -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="ds-label" for="cf-celular">Celular</label>
+            <input class="ds-input" type="tel" id="cf-celular" name="celular" placeholder="Celular" autocomplete="tel">
+          </div>
+          <div class="form-group">
+            <label class="ds-label" for="cf-pais">País</label>
+            <select class="ds-select" id="cf-pais" name="pais">
+              <option value="" disabled selected>País</option>
+              <option>Argentina</option><option>Uruguay</option><option>Chile</option>
+              <option>Paraguay</option><option>Bolivia</option><option>Colombia</option>
+              <option>Perú</option><option>México</option><option>Brasil</option><option>Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Empresa + Cómo nos conociste -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="ds-label" for="cf-empresa">Empresa <span class="req" aria-hidden="true">*</span></label>
+            <input class="ds-input" type="text" id="cf-empresa" name="empresa" placeholder="Nombre de tu empresa" autocomplete="organization" required>
+            <span class="field-err" id="err-empresa" role="alert">Nombre de empresa requerido</span>
+          </div>
+          <div class="form-group">
+            <label class="ds-label" for="cf-source">¿Cómo nos conociste?</label>
+            <select class="ds-select" id="cf-source" name="source">
+              <option value="" disabled selected>Selecciona...</option>
+              <option>Google</option><option>LinkedIn</option><option>Instagram</option>
+              <option>Recomendación</option><option>Evento o feria</option><option>Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Sección: Sobre tu empresa -->
+        <div class="cf-section-label">Sobre tu empresa</div>
+
+        <!-- Empleados -->
+        <div class="form-group">
+          <div class="cf-sublabel">Empleados</div>
+          <div class="hero-form-chips" id="cf-size">
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-size')">1–10</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-size')">10–50</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-size')">50–200</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-size')">Más de 200</button>
+          </div>
+        </div>
+
+        <!-- Rubro principal -->
+        <div class="form-group">
+          <div class="cf-sublabel">Rubro principal</div>
+          <div class="hero-form-chips" id="cf-sector">
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Importación y distribución</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">E-commerce</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Distribución y logística</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Retail</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Indumentaria y moda</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Electrónica y tecnología</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Servicios</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Manufactura / Industria</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-sector',true)">Otro</button>
+          </div>
+        </div>
+
+        <!-- Módulos de interés -->
+        <div class="form-group">
+          <div class="cf-sublabel">Módulos de interés</div>
+          <div class="hero-form-chips" id="cf-modules">
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Ventas</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Stock</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">YiQi POS</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Finanzas</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Contabilidad</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Comercial y CRM</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Compras</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">RRHH</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Calidad</button>
+            <button type="button" class="hero-form-chip" onclick="toggleChip(this,'cf-modules',true)">Gestión</button>
+          </div>
+        </div>
+
+        <!-- Mensaje -->
+        <div class="form-group">
+          <label class="ds-label" for="cf-mensaje">Mensaje <span class="req" aria-hidden="true">*</span></label>
+          <textarea class="ds-textarea" id="cf-mensaje" name="mensaje" placeholder="Cuéntanos qué estás buscando o qué área quieres mejorar..." required></textarea>
+          <span class="field-err" id="err-mensaje" role="alert">El mensaje es requerido</span>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-label">Enviar mensaje</span>
+        </button>
+        <p class="form-note">Te respondemos en menos de 24 hs hábiles</p>
+      </form>
+
+      <!-- Success -->
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+        <div class="success-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="success-title">¡Mensaje enviado!</p>
+        <p class="success-sub">Nuestro equipo comercial te va a contactar<br>en las próximas 24 hs hábiles.</p>
+      </div>
+    </div>
+
+
+  </div>
+</main>
+
+<!-- Footer -->
+<site-footer base="./"></site-footer>
+
+
+<script>
+  /* ── Tema ─────────────────────────────────── */
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  function resolveTheme(v) { return v === 'system' ? (mq.matches ? 'dark' : 'light') : v; }
+  function applyTheme(v)   { document.documentElement.dataset.theme = resolveTheme(v); }
+  function updateSwitch(v) {
+    document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.val === v));
+  }
+  function setTheme(v) { localStorage.setItem('yiqi-theme', v); applyTheme(v); updateSwitch(v); }
+  (function () {
+    const s = localStorage.getItem('yiqi-theme') || 'system';
+    applyTheme(s);
+    document.addEventListener('DOMContentLoaded', () => updateSwitch(s));
+  })();
+  mq.addEventListener('change', () => {
+    if ((localStorage.getItem('yiqi-theme') || 'system') === 'system') applyTheme('system');
+  });
+
+  /* ── Nav mobile ────────────────────────────── */
+
+  /* ── Formulario ──────────────────────────── */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function setErr(id, errId, show) {
+    const inp = document.getElementById(id);
+    const msg = document.getElementById(errId);
+    if (!inp || !msg) return;
+    inp.classList.toggle('err', show);
+    msg.classList.toggle('show', show);
+  }
+
+  function validate() {
+    let ok = true;
+    const nombre   = document.getElementById('cf-nombre').value.trim();
+    const apellido = document.getElementById('cf-apellido').value.trim();
+    const email    = document.getElementById('cf-email').value.trim();
+    const empresa  = document.getElementById('cf-empresa').value.trim();
+    const mensaje  = document.getElementById('cf-mensaje').value.trim();
+
+    setErr('cf-nombre',   'err-nombre',   !nombre);   if (!nombre)   ok = false;
+    setErr('cf-apellido', 'err-apellido', !apellido); if (!apellido) ok = false;
+    setErr('cf-email',    'err-email',    !EMAIL_RE.test(email)); if (!EMAIL_RE.test(email)) ok = false;
+    setErr('cf-empresa',  'err-empresa',  !empresa);  if (!empresa)  ok = false;
+    setErr('cf-mensaje',  'err-mensaje',  !mensaje);  if (!mensaje)  ok = false;
+
+    return ok;
+  }
+
+  // Clear errors on input
+  ['cf-nombre','cf-apellido','cf-email','cf-empresa','cf-mensaje'].forEach(id => {
+    const errMap = { 'cf-nombre':'err-nombre','cf-apellido':'err-apellido','cf-email':'err-email','cf-empresa':'err-empresa','cf-mensaje':'err-mensaje' };
+    document.getElementById(id)?.addEventListener('input', () => setErr(id, errMap[id], false));
+  });
+
+  function toggleChip(btn, groupId, multi) {
+    if (!multi) {
+      document.querySelectorAll('#' + groupId + ' .hero-form-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else {
+      btn.classList.toggle('active');
+    }
+  }
+
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) {
+      // Focus first invalid field
+      const first = document.querySelector('input.err, textarea.err');
+      if (first) first.focus();
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.classList.add('loading');
+
+    // Simulate async submit (replace with real endpoint)
+    await new Promise(r => setTimeout(r, 1400));
+
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="system">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acerca de YiQi — ERP para empresas que crecen</title>
+  <meta name="description" content="Conoce la historia, el equipo y la misión de YiQi, el ERP moderno para empresas latinoamericanas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./site.css">
+  <script src="./components/site-header.js" defer></script>
+  <script src="./components/site-footer.js" defer></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font: inherit; }
+
+    :root {
+      --bg:          #0c0c0e;
+      --bg-elev:     #111114;
+      --bg-elev-2:   #18181c;
+      --bg-soft:     rgba(255,255,255,.04);
+      --line:        rgba(255,255,255,.08);
+      --line-strong: rgba(255,255,255,.14);
+      --text:        #f0f1f3;
+      --muted:       #8a8d94;
+      --muted-2:     #5a5d66;
+      --cyan:        #00ccff;
+      --cyan-soft:   rgba(0,204,255,.12);
+      --cyan-soft-2: rgba(0,204,255,.18);
+      --cyan-label:  rgba(0,204,255,.52);
+      --text-cyan-muted: rgba(0,195,240,.45);
+      --green:       #00c48c;
+      --green-soft:  rgba(0,196,140,.12);
+      --amber:       #f6a623;
+      --amber-soft:  rgba(246,166,35,.12);
+      --red:         #f25f5c;
+      --red-soft:    rgba(242,95,92,.12);
+      --blue:        #7ab7ff;
+      --purple:      #a78bfa;
+      --purple-soft: rgba(167,139,250,.12);
+      --warm:        #b5a090;
+      --warm-soft:   rgba(181,160,144,.10);
+      --glow:        0 0 0 3px rgba(0,204,255,.22);
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
+      --shadow-md:   0 4px 16px rgba(0,0,0,.28);
+      --shadow-lg:   0 8px 32px rgba(0,0,0,.36);
+      --sans:        "Inter", ui-sans-serif, system-ui, sans-serif;
+      --display:     "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+      --mono:        "IBM Plex Mono", ui-monospace, monospace;
+      --topbar-h:    56px;
+      --radius-xs:   5px;
+      --radius-sm:   7px;
+      --radius:      10px;
+      --radius-md:   12px;
+      --radius-lg:   16px;
+      --radius-xl:   20px;
+      --radius-pill: 999px;
+      --tr:          180ms ease;
+    }
+    html[data-theme="light"] {
+      --bg:          #f5f4f0;
+      --bg-elev:     #eeece7;
+      --bg-elev-2:   #e6e4df;
+      --bg-soft:     rgba(0,0,0,.04);
+      --line:        rgba(0,0,0,.08);
+      --line-strong: rgba(0,0,0,.13);
+      --text:        #17191c;
+      --muted:       #586170;
+      --muted-2:     #7f8896;
+      --text-cyan-muted: rgba(0,140,175,.48);
+      --cyan:        #009fc7;
+      --cyan-soft:   rgba(0,159,199,.12);
+      --cyan-soft-2: rgba(0,159,199,.18);
+      --green:       #0c9b6d;
+      --amber:       #c78000;
+      --red:         #d4485e;
+      --blue:        #347de6;
+      --purple:      #7c3aed;
+      --glow:        0 0 0 3px rgba(0,159,199,.22);
+      --shadow-sm:   0 2px 8px rgba(16,36,54,.08);
+      --shadow-md:   0 8px 24px rgba(16,36,54,.12);
+      --shadow-lg:   0 16px 32px rgba(16,36,54,.16);
+    }
+
+    html, body { overflow-x: clip; }
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 72% 8%, rgba(0,204,255,.07), transparent 28%),
+        radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
+      min-height: 100vh;
+    }
+    html[data-theme="light"] body {
+      background:
+        radial-gradient(circle at 72% 8%, rgba(0,159,199,.06), transparent 28%),
+        radial-gradient(circle at 12% 60%, rgba(0,159,199,.04), transparent 22%),
+        linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, auto, 52px 52px, 52px 52px, auto;
+    }
+
+    /* ── SECTIONS ── */
+    .section { max-width: 1120px; margin: 0 auto; padding: 40px 24px 80px; }
+    .section + .section { padding-top: 0; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: left;
+      max-width: 1120px; margin: 0 auto;
+      padding: 48px 24px 8px;
+    }
+    .landing-kicker { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--cyan-soft); color: var(--cyan); font: 700 10px var(--mono); letter-spacing: .10em; text-transform: uppercase; margin-bottom: 20px; border: none; }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800; letter-spacing: -.03em; line-height: 1.1;
+      color: var(--text); margin-bottom: 20px;
+    }
+    .hero-title .hl { color: var(--cyan); }
+    .hero-desc {
+      font-size: 17px; color: var(--muted); line-height: 1.7;
+      max-width: 560px; margin: 0 0 40px;
+    }
+    .hero-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 12px 22px; border-radius: var(--radius);
+      font: 600 14px var(--sans); cursor: pointer;
+      border: 1px solid transparent;
+      transition: all var(--tr); text-decoration: none;
+    }
+    .btn-primary { background: var(--cyan-soft-2); border-color: rgba(0,204,255,.28); color: var(--cyan); }
+    .btn-primary:hover { background: var(--cyan-soft); box-shadow: var(--glow); }
+    .btn-ghost { background: var(--bg-soft); border-color: var(--line-strong); color: var(--muted); }
+    .btn-ghost:hover { color: var(--text); }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: var(--line); max-width: 1080px; margin: 0 auto; }
+
+    /* ── SECTION LABEL ── */
+    .section-eyebrow {
+      font: 600 11px var(--sans); letter-spacing: .08em;
+      text-transform: uppercase; color: var(--text-cyan-muted);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 700; letter-spacing: -.025em; line-height: 1.2;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .section-desc {
+      font-size: 15px; color: var(--muted); line-height: 1.7;
+      max-width: 520px; margin-bottom: 48px;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 0;
+    }
+    .stat-card {
+      background: var(--bg-elev);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 28px 24px;
+      text-align: left;
+      transition: box-shadow var(--tr);
+    }
+    .stat-card:hover { box-shadow: 0 0 0 1px rgba(0,204,255,.10) inset, var(--shadow-md); }
+    .stat-num {
+      font-family: var(--display);
+      font-size: 36px; font-weight: 800; letter-spacing: -.03em;
+      color: var(--text); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-num span { color: var(--cyan); }
+    .stat-label { font: 500 13px var(--sans); color: var(--muted); }
+
+    /* ── MISSION BLOCK ── */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+    }
+    .mission-text {}
+    .mission-visual {
+      background: var(--bg-elev);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      padding: 40px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .mission-item {
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .mission-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-sm);
+      background: var(--cyan-soft);
+    }
+    .mission-icon svg {
+      width: 16px; height: 16px;
+      stroke: var(--cyan); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .mission-icon.green { background: var(--green-soft); }
+    .mission-icon.green svg { stroke: var(--green); }
+    .mission-icon.purple { background: var(--purple-soft); }
+    .mission-icon.purple svg { stroke: var(--purple); }
+    .mission-item-title { font: 600 14px var(--sans); color: var(--text); margin-bottom: 3px; }
+    .mission-item-desc  { font: 400 13px var(--sans); color: var(--muted); line-height: 1.5; }
+
+    /* ── MODULES GRID ── */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .mod-card {
+      background: var(--bg-elev);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 20px 18px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: box-shadow var(--tr), transform var(--tr);
+    }
+    .mod-card:hover {
+      box-shadow: 0 0 0 1px rgba(0,204,255,.10) inset, var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .mod-icon {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-sm);
+      background: var(--cyan-soft);
+    }
+    .mod-icon svg {
+      width: 15px; height: 15px;
+      stroke: var(--cyan); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .mod-icon.green { background: var(--green-soft); }
+    .mod-icon.green svg { stroke: var(--green); }
+    .mod-icon.amber { background: var(--amber-soft); }
+    .mod-icon.amber svg { stroke: var(--amber); }
+    .mod-icon.purple { background: var(--purple-soft); }
+    .mod-icon.purple svg { stroke: var(--purple); }
+    .mod-icon.blue { background: rgba(122,183,255,.12); }
+    .mod-icon.blue svg { stroke: var(--blue); }
+    .mod-name { font: 600 13px var(--sans); color: var(--text); }
+
+    /* ── VALUES ── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .value-card {
+      background: var(--bg-elev-2);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 28px 24px;
+      transition: box-shadow var(--tr);
+    }
+    .value-card:hover { box-shadow: 0 0 0 1px rgba(0,204,255,.08) inset, var(--shadow-md); }
+    .value-num {
+      font-family: var(--display);
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      color: var(--text-cyan-muted); margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .value-title { font: 700 16px var(--display); color: var(--text); margin-bottom: 8px; }
+    .value-desc { font: 400 13px var(--sans); color: var(--muted); line-height: 1.6; }
+
+    /* ── CTA FINAL ── */
+    .cta-section {
+      text-align: left;
+      max-width: 1120px; margin: 0 auto;
+      padding: 80px 24px 96px;
+    }
+    .cta-section .section-title { margin-bottom: 14px; }
+    .cta-section .section-desc  { margin: 0 0 36px; }
+
+    /* ── CARD REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero { padding: 32px 16px 40px; }
+      .section { padding: 56px 16px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .mission-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .modules-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    .about-body { font-size: 15px; color: var(--text); line-height: 1.75; }
+    .tags-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      display: inline-flex; align-items: center;
+      padding: 5px 12px; border-radius: var(--radius-pill);
+      background: var(--bg-elev); border: none;
+      font: 500 12px var(--sans); color: var(--muted);
+      transition: all var(--tr);
+    }
+    .tag-link { text-decoration: none; }
+    .tag-link:hover { color: var(--cyan); border-color: rgba(0,204,255,.28); background: var(--cyan-soft); }
+    .about-body--second { margin-top: 16px; }
+    .tags-wrap { margin-top: 28px; }
+    @media (max-width: 768px) { .mission-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<site-header base="./" current-page="acerca-de"></site-header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="landing-kicker">// Acerca de YiQi</div>
+  <h1 class="hero-title">Software hecho para la operación real.</h1>
+  <p class="hero-desc">ERP moderno para empresas latinoamericanas que necesitan conectar toda su operación desde un solo sistema.</p>
+</section>
+
+<!-- SOBRE YIQI -->
+<div class="section">
+  <div style="max-width:680px">
+    <div class="mission-text">
+      <p class="about-body about-body--first">YiQi es una empresa de software que desarrolla YiQi ERP, un sistema de gestión integral diseñado para empresas que necesitan ordenar y conectar toda su operación. El ERP centraliza procesos como Clientes y Proveedores, Ventas, Compras, Finanzas, Contabilidad, RRHH, Comercial/CRM, Gestión, Stock, Producción, Calidad, POS (puntos de venta), y Gestión Editorial, conectando además marketplaces, plataformas de ecommerce, bancos, operadores logísticos y otros sistemas externos.</p>
+      <p class="about-body about-body--second">A través de YiQi API, las empresas pueden integrar distintos sistemas y automatizar su operación, logrando mayor control, eficiencia y decisiones basadas en datos. Fundada en Argentina en 2011, YiQi acompaña a empresas que operan en múltiples canales y buscan escalar su negocio con una gestión integrada.</p>
+      <div class="tags-wrap">
+        <a href="ayuda-erp.html" class="tag tag-link">Clientes y Proveedores</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Ventas</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Compras</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Finanzas</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Contabilidad</a>
+        <a href="ayuda-erp.html" class="tag tag-link">RRHH</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Comercial / CRM</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Gestión</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Stock</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Producción</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Calidad</a>
+        <a href="ayuda-erp.html" class="tag tag-link">POS</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Gestión Editorial</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Marketplaces</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Ecommerce</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Bancos</a>
+        <a href="ayuda-erp.html" class="tag tag-link">Logística</a>
+        <a href="https://apidoc.yiqi.com.ar" target="_blank" rel="noopener" class="tag tag-link">YiQi API ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <p class="section-eyebrow">¿Listo para empezar?</p>
+  <h2 class="section-title">Hablemos de tu empresa</h2>
+  <p class="section-desc">Agenda una demo gratuita de 30 minutos y te mostramos cómo YiQi se adapta a tu operación.</p>
+  <div class="hero-actions">
+    <a href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener" class="btn btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Reserva tu demo
+    </a>
+    <a href="mailto:comercial@yiqi.com.ar" class="btn btn-ghost">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Escribir al equipo
+    </a>
+  </div>
+</div>
+
+<site-footer base="./"></site-footer>
+
+<script>
+  /* Card reveal */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: .08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
