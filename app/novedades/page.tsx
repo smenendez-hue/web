@@ -3,6 +3,8 @@ import { Footer } from "@/components/footer"
 import { NovedadesContent } from "@/components/novedades-content"
 import { getNovedades, getNovedadesFilterOptions } from "@/lib/novedades-store"
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: "Novedades",
   description: "Últimas novedades y mejoras de YiQi ERP, con búsqueda y filtros por módulo y tipo.",
