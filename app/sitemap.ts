@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl()
   const now = new Date()
 
-  const staticRoutes = ["", "/contacto", "/faq", "/novedades"].map((path) => ({
+  const staticRoutes = ["", "/contacto", "/faq", "/novedades", "/privacidad"].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
   }))

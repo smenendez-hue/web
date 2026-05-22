@@ -105,6 +105,14 @@ export function Footer() {
           </a>
         </nav>
       </div>
+      <div className="page-shell mx-auto mt-8">
+        <a
+          href="/privacidad"
+          className="text-xs text-text-secondary/60 hover:text-text-secondary transition-colors"
+        >
+          Política de privacidad
+        </a>
+      </div>
     </footer>
   )
 }
