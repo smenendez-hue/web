@@ -67,11 +67,39 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A139CE458E83458C9ABEE0A3DC93F2BB }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_47D4E21C124F4CCA80256C778590BE87 }}
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'web-yiqi-nueva'
-          slot-name: 'Production'
-          package: deploy
+      - name: Resolve resource group
+        id: app
+        run: |
+          RG=$(az webapp list --query "[?name=='web-yiqi-nueva'].resourceGroup | [0]" -o tsv)
+          if [ -z "$RG" ]; then
+            echo "Could not resolve resource group for web-yiqi-nueva"
+            exit 1
+          fi
+          echo "resource_group=$RG" >> "$GITHUB_OUTPUT"
+
+      - name: Configure startup and disable Oryx build
+        run: |
+          az webapp config appsettings set \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false
+          az webapp config set \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --startup-file "node server.js"
+
+      - name: Create zip package
+        run: |
+          cd deploy
+          zip -r ../deploy.zip .
+
+      - name: Clean deploy to Azure Web App
+        run: |
+          az webapp deploy \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --src-path deploy.zip \
+            --type zip \
+            --clean true \
+            --restart true
           
