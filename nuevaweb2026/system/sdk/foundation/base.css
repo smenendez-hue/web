@@ -1,0 +1,135 @@
+/* ── YiQi Design System v1.2.5 — Base styles ── */
+
+/* Importar fuentes (necesario en entornos standalone) */
+/* @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap'); */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  transition: background .25s, color .25s;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Tabla DS — borderless con separadores ── */
+.yiqi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.yiqi-table th {
+  text-align: left;
+  font: 600 11px var(--mono);
+  letter-spacing: .06em;
+  color: var(--muted-2);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.yiqi-table td {
+  padding: 11px 12px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+.yiqi-table tr:last-child td {
+  border-bottom: none;
+}
+
+.yiqi-table tr:hover td {
+  background: var(--bg-soft);
+}
+
+/* ── Card base — sin border, profundidad por sombra ── */
+.yiqi-card {
+  background: var(--bg-elev);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+}
+
+/* ── Botones ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  font: 600 13px var(--sans);
+  letter-spacing: .01em;
+  cursor: pointer;
+  border: none;
+  transition: all 180ms ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--cyan-soft-2);
+  color: var(--cyan);
+}
+
+.btn-primary:hover {
+  background: rgba(0,204,255,.25);
+}
+
+.btn-ghost {
+  background: var(--bg-elev-2);
+  color: var(--muted);
+}
+
+.btn-ghost:hover {
+  color: var(--text);
+}
+
+/* ── Input — excepción borderless: controles interactivos llevan border ── */
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font: 400 14px var(--sans);
+  transition: border-color 160ms, box-shadow 160ms;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--cyan);
+  box-shadow: var(--glow);
+}
+
+/* ── Form label ── */
+.form-label {
+  display: block;
+  font: 500 12px var(--sans);
+  color: var(--muted);
+  margin-bottom: 6px;
+  letter-spacing: .01em;
+}
+
+/* ── Badge / chip ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font: 600 11px var(--mono);
+  letter-spacing: .04em;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-elev-2);
+  color: var(--muted);
+}
+
+.badge-cyan   { background: var(--cyan-soft);   color: var(--cyan); }
+.badge-green  { background: var(--green-soft);  color: var(--green); }
+.badge-amber  { background: var(--amber-soft);  color: var(--amber); }
+.badge-red    { background: var(--red-soft);    color: var(--red); }
+.badge-purple { background: var(--purple-soft); color: var(--purple); }

@@ -1,0 +1,39 @@
+/* ── YiQi Design System v1.2.5 — Light mode overrides ── */
+html[data-theme="light"] {
+  /* Backgrounds */
+  --bg:        #f5f4f0;
+  --bg-elev:   #eeece7;
+  --bg-elev-2: #e6e4df;
+  --bg-soft:   rgba(0,0,0,.04);
+
+  /* Borders */
+  --line:        rgba(0,0,0,.08);
+  --line-strong: rgba(0,0,0,.14);
+
+  /* Text */
+  --text:    #1a1a1e;
+  --muted:   #6b6e78;
+  --muted-2: #9b9ea8;
+
+  /* Brand — Cyan (shifted for light bg) */
+  --cyan:           #009fc7;
+  --cyan-soft:      rgba(0,159,199,.1);
+  --cyan-soft-2:    rgba(0,159,199,.16);
+  --cyan-label:     rgba(0,159,199,.65);
+  --text-cyan-muted:rgba(0,140,175,.48);
+
+  /* Semantic */
+  --green:      #007a58;
+  --green-soft: rgba(0,122,88,.1);
+  --amber:      #c47c00;
+  --amber-soft: rgba(196,124,0,.1);
+  --red:        #c93c39;
+  --red-soft:   rgba(201,60,57,.1);
+  --purple:     #7c3aed;
+  --purple-soft:rgba(124,58,237,.1);
+
+  /* Shadows (lighter for light bg) */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 8px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.1), 0 1px 4px rgba(0,0,0,.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.15), 0 2px 8px rgba(0,0,0,.08);
+}
