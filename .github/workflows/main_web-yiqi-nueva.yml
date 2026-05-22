@@ -21,42 +21,24 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
-
-      - name: Enable corepack and install pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
+          node-version: '20.x'
 
       - name: npm install, build, and test
         run: |
-          pnpm install --frozen-lockfile
-          pnpm run build --if-present
-          pnpm run test --if-present
+          npm install
+          npm run build --if-present
+          npm run test --if-present
 
-      - name: Prepare standalone bundle
+      - name: Create deployment package
         run: |
-          rm -rf deploy
-          mkdir -p deploy
-          cp -R .next/standalone/* deploy/
-          mkdir -p deploy/.next
-          cp -R .next/static deploy/.next/
-          if [ -d public ]; then
-            cp -R public deploy/
-          fi
-          cat > deploy/package.json <<'EOF'
-          {
-            "name": "my-v0-project",
-            "private": true,
-            "scripts": {
-              "start": "node server.js"
-            }
-          }
-          EOF
+          zip -r deploy.zip . \
+            -x '.git/*' '.github/*' '.gitignore' 'node_modules/*' '*.log'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: deploy
+          path: deploy.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -70,20 +52,38 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-          path: deploy
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B512E2E3F5404A72902EB079F383993C }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_78CC486FB8804BCC83F2DAF4D7FDFD07 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C59970B6BF9145D6A587F1F3CFD3DED2 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_80C5F14BD3BF4C24916AE566241ABF04 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A139CE458E83458C9ABEE0A3DC93F2BB }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_47D4E21C124F4CCA80256C778590BE87 }}
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'web-yiqi-nueva'
-          slot-name: 'Production'
-          package: deploy
+      - name: Resolve resource group
+        id: app
+        run: |
+          RG=$(az webapp list --query "[?name=='web-yiqi-nueva'].resourceGroup | [0]" -o tsv)
+          if [ -z "$RG" ]; then
+            echo "Could not resolve resource group for web-yiqi-nueva"
+            exit 1
+          fi
+          echo "resource_group=$RG" >> "$GITHUB_OUTPUT"
+
+      - name: Configure startup and disable Oryx build
+        run: |
+          az webapp config appsettings set \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false PORT=8080
+
+      - name: Clean deploy to Azure Web App
+        run: |
+          az webapp deploy \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --src-path deploy.zip \
+            --type zip \
+            --clean true \
+            --restart true
           
