@@ -10,7 +10,8 @@
    cualquier peso en ese rango. Pesos <700 caen al fallback. */
 @font-face {
   font-family: "Greycliff CF";
-  src: url("system/fonts/Greycliff-CF-Heavy.otf") format("opentype");
+  src: url("system/fonts/Greycliff-CF-Heavy.woff2") format("woff2"),
+       url("system/fonts/Greycliff-CF-Heavy.otf")   format("opentype");
   font-weight: 700 900;
   font-style: normal;
   font-display: swap;

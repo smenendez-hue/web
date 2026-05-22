@@ -228,8 +228,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     font-feature-settings: "kern" 0;
   }
   .tp-scramble .tp-dud {
+    color: #00ccff;
+    opacity: 1;
+  }
+  html[data-theme="light"] .tp-scramble .tp-dud {
     color: var(--cyan);
-    opacity: .68;
+    opacity: .72;
   }
   @media (prefers-reduced-motion: reduce) {
     .tp-scramble .tp-dud { color: inherit; opacity: 1; }
@@ -2384,7 +2388,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-  <link rel="preload" href="system/fonts/Greycliff-CF-Heavy.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="system/fonts/Greycliff-CF-Heavy.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 <div class="star-field" aria-hidden="true"></div>
@@ -4011,7 +4015,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ══════════════════════════════════════════
      SCRAMBLE ENGINE — sistema global
   ══════════════════════════════════════════ */
-  const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
+  const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQQQQQQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
   const _rand = () => SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
 
   /**
