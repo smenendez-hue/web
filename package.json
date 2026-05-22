@@ -1,0 +1,10 @@
+{
+  "name": "www-yiqi",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sitio web estatico de YiQi",
+  "scripts": {
+    "build": "echo \"No build step required for static site\"",
+    "test": "echo \"No tests configured\""
+  }
+}
