@@ -1,88 +1,124 @@
-# YiQi Landing Page
+# YiQi Design System — v1.2.5
 
-Este repositorio contiene la landing page principal de YiQi ERP, construida con Next.js 16 (Turbopack) y Tailwind CSS 4. El objetivo del sitio es exponer contenido estático y dinámico (blog, módulos, clientes, integraciones y FAQ) que se alimenta exclusivamente desde SQL Server Express para mantener la información actualizada.
+Repositorio canónico del sistema de diseño de YiQi ERP.
 
-## Arquitectura general
+---
 
-- **Next.js App Router** (`app/`): define las rutas principales (`/`, `/blog`, `/faq`, `/blog/[slug]`) y monta los componentes compartidos como `Header`, `Footer`, secciones destacadas y páginas completas que consumen stores desde `lib/`.
-- **Componentes** (`components/`): contienen secciones reutilizables (`HeroSection`, `ModulesSection`, `FAQSection`, etc.) y componentes auxiliares (`LogoScroller`, `BlogContent`, `BlogPostContent`).
-- **Librerías de datos** (`lib/`): alojan la lógica de conexión y normalización. Cada recurso real (blog, clientes, integraciones, FAQ) tiene su propio store o helper:
-  * `lib/db.ts`: configura la conexión a SQL Server a partir de variables de ambiente obligatorias.
-  * `lib/blog-store.ts`: ejecuta la consulta de posts, normaliza HTML/Markdown, genera slugs, resúmenes y calcula tiempos de lectura.
-  * `lib/faq-store.ts`: agrupa preguntas, implementa cache con TTL configurable (`FAQ_CACHE_TTL_MS`) y ofrece `clearFaqCache()` para invalidar manualmente.
-  * `lib/logo-utils.ts`: helper compartido que suministra `loadLogoItems`, deduplica consultas concurrentes, cachea resultados (TTL configurable vía `LOGO_CACHE_TTL_MS`) y permite invalidar el cache con `clearLogoCache()`.
-  * `lib/clients-store.ts` y `lib/integrations-store.ts`: simplemente llaman a `loadLogoItems` con sus querys y textos de fallback.
-  * `lib/image-utils.ts`: convierte los blobs base64 de la base de datos en `data:` URLs seguras.
-- **Datos de módulos** (`data/modules.ts`): concentra todas las tarjetas de módulos y sus detalles en español para que el componente `ModulesSection` y el panel de detalles compartan el mismo origen.
-- **Assets públicos** (`public/`): incluye logotipos, íconos y recursos estáticos mínimos. Las imágenes de clientes e integraciones se eliminaron en favor de los datos desde la base.
-- **Documentación viva** (`docs/data-architecture.md`): describe cómo fluyen los datos reales, los patrones reutilizados y dónde añadir nuevos cargadores para mantener la coherencia.
+## Estructura
 
-## Variables de entorno
-
-Copiar .env.example a .env.local (no versionado) y completar valores reales.
-
-`env
-DB_SERVER=
-DB_NAME=WEB_YIQI
-DB_USER=
-DB_PASSWORD=
-DB_ENCRYPT=true
-DB_TRUST_SERVER_CERTIFICATE=true
-FAQ_CACHE_TTL_MS=120000        # opcional, default 2 minutos
-LOGO_CACHE_TTL_MS=300000       # opcional, default 5 minutos
-CONTACT_MAIL_TO=comercial@yiqi.com.ar
-CONTACT_SENDER_MAIL=info@yiqi.com.ar
-CONTACT_SENDER_NAME=YiQi Web
-CONTACT_AUDIT_USER=WEB
-CONTACT_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
-RECAPTCHA_SECRET_KEY=
-RECAPTCHA_MIN_SCORE=0.5
-RECAPTCHA_EXPECTED_ACTION=contact_submit
-RECAPTCHA_ALLOWED_HOSTNAMES=www.yiqi.com.ar,yiqi.com.ar,localhost,127.0.0.1
-CONTACT_RATE_LIMIT_MAX=5
-CONTACT_RATE_LIMIT_WINDOW_MS=600000
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-SITE_URL=http://localhost:3000
-`
-
-DB_ENCRYPT/DB_TRUST_SERVER_CERTIFICATE ya estan forzados en lib/db.ts.
-En produccion, usar `CONTACT_ALLOWED_ORIGINS=https://www.yiqi.com.ar,https://yiqi.com.ar` (sin slash final).
-Completar `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` + `RECAPTCHA_SECRET_KEY` con las claves reales del dominio.
-
-## Scripts útiles
-
-```bash
-npm run dev   # arrancar el servidor de desarrollo
-npm run build # compilar para producción
-npm run start # ejecutar el build compilado
-npm run lint  # revisar el código con ESLint
+```
+/
+├── content/
+│   ├── context/
+│   │   └── YiQi ERP — Contexto para IA.md   ← contexto de producto para prompts
+│   │
+│   ├── design-system/
+│   │   ├── yiqi-design.md                    ← GUÍA MAESTRA v1.2.5 (referencia completa)
+│   │   └── archive/
+│   │       ├── YiQi_DS_v1_2_4.md
+│   │       ├── YiQi_DS_v1_2_4_Recipe.md
+│   │       └── YiQi_DS_v1_2_5_Recipe.md      ← reemplazado por yiqi-design.md
+│   │
+│   └── prompts/
+│       └── execution.md                      ← RECETA PARA IA (prompt maestro + tokens)
+│
+├── examples/
+│   ├── design-system/
+│   │   ├── index.html                        ← showcase completo del DS
+│   │   ├── styles.css                        ← CSS standalone v1.2.5 (para Christian)
+│   │   └── ds-doc.css                        ← estilos de la documentación interna
+│   │
+│   ├── dashboards/
+│   │   └── index.html
+│   │
+│   ├── marketplace/
+│   │   └── index.html
+│   │
+│   ├── landing/
+│   │   └── YiQi_Landing_DS.html
+│   │
+│   ├── leads/
+│   │   └── YiQi_MelCity_ERP_v1.8.html
+│   │
+│   └── ecosan/
+│       └── ecosan_informe.html
+│
+├── informes/
+│   ├── informes-index.html
+│   └── 2026-04-22.html
+│
+├── system/
+│   ├── icons/
+│   │   ├── LOGO YiQi 100x65.svg
+│   │   ├── LOGO YiQi 100x65 NEGATIVO.svg
+│   │   ├── iAready.svg
+│   │   ├── LOGOS CLIENTES/
+│   │   └── LOGOS INTEGRACIONES/
+│   │
+│   ├── sdk/
+│   │   ├── foundation/
+│   │   │   ├── tokens.css                    ← tokens DS v1.2.5
+│   │   │   ├── themes.css                    ← overrides light mode
+│   │   │   └── base.css                      ← reset + componentes base
+│   │   ├── components/
+│   │   ├── core/
+│   │   ├── elements/
+│   │   ├── index.css                         ← entry point CSS del SDK
+│   │   └── index.js
+│   │
+│   └── skills/
+│       ├── yiqi-ds-v1_2_5.skill              ← skill activo DS v1.2.5
+│       ├── yiqi-charts.skill
+│       ├── yiqi-dashboard.skill
+│       ├── yiqi-3d.skill
+│       ├── iAready.skill
+│       └── archive-yiqi-ds-v1_2_4.skill      ← archivado
+│
+├── archive/                                  ← versiones anteriores de entregables
+├── DS_AUDIT_v1_2_5.html                      ← auditoría DS v1.2.5 (30/04/2026)
+├── index.html                                ← landing principal
+├── CHANGELOG.md
+├── netlify.toml
+└── README.md
 ```
 
-## Flujo de datos destacable
+---
 
-1. Cuando la landing (`app/page.tsx`) se renderiza, llama a `loadFaqCategories({ maxEntries: 7 })`, `getClientLogos()` y `getIntegrationLogos()`. Todos ellos usan cache interno para evitar consultas repetidas durante unos minutos.
-2. El blog (`app/blog/page.tsx`) recoge todas las entradas desde SQL y las muestra con paginación, búsqueda y filtros en `components/blog-content.tsx`. Las fechas, autores y tiempos se normalizan en `lib/blog-store.ts`.
-3. El detalle de cada post (`app/blog/[slug]/page.tsx`) reutiliza la misma store para evitar duplicación de lógica.
-4. Los módulos y su panel de detalle comparten `data/modules.ts`, así cualquier cambio de texto se duplica de forma segura en todas las vistas.
-5. FAQ completa (`app/faq/page.tsx`) usa `loadFaqCategories()` sin límite para mostrar todo el contenido.
+## Archivos clave por audiencia
 
-## Recomendaciones para seguir escalando
+| Quién | Archivo | Para qué |
+|---|---|---|
+| Developer (Christian) | `examples/design-system/styles.css` | CSS standalone para incluir en HTML |
+| Developer (SDK) | `system/sdk/index.css` | Entry point del SDK modular |
+| IA / Claude | `content/prompts/execution.md` | Prompt maestro + tokens para generar entregables |
+| Referencia / Diseño | `content/design-system/yiqi-design.md` | Guía completa del sistema |
 
-1. Si agregas nuevos data-sources (por ejemplo, testimonios o casos), crea un store con la misma estrategia: query SQL en `lib/`, normalización, cache TTL opcional y clear helper documentado en `docs/data-architecture.md`.
-2. Usa `clearFaqCache()` / `clearLogoCache()` desde un script o webhook de actualización para forzar nueva lectura cuando los editores cambian los datos sin redeploy.
-3. Mantén las secciones UI (Hero, Modules, FAQ) en español y sin duplicar strings en varios archivos. El catálogo en `data/` es el único origen autorizado para módulos.
+---
 
-## ¿Qué no se almacena aquí?
+## Versión activa
 
-- Archivos de log o config sensitiva: las credenciales viven solo en `.env.local`.
-- Blogs MD/HTML antiguos: se borraron de `public/blog/` para evitar contenido duplicado y ahora todo viene desde `WEB_YIQI`.
-- Imágenes de clientes/integraciones: los logos los genera la base (base64) y los convierte `buildImageSource`, así se evita mantener assets gigantes.
+**DS v1.2.5** · 30/04/2026
 
-## ¿Qué sigue?
+Cambios principales respecto a v1.2.4:
+- Filosofía borderless (cards, módulos y panels sin borde; sombra por elevación)
+- Toggle de tema 3 pasos: Oscuro · Sistema · Claro (`"system"` por defecto)
+- Token `--text-cyan-muted` para subtítulos con tinte cyan
+- Fondo sin grilla — solo 2 radiales + `var(--bg)`
+- Paleta dark ajustada: backgrounds más fríos, colores semánticos recalibrados
+- Radius system reducido: `--radius` 14→10px, `--radius-sm` 10→7px
 
-Si necesitas ayuda para desplegar, documentar o extender alguna sección, puedo ayudarte a:
+---
 
-1. Crear un script de invalidación que ejecute `clearFaqCache()` y `clearLogoCache()` tras un deploy o edición.
-2. Añadir nuevas secciones guiadas desde SQL (testimonios, casos de éxito, recursos) siguiendo el mismo patrón.
-3. Preparar un plan para pruebas end-to-end o de rendimiento ahora que el sitio usa datos reales.
+## Ejecución local
+
+### Mac / Linux
+
+- Ejecuta `./iniciar-servidor.command`
+- Abre `http://localhost:3000/novedades.html`
+
+### Windows
+
+- Ejecuta `iniciar-servidor.bat` o `iniciar-servidor.ps1`
+- Requiere Python 3 instalado y accesible como `py` o `python`
+- El servidor servirá los archivos desde la carpeta del repositorio
+
