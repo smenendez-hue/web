@@ -276,7 +276,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-wrap {
     width: 100%; max-width: 440px;
     margin-top: 36px;
-    background: #23242a;
+    background: var(--bg-elev-2);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: none;
@@ -301,7 +301,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hf-field:last-child { margin-bottom: 0; }
   .hf-label {
     display: flex; align-items: center; gap: 4px;
-    font: 500 10px var(--sans); color: var(--muted);
+    font: 500 10px var(--sans); color: var(--muted-2);
     letter-spacing: .02em; margin-bottom: 5px;
   }
   .hf-label .req { color: var(--warm); font-size: 12px; line-height: 1; }
@@ -318,7 +318,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-wrap .input::placeholder { color: var(--muted-2); }
   .hero-form-wrap .input:focus { box-shadow: var(--glow); }
   .hero-form-wrap .input.error { box-shadow: 0 0 0 1.5px rgba(255,99,125,.4) inset; }
-  html[data-theme="light"] .hero-form-wrap { background: var(--bg-elev-2); }
   html[data-theme="light"] .hero-form-wrap .input {
     background: var(--bg-soft); box-shadow: 0 0 0 1px var(--line);
   }
@@ -341,7 +340,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hf-err.show { display: flex; animation: hfIn .18s ease; }
   /* Sublabel de chips (sin asterisco, más compacto) */
   .hf-section-sublabel {
-    font: 500 10px var(--sans); color: var(--muted);
+    font: 500 10px var(--sans); color: var(--muted-2);
     letter-spacing: .02em; margin-bottom: 8px;
   }
   /* Section label */
@@ -356,7 +355,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-chip {
     font: 500 11px var(--sans); padding: 5px 11px;
     border-radius: var(--radius-pill);
-    background: var(--bg-elev); color: var(--text);
+    background: var(--bg-elev); color: var(--muted);
     cursor: pointer; border: none; user-select: none;
     transition: background .15s ease, color .15s ease;
   }
@@ -390,14 +389,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* CTA — atenuado, auto-width, alineado a la derecha */
   .hf-btn-cta {
     height: 34px; padding: 0 18px;
-    background: var(--cyan-soft); border: none;
+    background: rgba(127,231,250,.07); border: none;
     border-radius: var(--radius-sm);
-    color: var(--cyan); font: 600 12px var(--sans); letter-spacing: .01em;
+    color: var(--muted); font: 600 12px var(--sans); letter-spacing: .01em;
     cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
     transition: background .16s, color .16s;
     margin-left: auto;
   }
-  .hf-btn-cta:hover { background: var(--cyan-soft-2); color: var(--cyan); }
+  .hf-btn-cta:hover { background: rgba(127,231,250,.14); color: var(--text); }
   html[data-theme="light"] .hf-btn-cta { background: var(--cyan-soft); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-cta:hover { background: var(--cyan-soft-2); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-autofill { color: var(--muted); }
