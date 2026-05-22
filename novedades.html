@@ -454,7 +454,10 @@ body {
 <script src="./components/site-footer.js" defer></script>
 
 <script>
-const API = 'https://novedades.yiqi.com.ar/api/YiQi/Novedades';
+const IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+const API = IS_LOCAL
+  ? './novedades.json'
+  : 'https://novedades.yiqi.com.ar/api/YiQi/Novedades';
 
 const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const TIPO_CLASS = {
