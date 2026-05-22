@@ -103,15 +103,13 @@ export function Footer() {
           >
             Trabaja con nosotros
           </a>
+          <a
+            href="/privacidad"
+            className="pt-1 text-xs text-text-secondary hover:text-text-primary transition-colors"
+          >
+            Politica de privacidad
+          </a>
         </nav>
-      </div>
-      <div className="page-shell mx-auto mt-8">
-        <a
-          href="/privacidad"
-          className="text-xs text-text-secondary/60 hover:text-text-secondary transition-colors"
-        >
-          Política de privacidad
-        </a>
       </div>
     </footer>
   )
