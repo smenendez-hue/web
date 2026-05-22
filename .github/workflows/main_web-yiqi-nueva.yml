@@ -36,7 +36,8 @@ jobs:
           tar \
             --exclude='./.git' \
             --exclude='./.github' \
-            --exclude='./version-vieja' \
+            --exclude='./deploy' \
+            --exclude='./node_modules' \
             -cf - . | tar -xf - -C deploy
 
       - name: Upload artifact for deployment job

@@ -1,8 +1,0 @@
-{
-    "appService.zipIgnorePattern": [
-        "node_modules{,/**}",
-        ".vscode{,/**}"
-    ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/3de9610e-f5a5-4549-a4fe-1e7fde5b55e4/resourceGroups/AppService/providers/Microsoft.Web/sites/web-yiqi-nueva",
-    "appService.deploySubpath": "."
-}
