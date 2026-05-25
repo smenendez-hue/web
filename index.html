@@ -190,12 +190,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     display: grid;
     grid-template-columns: 1fr 420px;
     gap: 56px;
-    align-items: center;
+    align-items: start;
     max-width: 1100px;
     margin: 0 auto;
     padding: 38px 0 42px;
   }
-  .hero-left { text-align: left; }
+  .hero-left { text-align: left; min-width: 0; overflow: hidden; }
   .hero-right { display: flex; align-items: center; justify-content: center; }
   .hero-label {
     display: inline-flex; align-items: center; gap: 10px;
@@ -5428,7 +5428,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   const fx1 = new Scramble(el1);
   const fx2 = new Scramble(el2);
   let i = 0;
-  const HOLD_MS = 2400;
+  const HOLD_MS = 5000;
   function next() {
     Promise.all([
       fx1.setText(phrases[i][0]),
