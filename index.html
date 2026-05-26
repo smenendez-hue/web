@@ -546,6 +546,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .logo-divider { height: 32px; opacity: .8; }
   }
 
+  /* ─── Mobile — logos 125% más grandes ─── */
+  @media (max-width: 540px) {
+    .logo-item { width: 215px; height: 55px; padding: 0 40px; }
+    .logo-item.logo-wide { width: 250px; }
+    .logo-item:has(img.logo-xl-tall) { width: 150px; height: 150px; }
+    .logo-item:has(img.logo-xl-wide) { width: 260px; }
+  }
+
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
   @media (prefers-reduced-motion: reduce) {
     .logo-marquee-track { animation: none; }
@@ -2188,6 +2196,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .int-logo-sep { height: 32px; opacity: .45; }
   }
 
+  /* ─── Mobile — logos integraciones 125% más grandes ─── */
+  @media (max-width: 540px) {
+    .int-logo-item { width: 200px; padding: 0 30px; }
+    .int-logo-item.int-logo-wide { width: 250px; }
+    .int-logo-img { height: 40px; }
+    .int-logo-img.int-logo-lg { height: 55px; }
+  }
+
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
   @media (prefers-reduced-motion: reduce) {
     .int-logos-track { animation: none; }
@@ -2239,7 +2255,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .mkt-banner-stat-lbl { font: 400 11px var(--sans); color: var(--muted-2); display: block; margin-top: 1px; }
   .mkt-banner-right {
     position: relative; overflow: hidden;
-    background: var(--bg-elev); min-height: 320px;
+    background: #e4eef7; min-height: 320px;
   }
   .mkt-banner-right::before { display: none; }
   .mkt-banner-preview {
@@ -2260,8 +2276,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     }
   }
   .mkt-bp-card {
-    background: var(--bg-elev-2); border-radius: 8px;
-    border: 1px solid rgba(0,204,255,.08); overflow: hidden;
+    background: #ffffff; border-radius: 9px;
+    border: 1px solid rgba(0,0,0,.09);
+    box-shadow: 0 2px 10px rgba(0,0,0,.28), 0 1px 3px rgba(0,0,0,.18);
+    overflow: hidden;
     flex-shrink: 0;
     display: flex; flex-direction: column;
   }
@@ -2275,28 +2293,29 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .mkt-bp-info {
     padding: 10px 14px 12px;
-    background: var(--bg-elev);
+    background: rgba(238,245,252,.98);
     flex-shrink: 0;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgba(0,0,0,.07);
   }
-  .mkt-bp-kicker { font: 600 10px/1 var(--sans); letter-spacing:.08em; color: var(--cyan); opacity:.9; display:block; margin-bottom:5px; text-transform:uppercase; }
-  .mkt-bp-name { font: 700 13px/1.2 var(--sans); color: #f0f4f8; display:block; margin:0 0 3px; }
-  .mkt-bp-desc { font: 400 11px/1.35 var(--sans); color: rgba(240,244,248,.6); margin:0; }
-  .mkt-bp-card .mkt-bp-svg-light { display: none; }
-  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-dark { display: none; }
-  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-light { display: block; }
-  html[data-theme="light"] .mkt-banner-right { background: #e4eef7; }
+  .mkt-bp-kicker { font: 600 10px/1 var(--sans); letter-spacing:.08em; color: #009fc7; opacity:1; display:block; margin-bottom:5px; text-transform:uppercase; }
+  .mkt-bp-name { font: 700 13px/1.2 var(--sans); color: #0f1a2e; display:block; margin:0 0 3px; }
+  .mkt-bp-desc { font: 400 11px/1.35 var(--sans); color: #5a6a7e; margin:0; }
+  .mkt-bp-card .mkt-bp-svg-dark  { display: none; }
+  .mkt-bp-card .mkt-bp-svg-light { display: block; }
+  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-dark  { display: block; }
+  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-light { display: none; }
+  html[data-theme="light"] .mkt-banner-right { background: #0f1013; }
   html[data-theme="light"] .mkt-banner-right::before { display: none; }
   html[data-theme="light"] .mkt-bp-card {
-    background: transparent;
-    border-color: rgba(0,0,0,.09);
-    box-shadow: 0 2px 10px rgba(0,0,0,.11), 0 1px 3px rgba(0,0,0,.07);
-    border-radius: 9px;
+    background: #14161b;
+    border-color: rgba(0,204,255,.08);
+    box-shadow: none;
+    border-radius: 8px;
   }
-  html[data-theme="light"] .mkt-bp-info { background: rgba(238,245,252,.96); }
-  html[data-theme="light"] .mkt-bp-kicker { color: #009fc7; opacity: 1; }
-  html[data-theme="light"] .mkt-bp-name { color: #0f1a2e; }
-  html[data-theme="light"] .mkt-bp-desc { color: #5a6a7e; }
+  html[data-theme="light"] .mkt-bp-info { background: #0f1013; border-top-color: rgba(255,255,255,.08); }
+  html[data-theme="light"] .mkt-bp-kicker { color: #00ccff; opacity: .9; }
+  html[data-theme="light"] .mkt-bp-name { color: #f0f4f8; }
+  html[data-theme="light"] .mkt-bp-desc { color: rgba(240,244,248,.6); }
   @media (max-width: 860px) {
     .mkt-banner-inner { grid-template-columns: 1fr; }
     .mkt-banner-right { min-height: 200px; }
