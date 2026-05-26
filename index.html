@@ -141,20 +141,23 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 10px 16px; border-radius: var(--radius);
-    border: none;
+    border: 1px solid transparent;
     font: 600 13px var(--sans); letter-spacing: .01em;
     cursor: pointer; transition: all var(--tr); white-space: nowrap;
   }
   .btn-primary {
-    background: var(--cyan-soft-2);
-    color: #7ec8e3;
+    background: var(--cyan-soft);
+    border-color: rgba(0,204,255,.28);
+    color: var(--cyan);
     font-weight: 600;
   }
   html[data-theme="light"] .btn-primary {
     color: #2a7a96;
+    border-color: rgba(0,159,199,.28);
   }
   .btn-primary:hover {
-    background: rgba(0,204,255,.22);
+    background: var(--cyan-soft-2);
+    border-color: rgba(0,204,255,.40);
   }
   .btn-ghost {
     background: transparent; color: var(--muted);
@@ -2447,7 +2450,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   <p class="hero-claim"><span class="claim-prefix">//</span><span id="hero-claim-text"></span><span class="claim-cursor" aria-hidden="true"></span></p>
 
   <div class="hero-actions">
-    <a href="#hero-form" class="btn btn-primary btn-lg">
+    <a href="contacto.html" class="btn btn-primary btn-lg">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Reserva tu demo
     </a>
     <a href="#modulos" class="btn btn-ghost btn-lg">

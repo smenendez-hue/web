@@ -80,7 +80,7 @@ button{font:inherit;cursor:pointer}
 
 /* ── GRID HELPERS ── */
 .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
-.token-grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.token-grid-2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .token-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .comp-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px; }
 
