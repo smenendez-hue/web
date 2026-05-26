@@ -102,16 +102,15 @@
   /* ── HERO ── */
   .hero { padding: 96px 0 72px; text-align: center; }
   .hero-ia-logo {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin-bottom: 32px; padding: 6px 14px 6px 10px;
-    border-radius: var(--radius-pill);
-    background: var(--cyan-soft); border: 1px solid rgba(0,204,255,.16);
+    display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+    margin-bottom: 32px;
+    background: transparent; border: none;
   }
-  .hero-ia-logo svg { height: 14px; width: auto; }
+  .hero-ia-logo svg { height: 40px; width: auto; }
   .hero-ia-logo .ia-letters { fill: var(--text); }
   .hero-ia-logo .ia-accent  { fill: var(--cyan); }
   .hero-ia-logo-label {
-    font: 600 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cyan);
+    font: 400 13px/1 var(--sans); letter-spacing: .02em; color: var(--muted);
   }
   .hero-headline {
     font: 800 58px/1.05 var(--display); letter-spacing: -.03em; color: var(--text);
@@ -249,48 +248,61 @@
   }
   .cta-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
-  @media (max-width: 640px) {
-    .hero-headline { font-size: 38px; }
-    .section-title { font-size: 30px; }
-    .cta-box { padding: 40px 24px; }
-    .cta-headline { font-size: 26px; }
-  }
-
-  /* ── MOBILE FIXES ── */
+  /* ── MOBILE ── */
   @media (max-width: 640px) {
     .page-wrap { padding: 0 20px; }
 
-    .hero { padding: 64px 0 48px; }
-    .hero-sub { font-size: 16px; }
+    /* Hero */
+    .hero { padding: 40px 0 36px; text-align: left; }
+    .hero-headline { font-size: 36px; margin-left: 0; margin-right: 0; }
+    .hero-sub { font-size: 15px; margin: 0 0 28px; max-width: 100%; }
+    .hero-actions { justify-content: flex-start; }
+    .hero-ia-logo { margin-bottom: 24px; align-items: flex-start; }
 
-    .section { padding: 56px 0; }
-    .ways-section { padding: 56px 0; }
-    .integrations-section { padding: 56px 0; }
-    .cta-section { padding: 64px 0; }
-  }
+    /* Stats */
+    .stats-strip { margin: 40px 0; }
+    .stat-cell { padding: 20px 16px; }
+    .stat-val { font-size: 26px; }
+    .stat-lbl { font-size: 11px; }
 
-  @media (max-width: 480px) {
-    .hero-headline { font-size: 32px; }
-    .section-title { font-size: 26px; }
+    /* Secciones */
+    .section { padding: 44px 0; }
+    .section-title { font-size: 28px; }
+    .section-sub { font-size: 14px; }
+    .ways-section { padding: 44px 0; }
+    .integrations-section { padding: 44px 0; text-align: left; }
+    .integrations-logos { justify-content: flex-start; margin-top: 28px; }
+    .cta-section { padding: 48px 0; }
 
-    /* what-visual: más espacio interno y badges que no desbordan */
+    /* Features */
+    .features-grid { margin-top: 32px; gap: 12px; }
+    .feature-card { padding: 20px; }
+
+    /* Ways */
+    .ways-grid { margin-top: 32px; gap: 12px; }
+    .way-card { padding: 20px; }
+
+    /* What */
     .what-visual { padding: 18px; }
     .what-visual-row { flex-wrap: wrap; gap: 6px 8px; }
     .what-visual-badge { margin-left: 0; }
 
-    /* integrations: columnas iguales, centrar texto */
-    .integrations-logos { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .int-pill { justify-content: center; width: 100%; }
+    /* CTA */
+    .cta-box { padding: 32px 20px; }
+    .cta-headline { font-size: 26px; }
+    .cta-sub { font-size: 14px; margin-bottom: 24px; }
+    .cta-actions { justify-content: flex-start; }
 
-    /* hero pill: letra un poco más pequeña si es necesario */
-    .hero-ia-logo { padding: 5px 12px 5px 8px; gap: 8px; }
-    .hero-ia-logo-label { font-size: 9px; }
+    /* Integrations pills */
+    .integrations-logos { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .int-pill { justify-content: flex-start; width: 100%; }
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 390px) {
     .page-wrap { padding: 0 16px; }
-    .hero-headline { font-size: 28px; }
-    .hero-ia-logo-label { display: none; }
+    .hero-headline { font-size: 30px; }
+    /* hero-ia-logo-label visible */
+    .section-title { font-size: 24px; }
   }
   </style>
 

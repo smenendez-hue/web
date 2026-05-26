@@ -5302,8 +5302,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .mkt-banner-left  { padding: 32px 20px; }
 
   /* Logo strip */
-  .logo-strip { padding: 16px 0 20px; }
+  .logo-strip { padding: 32px 0 20px; }
   .logo-strip-label { text-align: left; padding-left: 20px; }
+  .logo-item { height: 55px; width: 160px; padding: 0 28px; }
+  .logo-item.logo-wide { width: 190px; }
+  .logo-item:has(img.logo-xl-tall) { height: 55px; width: 100px; }
+  .logo-item:has(img.logo-xl-wide) { width: 190px; }
 
   /* Módulos — filtros: fila scrollable horizontal */
   .mod-filter-label { display: none; }
@@ -5323,8 +5327,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .mod-filter-chips::-webkit-scrollbar { display: none; }
   .mod-filter-chip { padding: 5px 11px; font-size: 10px; flex-shrink: 0; white-space: nowrap; }
 
-  /* Módulos grid */
-  .mod-grid { grid-template-columns: 1fr !important; gap: 8px; }
+  /* Módulos grid — 2 columnas en mobile */
+  .mod-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px; }
+  .mod-card:not(.open) { height: 56px; }
+  .mod-card-header-left { padding: 10px 12px; gap: 8px; }
+  .mod-card-name { font-size: 12px; }
+  .mod-icon { width: 24px; height: 24px; }
+  .mod-icon svg { width: 13px; height: 13px; }
+  .mod-card-desc { display: none; }
 
   /* FAQ */
   .faq-inner { padding: 0; }
@@ -5346,7 +5356,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .claim-pre { text-align: left; }
   .pricing-header { text-align: left; }
   .pricing-section { align-items: flex-start; }
-  .ia-ready-section { text-align: left; margin: 0; }
+  .ia-ready-section { text-align: left; margin: 0; max-width: 100%; padding-left: 20px; padding-right: 20px; }
+  .ia-ready-section .section-sub { margin: 0; }
+  .features-section .section-sub { margin: 0; }
+  .faq-cta-wrap { text-align: left; }
   .int-label { text-align: left; padding-left: 20px; }
   .pricing-title { text-align: left; }
 
