@@ -7,6 +7,8 @@ const ROOT = __dirname;
 const DEFAULT_AUTH_URL = "https://api.yiqi.com.ar/token";
 const DEFAULT_PUBLIC_BASE_URL = "https://api.yiqi.com.ar/api/public";
 const DEFAULT_SCHEMA_ID = 1387;
+const DEFAULT_API_USER = "cristal@yiqi.com.ar";
+const DEFAULT_API_PASSWORD = "yiqibot2023X";
 const DEFAULT_PAGE_SIZE = 50;
 const MAX_PAGES = 200;
 
@@ -42,8 +44,8 @@ function getYiqiConfig() {
     authUrl,
     publicBaseUrl,
     schemaId,
-    user: process.env.YIQI_API_USER || "",
-    password: process.env.YIQI_API_PASSWORD || "",
+    user: process.env.YIQI_API_USER || DEFAULT_API_USER,
+    password: process.env.YIQI_API_PASSWORD || DEFAULT_API_PASSWORD,
   };
 }
 

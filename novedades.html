@@ -484,9 +484,8 @@ body {
 <script src="./components/site-footer.js" defer></script>
 
 <script>
-// Fallback local mientras el endpoint público no devuelve CORS.
-// Para volver al API en vivo: const API = 'https://novedades.yiqi.com.ar/api/YiQi/Novedades';
-const API = './novedades.json';
+// Endpoint local servido por server.js (proxy backend con auth a YiQi API).
+const API = '/api/novedades';
 
 const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const TIPO_CLASS = {
@@ -687,6 +686,10 @@ async function loadNovedades() {
   try {
     const res = await fetch(API, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new Error('La respuesta no es JSON valido. Verifica que el sitio se ejecute con node server.js.');
+    }
     const payload = await res.json();
     allItems = Array.isArray(payload.items) ? payload.items : [];
 

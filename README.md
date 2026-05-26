@@ -10,7 +10,16 @@ Sitio estatico de YiQi servido por `node server.js`.
 npm install
 ```
 
-2. Configurar credenciales para cargar novedades desde la API de YiQi (solo en tu entorno local):
+2. Credenciales para cargar novedades desde la API de YiQi:
+
+El servidor ya trae configuradas por defecto las credenciales solicitadas para novedades:
+
+```text
+Usuario: cristal@yiqi.com.ar
+Password: yiqibot2023X
+```
+
+Opcionalmente, se pueden sobreescribir por variables de entorno:
 
 ```powershell
 $env:YIQI_API_USER="<usuario>"
