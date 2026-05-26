@@ -1015,6 +1015,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 
   /* ── Cards — DS v1.2.6 card treatment (profundidad mejorada, sombras tinted navy) ── */
   .modules-section .mod-card {
+    --py: 0px;
     background:
       linear-gradient(180deg, rgba(255,255,255,.024), transparent 38%),
       var(--bg-elev-2);
@@ -1024,7 +1025,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       0 1px 0 rgba(255,255,255,.045) inset,
       0 2px 6px rgba(8,16,32,.28),
       0 14px 32px rgba(8,16,32,.40);
-    transition: border-color var(--tr), transform .2s ease, background var(--tr), box-shadow var(--tr), opacity .3s ease;
+    transition: border-color var(--tr), background var(--tr), box-shadow var(--tr), opacity .3s ease;
+    transform: translateY(var(--py));
     cursor: pointer;
     touch-action: manipulation;
   }
@@ -1039,7 +1041,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
         0 4px 14px rgba(8,16,32,.32),
         0 18px 44px rgba(0,204,255,.10),
         0 22px 56px rgba(8,16,32,.44);
-      transform: translateY(-3px);
+      transform: translateY(calc(var(--py) - 3px));
     }
     .modules-section .mod-card:hover .mod-icon {
       background: transparent;
@@ -5489,6 +5491,42 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   el1.textContent = '';
   el2.textContent = '';
   next();
+})();
+
+/* ── Módulos parallax por columna ── */
+(function() {
+  const section = document.querySelector('.modules-section');
+  if (!section) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.innerWidth < 768) return; // solo desktop
+
+  // Velocidad por columna (negativo = sube, positivo = baja)
+  const speeds = [-0.16, 0.13, -0.09, 0.19];
+  let rafId = null;
+
+  function update() {
+    const rect = section.getBoundingClientRect();
+    const progress = window.innerHeight * 0.5 - rect.top;
+    const cards = section.querySelectorAll('.mod-grid .mod-card');
+    cards.forEach((card, i) => {
+      const col = i % 4;
+      card.style.setProperty('--py', (progress * speeds[col]).toFixed(1) + 'px');
+    });
+    rafId = requestAnimationFrame(update);
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        rafId = requestAnimationFrame(update);
+      } else {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    });
+  }, { rootMargin: '300px' });
+
+  io.observe(section);
 })();
 </script>
 </body>
