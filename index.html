@@ -469,7 +469,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .logo-strip-label {
     text-align: center;
     font: 700 10px var(--mono); letter-spacing: .16em; text-transform: uppercase;
-    color: var(--muted-2); margin-bottom: 8px;
+    color: var(--muted-2); margin-bottom: 20px;
   }
   .logo-marquee-mask {
     overflow-x: hidden;
@@ -515,7 +515,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Widescreen (xxl ≥ 1440px) — clientes más grandes, más respiro ─── */
   @media (min-width: 1440px) {
     .logo-strip { padding: 56px 0 48px; }
-    .logo-strip-label { font-size: 11px; margin-bottom: 14px; }
+    .logo-strip-label { font-size: 11px; margin-bottom: 24px; }
     .logo-marquee-mask {
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
@@ -531,7 +531,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Ultra-wide (≥ 1920px) — máximo respiro, container limitado ─── */
   @media (min-width: 1920px) {
     .logo-strip { padding: 72px 0 60px; }
-    .logo-strip-label { font-size: 12px; margin-bottom: 20px; }
+    .logo-strip-label { font-size: 12px; margin-bottom: 32px; }
     .logo-marquee-mask {
       max-width: 1760px;
       margin: 0 auto;
@@ -2118,7 +2118,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     letter-spacing: .16em;
     text-transform: uppercase;
     color: var(--muted-2);
-    margin-bottom: 36px;
+    margin-bottom: 20px;
     position: relative; z-index: 1;
   }
   .int-logos-mask {
@@ -2138,15 +2138,15 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .int-logo-item {
     display: flex; align-items: center; justify-content: center;
     padding: 0 24px;
-    width: 160px; flex-shrink: 0;
+    width: 160px; height: 44px; flex-shrink: 0;
     transition: opacity .2s, transform .25s ease;
   }
   .int-logo-item:hover { transform: translateY(-2px); }
   .int-logo-item:hover .int-logo-img { opacity: 1; }
   .int-logo-item.int-logo-wide { width: 200px; }
-  .int-logo-img.int-logo-lg { height: 44px; }
+  .int-logo-item.int-logo-lg-item { height: 56px; } /* para logos excepcionalmente altos */
   .int-logo-img {
-    width: 100%; height: 32px;
+    max-width: 100%; max-height: 100%; width: auto; height: auto;
     display: block; object-fit: contain;
     filter: brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(162deg) opacity(.55); /* cyan-soft */
     transition: opacity .2s, filter .2s;
@@ -2165,13 +2165,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Widescreen (xxl ≥ 1440px) — logos más grandes, más respiro ─── */
   @media (min-width: 1440px) {
     .int-logos-strip { padding: 56px 0 60px; }
-    .int-logos-label { font-size: 11px; margin-bottom: 44px; }
+    .int-logos-label { font-size: 11px; margin-bottom: 24px; }
     .int-logos-mask {
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
     }
     .int-logos-track { animation-duration: 32s; }
-    .int-logo-item { width: 188px; padding: 0 30px; }
+    .int-logo-item { width: 188px; height: 56px; padding: 0 30px; }
     .int-logo-item.int-logo-wide { width: 232px; }
     .int-logo-img { height: 38px; }
     .int-logo-img.int-logo-lg { height: 50px; }
@@ -2181,7 +2181,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Ultra-wide (≥ 1920px) — máximo respiro, container limitado ─── */
   @media (min-width: 1920px) {
     .int-logos-strip { padding: 72px 0 76px; }
-    .int-logos-label { font-size: 12px; margin-bottom: 52px; }
+    .int-logos-label { font-size: 12px; margin-bottom: 32px; }
     .int-logos-mask {
       max-width: 1760px;
       margin: 0 auto;
@@ -2189,19 +2189,17 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
               mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
     }
     .int-logos-track { animation-duration: 38s; }
-    .int-logo-item { width: 208px; padding: 0 34px; }
+    .int-logo-item { width: 208px; height: 64px; padding: 0 34px; }
     .int-logo-item.int-logo-wide { width: 256px; }
     .int-logo-img { height: 42px; }
     .int-logo-img.int-logo-lg { height: 54px; }
     .int-logo-sep { height: 32px; opacity: .45; }
   }
 
-  /* ─── Mobile — logos integraciones 125% más grandes ─── */
+  /* ─── Mobile — logos integraciones mismo tamaño que clientes ─── */
   @media (max-width: 540px) {
-    .int-logo-item { width: 200px; padding: 0 30px; }
+    .int-logo-item { width: 215px; height: 55px; padding: 0 40px; }
     .int-logo-item.int-logo-wide { width: 250px; }
-    .int-logo-img { height: 40px; }
-    .int-logo-img.int-logo-lg { height: 55px; }
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
@@ -5279,11 +5277,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-actions { gap: 10px; }
   .hero-actions .btn { padding: 11px 20px; font-size: 13px; }
 
-  /* Integrations strip — más compacto */
-  .int-logos-strip { padding: 6px 0 10px; }
-  .int-logos-label { margin-bottom: 6px; font-size: 9px; }
-  .int-logo-item { width: 100px; padding: 0 16px; }
-  .int-logo-img { height: 20px; }
+  /* Integrations strip — mismo tamaño que carrusel clientes */
+  .int-logos-strip { padding: 16px 0 20px; }
+  .int-logos-label { margin-bottom: 16px; font-size: 9px; }
+  .int-logo-item { width: 215px; height: 55px; padding: 0 40px; }
+  .int-logo-item.int-logo-wide { width: 250px; }
+  .int-logo-img { height: 55px; }
+  .int-logo-img.int-logo-lg { height: 55px; }
 
   /* Secciones — padding lateral reducido */
   .features-section { padding: 48px 16px 52px; }
