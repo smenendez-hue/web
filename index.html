@@ -190,12 +190,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     display: grid;
     grid-template-columns: 1fr 420px;
     gap: 56px;
-    align-items: center;
+    align-items: start;
     max-width: 1100px;
     margin: 0 auto;
     padding: 38px 0 42px;
   }
-  .hero-left { text-align: left; }
+  .hero-left { text-align: left; min-width: 0; overflow: hidden; }
   .hero-right { display: flex; align-items: center; justify-content: center; }
   .hero-label {
     display: inline-flex; align-items: center; gap: 10px;
@@ -276,7 +276,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-wrap {
     width: 100%; max-width: 440px;
     margin-top: 36px;
-    background: var(--bg-elev-2);
+    background: #23242a;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: none;
@@ -301,7 +301,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hf-field:last-child { margin-bottom: 0; }
   .hf-label {
     display: flex; align-items: center; gap: 4px;
-    font: 500 10px var(--sans); color: var(--muted-2);
+    font: 500 10px var(--sans); color: var(--muted);
     letter-spacing: .02em; margin-bottom: 5px;
   }
   .hf-label .req { color: var(--warm); font-size: 12px; line-height: 1; }
@@ -318,6 +318,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-wrap .input::placeholder { color: var(--muted-2); }
   .hero-form-wrap .input:focus { box-shadow: var(--glow); }
   .hero-form-wrap .input.error { box-shadow: 0 0 0 1.5px rgba(255,99,125,.4) inset; }
+  html[data-theme="light"] .hero-form-wrap { background: var(--bg-elev-2); }
   html[data-theme="light"] .hero-form-wrap .input {
     background: var(--bg-soft); box-shadow: 0 0 0 1px var(--line);
   }
@@ -340,7 +341,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hf-err.show { display: flex; animation: hfIn .18s ease; }
   /* Sublabel de chips (sin asterisco, más compacto) */
   .hf-section-sublabel {
-    font: 500 10px var(--sans); color: var(--muted-2);
+    font: 500 10px var(--sans); color: var(--muted);
     letter-spacing: .02em; margin-bottom: 8px;
   }
   /* Section label */
@@ -355,7 +356,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-chip {
     font: 500 11px var(--sans); padding: 5px 11px;
     border-radius: var(--radius-pill);
-    background: var(--bg-elev); color: var(--muted);
+    background: var(--bg-elev); color: var(--text);
     cursor: pointer; border: none; user-select: none;
     transition: background .15s ease, color .15s ease;
   }
@@ -386,19 +387,20 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     white-space: nowrap; flex-shrink: 0;
   }
   .hf-btn-autofill:hover { color: var(--cyan); background: var(--cyan-soft); }
-  /* CTA — atenuado, auto-width, alineado a la derecha */
+  /* CTA — DS v1.2.5 .btn-primary */
   .hf-btn-cta {
-    height: 34px; padding: 0 18px;
-    background: rgba(127,231,250,.07); border: none;
-    border-radius: var(--radius-sm);
-    color: var(--muted); font: 600 12px var(--sans); letter-spacing: .01em;
+    padding: 9px 16px;
+    background: var(--cyan-soft-2);
+    border: 1px solid rgba(0,204,255,.28);
+    border-radius: var(--radius);
+    color: var(--cyan); font: 500 13px var(--sans);
     cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-    transition: background .16s, color .16s;
+    transition: all var(--tr);
     margin-left: auto;
   }
-  .hf-btn-cta:hover { background: rgba(127,231,250,.14); color: var(--text); }
-  html[data-theme="light"] .hf-btn-cta { background: var(--cyan-soft); color: var(--cyan); }
-  html[data-theme="light"] .hf-btn-cta:hover { background: var(--cyan-soft-2); color: var(--cyan); }
+  .hf-btn-cta:hover { background: rgba(0,204,255,.24); border-color: rgba(0,204,255,.40); color: var(--cyan); }
+  html[data-theme="light"] .hf-btn-cta { background: var(--cyan-soft-2); border-color: rgba(0,159,199,.28); color: var(--cyan); }
+  html[data-theme="light"] .hf-btn-cta:hover { background: rgba(0,159,199,.24); border-color: rgba(0,159,199,.40); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-autofill { color: var(--muted); }
   html[data-theme="light"] .hf-btn-autofill:hover { color: var(--cyan); background: var(--cyan-soft); }
   html[data-theme="light"] .hf-btn-ghost { color: var(--muted-2); }
@@ -467,7 +469,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .logo-strip-label {
     text-align: center;
     font: 700 10px var(--mono); letter-spacing: .16em; text-transform: uppercase;
-    color: var(--muted-2); margin-bottom: 8px;
+    color: var(--muted-2); margin-bottom: 20px;
   }
   .logo-marquee-mask {
     overflow-x: hidden;
@@ -513,7 +515,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Widescreen (xxl ≥ 1440px) — clientes más grandes, más respiro ─── */
   @media (min-width: 1440px) {
     .logo-strip { padding: 56px 0 48px; }
-    .logo-strip-label { font-size: 11px; margin-bottom: 14px; }
+    .logo-strip-label { font-size: 11px; margin-bottom: 24px; }
     .logo-marquee-mask {
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
@@ -529,7 +531,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Ultra-wide (≥ 1920px) — máximo respiro, container limitado ─── */
   @media (min-width: 1920px) {
     .logo-strip { padding: 72px 0 60px; }
-    .logo-strip-label { font-size: 12px; margin-bottom: 20px; }
+    .logo-strip-label { font-size: 12px; margin-bottom: 32px; }
     .logo-marquee-mask {
       max-width: 1760px;
       margin: 0 auto;
@@ -542,6 +544,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .logo-item:has(img.logo-xl-tall) { width: 160px; height: 160px; }
     .logo-item:has(img.logo-xl-wide) { width: 264px; }
     .logo-divider { height: 32px; opacity: .8; }
+  }
+
+  /* ─── Mobile — logos 125% más grandes ─── */
+  @media (max-width: 540px) {
+    .logo-item { width: 215px; height: 55px; padding: 0 40px; }
+    .logo-item.logo-wide { width: 250px; }
+    .logo-item:has(img.logo-xl-tall) { width: 150px; height: 150px; }
+    .logo-item:has(img.logo-xl-wide) { width: 260px; }
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
@@ -2108,7 +2118,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     letter-spacing: .16em;
     text-transform: uppercase;
     color: var(--muted-2);
-    margin-bottom: 36px;
+    margin-bottom: 20px;
     position: relative; z-index: 1;
   }
   .int-logos-mask {
@@ -2128,15 +2138,15 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .int-logo-item {
     display: flex; align-items: center; justify-content: center;
     padding: 0 24px;
-    width: 160px; flex-shrink: 0;
+    width: 160px; height: 44px; flex-shrink: 0;
     transition: opacity .2s, transform .25s ease;
   }
   .int-logo-item:hover { transform: translateY(-2px); }
   .int-logo-item:hover .int-logo-img { opacity: 1; }
   .int-logo-item.int-logo-wide { width: 200px; }
-  .int-logo-img.int-logo-lg { height: 44px; }
+  .int-logo-item.int-logo-lg-item { height: 56px; } /* para logos excepcionalmente altos */
   .int-logo-img {
-    width: 100%; height: 32px;
+    max-width: 100%; max-height: 100%; width: auto; height: auto;
     display: block; object-fit: contain;
     filter: brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(162deg) opacity(.55); /* cyan-soft */
     transition: opacity .2s, filter .2s;
@@ -2155,13 +2165,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Widescreen (xxl ≥ 1440px) — logos más grandes, más respiro ─── */
   @media (min-width: 1440px) {
     .int-logos-strip { padding: 56px 0 60px; }
-    .int-logos-label { font-size: 11px; margin-bottom: 44px; }
+    .int-logos-label { font-size: 11px; margin-bottom: 24px; }
     .int-logos-mask {
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
     }
     .int-logos-track { animation-duration: 32s; }
-    .int-logo-item { width: 188px; padding: 0 30px; }
+    .int-logo-item { width: 188px; height: 56px; padding: 0 30px; }
     .int-logo-item.int-logo-wide { width: 232px; }
     .int-logo-img { height: 38px; }
     .int-logo-img.int-logo-lg { height: 50px; }
@@ -2171,7 +2181,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Ultra-wide (≥ 1920px) — máximo respiro, container limitado ─── */
   @media (min-width: 1920px) {
     .int-logos-strip { padding: 72px 0 76px; }
-    .int-logos-label { font-size: 12px; margin-bottom: 52px; }
+    .int-logos-label { font-size: 12px; margin-bottom: 32px; }
     .int-logos-mask {
       max-width: 1760px;
       margin: 0 auto;
@@ -2179,11 +2189,17 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
               mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
     }
     .int-logos-track { animation-duration: 38s; }
-    .int-logo-item { width: 208px; padding: 0 34px; }
+    .int-logo-item { width: 208px; height: 64px; padding: 0 34px; }
     .int-logo-item.int-logo-wide { width: 256px; }
     .int-logo-img { height: 42px; }
     .int-logo-img.int-logo-lg { height: 54px; }
     .int-logo-sep { height: 32px; opacity: .45; }
+  }
+
+  /* ─── Mobile — logos integraciones mismo tamaño que clientes ─── */
+  @media (max-width: 540px) {
+    .int-logo-item { width: 215px; height: 55px; padding: 0 40px; }
+    .int-logo-item.int-logo-wide { width: 250px; }
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
@@ -2237,7 +2253,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .mkt-banner-stat-lbl { font: 400 11px var(--sans); color: var(--muted-2); display: block; margin-top: 1px; }
   .mkt-banner-right {
     position: relative; overflow: hidden;
-    background: var(--bg-elev); min-height: 320px;
+    background: #e4eef7; min-height: 320px;
   }
   .mkt-banner-right::before { display: none; }
   .mkt-banner-preview {
@@ -2258,8 +2274,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     }
   }
   .mkt-bp-card {
-    background: var(--bg-elev-2); border-radius: 8px;
-    border: 1px solid rgba(0,204,255,.08); overflow: hidden;
+    background: #ffffff; border-radius: 9px;
+    border: 1px solid rgba(0,0,0,.09);
+    box-shadow: 0 2px 10px rgba(0,0,0,.28), 0 1px 3px rgba(0,0,0,.18);
+    overflow: hidden;
     flex-shrink: 0;
     display: flex; flex-direction: column;
   }
@@ -2273,28 +2291,29 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .mkt-bp-info {
     padding: 10px 14px 12px;
-    background: var(--bg-elev);
+    background: rgba(238,245,252,.98);
     flex-shrink: 0;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgba(0,0,0,.07);
   }
-  .mkt-bp-kicker { font: 600 10px/1 var(--sans); letter-spacing:.08em; color: var(--cyan); opacity:.9; display:block; margin-bottom:5px; text-transform:uppercase; }
-  .mkt-bp-name { font: 700 13px/1.2 var(--sans); color: #f0f4f8; display:block; margin:0 0 3px; }
-  .mkt-bp-desc { font: 400 11px/1.35 var(--sans); color: rgba(240,244,248,.6); margin:0; }
-  .mkt-bp-card .mkt-bp-svg-light { display: none; }
-  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-dark { display: none; }
-  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-light { display: block; }
-  html[data-theme="light"] .mkt-banner-right { background: #e4eef7; }
+  .mkt-bp-kicker { font: 600 10px/1 var(--sans); letter-spacing:.08em; color: #009fc7; opacity:1; display:block; margin-bottom:5px; text-transform:uppercase; }
+  .mkt-bp-name { font: 700 13px/1.2 var(--sans); color: #0f1a2e; display:block; margin:0 0 3px; }
+  .mkt-bp-desc { font: 400 11px/1.35 var(--sans); color: #5a6a7e; margin:0; }
+  .mkt-bp-card .mkt-bp-svg-dark  { display: none; }
+  .mkt-bp-card .mkt-bp-svg-light { display: block; }
+  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-dark  { display: block; }
+  html[data-theme="light"] .mkt-bp-card .mkt-bp-svg-light { display: none; }
+  html[data-theme="light"] .mkt-banner-right { background: #0f1013; }
   html[data-theme="light"] .mkt-banner-right::before { display: none; }
   html[data-theme="light"] .mkt-bp-card {
-    background: transparent;
-    border-color: rgba(0,0,0,.09);
-    box-shadow: 0 2px 10px rgba(0,0,0,.11), 0 1px 3px rgba(0,0,0,.07);
-    border-radius: 9px;
+    background: #14161b;
+    border-color: rgba(0,204,255,.08);
+    box-shadow: none;
+    border-radius: 8px;
   }
-  html[data-theme="light"] .mkt-bp-info { background: rgba(238,245,252,.96); }
-  html[data-theme="light"] .mkt-bp-kicker { color: #009fc7; opacity: 1; }
-  html[data-theme="light"] .mkt-bp-name { color: #0f1a2e; }
-  html[data-theme="light"] .mkt-bp-desc { color: #5a6a7e; }
+  html[data-theme="light"] .mkt-bp-info { background: #0f1013; border-top-color: rgba(255,255,255,.08); }
+  html[data-theme="light"] .mkt-bp-kicker { color: #00ccff; opacity: .9; }
+  html[data-theme="light"] .mkt-bp-name { color: #f0f4f8; }
+  html[data-theme="light"] .mkt-bp-desc { color: rgba(240,244,248,.6); }
   @media (max-width: 860px) {
     .mkt-banner-inner { grid-template-columns: 1fr; }
     .mkt-banner-right { min-height: 200px; }
@@ -3192,7 +3211,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <div class="mkt-banner-left">
       <!-- iAready logo -->
       <div class="mkt-banner-partner">
-        <a href="contacto.html" title="IA Ready — Contacto">
+        <a href="https://yiqi.com.ar/ia-ready.html" title="IA Ready — Plataforma de integración">
         <svg viewBox="0 0 256 68" width="80" height="21" xmlns="http://www.w3.org/2000/svg" aria-label="iAready" style="color:var(--text);display:block">
           <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/>
           <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/>
@@ -5258,11 +5277,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-actions { gap: 10px; }
   .hero-actions .btn { padding: 11px 20px; font-size: 13px; }
 
-  /* Integrations strip — más compacto */
-  .int-logos-strip { padding: 6px 0 10px; }
-  .int-logos-label { margin-bottom: 6px; font-size: 9px; }
-  .int-logo-item { width: 100px; padding: 0 16px; }
-  .int-logo-img { height: 20px; }
+  /* Integrations strip — mismo tamaño que carrusel clientes */
+  .int-logos-strip { padding: 16px 0 20px; }
+  .int-logos-label { margin-bottom: 16px; font-size: 9px; text-align: left; padding-left: 20px; }
+  .int-logo-item { width: 215px; height: 55px; padding: 0 40px; }
+  .int-logo-item.int-logo-wide { width: 250px; }
+  .int-logo-img { height: 55px; }
+  .int-logo-img.int-logo-lg { height: 55px; }
 
   /* Secciones — padding lateral reducido */
   .features-section { padding: 48px 16px 52px; }
@@ -5278,7 +5299,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .mkt-banner-left  { padding: 32px 24px; }
 
   /* Logo strip */
-  .logo-strip { padding: 48px 0 32px; }
+  .logo-strip { padding: 16px 0 20px; }
+  .logo-strip-label { text-align: left; padding-left: 20px; }
 
   /* Módulos — filtros: fila scrollable horizontal */
   .mod-filter-label { display: none; }
@@ -5356,17 +5378,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   // Cada frase se parte en 2 líneas para que el lockup no se mueva
   const phrases = [
     ['Se-conecta-',      'con-todo.'],
-    ['15-años-',         'de-experiencia.'],
-    ['Todo-desde-',      'un-solo-lugar.'],
     ['B2B-y-B2C-',       'en-un-sistema.'],
-    ['Datos-',           'en-tiempo-real.'],
-    ['Cientos-de-',      'empresas-confían.'],
-    ['Crece-',           'a-tu-ritmo.'],
-    ['IA-conectada-',    'a-tu-ERP.'],
-    ['Suma-módulos-',    'sin-fricción.'],
-    ['Escala-',          'sin-cambiar-sistema.'],
-    ['Hecho-en-',        'Argentina.'],
-    ['El-ERP-más-',      'completo-del-mercado.']
+    ['Tu-ERP-',          'conectado-a-la-IA.'],
+    ['15-años-',         'de-experiencia.'],
+    ['Escala-',          'sin-cambiar-sistema.']
   ];
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -5433,7 +5448,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   const fx1 = new Scramble(el1);
   const fx2 = new Scramble(el2);
   let i = 0;
-  const HOLD_MS = 2400;
+  const HOLD_MS = 5000;
   function next() {
     Promise.all([
       fx1.setText(phrases[i][0]),

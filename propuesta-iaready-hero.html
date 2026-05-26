@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta — Imágenes iAready en ia-ready.html</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0c0c0e; color: #f0f1f3; -webkit-font-smoothing: antialiased; }
+
+    .doc-header { padding: 48px 48px 32px; border-bottom: 1px solid rgba(255,255,255,.08); max-width: 1120px; margin: 0 auto; }
+    .doc-label { font: 600 10px 'IBM Plex Mono', monospace; letter-spacing: .12em; text-transform: uppercase; color: rgba(0,204,255,.7); margin-bottom: 12px; }
+    .doc-title { font: 700 28px/1.1 'Inter'; color: #f0f1f3; margin-bottom: 8px; }
+    .doc-sub { font: 400 14px/1.6 'Inter'; color: #8a8d94; max-width: 620px; }
+    .doc-sub strong { color: #c8d0d8; font-weight: 500; }
+    code { font-family: 'IBM Plex Mono'; font-size: 12px; color: #00ccff; }
+
+    .doc-body { max-width: 1120px; margin: 0 auto; padding: 0 48px 80px; }
+
+    .option { margin-top: 64px; }
+    .option-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .option-badge { font: 700 10px 'IBM Plex Mono'; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: rgba(0,204,255,.1); color: #00ccff; border: 1px solid rgba(0,204,255,.2); }
+    .option-badge.rec { background: rgba(21,212,156,.1); color: #15d49c; border-color: rgba(21,212,156,.25); }
+    .option-title { font: 700 20px 'Inter'; color: #f0f1f3; }
+    .option-desc { font: 400 13px/1.65 'Inter'; color: #8a8d94; max-width: 700px; margin-bottom: 28px; }
+    .option-desc strong { color: #c8d0d8; font-weight: 500; }
+
+    .preview-frame { border-radius: 14px; border: 1px solid rgba(255,255,255,.08); overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.45); position: relative; }
+    .frame-label { position: absolute; top: 12px; right: 14px; z-index: 10; font: 600 9px 'IBM Plex Mono'; letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.55); backdrop-filter: blur(8px); color: rgba(255,255,255,.5); padding: 4px 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,.1); }
+
+    /* Gradiente extraído de las imágenes */
+    .ia-bg { background: linear-gradient(175deg, #4e8fa6 0%, #3d7a8a 20%, #2e6070 38%, #284d56 52%, #233b38 66%, #1e2e26 80%, #141a10 100%); }
+
+    /* Colores del logo según imágenes */
+    .lc { fill: #e8d5b5; }
+    .lm { fill: #7ecfc8; }
+
+    /* OPCIÓN A */
+    .hero-a { min-height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 72px 40px; position: relative; }
+    .hero-a .ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.06) 0%, rgba(0,0,0,.2) 60%, rgba(10,10,14,.78) 100%); }
+    .hero-a .cnt { position: relative; z-index: 1; }
+    .ia-pill-glass { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 10px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); margin-bottom: 28px; backdrop-filter: blur(6px); }
+    .ia-pill-glass span { font: 600 10px 'IBM Plex Mono'; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+    .hero-a h1 { font: 800 58px/1.05 'Inter'; letter-spacing: -.03em; color: #f0ece4; margin-bottom: 18px; max-width: 640px; }
+    .hero-a h1 em { font-style: normal; color: #7ecfc8; }
+    .hero-a p { font: 400 17px/1.55 'Inter'; color: rgba(240,236,228,.7); max-width: 500px; margin: 0 auto 32px; }
+    .hero-a .acts { display: flex; gap: 10px; justify-content: center; }
+    .btn-mint { padding: 11px 20px; border-radius: 10px; font: 600 13px 'Inter'; background: rgba(126,207,200,.18); border: 1px solid rgba(126,207,200,.35); color: #7ecfc8; display: inline-flex; align-items: center; gap: 7px; }
+    .btn-glass { padding: 11px 20px; border-radius: 10px; font: 600 13px 'Inter'; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); color: rgba(240,236,228,.75); display: inline-flex; align-items: center; gap: 7px; }
+    .fade-bot { position: absolute; bottom: 0; left: 0; right: 0; height: 110px; background: linear-gradient(transparent, #0c0c0e); }
+
+    .stats-r { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,.06); border-top: 1px solid rgba(255,255,255,.06); }
+    .sc { background: #111114; padding: 22px 24px; text-align: center; }
+    .sv { font: 700 28px/1 'Inter'; color: #f0f1f3; letter-spacing: -.02em; margin-bottom: 5px; }
+    .sl { font: 400 11px 'Inter'; color: #5a5d66; }
+
+    /* OPCIÓN B */
+    .hero-b { padding: 72px 40px 56px; text-align: center; background: #0c0c0e; }
+    .pill-cyan { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 10px; border-radius: 999px; background: rgba(0,204,255,.1); border: 1px solid rgba(0,204,255,.18); margin-bottom: 28px; }
+    .pill-cyan span { font: 600 10px 'IBM Plex Mono'; letter-spacing: .1em; text-transform: uppercase; color: #00ccff; }
+    .hero-b h1 { font: 800 56px/1.05 'Inter'; letter-spacing: -.03em; color: #f0f1f3; margin-bottom: 18px; }
+    .hero-b h1 em { font-style: normal; color: #00ccff; }
+    .hero-b p { font: 400 17px/1.55 'Inter'; color: #8a8d94; max-width: 500px; margin: 0 auto 32px; }
+    .hero-b .acts { display: flex; gap: 10px; justify-content: center; }
+    .btn-c { padding: 11px 20px; border-radius: 10px; font: 600 13px 'Inter'; background: rgba(0,204,255,.1); border: 1px solid rgba(0,204,255,.28); color: #00ccff; display: inline-flex; align-items: center; gap: 7px; }
+    .btn-g { padding: 11px 20px; border-radius: 10px; font: 600 13px 'Inter'; background: transparent; border: 1px solid rgba(255,255,255,.14); color: #8a8d94; display: inline-flex; align-items: center; gap: 7px; }
+
+    .band { width: 100%; aspect-ratio: 16/5; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .band .ft { position: absolute; top: 0; left: 0; right: 0; height: 70px; background: linear-gradient(#0c0c0e, transparent); z-index: 2; }
+    .band .fb { position: absolute; bottom: 0; left: 0; right: 0; height: 90px; background: linear-gradient(transparent, #0c0c0e); z-index: 2; }
+
+    /* OPCIÓN C */
+    .hero-c { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
+    .hero-c-l { padding: 64px 48px; display: flex; flex-direction: column; justify-content: center; background: #0c0c0e; }
+    .kicker { font: 600 10px 'IBM Plex Mono'; letter-spacing: .12em; text-transform: uppercase; color: #00ccff; margin-bottom: 18px; }
+    .hero-c-l h1 { font: 800 44px/1.07 'Inter'; letter-spacing: -.03em; color: #f0f1f3; margin-bottom: 14px; }
+    .hero-c-l h1 em { font-style: normal; color: #00ccff; }
+    .hero-c-l p { font: 400 14px/1.6 'Inter'; color: #8a8d94; max-width: 360px; margin-bottom: 28px; }
+    .hero-c-l .acts { display: flex; gap: 10px; }
+    .hero-c-r { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .fade-l { position: absolute; top: 0; left: 0; width: 90px; height: 100%; background: linear-gradient(to right, #0c0c0e, transparent); z-index: 2; }
+
+    /* Notas */
+    .notes { margin-top: 64px; padding: 32px 36px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; }
+    .notes-t { font: 600 10px 'IBM Plex Mono'; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,204,255,.7); margin-bottom: 20px; }
+    .nr { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .nr:last-child { border-bottom: none; }
+    .ni { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .nt { font: 400 13px/1.6 'Inter'; color: #8a8d94; }
+    .nt strong { color: #c8d0d8; font-weight: 500; }
+
+    .div { height: 1px; background: rgba(255,255,255,.06); margin: 56px 0 0; }
+  </style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-label">Propuesta visual · ia-ready.html</div>
+  <h1 class="doc-title">Aplicación de las imágenes iAready al hero</h1>
+  <p class="doc-sub">
+    Tres opciones para integrar el asset visual (gradiente azul→oscuro con logotipo beige/mint) en la página.
+    <strong>Opción A</strong> es la más impactante. Las imágenes deben guardarse como
+    <code>system/img/iaready-hero.webp</code> y <code>system/img/iaready-hero-sm.webp</code>.
+  </p>
+</div>
+
+<div class="doc-body">
+
+  <!-- ══ OPCIÓN A ══ -->
+  <div class="option">
+    <div class="option-meta">
+      <span class="option-badge rec">✦ Recomendada</span>
+      <span class="option-title">A — Hero fullscreen con imagen de fondo</span>
+    </div>
+    <p class="option-desc">
+      La imagen reemplaza el fondo actual del hero. El copy va superpuesto con un overlay sutil para legibilidad.
+      El badge pasa a estilo <strong>glass blanco</strong>, los textos adoptan la paleta <strong>beige/cream</strong> de la imagen,
+      el botón principal usa el <strong>mint</strong> del logo. Un fade-to-dark en el borde inferior integra sin costuras con el resto de la página.<br><br>
+      <strong>Implementación:</strong> cambiar el <code>background</code> del <code>.hero</code> por
+      <code>background-image: url(system/img/iaready-hero.webp); background-size: cover; background-position: center top;</code>
+    </p>
+    <div class="preview-frame">
+      <div class="frame-label">Previsualización</div>
+      <div class="hero-a ia-bg">
+        <div class="ov"></div>
+        <div class="cnt">
+          <div class="ia-pill-glass">
+            <svg viewBox="0 0 256 68" width="60" height="16" fill="none">
+              <path class="lc" d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
+              <path class="lc" d="M190.294 54.896C180.439 54.896 173.65 46.72 173.65 36.135C173.65 25.623 180.439 17.374 190.294 17.374C194.747 17.374 197.886 18.688 200.222 21.243V2.993C200.222 2.336 200.733 1.825 201.39 1.825H211.391C212.048 1.825 212.559 2.336 212.559 2.993V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.859C198.616 52.998 195.185 54.896 190.294 54.896ZM185.622 36.135C185.622 40.807 188.834 43.8 193.068 43.8C197.375 43.8 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.47 193.068 28.47C188.834 28.47 185.622 31.536 185.622 36.135Z"/>
+              <path class="lc" d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z"/>
+              <path class="lc" d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z"/>
+              <path class="lc" d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z"/>
+              <path class="lm" d="M17.7429 54.02C16.9399 54.02 16.5019 53.509 16.7939 52.779L33.5839 3.796C33.8029 3.212 34.3869 2.92 34.9709 2.92H45.9939C46.5779 2.92 47.2349 3.212 47.4539 3.796L64.2439 52.779C64.5359 53.509 64.0979 54.02 63.2949 54.02H52.4179C51.8339 54.02 51.3229 53.801 51.1039 53.144L49.2059 47.012H31.7589L29.8609 53.144C29.6419 53.801 29.2039 54.02 28.6199 54.02H17.7429ZM35.2629 35.77H45.7019L40.5189 19.053L35.2629 35.77Z"/>
+              <path class="lc" d="M6.643 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.643 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.643 13.213ZM0.438 52.852V19.418C0.438 18.761 0.949 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949 54.02 0.438 53.509 0.438 52.852Z"/>
+            </svg>
+            <span>Plataforma de integración</span>
+          </div>
+          <h1>Construye con IA,<br>conecta y <em>automatiza</em>.</h1>
+          <p>API, webhooks e interfaces nativas — tres formas de integrar y extender YiQi con tus propias herramientas.</p>
+          <div class="acts">
+            <button class="btn-mint">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Ver documentación API
+            </button>
+            <button class="btn-glass">Reserva tu demo →</button>
+          </div>
+        </div>
+        <div class="fade-bot"></div>
+      </div>
+      <div class="stats-r">
+        <div class="sc"><div class="sv">+16</div><div class="sl">Módulos con API pública</div></div>
+        <div class="sc"><div class="sv">+60</div><div class="sl">Objetos documentados</div></div>
+        <div class="sc"><div class="sv">3</div><div class="sl">Formas de integración</div></div>
+        <div class="sc"><div class="sv">+20</div><div class="sl">Eventos automatizables</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- ══ OPCIÓN B ══ -->
+  <div class="option">
+    <div class="option-meta">
+      <span class="option-badge">Opción B</span>
+      <span class="option-title">B — Banda visual entre hero y stats</span>
+    </div>
+    <p class="option-desc">
+      El hero existente queda intacto con la paleta cyan del DS. La imagen se agrega como una <strong>banda full-width de transición</strong>
+      con fade-to-dark arriba y abajo, actuando como un momento de marca puro antes de los stats.
+      <strong>Implementación mínima:</strong> un <code>&lt;div class="ia-visual-band"&gt;</code> con
+      <code>background-image</code> insertado entre <code>.hero</code> y <code>.stats-strip</code>.
+    </p>
+    <div class="preview-frame">
+      <div class="frame-label">Previsualización</div>
+      <div class="hero-b">
+        <div class="pill-cyan">
+          <svg viewBox="0 0 256 68" width="52" height="14" fill="none">
+            <path fill="#8a8d94" d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
+            <path fill="#00ccff" d="M17.743 54.02C16.94 54.02 16.502 53.509 16.794 52.779L33.584 3.796C33.803 3.212 34.387 2.92 34.971 2.92H45.994C46.578 2.92 47.235 3.212 47.454 3.796L64.244 52.779C64.536 53.509 64.098 54.02 63.295 54.02H52.418C51.834 54.02 51.323 53.801 51.104 53.144L49.206 47.012H31.759L29.861 53.144C29.642 53.801 29.204 54.02 28.62 54.02H17.743ZM35.263 35.77H45.702L40.519 19.053L35.263 35.77Z"/>
+            <path fill="#8a8d94" d="M6.643 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.643 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.643 13.213ZM0.438 52.852V19.418C0.438 18.761 0.949 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949 54.02 0.438 53.509 0.438 52.852Z"/>
+          </svg>
+          <span>Plataforma de integración</span>
+        </div>
+        <h1>Construye con IA,<br>conecta y <em>automatiza</em>.</h1>
+        <p>API, webhooks e interfaces nativas — tres formas de integrar y extender YiQi con tus propias herramientas.</p>
+        <div class="acts">
+          <button class="btn-c">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Ver documentación API
+          </button>
+          <button class="btn-g">Reserva tu demo →</button>
+        </div>
+      </div>
+      <div class="band ia-bg">
+        <div class="ft"></div>
+        <svg viewBox="0 0 256 68" width="200" height="53" fill="none" style="position:relative;z-index:1">
+          <path class="lc" d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
+          <path class="lc" d="M190.294 54.896C180.439 54.896 173.65 46.72 173.65 36.135C173.65 25.623 180.439 17.374 190.294 17.374C194.747 17.374 197.886 18.688 200.222 21.243V2.993C200.222 2.336 200.733 1.825 201.39 1.825H211.391C212.048 1.825 212.559 2.336 212.559 2.993V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.859C198.616 52.998 195.185 54.896 190.294 54.896ZM185.622 36.135C185.622 40.807 188.834 43.8 193.068 43.8C197.375 43.8 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.47 193.068 28.47C188.834 28.47 185.622 31.536 185.622 36.135Z"/>
+          <path class="lc" d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z"/>
+          <path class="lc" d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z"/>
+          <path class="lc" d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z"/>
+          <path class="lm" d="M17.7429 54.02C16.9399 54.02 16.5019 53.509 16.7939 52.779L33.5839 3.796C33.8029 3.212 34.3869 2.92 34.9709 2.92H45.9939C46.5779 2.92 47.2349 3.212 47.4539 3.796L64.2439 52.779C64.5359 53.509 64.0979 54.02 63.2949 54.02H52.4179C51.8339 54.02 51.3229 53.801 51.1039 53.144L49.2059 47.012H31.7589L29.8609 53.144C29.6419 53.801 29.2039 54.02 28.6199 54.02H17.7429ZM35.2629 35.77H45.7019L40.5189 19.053L35.2629 35.77Z"/>
+          <path class="lc" d="M6.643 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.643 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.643 13.213ZM0.438 52.852V19.418C0.438 18.761 0.949 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949 54.02 0.438 53.509 0.438 52.852Z"/>
+        </svg>
+        <div class="fb"></div>
+      </div>
+      <div class="stats-r">
+        <div class="sc"><div class="sv">+16</div><div class="sl">Módulos con API pública</div></div>
+        <div class="sc"><div class="sv">+60</div><div class="sl">Objetos documentados</div></div>
+        <div class="sc"><div class="sv">3</div><div class="sl">Formas de integración</div></div>
+        <div class="sc"><div class="sv">+20</div><div class="sl">Eventos automatizables</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- ══ OPCIÓN C ══ -->
+  <div class="option">
+    <div class="option-meta">
+      <span class="option-badge">Opción C</span>
+      <span class="option-title">C — Hero split: copy izquierda, imagen derecha</span>
+    </div>
+    <p class="option-desc">
+      Layout de dos columnas — el copy queda a la izquierda sobre fondo oscuro del DS,
+      la imagen ocupa el panel derecho como visual de marca con fade izquierdo para suavizar la unión.
+      <strong>Más conservadora</strong>: preserva el estilo actual sin tocarlo, solo agrega la imagen como panel lateral.
+    </p>
+    <div class="preview-frame">
+      <div class="frame-label">Previsualización</div>
+      <div class="hero-c">
+        <div class="hero-c-l">
+          <div class="kicker">Plataforma de integración</div>
+          <h1>Construye con IA,<br>conecta y <em>automatiza</em>.</h1>
+          <p>API, webhooks e interfaces nativas — tres formas de integrar y extender YiQi con tus propias herramientas.</p>
+          <div class="acts">
+            <button class="btn-c" style="font-size:12px;padding:9px 16px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              API Docs
+            </button>
+            <button class="btn-g" style="font-size:12px;padding:9px 16px;">Demo →</button>
+          </div>
+        </div>
+        <div class="hero-c-r ia-bg" style="padding:40px;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 256 68" width="170" height="45" fill="none">
+            <path class="lc" d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
+            <path class="lc" d="M190.294 54.896C180.439 54.896 173.65 46.72 173.65 36.135C173.65 25.623 180.439 17.374 190.294 17.374C194.747 17.374 197.886 18.688 200.222 21.243V2.993C200.222 2.336 200.733 1.825 201.39 1.825H211.391C212.048 1.825 212.559 2.336 212.559 2.993V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.859C198.616 52.998 195.185 54.896 190.294 54.896ZM185.622 36.135C185.622 40.807 188.834 43.8 193.068 43.8C197.375 43.8 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.47 193.068 28.47C188.834 28.47 185.622 31.536 185.622 36.135Z"/>
+            <path class="lc" d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z"/>
+            <path class="lc" d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z"/>
+            <path class="lc" d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z"/>
+            <path class="lm" d="M17.7429 54.02C16.9399 54.02 16.5019 53.509 16.7939 52.779L33.5839 3.796C33.8029 3.212 34.3869 2.92 34.9709 2.92H45.9939C46.5779 2.92 47.2349 3.212 47.4539 3.796L64.2439 52.779C64.5359 53.509 64.0979 54.02 63.2949 54.02H52.4179C51.8339 54.02 51.3229 53.801 51.1039 53.144L49.2059 47.012H31.7589L29.8609 53.144C29.6419 53.801 29.2039 54.02 28.6199 54.02H17.7429ZM35.2629 35.77H45.7019L40.5189 19.053L35.2629 35.77Z"/>
+            <path class="lc" d="M6.643 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.643 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.643 13.213ZM0.438 52.852V19.418C0.438 18.761 0.949 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949 54.02 0.438 53.509 0.438 52.852Z"/>
+          </svg>
+          <div class="fade-l"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ NOTAS ══ -->
+  <div class="notes">
+    <div class="notes-t">Notas de implementación</div>
+    <div class="nr">
+      <div class="ni">📁</div>
+      <div class="nt"><strong>Archivos:</strong> guardar la imagen grande como <code>system/img/iaready-hero.webp</code> y la pequeña como <code>system/img/iaready-hero-sm.webp</code>. Convertir a WebP (&lt;200 KB).</div>
+    </div>
+    <div class="nr">
+      <div class="ni">🖼</div>
+      <div class="nt"><strong>OG Image (aplica en todas las opciones):</strong> agregar <code>&lt;meta property="og:image" content="system/img/iaready-hero.webp"&gt;</code> en el <code>&lt;head&gt;</code>. La imagen 16:9 es ideal para previews en redes y WhatsApp.</div>
+    </div>
+    <div class="nr">
+      <div class="ni">🌓</div>
+      <div class="nt"><strong>Light mode:</strong> el gradiente azul-oscuro contrasta en ambos temas. No requiere variante.</div>
+    </div>
+    <div class="nr">
+      <div class="ni">📱</div>
+      <div class="nt"><strong>Mobile:</strong> en opción C el panel derecho se oculta en mobile. En A y B no hay cambios en mobile.</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
