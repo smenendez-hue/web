@@ -145,15 +145,39 @@ body {
 /* ── Filtros ── */
 .nov-filters {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 12px;
   margin-bottom: 36px;
+}
+.nov-filter-row {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 8px;
 }
 .nov-filter-label {
   font: 500 12px/1 var(--sans);
   color: var(--muted-2);
   margin-right: 4px;
+}
+.nov-search {
+  width: min(100%, 460px);
+  height: 38px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--text);
+  padding: 0 14px;
+  font: 400 13px/1 var(--sans);
+  outline: none;
+  transition: border-color var(--tr), box-shadow var(--tr);
+}
+.nov-search::placeholder {
+  color: var(--muted-2);
+}
+.nov-search:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 2px var(--cyan-soft);
 }
 .filter-chip {
   font: 500 12px/1 var(--sans);
@@ -386,15 +410,21 @@ body {
   </div>
 
   <!-- Filtros -->
-  <div class="nov-filters" id="nov-filters" aria-label="Filtros">
-    <span class="nov-filter-label">Tipo:</span>
-    <button class="filter-chip active" data-group="tipo" data-value="">Todos</button>
-    <button class="filter-chip" data-group="tipo" data-value="Mejora">Mejora</button>
-    <button class="filter-chip" data-group="tipo" data-value="Nueva funcionalidad">Nueva función</button>
-    <button class="filter-chip" data-group="tipo" data-value="Performance">Performance</button>
-    <div class="filter-sep"></div>
-    <span class="nov-filter-label">Módulo:</span>
-    <button class="filter-chip active" data-group="modulo" data-value="">Todos</button>
+  <div class="nov-filters" aria-label="Filtros">
+    <input id="nov-search" class="nov-search" type="search" placeholder="Buscar por título, descripción, tipo o módulo" autocomplete="off" aria-label="Buscar novedades" />
+
+    <div class="nov-filter-row" id="nov-filters-tipo" aria-label="Filtro por tipo">
+      <span class="nov-filter-label">Tipo:</span>
+      <button class="filter-chip active" data-group="tipo" data-value="">Todos</button>
+      <button class="filter-chip" data-group="tipo" data-value="Mejora">Mejora</button>
+      <button class="filter-chip" data-group="tipo" data-value="Nueva funcionalidad">Nueva función</button>
+      <button class="filter-chip" data-group="tipo" data-value="Performance">Performance</button>
+    </div>
+
+    <div class="nov-filter-row" id="nov-filters-modulo" aria-label="Filtro por módulo">
+      <span class="nov-filter-label">Módulo:</span>
+      <button class="filter-chip active" data-group="modulo" data-value="">Todos</button>
+    </div>
   </div>
 
   <!-- Contador -->
@@ -454,9 +484,7 @@ body {
 <script src="./components/site-footer.js" defer></script>
 
 <script>
-// Fallback local mientras el endpoint público no devuelve CORS.
-// Para volver al API en vivo: const API = 'https://novedades.yiqi.com.ar/api/YiQi/Novedades';
-const API = './novedades.json';
+const API = './api/novedades';
 
 const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const TIPO_CLASS = {
@@ -472,9 +500,23 @@ const TIPO_LABEL = {
 
 let allItems = [];
 let activeFilters = { tipo: '', modulo: '' };
+let searchTerm = '';
 
-function formatDate(iso) {
-  const d = new Date(iso);
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatDate(rawDate) {
+  const d = rawDate ? new Date(rawDate) : null;
+  if (!d || Number.isNaN(d.getTime())) {
+    return { day: '--', month: '---', year: '----' };
+  }
+
   return {
     day:   d.getUTCDate().toString().padStart(2,'0'),
     month: MESES[d.getUTCMonth()],
@@ -483,27 +525,30 @@ function formatDate(iso) {
 }
 
 function badgeHtml(tipo, modulo) {
-  const tc = TIPO_CLASS[tipo] || 'badge-mejora';
-  const tl = TIPO_LABEL[tipo] || tipo;
+  const safeTipo = (tipo || '').trim() || 'Mejora';
+  const safeModulo = (modulo || '').trim() || 'General';
+  const tc = TIPO_CLASS[safeTipo] || 'badge-mejora';
+  const tl = TIPO_LABEL[safeTipo] || safeTipo;
   return `
-    <span class="nov-badge ${tc}">${tl}</span>
-    <span class="nov-badge badge-modulo">${modulo}</span>
+    <span class="nov-badge ${tc}">${escapeHtml(tl)}</span>
+    <span class="nov-badge badge-modulo">${escapeHtml(safeModulo)}</span>
   `.trim();
 }
 
-function cardHtml(item, isLast) {
-  const {day, month, year} = formatDate(item.DateUpdate);
-  const desc = (item.Descripcion || '').replace(/\r\n/g, '\n').trim();
-  const linkHtml = item.LINK
-    ? `<a class="nov-link" href="${item.LINK}" target="_blank" rel="noopener">
+function cardHtml(item) {
+  const {day, month, year} = formatDate(item.fecha);
+  const desc = (item.descripcion || '').replace(/\r\n/g, '\n').trim();
+  const linkHtml = item.linkWiki
+    ? `<a class="nov-link" href="${escapeHtml(item.linkWiki)}" target="_blank" rel="noopener">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Ver documentación
        </a>`
     : '';
+
   return `
-<div class="nov-card" data-tipo="${item.TIPO}" data-modulo="${item.Modulo}" role="listitem">
+<div class="nov-card" data-tipo="${escapeHtml(item.tipo || '')}" data-modulo="${escapeHtml(item.modulo || '')}" role="listitem">
   <div class="nov-date-col">
     <span class="nov-date-day">${day}</span>
     <span class="nov-date-month">${month}</span>
@@ -514,17 +559,17 @@ function cardHtml(item, isLast) {
     <div class="nov-divider-line"></div>
   </div>
   <div class="nov-body">
-    <div class="nov-badges">${badgeHtml(item.TIPO, item.Modulo)}</div>
-    <h2 class="nov-card-title">${item.Title}</h2>
-    <p class="nov-card-desc">${desc}</p>
+    <div class="nov-badges">${badgeHtml(item.tipo, item.modulo)}</div>
+    <h2 class="nov-card-title">${escapeHtml(item.titulo || 'Sin titulo')}</h2>
+    <p class="nov-card-desc">${escapeHtml(desc)}</p>
     ${linkHtml}
   </div>
 </div>`.trim();
 }
 
 function populateModuleFilters(items) {
-  const modulos = [...new Set(items.map(i => i.Modulo))].sort();
-  const container = document.getElementById('nov-filters');
+  const modulos = [...new Set(items.map(i => i.modulo).filter(Boolean))].sort();
+  const container = document.getElementById('nov-filters-modulo');
   modulos.forEach(mod => {
     const btn = document.createElement('button');
     btn.className = 'filter-chip';
@@ -537,11 +582,15 @@ function populateModuleFilters(items) {
 
 function applyFilters() {
   const cards = document.querySelectorAll('.nov-card');
+  const normalizedSearch = searchTerm.trim().toLowerCase();
   let visible = 0;
   cards.forEach(card => {
     const matchTipo   = !activeFilters.tipo   || card.dataset.tipo   === activeFilters.tipo;
     const matchModulo = !activeFilters.modulo || card.dataset.modulo === activeFilters.modulo;
-    if (matchTipo && matchModulo) {
+    const text = `${card.dataset.search || ''}`.toLowerCase();
+    const matchSearch = !normalizedSearch || text.includes(normalizedSearch);
+
+    if (matchTipo && matchModulo && matchSearch) {
       card.classList.remove('hidden');
       visible++;
     } else {
@@ -578,17 +627,43 @@ function applyFilters() {
 }
 
 function bindFilters() {
-  document.getElementById('nov-filters').addEventListener('click', e => {
-    const chip = e.target.closest('.filter-chip');
-    if (!chip) return;
-    const group = chip.dataset.group;
-    const value = chip.dataset.value;
-    // Toggle active dentro del grupo
-    document.querySelectorAll(`.filter-chip[data-group="${group}"]`).forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    activeFilters[group] = value;
+  document.querySelectorAll('.nov-filter-row').forEach((row) => {
+    row.addEventListener('click', e => {
+      const chip = e.target.closest('.filter-chip');
+      if (!chip) return;
+      const group = chip.dataset.group;
+      const value = chip.dataset.value;
+
+      row.querySelectorAll(`.filter-chip[data-group="${group}"]`).forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeFilters[group] = value;
+      applyFilters();
+    });
+  });
+
+  document.getElementById('nov-search').addEventListener('input', (e) => {
+    searchTerm = e.target.value || '';
     applyFilters();
   });
+}
+
+function buildSearchText(item) {
+  return [
+    item.titulo,
+    item.descripcion,
+    item.modulo,
+    item.tipo,
+  ]
+    .filter(Boolean)
+    .join(' ');
+}
+
+function renderItems(items) {
+  return items.map((item) => {
+    const baseCard = cardHtml(item);
+    const search = escapeHtml(buildSearchText(item));
+    return baseCard.replace('<div class="nov-card"', `<div class="nov-card" data-search="${search}"`);
+  }).join('\n');
 }
 
 function showError(msg) {
@@ -608,22 +683,28 @@ function showError(msg) {
 
 async function loadNovedades() {
   try {
-    const res = await fetch(API);
+    const res = await fetch(API, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    allItems = data;
+    const payload = await res.json();
+    allItems = Array.isArray(payload.items) ? payload.items : [];
 
     populateModuleFilters(allItems);
     bindFilters();
 
     const list = document.getElementById('nov-list');
-    list.innerHTML = allItems.map((item, i) => cardHtml(item, i === allItems.length - 1)).join('\n');
+    if (allItems.length === 0) {
+      showError('No hay novedades publicadas en este momento.');
+      return;
+    }
+
+    list.innerHTML = renderItems(allItems);
 
     applyFilters();
   } catch (err) {
-    let hint = err.message.includes('Failed to fetch') || err.message.includes('NetworkError')
-      ? 'Puede ser un bloqueo CORS o de red. Asegurate de acceder desde un dominio autorizado.'
-      : err.message;
+    const message = err instanceof Error ? err.message : String(err);
+    let hint = message.includes('Failed to fetch') || message.includes('NetworkError')
+      ? 'No se pudo contactar al servidor local. Verifica que el sitio este iniciado con node server.js.'
+      : message;
     showError(hint);
     console.error('[novedades]', err);
   }
