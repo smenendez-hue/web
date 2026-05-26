@@ -484,6 +484,11 @@ body {
 <script src="./components/site-footer.js" defer></script>
 
 <script>
+if (window.location.hostname === 'yiqi.com.ar') {
+  const target = `https://www.yiqi.com.ar${window.location.pathname}${window.location.search}${window.location.hash}`;
+  window.location.replace(target);
+}
+
 // Endpoint local servido por server.js (proxy backend con auth a YiQi API).
 const API = '/api/novedades';
 
