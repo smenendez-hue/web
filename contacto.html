@@ -571,7 +571,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
         <div class="form-divider"></div>
 
         <div class="form-footer">
-          <button type="button" class="btn-autofill" onclick="cfAutofill()" title="Completar con datos de prueba">
+          <button type="button" class="btn-autofill" style="display:none" onclick="cfAutofill()" title="Completar con datos de prueba">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             autofill
           </button>
@@ -654,6 +654,18 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     const errMap = { 'cf-nombre':'err-nombre','cf-apellido':'err-apellido','cf-email':'err-email','cf-empresa':'err-empresa','cf-mensaje':'err-mensaje' };
     document.getElementById(id)?.addEventListener('input', () => setErr(id, errMap[id], false));
   });
+
+  /* ── Autofill solo en dev (localhost o ?dev=1) ─────────── */
+  (function() {
+    const h = location.hostname;
+    const isDev =
+      h === 'localhost' || h === '127.0.0.1' || h === '' ||
+      h.endsWith('.local') || h.startsWith('192.168.') ||
+      new URLSearchParams(location.search).get('dev') === '1';
+    if (isDev) {
+      document.querySelectorAll('.btn-autofill').forEach(b => b.style.display = '');
+    }
+  })();
 
   /* ── Filtro nombre y apellido: solo letras, espacios, ', - ── */
   (function() {
