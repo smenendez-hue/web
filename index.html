@@ -2483,28 +2483,28 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <!-- ══ PASO 1: Nombre · Apellido · Email ══ -->
     <div class="hf-step active" id="hf-step-1">
       <div class="hf-field">
-        <input class="input" type="text" id="hf-nombre" placeholder="Nombre" autocomplete="given-name" aria-label="Nombre">
+        <input class="input" type="text" id="hf-nombre" placeholder="Nombre" autocomplete="given-name" maxlength="60" aria-label="Nombre">
         <div class="hf-err" id="err-nombre"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ingresa tu nombre.</div>
       </div>
       <div class="hf-field">
-        <input class="input" type="text" id="hf-apellido" placeholder="Apellido" autocomplete="family-name" aria-label="Apellido">
+        <input class="input" type="text" id="hf-apellido" placeholder="Apellido" autocomplete="family-name" maxlength="60" aria-label="Apellido">
         <div class="hf-err" id="err-apellido"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ingresa tu apellido.</div>
       </div>
       <div class="hf-field">
-        <input class="input" type="email" id="hf-email" placeholder="Email de trabajo" autocomplete="email" aria-label="Email de trabajo">
+        <input class="input" type="email" id="hf-email" placeholder="Email de trabajo" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="120" aria-label="Email de trabajo">
         <div class="hf-err" id="err-email"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ingresa un email válido.</div>
       </div>
     </div>
     <!-- Footer paso 1 -->
     <div class="hf-footer" id="hf-footer-1">
       <div class="hf-footer-actions">
-        <button class="hf-btn-autofill" onclick="hfAutofill()" title="Completar con datos de prueba">
+        <button class="hf-btn-autofill" style="display:none" onclick="hfAutofill()" title="Completar con datos de prueba">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           autofill
         </button>
         <button class="hf-btn-cta" onclick="hfGoStep(2)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
-      <p class="hf-legal">Al continuar aceptás nuestra <a href="https://yiqi.com.ar">política de privacidad</a>.</p>
+      <p class="hf-legal">Al continuar aceptas nuestra <a href="https://yiqi.com.ar">política de privacidad</a>.</p>
     </div>
 
     <!-- ══ PASO 2: Contacto ══ -->
@@ -2512,7 +2512,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       <div class="hf-section-label">Datos de contacto</div>
       <div class="hf-row">
         <div class="hf-field">
-          <input class="input" type="tel" id="hf-phone" placeholder="Celular" autocomplete="tel" aria-label="Celular">
+          <input class="input" type="tel" id="hf-phone" placeholder="Celular" autocomplete="tel" inputmode="tel" pattern="[\d\s+()\-]*" maxlength="25" aria-label="Celular">
           <div class="hf-err" id="err-phone"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Ingresa un celular válido.</div>
         </div>
         <div class="hf-field">
@@ -2539,7 +2539,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <!-- Footer paso 2 -->
     <div class="hf-footer" id="hf-footer-2">
       <div class="hf-footer-actions">
-        <button class="hf-btn-autofill" onclick="hfAutofill()" title="Completar con datos de prueba">
+        <button class="hf-btn-autofill" style="display:none" onclick="hfAutofill()" title="Completar con datos de prueba">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           autofill
         </button>
@@ -3950,11 +3950,85 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     document.getElementById('hero-form').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  function hfSubmit() {
+  /* ── Payload ─────────────────────────────────── */
+  function hfChipValues(groupId) {
+    return [...document.querySelectorAll('#' + groupId + ' .hero-form-chip.active')]
+      .map(b => b.textContent.trim());
+  }
+  function hfBuildPayload() {
+    return {
+      nombre:    document.getElementById('hf-nombre').value.trim(),
+      apellido:  document.getElementById('hf-apellido').value.trim(),
+      email:     document.getElementById('hf-email').value.trim(),
+      celular:   document.getElementById('hf-phone').value.trim(),
+      pais:      document.getElementById('hf-country').value,
+      empresa:   document.getElementById('hf-empresa').value.trim(),
+      source:    document.getElementById('hf-source').value,
+      empleados: hfChipValues('hf-size')[0] || '',
+      rubros:    hfChipValues('hf-sector'),
+      modulos:   hfChipValues('hf-modules'),
+      mensaje:   document.getElementById('hf-message').value.trim(),
+      meta: {
+        url:       location.href,
+        referrer:  document.referrer || '',
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+        form:      'hero-index'
+      }
+    };
+  }
+
+  /* ── Fallback localStorage (mismo patrón que contacto.html) ── */
+  const HF_LS_KEY = 'yiqi-contact-pending';
+  function hfSavePending(payload) {
+    try {
+      const list = JSON.parse(localStorage.getItem(HF_LS_KEY) || '[]');
+      list.push(payload);
+      localStorage.setItem(HF_LS_KEY, JSON.stringify(list));
+    } catch {}
+  }
+  async function hfFlushPending() {
+    let list;
+    try { list = JSON.parse(localStorage.getItem(HF_LS_KEY) || '[]'); } catch { return; }
+    if (!list.length) return;
+    const remaining = [];
+    for (const p of list) {
+      try {
+        const r = await fetch('/api/contact', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(p)
+        });
+        if (!r.ok) remaining.push(p);
+      } catch { remaining.push(p); }
+    }
+    localStorage.setItem(HF_LS_KEY, JSON.stringify(remaining));
+  }
+  document.addEventListener('DOMContentLoaded', () => { hfFlushPending().catch(() => {}); });
+
+  /* ── Submit real ─────────────────────────────── */
+  async function hfSubmit() {
     if (!hfValidate3()) return;
-    document.querySelectorAll('.hf-step, .hf-footer, .hf-footer-row, .hf-dots, .hf-header, .hf-divider')
-      .forEach(el => el.style.display = 'none');
-    document.getElementById('hero-form-success').classList.add('show');
+
+    const btn = document.querySelector('#hf-footer-3 .hf-btn-cta');
+    if (btn) { btn.disabled = true; btn.style.opacity = '.7'; }
+
+    const payload = hfBuildPayload();
+
+    let ok = false;
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      ok = res.ok;
+      if (!ok) console.warn('[hero-form] backend respondió', res.status);
+    } catch (err) {
+      console.warn('[hero-form] error de red:', err);
+    }
+    if (!ok) hfSavePending(payload);
+
+    try { sessionStorage.setItem('yiqi-last-email', payload.email); } catch {}
+    window.location.href = '/gracias.html?from=hero';
   }
 
   function toggleChip(el, groupId, multi) {
@@ -3976,6 +4050,86 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   });
   const cc = document.getElementById('hf-country');
   if (cc) cc.addEventListener('change', () => hfSetErr('hf-country','err-country', false));
+
+  /* ── Autofill solo en dev (localhost o ?dev=1) ─────────── */
+  (function() {
+    const h = location.hostname;
+    const isDev =
+      h === 'localhost' || h === '127.0.0.1' || h === '' ||
+      h.endsWith('.local') || h.startsWith('192.168.') ||
+      new URLSearchParams(location.search).get('dev') === '1';
+    if (isDev) {
+      document.querySelectorAll('.hf-btn-autofill').forEach(b => b.style.display = '');
+    }
+  })();
+
+  /* ── Filtro nombre y apellido: solo letras, espacios, ', - ── */
+  (function() {
+    const ALLOWED = /[^\p{L}\s'\-]/gu;
+    ['hf-nombre','hf-apellido'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', function() {
+        const start = this.selectionStart;
+        const clean = this.value.replace(ALLOWED, '');
+        if (clean !== this.value) {
+          this.value = clean;
+          try { this.setSelectionRange(start - 1, start - 1); } catch {}
+        }
+      });
+      el.addEventListener('paste', function(e) {
+        e.preventDefault();
+        const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
+        document.execCommand('insertText', false, txt.replace(ALLOWED, ''));
+      });
+    });
+  })();
+
+  /* ── Filtro email: lowercase, sin espacios, valida en blur ── */
+  (function() {
+    const email = document.getElementById('hf-email');
+    if (!email) return;
+    email.addEventListener('input', function() {
+      const start = this.selectionStart;
+      const clean = this.value.toLowerCase().replace(/\s+/g, '');
+      if (clean !== this.value) {
+        this.value = clean;
+        try { this.setSelectionRange(start, start); } catch {}
+      }
+    });
+    email.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
+      const clean = txt.toLowerCase().replace(/\s+/g, '');
+      document.execCommand('insertText', false, clean);
+    });
+    email.addEventListener('blur', function() {
+      const v = this.value.trim();
+      if (!v) { hfSetErr('hf-email', 'err-email', false); return; }
+      hfSetErr('hf-email', 'err-email', !HF_EMAIL_RE.test(v));
+    });
+  })();
+
+  /* ── Filtro celular: solo dígitos, espacios, +, (, ), - ── */
+  (function() {
+    const tel = document.getElementById('hf-phone');
+    if (!tel) return;
+    const ALLOWED = /[^\d\s+()\-]/g;
+    tel.addEventListener('input', function() {
+      const start = this.selectionStart;
+      const clean = this.value.replace(ALLOWED, '');
+      if (clean !== this.value) {
+        this.value = clean;
+        try { this.setSelectionRange(start - 1, start - 1); } catch {}
+      }
+    });
+    tel.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
+      const clean = txt.replace(ALLOWED, '');
+      document.execCommand('insertText', false, clean);
+    });
+  })();
 
   // Init
   hfShowStep(1);
