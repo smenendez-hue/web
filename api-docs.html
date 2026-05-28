@@ -126,7 +126,7 @@ button{font:inherit;cursor:pointer;border:none;background:none}
 /* Search */
 
 .search-row{display:flex;align-items:center;gap:12px;max-width:640px}
-.count-badge{flex-shrink:0;padding:5px 12px;border-radius:var(--radius-pill);border:none;background:var(--bg-elev-2);font:700 11px var(--mono);color:var(--muted);white-space:nowrap}
+.count-badge{flex-shrink:0;font:600 11px var(--mono);color:var(--muted-2);letter-spacing:.04em;white-space:nowrap}
 
 /* ── CONTENT ── */
 .content{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
@@ -249,7 +249,6 @@ code{font-family:var(--mono);font-size:11px;background:var(--bg-soft);box-shadow
         <svg class="search-icon" viewBox="0 0 256 256"><circle cx="112" cy="112" r="80" stroke="currentColor" stroke-width="18" fill="none"/><line x1="168" y1="168" x2="224" y2="224" stroke="currentColor" stroke-width="18" stroke-linecap="round"/></svg>
         <input class="search-input" id="apiSearch" type="search" placeholder="Buscar módulo (ej: ventas, stock, auth…)" oninput="filterCards(this.value)"/>
       </div>
-      <div class="count-badge" id="countBadge">16 módulos</div>
       <button id="llmBtn" onclick="copyForLLM()" style="display:inline-flex;align-items:center;gap:8px;padding:0 14px;height:40px;border-radius:var(--radius);border:none;background:var(--bg-elev-2);color:var(--muted);font:600 11px var(--mono);letter-spacing:.04em;cursor:pointer;white-space:nowrap;transition:all 180ms ease;flex-shrink:0"
         onmouseenter="this.style.color='var(--cyan)';this.style.background='var(--cyan-soft)'"
         onmouseleave="this.style.color='var(--muted)';this.style.background='var(--bg-elev-2)'">
@@ -387,7 +386,10 @@ code{font-family:var(--mono);font-size:11px;background:var(--bg-soft);box-shadow
     </div>
   </div>
   <div class="section-head">
-    <span class="section-title">Módulos disponibles</span>
+    <div style="display:flex;align-items:baseline;gap:10px">
+      <span class="section-title">Módulos disponibles</span>
+      <span class="count-badge" id="countBadge">16 módulos</span>
+    </div>
     <button onclick="toggleAll()" id="toggleAllBtn" style="font:600 11px var(--mono);color:var(--muted);padding:4px 10px;border-radius:var(--radius-pill);border:none;background:var(--bg-elev-2);transition:all 180ms ease;cursor:pointer" onmouseenter="this.style.color='var(--text)'" onmouseleave="this.style.color='var(--muted)'">Expandir todos</button>
   </div>
 
