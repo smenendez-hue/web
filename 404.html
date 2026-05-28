@@ -249,16 +249,19 @@
     });
   })();
 
-  /* Mostrar la URL que intentaron visitar — útil para que el usuario entienda qué pasó */
+  /* Mostrar la URL que intentaron visitar — útil para que el usuario entienda qué pasó.
+     Solo se muestra cuando llegamos por un path inválido (ej: /pagina-que-no-existe).
+     Si alguien carga /404.html directamente, no tiene sentido mostrarla. */
   (function() {
     const el = document.getElementById('current-url');
     if (!el) return;
-    const url = location.pathname + location.search;
-    if (url && url !== '/' && url !== '/404.html') {
-      el.textContent = url;
-    } else {
+    const path = location.pathname;
+    const isDirectVisit = path === '/' || path === '' || path === '/404.html';
+    if (isDirectVisit) {
       el.style.display = 'none';
+      return;
     }
+    el.textContent = path + location.search;
   })();
 
   /* Scramble loop del número 404
