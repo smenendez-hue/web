@@ -462,12 +462,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
         <div class="form-row">
           <div class="form-group">
             <label class="ds-label" for="cf-nombre">Nombre <span class="req" aria-hidden="true">*</span></label>
-            <input class="ds-input" type="text" id="cf-nombre" name="nombre" placeholder="Tu nombre" autocomplete="given-name" required>
+            <input class="ds-input" type="text" id="cf-nombre" name="nombre" placeholder="Tu nombre" autocomplete="given-name" maxlength="60" required>
             <span class="field-err" id="err-nombre" role="alert">Nombre requerido</span>
           </div>
           <div class="form-group">
             <label class="ds-label" for="cf-apellido">Apellido <span class="req" aria-hidden="true">*</span></label>
-            <input class="ds-input" type="text" id="cf-apellido" name="apellido" placeholder="Tu apellido" autocomplete="family-name" required>
+            <input class="ds-input" type="text" id="cf-apellido" name="apellido" placeholder="Tu apellido" autocomplete="family-name" maxlength="60" required>
             <span class="field-err" id="err-apellido" role="alert">Apellido requerido</span>
           </div>
         </div>
@@ -653,6 +653,28 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     const errMap = { 'cf-nombre':'err-nombre','cf-apellido':'err-apellido','cf-email':'err-email','cf-empresa':'err-empresa','cf-mensaje':'err-mensaje' };
     document.getElementById(id)?.addEventListener('input', () => setErr(id, errMap[id], false));
   });
+
+  /* ── Filtro nombre y apellido: solo letras, espacios, ', - ── */
+  (function() {
+    const ALLOWED = /[^\p{L}\s'\-]/gu;
+    ['cf-nombre','cf-apellido'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', function() {
+        const start = this.selectionStart;
+        const clean = this.value.replace(ALLOWED, '');
+        if (clean !== this.value) {
+          this.value = clean;
+          try { this.setSelectionRange(start - 1, start - 1); } catch {}
+        }
+      });
+      el.addEventListener('paste', function(e) {
+        e.preventDefault();
+        const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
+        document.execCommand('insertText', false, txt.replace(ALLOWED, ''));
+      });
+    });
+  })();
 
   /* ── Filtro email: lowercase, sin espacios, valida en blur ── */
   (function() {
