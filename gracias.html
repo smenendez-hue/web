@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="system">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '455192279196875');
+fbq('track', 'PageView');
+
+// Disparar evento Lead solo si la persona llega desde el form
+// (query param ?from=contact). Evita conteos accidentales.
+(function() {
+  var qs = new URLSearchParams(window.location.search);
+  if (qs.get('from') === 'contact') {
+    fbq('track', 'Lead', {
+      content_name: 'Contacto YiQi',
+      content_category: 'Formulario sitio'
+    });
+  }
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gracias — YiQi</title>
+  <meta name="description" content="Recibimos tu mensaje. El equipo comercial de YiQi te contacta en menos de 24 horas hábiles.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="stylesheet" href="./site.css">
+  <script src="./components/site-header.js" defer></script>
+  <script src="./components/site-footer.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; overflow-x: clip; }
+
+    .ty-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 96px 24px 64px;
+      text-align: center;
+    }
+    @media (max-width: 720px) {
+      .ty-wrap { padding: 64px 20px 48px; }
+    }
+
+    .ty-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cyan-soft);
+      color: var(--cyan);
+      border-radius: 50%;
+      box-shadow: var(--shadow-md);
+      animation: pop .55s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes pop {
+      0%   { transform: scale(.4); opacity: 0; }
+      70%  { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    .ty-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 12px;
+      background: var(--cyan-soft); color: var(--cyan);
+      font: 600 11px var(--mono); letter-spacing: .04em;
+      border-radius: var(--radius-pill);
+      margin-bottom: 20px; text-transform: uppercase;
+    }
+    .ty-title {
+      font: 800 44px/1.1 var(--display); letter-spacing: -.025em;
+      color: var(--text); margin: 0 0 16px;
+    }
+    .ty-lead {
+      font: 400 18px/1.6 var(--sans); color: var(--muted);
+      max-width: 540px; margin: 0 auto 40px;
+    }
+    @media (max-width: 720px) {
+      .ty-title { font-size: 32px; }
+      .ty-lead { font-size: 16px; }
+    }
+
+    .ty-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 0 auto 48px;
+      text-align: left;
+    }
+    @media (max-width: 640px) { .ty-steps { grid-template-columns: 1fr; } }
+    .ty-step {
+      padding: 20px;
+      background: var(--bg-elev);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .ty-step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px;
+      background: var(--cyan-soft); color: var(--cyan);
+      font: 700 13px var(--mono);
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    .ty-step-title {
+      font: 600 14px var(--sans); color: var(--text); margin: 0 0 4px;
+    }
+    .ty-step-text {
+      font: 400 13px/1.5 var(--sans); color: var(--muted); margin: 0;
+    }
+
+    .ty-ctas {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 48px;
+    }
+    .ty-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px;
+      font: 600 14px var(--sans);
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--tr);
+    }
+    .ty-btn-primary {
+      background: var(--cyan-soft-2);
+      color: var(--cyan);
+    }
+    .ty-btn-primary:hover { background: var(--cyan-soft); box-shadow: var(--shadow-sm); }
+    .ty-btn-ghost {
+      background: transparent; color: var(--muted);
+    }
+    .ty-btn-ghost:hover { background: var(--bg-soft); color: var(--text); }
+
+    .ty-explore {
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+    .ty-explore-label {
+      font: 600 11px var(--mono); letter-spacing: .08em;
+      color: var(--muted-2); text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .ty-links {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    }
+    .ty-link {
+      font: 500 13px var(--sans);
+      color: var(--cyan);
+      padding: 6px 0;
+      text-decoration: none;
+      transition: color var(--tr);
+    }
+    .ty-link:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+<site-header base="./" current-page=""></site-header>
+
+<main>
+  <div class="ty-wrap">
+    <div class="ty-icon" aria-hidden="true">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <div class="ty-eyebrow">Mensaje recibido</div>
+
+    <h1 class="ty-title">¡Gracias! Tenemos tu mensaje.</h1>
+    <p class="ty-lead">
+      Nuestro equipo comercial te contacta en menos de <strong>24 horas hábiles</strong>
+      para entender qué necesitas y mostrarte cómo YiQi se integra con tu operación.
+    </p>
+
+    <div class="ty-steps">
+      <div class="ty-step">
+        <div class="ty-step-num">1</div>
+        <div class="ty-step-title">Revisamos tu caso</div>
+        <p class="ty-step-text">Leemos tu mensaje y miramos tu rubro, módulos de interés y tamaño de la empresa.</p>
+      </div>
+      <div class="ty-step">
+        <div class="ty-step-num">2</div>
+        <div class="ty-step-title">Te escribimos</div>
+        <p class="ty-step-text">En menos de 24 horas hábiles te contactamos por mail o teléfono para coordinar.</p>
+      </div>
+      <div class="ty-step">
+        <div class="ty-step-num">3</div>
+        <div class="ty-step-title">Demo a medida</div>
+        <p class="ty-step-text">Te mostramos YiQi en función de tu operación real, no una demo genérica.</p>
+      </div>
+    </div>
+
+    <div class="ty-ctas">
+      <a class="ty-btn ty-btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">
+        ¿Quieres acelerar? Reserva tu demo
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a class="ty-btn ty-btn-ghost" href="./index.html">Volver al inicio</a>
+    </div>
+
+    <div class="ty-explore">
+      <div class="ty-explore-label">Mientras tanto, conoce YiQi</div>
+      <div class="ty-links">
+        <a class="ty-link" href="./ia-ready.html">IA Ready</a>
+        <a class="ty-link" href="./marketplace.html">Marketplace</a>
+        <a class="ty-link" href="./tiendanube.html">Tienda Nube</a>
+        <a class="ty-link" href="./novedades.html">Novedades</a>
+        <a class="ty-link" href="./faq.html">Preguntas frecuentes</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<site-footer base="./"></site-footer>
+
+<script>
+  /* Tema (mismo patrón que el resto del sitio) */
+  (function() {
+    const _mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const resolveTheme = v => v === 'system' ? (_mq.matches ? 'dark' : 'light') : v;
+    document.documentElement.dataset.theme = resolveTheme(localStorage.getItem('yiqi-theme') || 'system');
+    _mq.addEventListener('change', () => {
+      if ((localStorage.getItem('yiqi-theme') || 'system') === 'system') {
+        document.documentElement.dataset.theme = _mq.matches ? 'dark' : 'light';
+      }
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="system">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '455192279196875');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacto — YiQi</title>
-  <meta name="description" content="Hablá con el equipo de YiQi. Demo, consultas comerciales y soporte.">
+  <meta name="description" content="Habla con el equipo de YiQi. Demo, consultas comerciales y soporte.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./site.css">
@@ -457,7 +475,7 @@
         <!-- Email -->
         <div class="form-group">
           <label class="ds-label" for="cf-email">Email de trabajo <span class="req" aria-hidden="true">*</span></label>
-          <input class="ds-input" type="email" id="cf-email" name="email" placeholder="correo@empresa.com" autocomplete="email" required>
+          <input class="ds-input" type="email" id="cf-email" name="email" placeholder="correo@empresa.com" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="120" required>
           <span class="field-err" id="err-email" role="alert">Ingresa un email válido</span>
         </div>
 
@@ -465,7 +483,7 @@
         <div class="form-row">
           <div class="form-group">
             <label class="ds-label" for="cf-celular">Celular</label>
-            <input class="ds-input" type="tel" id="cf-celular" name="celular" placeholder="Celular" autocomplete="tel">
+            <input class="ds-input" type="tel" id="cf-celular" name="celular" placeholder="Celular" autocomplete="tel" inputmode="tel" pattern="[\d\s+()\-]*" maxlength="25">
           </div>
           <div class="form-group">
             <label class="ds-label" for="cf-pais">País</label>
@@ -636,6 +654,61 @@
     document.getElementById(id)?.addEventListener('input', () => setErr(id, errMap[id], false));
   });
 
+  /* ── Filtro email: lowercase, sin espacios, valida en blur ── */
+  (function() {
+    const email = document.getElementById('cf-email');
+    if (!email) return;
+
+    // Mientras escribe: lowercase + sin espacios
+    email.addEventListener('input', function() {
+      const start = this.selectionStart;
+      const clean = this.value.toLowerCase().replace(/\s+/g, '');
+      if (clean !== this.value) {
+        this.value = clean;
+        try { this.setSelectionRange(start, start); } catch {}
+      }
+    });
+
+    // Pegado: limpiar antes de insertar
+    email.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
+      const clean = txt.toLowerCase().replace(/\s+/g, '');
+      document.execCommand('insertText', false, clean);
+    });
+
+    // Al salir del campo: validar formato y avisar
+    email.addEventListener('blur', function() {
+      const v = this.value.trim();
+      if (!v) { setErr('cf-email', 'err-email', false); return; }
+      const ok = EMAIL_RE.test(v);
+      setErr('cf-email', 'err-email', !ok);
+    });
+  })();
+
+  /* ── Filtro celular: solo dígitos, espacios, +, (, ), - ── */
+  (function() {
+    const tel = document.getElementById('cf-celular');
+    if (!tel) return;
+    const ALLOWED = /[^\d\s+()\-]/g;
+    tel.addEventListener('input', function() {
+      const start = this.selectionStart;
+      const clean = this.value.replace(ALLOWED, '');
+      if (clean !== this.value) {
+        this.value = clean;
+        // mantener el cursor donde estaba
+        try { this.setSelectionRange(start - 1, start - 1); } catch {}
+      }
+    });
+    // Bloquear pegado de texto con letras (las limpia)
+    tel.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
+      const clean = txt.replace(ALLOWED, '');
+      document.execCommand('insertText', false, clean);
+    });
+  })();
+
   function toggleChip(btn, groupId, multi) {
     if (!multi) {
       document.querySelectorAll('#' + groupId + ' .hero-form-chip').forEach(b => b.classList.remove('active'));
@@ -645,10 +718,66 @@
     }
   }
 
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  /* ── Payload ─────────────────────────────────────────── */
+  function chipValues(groupId) {
+    return [...document.querySelectorAll('#' + groupId + ' .hero-form-chip.active')]
+      .map(b => b.textContent.trim());
+  }
+  function buildPayload() {
+    return {
+      nombre:    document.getElementById('cf-nombre').value.trim(),
+      apellido:  document.getElementById('cf-apellido').value.trim(),
+      email:     document.getElementById('cf-email').value.trim(),
+      celular:   document.getElementById('cf-celular').value.trim(),
+      pais:      document.getElementById('cf-pais').value,
+      empresa:   document.getElementById('cf-empresa').value.trim(),
+      source:    document.getElementById('cf-source').value,
+      empleados: chipValues('cf-size')[0] || '',
+      rubros:    chipValues('cf-sector'),
+      modulos:   chipValues('cf-modules'),
+      mensaje:   document.getElementById('cf-mensaje').value.trim(),
+      meta: {
+        url:       location.href,
+        referrer:  document.referrer || '',
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString()
+      }
+    };
+  }
+
+  /* ── Fallback: si el backend falla, no perder data ───── */
+  const LS_KEY = 'yiqi-contact-pending';
+  function savePending(payload) {
+    try {
+      const list = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+      list.push(payload);
+      localStorage.setItem(LS_KEY, JSON.stringify(list));
+    } catch (e) { /* localStorage lleno o bloqueado: nada que hacer */ }
+  }
+  async function flushPending() {
+    let list;
+    try { list = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch { return; }
+    if (!list.length) return;
+    const remaining = [];
+    for (const p of list) {
+      try {
+        const r = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(p)
+        });
+        if (!r.ok) remaining.push(p);
+      } catch { remaining.push(p); }
+    }
+    localStorage.setItem(LS_KEY, JSON.stringify(remaining));
+  }
+  // Intentar flush al cargar la página
+  document.addEventListener('DOMContentLoaded', () => { flushPending().catch(() => {}); });
+
+  /* ── Submit real ─────────────────────────────────────── */
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!validate()) {
-      // Focus first invalid field
       const first = document.querySelector('input.err, textarea.err');
       if (first) first.focus();
       return;
@@ -658,11 +787,29 @@
     btn.disabled = true;
     btn.classList.add('loading');
 
-    // Simulate async submit (replace with real endpoint)
-    await new Promise(r => setTimeout(r, 1400));
+    const payload = buildPayload();
 
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('formSuccess').classList.add('show');
+    let ok = false;
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      ok = res.ok;
+      if (!ok) console.warn('[contact] backend respondió', res.status);
+    } catch (err) {
+      console.warn('[contact] error de red:', err);
+    }
+
+    // Si el backend falla, guardar localmente para no perder data.
+    // El usuario igual ve "éxito" — la data se reintenta al recargar.
+    if (!ok) savePending(payload);
+
+    // Redirect a página de gracias (Meta dispara Lead allá).
+    // Pasamos email hasheable opcional via session para el evento.
+    try { sessionStorage.setItem('yiqi-last-email', payload.email); } catch {}
+    window.location.href = '/gracias.html?from=contact';
   });
 </script>
 </body>
