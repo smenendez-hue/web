@@ -209,6 +209,166 @@ function sendJson(res, statusCode, payload) {
   res.end(body);
 }
 
+/* ─────────────────────────────────────────────────────────────
+   /api/contact — recibe el formulario y lo persiste
+   1) Siempre guarda a contact-submissions.jsonl (no se pierde data)
+   2) Mejor esfuerzo: crear ON en CRM YiQi via API
+   ───────────────────────────────────────────────────────────── */
+
+const CONTACT_LOG_FILE = path.join(ROOT, "contact-submissions.jsonl");
+const CONTACT_ENTITY = process.env.YIQI_CONTACT_ENTITY || "ONS"; // ajustar si la entidad real es otra
+const CONTACT_MAX_BODY_BYTES = 32 * 1024; // 32 KB
+
+function readJsonBody(req) {
+  return new Promise((resolve, reject) => {
+    let bytes = 0;
+    const chunks = [];
+    req.on("data", (chunk) => {
+      bytes += chunk.length;
+      if (bytes > CONTACT_MAX_BODY_BYTES) {
+        req.destroy();
+        reject(new Error("Body too large"));
+        return;
+      }
+      chunks.push(chunk);
+    });
+    req.on("end", () => {
+      try {
+        const text = Buffer.concat(chunks).toString("utf8");
+        resolve(text ? JSON.parse(text) : {});
+      } catch (e) {
+        reject(new Error("Invalid JSON: " + e.message));
+      }
+    });
+    req.on("error", reject);
+  });
+}
+
+function validateContactPayload(p) {
+  if (!p || typeof p !== "object") return "Payload vacío o inválido";
+  const reqFields = ["nombre", "apellido", "email", "empresa", "mensaje"];
+  for (const k of reqFields) {
+    if (!p[k] || typeof p[k] !== "string" || !p[k].trim()) {
+      return `Campo requerido: ${k}`;
+    }
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(p.email.trim())) {
+    return "Email con formato inválido";
+  }
+  return null;
+}
+
+function appendContactSubmission(payload, extra = {}) {
+  const line = JSON.stringify({ ...payload, _server: { receivedAt: new Date().toISOString(), ...extra } });
+  return new Promise((resolve) => {
+    fs.appendFile(CONTACT_LOG_FILE, line + "\n", (err) => {
+      if (err) console.error("[contact] could not write log:", err.message);
+      resolve();
+    });
+  });
+}
+
+function buildOnPayloadFromContact(p) {
+  // Mapeo provisorio del payload del form a un registro de ON.
+  // Ajustar nombres de campos según la entidad real en YiQi ERP.
+  const rubros = Array.isArray(p.rubros) ? p.rubros.join(", ") : "";
+  const modulos = Array.isArray(p.modulos) ? p.modulos.join(", ") : "";
+  const origenFmt = (p?.meta?.form === "hero-index")
+    ? "Web yiqi.com.ar (hero)"
+    : "Web yiqi.com.ar (contacto)";
+
+  return {
+    record: {
+      EMPRESA: (p.empresa || "").trim(),
+      CONTACTO_NOMBRE: `${p.nombre} ${p.apellido}`.trim(),
+      CONTACTO_EMAIL: (p.email || "").trim(),
+      CONTACTO_TELEFONO: (p.celular || "").trim(),
+      ORIGEN: origenFmt,
+      PAIS: (p.pais || "").trim(),
+      TITULO: `Contacto web — ${p.empresa || "sin empresa"}`,
+      DESCRIPCION: [
+        p.mensaje || "",
+        "",
+        rubros  ? `Rubros: ${rubros}`   : "",
+        modulos ? `Módulos: ${modulos}` : "",
+        p.empleados ? `Empleados: ${p.empleados}` : "",
+        p.source    ? `¿Cómo nos conoció?: ${p.source}` : "",
+      ].filter(Boolean).join("\n").trim(),
+    },
+  };
+}
+
+async function tryCreateOnInYiqi(payload) {
+  const config = getYiqiConfig();
+  const missing = getMissingYiqiAuthEnv(config);
+  if (missing.length > 0) {
+    throw new Error(`Missing YiQi API auth env: ${missing.join(", ")}`);
+  }
+
+  let token = await getYiqiToken(config);
+  const body = buildOnPayloadFromContact(payload);
+  const url = `${config.publicBaseUrl}/${CONTACT_ENTITY}/insert?schemaId=${config.schemaId}`;
+
+  const doFetch = async (tk) => fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${tk}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  let response = await doFetch(token);
+
+  // Refresh de token si expiró
+  if (response.status === 401 || response.status === 403) {
+    cachedToken = null;
+    token = await getYiqiToken(config, true);
+    response = await doFetch(token);
+  }
+
+  if (!response.ok) {
+    const details = await response.text().catch(() => "");
+    throw new Error(`Insert ${CONTACT_ENTITY} failed (${response.status}): ${details || "No details"}`);
+  }
+
+  const result = await response.json().catch(() => ({}));
+  return result?.id || result?.data?.id || null;
+}
+
+async function handleContactSubmission(req, res) {
+  let payload;
+  try {
+    payload = await readJsonBody(req);
+  } catch (e) {
+    sendJson(res, 400, { ok: false, error: e.message });
+    return;
+  }
+
+  const err = validateContactPayload(payload);
+  if (err) {
+    sendJson(res, 400, { ok: false, error: err });
+    return;
+  }
+
+  // 1) Siempre persistir local — red de seguridad, no se pierde data nunca
+  await appendContactSubmission(payload);
+
+  // 2) Mejor esfuerzo: crear ON en CRM
+  let onId = null;
+  let onError = null;
+  try {
+    onId = await tryCreateOnInYiqi(payload);
+  } catch (e) {
+    onError = e instanceof Error ? e.message : String(e);
+    console.error("[contact] could not create ON:", onError);
+    await appendContactSubmission(payload, { onError });
+  }
+
+  // Siempre 200 al cliente si el payload era válido — la data ya está a salvo
+  sendJson(res, 200, { ok: true, id: onId, crm: onError ? "deferred" : "synced" });
+}
+
 function safePathFromUrl(urlPath) {
   const cleanPath = decodeURIComponent(urlPath.split("?")[0]);
   const normalized = path.normalize(cleanPath).replace(/^([.][.][/\\])+/, "");
@@ -243,6 +403,15 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (req.url === "/api/contact" && req.method === "POST") {
+    handleContactSubmission(req, res).catch((error) => {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      console.error("[contact] handler crashed:", message);
+      sendJson(res, 500, { ok: false, error: "Internal error" });
+    });
+    return;
+  }
+
   const requestPath = req.url === "/" ? "/index.html" : req.url;
   let filePath = safePathFromUrl(requestPath);
 
@@ -253,7 +422,16 @@ const server = http.createServer((req, res) => {
 
     fs.access(filePath, fs.constants.F_OK, (accessErr) => {
       if (accessErr) {
-        sendFile(res, path.join(ROOT, "index.html"));
+        // Servir 404.html con status 404 (correcto para SEO)
+        fs.readFile(path.join(ROOT, "404.html"), (err, data) => {
+          if (err) {
+            res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+            res.end("Not Found");
+            return;
+          }
+          res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+          res.end(data);
+        });
         return;
       }
       sendFile(res, filePath);
