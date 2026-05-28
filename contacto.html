@@ -15,7 +15,7 @@
     v('cf-apellido', 'García');
     v('cf-email',    'sgarcia@distribuidora.com.ar');
     v('cf-celular',  '+54 9 11 4523-8901');
-    v('cf-pais',     'AR');
+    v('cf-pais',     'Argentina');
     v('cf-empresa',  'Distribuidora del Sur S.A.');
     v('cf-source',   'linkedin');
     v('cf-mensaje',  'Estamos buscando una solución para unificar ventas, stock y finanzas. Somos una distribuidora con 3 sucursales y necesitamos mejor visibilidad del inventario en tiempo real.');
@@ -250,6 +250,13 @@
     text-align: left;
     margin-top: 12px;
   }
+  .form-error {
+    display: none;
+    margin-top: 10px;
+    font: 500 12px/1.4 var(--sans);
+    color: var(--red);
+  }
+  .form-error.show { display: block; }
 
   /* Success state */
   .form-success {
@@ -561,6 +568,7 @@
             <span class="btn-label">Enviar mensaje</span>
           </button>
         </div>
+        <p class="form-error" id="formError" role="alert"></p>
         <p class="form-note">Te respondemos en menos de 24 hs hábiles</p>
       </form>
 
@@ -645,7 +653,45 @@
     }
   }
 
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  function getSelectedChipValues(groupId) {
+    return Array.from(document.querySelectorAll('#' + groupId + ' .hero-form-chip.active'))
+      .map((chip) => chip.textContent.trim())
+      .filter(Boolean);
+  }
+
+  function buildConsultaPayload() {
+    const nombre = document.getElementById('cf-nombre').value.trim();
+    const apellido = document.getElementById('cf-apellido').value.trim();
+    const empresa = document.getElementById('cf-empresa').value.trim();
+    const source = document.getElementById('cf-source').value.trim();
+    const mensaje = document.getElementById('cf-mensaje').value.trim();
+    const celular = document.getElementById('cf-celular').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const countryName = document.getElementById('cf-pais').value.trim();
+
+    const empleadosBadge = getSelectedChipValues('cf-size')[0] || '';
+    const rubros = getSelectedChipValues('cf-sector');
+    const modulos = getSelectedChipValues('cf-modules');
+
+    return {
+      schemaId: 23,
+      countryName,
+      data: {
+        COCO_CONTACTO: [nombre, apellido].filter(Boolean).join(' '),
+        COCO_CLIENTE: empresa,
+        COCO_CONSULTA: mensaje,
+        COCO_TELEFONO: celular,
+        COCO_MAIL: email,
+        COCO_CANT_EMPLEADOS: empleadosBadge,
+        COCO_RUBRO_PRINCIPAL: rubros.join(', '),
+        COCO_MODULOS_DE_INTERES: modulos.join(', '),
+        ORCO_ID_ORCO: 109574,
+        COCO_CANAL_DE_CONTACTO: source,
+      },
+    };
+  }
+
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!validate()) {
       // Focus first invalid field
@@ -655,14 +701,37 @@
     }
 
     const btn = document.getElementById('submitBtn');
+    const formError = document.getElementById('formError');
+    formError.textContent = '';
+    formError.classList.remove('show');
+
     btn.disabled = true;
     btn.classList.add('loading');
 
-    // Simulate async submit (replace with real endpoint)
-    await new Promise(r => setTimeout(r, 1400));
+    try {
+      const payload = buildConsultaPayload();
+      const response = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
 
-    document.getElementById('contactForm').style.display = 'none';
-    document.getElementById('formSuccess').classList.add('show');
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok || !body?.ok) {
+        throw new Error(body?.error || body?.details || 'No se pudo enviar la consulta.');
+      }
+
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    } catch (error) {
+      formError.textContent = error instanceof Error ? error.message : 'Error enviando la consulta.';
+      formError.classList.add('show');
+    } finally {
+      btn.disabled = false;
+      btn.classList.remove('loading');
+    }
   });
 </script>
 </body>

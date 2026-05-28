@@ -7,6 +7,7 @@ const ROOT = __dirname;
 const DEFAULT_AUTH_URL = "https://api.yiqi.com.ar/token";
 const DEFAULT_PUBLIC_BASE_URL = "https://api.yiqi.com.ar/api/public";
 const DEFAULT_SCHEMA_ID = 1387;
+const DEFAULT_CONTACT_SCHEMA_ID = 23;
 const DEFAULT_API_USER = "cristal@yiqi.com.ar";
 const DEFAULT_API_PASSWORD = "yiqibot2023X";
 const DEFAULT_PAGE_SIZE = 50;
@@ -39,11 +40,16 @@ function getYiqiConfig() {
   const publicBaseUrl = (process.env.YIQI_API_PUBLIC_BASE_URL || DEFAULT_PUBLIC_BASE_URL).replace(/\/+$/, "");
   const schemaRaw = process.env.YIQI_API_SCHEMA_ID;
   const schemaId = Number.isFinite(Number(schemaRaw)) && Number(schemaRaw) > 0 ? Number(schemaRaw) : DEFAULT_SCHEMA_ID;
+  const contactSchemaRaw = process.env.YIQI_API_CONTACT_SCHEMA_ID;
+  const contactSchemaId = Number.isFinite(Number(contactSchemaRaw)) && Number(contactSchemaRaw) > 0
+    ? Number(contactSchemaRaw)
+    : DEFAULT_CONTACT_SCHEMA_ID;
 
   return {
     authUrl,
     publicBaseUrl,
     schemaId,
+    contactSchemaId,
     user: process.env.YIQI_API_USER || DEFAULT_API_USER,
     password: process.env.YIQI_API_PASSWORD || DEFAULT_API_PASSWORD,
   };
@@ -200,6 +206,175 @@ async function getNovedades() {
   return collected.map((record, index) => normalizeNovedad(record, index));
 }
 
+async function postConsultaComercial(config, token, payload) {
+  const url = `${config.publicBaseUrl}/CONSULTA_COMERCIAL`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const details = await response.text().catch(() => "");
+    throw new Error(`CONSULTA_COMERCIAL failed (${response.status}): ${details || "No details"}`);
+  }
+
+  const rawBody = await response.text().catch(() => "");
+  if (!rawBody) return {};
+
+  try {
+    return JSON.parse(rawBody);
+  } catch {
+    return { raw: rawBody };
+  }
+}
+
+async function sendConsultaComercial(payload) {
+  const config = getYiqiConfig();
+  const missing = getMissingYiqiAuthEnv(config);
+  if (missing.length > 0) {
+    throw new Error(`Missing YiQi API auth env: ${missing.join(", ")}`);
+  }
+
+  let token = await getYiqiToken(config);
+  try {
+    return await postConsultaComercial(config, token, payload);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const unauthorized = message.includes("(401)") || message.includes("(403)");
+    if (!unauthorized) throw error;
+
+    cachedToken = null;
+    token = await getYiqiToken(config, true);
+    return postConsultaComercial(config, token, payload);
+  }
+}
+
+async function queryEntity(config, token, entityName, schemaId, queryBody) {
+  const url = `${config.publicBaseUrl}/${entityName}/query?schemaId=${schemaId}`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(queryBody),
+  });
+
+  if (!response.ok) {
+    const details = await response.text().catch(() => "");
+    throw new Error(`${entityName} query failed (${response.status}): ${details || "No details"}`);
+  }
+
+  return response.json();
+}
+
+function buildPaisLookupPayload(countryName) {
+  return {
+    page: 1,
+    pageSize: 50,
+    search: "",
+    columns: [
+      { field: "PAIS_PAIS", title: "PAIS_PAIS" },
+    ],
+    filters: [
+      {
+        columnName: "PAIS_PAIS",
+        operator: "=",
+        value: countryName,
+      },
+    ],
+  };
+}
+
+async function resolvePaisIdByName(schemaId, countryName) {
+  const config = getYiqiConfig();
+  const missing = getMissingYiqiAuthEnv(config);
+  if (missing.length > 0) {
+    throw new Error(`Missing YiQi API auth env: ${missing.join(", ")}`);
+  }
+
+  let token = await getYiqiToken(config);
+  let response;
+
+  try {
+    response = await queryEntity(config, token, "PAIS", schemaId, buildPaisLookupPayload(countryName));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const unauthorized = message.includes("(401)") || message.includes("(403)");
+    if (!unauthorized) throw error;
+
+    cachedToken = null;
+    token = await getYiqiToken(config, true);
+    response = await queryEntity(config, token, "PAIS", schemaId, buildPaisLookupPayload(countryName));
+  }
+
+  const rows = Array.isArray(response?.data) ? response.data : [];
+  const first = rows[0];
+  const id = Number(first?.id);
+
+  if (!Number.isFinite(id) || id <= 0) {
+    throw new Error(`No se encontro PAIS_ID_PAIS para '${countryName}'`);
+  }
+
+  return id;
+}
+
+function isNonEmptyString(value) {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function validateContactoPayload(payload) {
+  if (!payload || typeof payload !== "object") {
+    return "Payload invalido";
+  }
+
+  if (!Number.isFinite(payload.schemaId) || payload.schemaId <= 0) {
+    return "schemaId invalido";
+  }
+
+  if (!payload.data || typeof payload.data !== "object") {
+    return "data invalido";
+  }
+
+  const data = payload.data;
+  const requiredStringFields = [
+    "COCO_CONTACTO",
+    "COCO_CLIENTE",
+    "COCO_CONSULTA",
+    "COCO_MAIL",
+    "COCO_CANT_EMPLEADOS",
+  ];
+
+  for (const field of requiredStringFields) {
+    if (!isNonEmptyString(data[field])) {
+      return `${field} es requerido`;
+    }
+  }
+
+  return null;
+}
+
+function readRequestBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk;
+      if (body.length > 1024 * 1024) {
+        reject(new Error("Request body demasiado grande"));
+        req.destroy();
+      }
+    });
+
+    req.on("end", () => resolve(body));
+    req.on("error", reject);
+  });
+}
+
 function sendJson(res, statusCode, payload) {
   const body = JSON.stringify(payload);
   res.writeHead(statusCode, {
@@ -231,6 +406,62 @@ function sendFile(res, filePath) {
 }
 
 const server = http.createServer((req, res) => {
+  if (req.url === "/api/contacto" && req.method === "POST") {
+    readRequestBody(req)
+      .then((rawBody) => {
+        let parsed;
+        try {
+          parsed = JSON.parse(rawBody || "{}");
+        } catch {
+          sendJson(res, 400, { error: "JSON invalido" });
+          return;
+        }
+
+        const config = getYiqiConfig();
+        const schemaId = Number.isFinite(Number(parsed?.schemaId)) && Number(parsed.schemaId) > 0
+          ? Number(parsed.schemaId)
+          : config.contactSchemaId;
+
+        const payload = {
+          schemaId,
+          data: parsed?.data || {},
+        };
+        const countryName = isNonEmptyString(parsed?.countryName) ? parsed.countryName.trim() : "";
+
+        const validationError = validateContactoPayload(payload);
+        if (validationError) {
+          sendJson(res, 400, { error: validationError });
+          return;
+        }
+
+        const sendRequest = async () => {
+          if (countryName && !Number.isFinite(Number(payload.data.PAIS_ID_PAIS))) {
+            const paisId = await resolvePaisIdByName(payload.schemaId, countryName);
+            payload.data.PAIS_ID_PAIS = paisId;
+          }
+
+          return sendConsultaComercial(payload);
+        };
+
+        sendRequest()
+          .then((result) => {
+            sendJson(res, 200, { ok: true, result });
+          })
+          .catch((error) => {
+            const message = error instanceof Error ? error.message : "Unknown error";
+            sendJson(res, 500, {
+              error: "No se pudo enviar la consulta comercial",
+              details: message,
+            });
+          });
+      })
+      .catch((error) => {
+        const message = error instanceof Error ? error.message : "Unknown error";
+        sendJson(res, 500, { error: "Error leyendo request", details: message });
+      });
+    return;
+  }
+
   if (req.url === "/api/novedades" && req.method === "GET") {
     getNovedades()
       .then((items) => {
