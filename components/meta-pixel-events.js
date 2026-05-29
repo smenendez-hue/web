@@ -71,6 +71,15 @@
     'erp-panel':      { name: 'YiQi Panel',             category: 'product' }
   };
 
+  // Home: slug vacío o "index"
+  if (slug === '' || slug === 'index') {
+    fbq('track', 'ViewContent', {
+      content_name:     'Home',
+      content_category: 'landing',
+      content_type:     'page'
+    });
+  }
+
   var page = PAGE_MAP[slug];
   if (page) {
     fbq('track', 'ViewContent', {
