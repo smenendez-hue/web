@@ -18,10 +18,12 @@ fbq('track', 'PageView');
 // (query param ?from=contact). Evita conteos accidentales.
 (function() {
   var qs = new URLSearchParams(window.location.search);
-  if (qs.get('from') === 'contact') {
+  var fromParam = qs.get('from');
+    if (fromParam) {
     fbq('track', 'Lead', {
       content_name: 'Contacto YiQi',
-      content_category: 'Formulario sitio'
+      content_category: 'Formulario sitio',
+        source: fromParam
     });
   }
 })();
@@ -349,5 +351,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     });
   })();
 </script>
+<script src="./components/meta-pixel-events.js" defer></script>
 </body>
 </html>
