@@ -486,6 +486,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     display: flex; align-items: center; gap: 0;
     width: max-content;
     animation: scroll-logos 30s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
   .logo-marquee-track:hover { animation-play-state: paused; }
   @keyframes scroll-logos {
@@ -552,12 +555,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .logo-divider { height: 32px; opacity: .8; }
   }
 
-  /* ─── Mobile — logos 125% más grandes ─── */
+  /* ─── Mobile — logos compactos para que más entren a la vez (evita saltos por lazy-load) ─── */
   @media (max-width: 540px) {
-    .logo-item { width: 215px; height: 55px; padding: 0 40px; }
-    .logo-item.logo-wide { width: 250px; }
-    .logo-item:has(img.logo-xl-tall) { width: 150px; height: 150px; }
-    .logo-item:has(img.logo-xl-wide) { width: 260px; }
+    .logo-item { width: 150px; height: 44px; padding: 0 24px; }
+    .logo-item.logo-wide { width: 180px; }
+    .logo-item:has(img.logo-xl-tall) { width: 110px; height: 110px; }
+    .logo-item:has(img.logo-xl-wide) { width: 190px; }
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
@@ -1304,6 +1307,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     display: flex; align-items: stretch;
     width: max-content;
     animation: scroll-left 18s linear infinite;
+      will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
   .marquee-track:hover { animation-play-state: paused; }
   @keyframes scroll-left {
@@ -2142,6 +2148,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     align-items: center;
     width: max-content;
     animation: scroll-left 24s linear infinite;
+      will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
   .int-logos-track:hover { animation-play-state: paused; }
   .int-logo-item {
@@ -2627,58 +2636,58 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   <div class="int-logos-mask">
     <div class="int-logos-track" aria-hidden="true">
       <!-- Set A -->
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/SHOPIFY.svg" alt="SHOPIFY" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/SHOPIFY.svg" alt="SHOPIFY" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/VTEX.svg" alt="VTEX" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/VTEX.svg" alt="VTEX" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="TiendaNube" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="TiendaNube" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/MERCADO LIBRE.svg" alt="Mercado Libre" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MERCADO LIBRE.svg" alt="Mercado Libre" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ARCA.svg" alt="ARCA" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ARCA.svg" alt="ARCA" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ONCITY.svg" alt="Oncity" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ONCITY.svg" alt="Oncity" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/MERCADO ENVIOS.svg" alt="Mercado Envíos" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MERCADO ENVIOS.svg" alt="Mercado Envíos" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <!-- Set B -->
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/SHOPIFY.svg" alt="SHOPIFY" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/SHOPIFY.svg" alt="SHOPIFY" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/VTEX.svg" alt="VTEX" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/VTEX.svg" alt="VTEX" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="TiendaNube" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="TiendaNube" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/MERCADO LIBRE.svg" alt="Mercado Libre" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MERCADO LIBRE.svg" alt="Mercado Libre" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ARCA.svg" alt="ARCA" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ARCA.svg" alt="ARCA" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ONCITY.svg" alt="Oncity" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ONCITY.svg" alt="Oncity" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/MERCADO ENVIOS.svg" alt="Mercado Envíos" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MERCADO ENVIOS.svg" alt="Mercado Envíos" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item"><img src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img" loading="lazy"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
     </div>
   </div>
@@ -2760,102 +2769,102 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   <div class="logo-marquee-mask">
         <div class="logo-marquee-track" aria-hidden="true">
       <!-- Set A -->
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/FEBO.svg" alt="FEBO" class="int-logo-img logo-xl-wide" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/FEBO.svg" alt="FEBO" class="int-logo-img logo-xl-wide"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/MOVISTAR.svg" alt="Movistar" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/MOVISTAR.svg" alt="Movistar" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/FUEGUIA.svg" alt="Fueguia" class="int-logo-img logo-xl-tall" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/FUEGUIA.svg" alt="Fueguia" class="int-logo-img logo-xl-tall"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/NEC.svg" alt="NEC" class="int-logo-img logo-xs" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/NEC.svg" alt="NEC" class="int-logo-img logo-xs"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/OXFORD.svg" alt="Oxford" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/OXFORD.svg" alt="Oxford" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/POSCO.svg" alt="POSCO" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/POSCO.svg" alt="POSCO" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/TELEFONICA.svg" alt="Telefónica" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/TELEFONICA.svg" alt="Telefónica" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/METROBLANC 1.svg" alt="Metroblanc" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/METROBLANC 1.svg" alt="Metroblanc" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/ABACO.svg" alt="Ábaco" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/ABACO.svg" alt="Ábaco" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/ECOSAN.svg" alt="Ecosan" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/ECOSAN.svg" alt="Ecosan" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/HUINOIL.svg" alt="Huinoil" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/HUINOIL.svg" alt="Huinoil" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item logo-wide"><img src="system/icons/LOGOS CLIENTES/DXRACET.svg" alt="DXRacet" class="int-logo-img logo-lg" loading="lazy"></div>
+      <div class="logo-item logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/DXRACET.svg" alt="DXRacet" class="int-logo-img logo-lg"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/ARPH-Group.svg" alt="ARPH Group" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/ARPH-Group.svg" alt="ARPH Group" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/AZ.svg" alt="AZ" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/AZ.svg" alt="AZ" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/BAIRESROCK.svg" alt="Bairesrock" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/BAIRESROCK.svg" alt="Bairesrock" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/CITRIPIA.svg" alt="Citripia" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/CITRIPIA.svg" alt="Citripia" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/GUIDO.svg" alt="Guido" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/GUIDO.svg" alt="Guido" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/HOJAS DEL SUR.svg" alt="Hojas del Sur" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/HOJAS DEL SUR.svg" alt="Hojas del Sur" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/MAIL AMERICAS.svg" alt="Mail Américas" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/MAIL AMERICAS.svg" alt="Mail Américas" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/NINA.svg" alt="Nina" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/NINA.svg" alt="Nina" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/PENIEL.svg" alt="Peniel" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/PENIEL.svg" alt="Peniel" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/PW.svg" alt="PW" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/PW.svg" alt="PW" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/VINOTECA MASIS.svg" alt="Vinoteca Masís" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/VINOTECA MASIS.svg" alt="Vinoteca Masís" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/WALDEN.svg" alt="Walden" class="int-logo-img logo-xl-wide" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/WALDEN.svg" alt="Walden" class="int-logo-img logo-xl-wide"></div>
       <div class="logo-divider"></div>
       <!-- Set B -->
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/FEBO.svg" alt="FEBO" class="int-logo-img logo-xl-wide" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/FEBO.svg" alt="FEBO" class="int-logo-img logo-xl-wide"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/MOVISTAR.svg" alt="Movistar" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/MOVISTAR.svg" alt="Movistar" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/FUEGUIA.svg" alt="Fueguia" class="int-logo-img logo-xl-tall" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/FUEGUIA.svg" alt="Fueguia" class="int-logo-img logo-xl-tall"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/NEC.svg" alt="NEC" class="int-logo-img logo-xs" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/NEC.svg" alt="NEC" class="int-logo-img logo-xs"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/OXFORD.svg" alt="Oxford" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/OXFORD.svg" alt="Oxford" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/POSCO.svg" alt="POSCO" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/POSCO.svg" alt="POSCO" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/TELEFONICA.svg" alt="Telefónica" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/TELEFONICA.svg" alt="Telefónica" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/METROBLANC 1.svg" alt="Metroblanc" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/METROBLANC 1.svg" alt="Metroblanc" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/ABACO.svg" alt="Ábaco" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/ABACO.svg" alt="Ábaco" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/ECOSAN.svg" alt="Ecosan" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/ECOSAN.svg" alt="Ecosan" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/HUINOIL.svg" alt="Huinoil" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/HUINOIL.svg" alt="Huinoil" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item logo-wide"><img src="system/icons/LOGOS CLIENTES/DXRACET.svg" alt="DXRacet" class="int-logo-img logo-lg" loading="lazy"></div>
+      <div class="logo-item logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/DXRACET.svg" alt="DXRacet" class="int-logo-img logo-lg"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/ARPH-Group.svg" alt="ARPH Group" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/ARPH-Group.svg" alt="ARPH Group" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/AZ.svg" alt="AZ" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/AZ.svg" alt="AZ" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/BAIRESROCK.svg" alt="Bairesrock" class="int-logo-img logo-sm" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/BAIRESROCK.svg" alt="Bairesrock" class="int-logo-img logo-sm"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/CITRIPIA.svg" alt="Citripia" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/CITRIPIA.svg" alt="Citripia" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/GUIDO.svg" alt="Guido" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/GUIDO.svg" alt="Guido" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/HOJAS DEL SUR.svg" alt="Hojas del Sur" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/HOJAS DEL SUR.svg" alt="Hojas del Sur" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/MAIL AMERICAS.svg" alt="Mail Américas" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/MAIL AMERICAS.svg" alt="Mail Américas" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/NINA.svg" alt="Nina" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/NINA.svg" alt="Nina" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/PENIEL.svg" alt="Peniel" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/PENIEL.svg" alt="Peniel" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/PW.svg" alt="PW" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/PW.svg" alt="PW" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/VINOTECA MASIS.svg" alt="Vinoteca Masís" class="int-logo-img" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/VINOTECA MASIS.svg" alt="Vinoteca Masís" class="int-logo-img"></div>
       <div class="logo-divider"></div>
-      <div class="logo-item"><img src="system/icons/LOGOS CLIENTES/WALDEN.svg" alt="Walden" class="int-logo-img logo-xl-wide" loading="lazy"></div>
+      <div class="logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS CLIENTES/WALDEN.svg" alt="Walden" class="int-logo-img logo-xl-wide"></div>
       <div class="logo-divider"></div>
     </div>
     </div>
