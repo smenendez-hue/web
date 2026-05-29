@@ -384,6 +384,14 @@ function sendJson(res, statusCode, payload) {
   res.end(body);
 }
 
+function inferHttpStatusFromErrorMessage(message) {
+  const match = /\((\d{3})\)/.exec(message);
+  const status = Number(match?.[1]);
+  if (!Number.isInteger(status)) return null;
+  if (status < 100 || status > 599) return null;
+  return status;
+}
+
 /* ─────────────────────────────────────────────────────────────
    /api/contact — recibe el formulario y lo persiste
    1) Siempre guarda a contact-submissions.jsonl (no se pierde data)
@@ -596,8 +604,14 @@ const server = http.createServer((req, res) => {
 
         const sendRequest = async () => {
           if (countryName && !Number.isFinite(Number(payload.data.PAIS_ID_PAIS))) {
-            const paisId = await resolvePaisIdByName(payload.schemaId, countryName);
-            payload.data.PAIS_ID_PAIS = paisId;
+            try {
+              const paisId = await resolvePaisIdByName(payload.schemaId, countryName);
+              payload.data.PAIS_ID_PAIS = paisId;
+            } catch (error) {
+              const message = error instanceof Error ? error.message : String(error);
+              // El pais en el formulario es opcional; no bloquear el envio si el lookup no encuentra coincidencia exacta.
+              console.warn("[contacto] PAIS_ID_PAIS no resuelto:", message);
+            }
           }
 
           return sendConsultaComercial(payload);
@@ -609,7 +623,10 @@ const server = http.createServer((req, res) => {
           })
           .catch((error) => {
             const message = error instanceof Error ? error.message : "Unknown error";
-            sendJson(res, 500, {
+            const inferredStatus = inferHttpStatusFromErrorMessage(message);
+            const statusCode = inferredStatus && inferredStatus >= 400 && inferredStatus < 500 ? 400 : 500;
+
+            sendJson(res, statusCode, {
               error: "No se pudo enviar la consulta comercial",
               details: message,
             });

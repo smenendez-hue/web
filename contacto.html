@@ -884,7 +884,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 
       const body = await response.json().catch(() => ({}));
       if (!response.ok || !body?.ok) {
-        throw new Error(body?.error || body?.details || 'No se pudo enviar la consulta.');
+        throw new Error(body?.details || body?.error || 'No se pudo enviar la consulta.');
       }
 
       // Redirect a gracias.html (donde se dispara el evento Lead de Meta)
