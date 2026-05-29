@@ -479,21 +479,28 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .logo-marquee-mask {
     overflow-x: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    position: relative;
   }
+  .logo-marquee-mask::before,
+  .logo-marquee-mask::after {
+    content: ""; position: absolute; top: 0; bottom: 0;
+    width: 8%; pointer-events: none; z-index: 2;
+  }
+  .logo-marquee-mask::before { left: 0;  background: linear-gradient(90deg,  var(--bg) 0%, transparent 100%); }
+  .logo-marquee-mask::after  { right: 0; background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%); }
   .logo-marquee-track {
     display: flex; align-items: center; gap: 0;
     width: max-content;
     animation: scroll-logos 44s linear infinite;
     will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
   }
-  .logo-marquee-track:hover { animation-play-state: paused; }
   @keyframes scroll-logos {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    from { -webkit-transform: translate3d(0,0,0);     transform: translate3d(0,0,0); }
+    to   { -webkit-transform: translate3d(-50%,0,0);  transform: translate3d(-50%,0,0); }
   }
   .logo-item {
     padding: 0 32px; flex-shrink: 0;
@@ -525,10 +532,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1440px) {
     .logo-strip { padding: 56px 0 48px; }
     .logo-strip-label { font-size: 11px; margin-bottom: 24px; }
-    .logo-marquee-mask {
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
-    }
+    .logo-marquee-mask::before,
+    .logo-marquee-mask::after { width: 200px; }
     .logo-marquee-track { animation-duration: 50s; }
     .logo-item { width: 200px; height: 56px; padding: 0 36px; }
     .logo-item.logo-wide { width: 232px; }
@@ -541,12 +546,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1920px) {
     .logo-strip { padding: 72px 0 60px; }
     .logo-strip-label { font-size: 12px; margin-bottom: 32px; }
-    .logo-marquee-mask {
-      max-width: 1760px;
-      margin: 0 auto;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
-    }
+    .logo-marquee-mask { max-width: 1760px; margin: 0 auto; }
+    .logo-marquee-mask::before,
+    .logo-marquee-mask::after { width: 240px; }
     .logo-marquee-track { animation-duration: 56s; }
     .logo-item { width: 220px; height: 64px; padding: 0 40px; }
     .logo-item.logo-wide { width: 256px; }
@@ -567,7 +569,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
   @media (prefers-reduced-motion: reduce) {
     .logo-marquee-track { animation: none; }
-    .logo-marquee-mask { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .logo-marquee-mask { overflow-x: auto; }
+    .logo-marquee-mask::before, .logo-marquee-mask::after { display: none; }
   }
 
   /* ═══════════════════════════════════════════
@@ -1314,8 +1317,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .marquee-track:hover { animation-play-state: paused; }
   @keyframes scroll-left {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    from { -webkit-transform: translate3d(0,0,0);     transform: translate3d(0,0,0); }
+    to   { -webkit-transform: translate3d(-50%,0,0);  transform: translate3d(-50%,0,0); }
   }
   .int-item {
     display: flex; align-items: center; gap: 0;
@@ -2140,20 +2143,25 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .int-logos-mask {
     overflow: hidden;
     position: relative; z-index: 1;
-    /* Fade en pixeles fijos — consistente en cualquier viewport */
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%);
-            mask-image: linear-gradient(90deg, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%);
   }
+  .int-logos-mask::before,
+  .int-logos-mask::after {
+    content: ""; position: absolute; top: 0; bottom: 0;
+    width: 180px; pointer-events: none; z-index: 2;
+  }
+  .int-logos-mask::before { left: 0;  background: linear-gradient(90deg,  var(--bg) 0%, transparent 100%); }
+  .int-logos-mask::after  { right: 0; background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%); }
   .int-logos-track {
     display: flex;
     align-items: center;
     width: max-content;
     animation: scroll-left 22s linear infinite;
-      will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
   }
-  .int-logos-track:hover { animation-play-state: paused; }
   .int-logo-item {
     display: flex; align-items: center; justify-content: center;
     padding: 0 24px;
@@ -2185,10 +2193,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1440px) {
     .int-logos-strip { padding: 56px 0 60px; }
     .int-logos-label { font-size: 11px; margin-bottom: 24px; }
-    .int-logos-mask {
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
-    }
+    .int-logos-mask::before,
+    .int-logos-mask::after { width: 280px; }
     .int-logos-track { animation-duration: 26s; }
     .int-logo-item { width: 188px; height: 56px; padding: 0 30px; }
     .int-logo-item.int-logo-wide { width: 280px; }
@@ -2201,12 +2207,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1920px) {
     .int-logos-strip { padding: 72px 0 76px; }
     .int-logos-label { font-size: 12px; margin-bottom: 32px; }
-    .int-logos-mask {
-      max-width: 1760px;
-      margin: 0 auto;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
-    }
+    .int-logos-mask { max-width: 1760px; margin: 0 auto; }
+    .int-logos-mask::before,
+    .int-logos-mask::after { width: 240px; }
     .int-logos-track { animation-duration: 29s; }
     .int-logo-item { width: 208px; height: 64px; padding: 0 34px; }
     .int-logo-item.int-logo-wide { width: 320px; }
@@ -2221,16 +2224,15 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .int-logo-item.int-logo-wide { width: 220px; }
     .int-logo-img { height: 24px; }
     .int-logos-track { animation-duration: 24s; } /* ~82 px/s */
-    .int-logos-mask {
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
-    }
+    .int-logos-mask::before,
+    .int-logos-mask::after { width: 32px; }
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
   @media (prefers-reduced-motion: reduce) {
     .int-logos-track { animation: none; }
-    .int-logos-mask { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .int-logos-mask { overflow-x: auto; }
+    .int-logos-mask::before, .int-logos-mask::after { display: none; }
   }
 
 
