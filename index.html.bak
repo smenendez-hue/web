@@ -485,7 +485,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .logo-marquee-track {
     display: flex; align-items: center; gap: 0;
     width: max-content;
-    animation: scroll-logos 44s linear infinite;
+    animation: scroll-logos 30s linear infinite;
     will-change: transform;
     backface-visibility: hidden;
     transform: translateZ(0);
@@ -515,7 +515,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .logo-item img.logo-sm { max-height: 60%; }
   .logo-item img.logo-lg { max-height: 90%; }
   .logo-item:has(img.logo-xl-tall) { height: 120px; width: 120px; }
-  .logo-item img.logo-xl-tall { max-height: 100%; max-width: 100%; }
+  .logo-item img.logo-xl-tall { max-height: 100%; }
   .logo-item:has(img.logo-xl-wide) { width: 208px; }
   .logo-item img.logo-xl-wide { max-width: 100%; max-height: 100%; }
   .logo-item img:hover { opacity: .8; }
@@ -529,7 +529,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
     }
-    .logo-marquee-track { animation-duration: 50s; }
+    .logo-marquee-track { animation-duration: 36s; }
     .logo-item { width: 200px; height: 56px; padding: 0 36px; }
     .logo-item.logo-wide { width: 232px; }
     .logo-item:has(img.logo-xl-tall) { width: 140px; height: 140px; }
@@ -547,7 +547,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
     }
-    .logo-marquee-track { animation-duration: 56s; }
+    .logo-marquee-track { animation-duration: 42s; }
     .logo-item { width: 220px; height: 64px; padding: 0 40px; }
     .logo-item.logo-wide { width: 256px; }
     .logo-item:has(img.logo-xl-tall) { width: 160px; height: 160px; }
@@ -561,7 +561,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .logo-item.logo-wide { width: 180px; }
     .logo-item:has(img.logo-xl-tall) { width: 110px; height: 110px; }
     .logo-item:has(img.logo-xl-wide) { width: 190px; }
-    .logo-marquee-track { animation-duration: 42s; } /* ~80 px/s — match con int-logos */
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
@@ -2148,7 +2147,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     display: flex;
     align-items: center;
     width: max-content;
-    animation: scroll-left 22s linear infinite;
+    animation: scroll-left 24s linear infinite;
       will-change: transform;
     backface-visibility: hidden;
     transform: translateZ(0);
@@ -2162,10 +2161,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .int-logo-item:hover { transform: translateY(-2px); }
   .int-logo-item:hover .int-logo-img { opacity: 1; }
-  .int-logo-item.int-logo-wide { width: 240px; }
+  .int-logo-item.int-logo-wide { width: 200px; }
   .int-logo-item.int-logo-lg-item { height: 56px; } /* para logos excepcionalmente altos */
   .int-logo-img {
-    max-width: 100%; max-height: 100%; width: auto; height: 28px;
+    max-width: 100%; max-height: 100%; width: auto; height: auto;
     display: block; object-fit: contain;
     filter: brightness(0) invert(1) sepia(1) saturate(6) hue-rotate(162deg) opacity(.55); /* cyan-soft */
     transition: opacity .2s, filter .2s;
@@ -2189,9 +2188,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
     }
-    .int-logos-track { animation-duration: 26s; }
+    .int-logos-track { animation-duration: 32s; }
     .int-logo-item { width: 188px; height: 56px; padding: 0 30px; }
-    .int-logo-item.int-logo-wide { width: 280px; }
+    .int-logo-item.int-logo-wide { width: 232px; }
     .int-logo-img { height: 38px; }
     .int-logo-img.int-logo-lg { height: 50px; }
     .int-logo-sep { height: 28px; }
@@ -2207,9 +2206,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
     }
-    .int-logos-track { animation-duration: 29s; }
+    .int-logos-track { animation-duration: 38s; }
     .int-logo-item { width: 208px; height: 64px; padding: 0 34px; }
-    .int-logo-item.int-logo-wide { width: 320px; }
+    .int-logo-item.int-logo-wide { width: 256px; }
     .int-logo-img { height: 42px; }
     .int-logo-img.int-logo-lg { height: 54px; }
     .int-logo-sep { height: 32px; opacity: .45; }
@@ -2218,9 +2217,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ─── Mobile — logos compactos + mask con fade reducido ─── */
   @media (max-width: 540px) {
     .int-logo-item { width: 150px; height: 44px; padding: 0 24px; }
-    .int-logo-item.int-logo-wide { width: 220px; }
-    .int-logo-img { height: 24px; }
-    .int-logos-track { animation-duration: 24s; } /* ~82 px/s */
+    .int-logo-item.int-logo-wide { width: 180px; }
     .int-logos-mask {
       -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
               mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
@@ -2653,7 +2650,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
@@ -2661,13 +2658,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ONCITY.svg" alt="Oncity" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MERCADO ENVIOS.svg" alt="Mercado Envíos" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <!-- Set B -->
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/SHOPIFY.svg" alt="SHOPIFY" class="int-logo-img"></div>
@@ -2680,7 +2677,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
@@ -2688,13 +2685,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ONCITY.svg" alt="Oncity" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MERCADO ENVIOS.svg" alt="Mercado Envíos" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ENVIOPACK.svg" alt="Enviopack" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img"></div>
+      <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/MAGENTO.svg" alt="Magento" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
     </div>
   </div>
