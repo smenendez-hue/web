@@ -2214,10 +2214,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .int-logo-sep { height: 32px; opacity: .45; }
   }
 
-  /* ─── Mobile — logos compactos para evitar saltos y mostrar más logos a la vez ─── */
+  /* ─── Mobile — logos compactos + mask con fade reducido ─── */
   @media (max-width: 540px) {
     .int-logo-item { width: 150px; height: 44px; padding: 0 24px; }
     .int-logo-item.int-logo-wide { width: 180px; }
+    .int-logos-mask {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+    }
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
