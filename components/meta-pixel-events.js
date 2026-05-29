@@ -15,6 +15,13 @@
 (function () {
   'use strict';
 
+  // ---------- Guard de hostname: solo producción ----------
+  var ALLOWED_HOSTS = ['yiqi.com.ar', 'www.yiqi.com.ar'];
+  var host = (location.hostname || '').toLowerCase();
+  if (ALLOWED_HOSTS.indexOf(host) === -1) {
+    return; // No tracking en dev/staging/previews
+  }
+
   var PIXEL_ID = '455192279196875';
 
   // ---------- 1. Carga del píxel base si no existe ----------

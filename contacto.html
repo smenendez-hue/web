@@ -11,8 +11,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
+// YIQI_PIXEL_GUARD: solo producción
+if (['yiqi.com.ar','www.yiqi.com.ar'].indexOf(location.hostname) > -1) {
 fbq('init', '455192279196875');
 fbq('track', 'PageView');
+}
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
