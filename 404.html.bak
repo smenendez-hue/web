@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Base raíz: el 404 puede servirse en cualquier ruta (/blog/x). Sin esto, los enlaces y assets relativos resolverían mal. -->
-  <base href="/">
   <title>Página no encontrada — YiQi</title>
   <meta name="description" content="La página que buscas no existe. Te ayudamos a volver al camino correcto.">
   <meta name="robots" content="noindex,follow">
