@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YiQi — Texto 3D · Scroll Observer (anime.js v4)</title>
+<link rel="stylesheet" href="./site.css">
+<link rel="preload" href="system/fonts/Greycliff-CF-Heavy.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0b; --bg-elev:#0f1013; --bg-elev-2:#14161b; --bg-soft:#181b21;
+    --line:rgba(255,255,255,.08); --text:#f3f5f7; --muted:#908e8e; --muted-2:#625f5f;
+    --cyan:#00ccff; --gridline:rgba(0,204,255,.16);
+    --display:'Greycliff CF','Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;
+    --sans:'Inter',ui-sans-serif,system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  html[data-theme="light"]{
+    --bg:#eeece7; --bg-elev:#f6f4ef; --bg-elev-2:#fff; --bg-soft:#ece9e2;
+    --line:rgba(0,0,0,.08); --text:#17191c; --muted:#5e5a57; --muted-2:#8a8580;
+    --cyan:#009fc7; --gridline:rgba(0,159,199,.18);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:var(--sans); color:var(--text);
+    background:
+      radial-gradient(ellipse at 60% 0%, rgba(0,204,255,.08), transparent 45%),
+      radial-gradient(ellipse at 15% 90%, rgba(0,204,255,.05), transparent 38%),
+      var(--bg);
+  }
+  html[data-theme="light"] body{
+    background:
+      radial-gradient(ellipse at 60% 0%, rgba(0,159,199,.07), transparent 45%),
+      radial-gradient(ellipse at 15% 90%, rgba(0,159,199,.04), transparent 38%),
+      var(--bg);
+  }
+
+  .spacer{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; padding:40px; }
+  .kicker{ font:600 11px var(--mono); letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2); }
+  .hint{ font:400 14px var(--sans); color:var(--muted); }
+  .arrow{ color:var(--cyan); font-size:22px; animation:bob 1.6s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+  /* Sección alta -> rango de scroll; el texto queda sticky mientras se "scrubbea" */
+  .fx-section{ min-height:240vh; position:relative; }
+  .fx-sticky{ position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center; perspective:1100px; overflow:hidden; }
+  .world{ transform-style:preserve-3d; will-change:transform; position:relative; }
+  .fx-text{
+    font-family:var(--display); font-weight:800; font-size:clamp(30px,5.5vw,62px);
+    line-height:1.12; letter-spacing:-.03em; color:var(--text);
+    transform-style:preserve-3d; text-align:center; max-width:14ch;
+  }
+
+  .grid-floor{
+    position:absolute; left:50%; top:50%; width:1600px; height:1600px; margin:-800px 0 0 -800px;
+    transform:rotateX(90deg) translateZ(140px);
+    background-image:
+      linear-gradient(var(--gridline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(circle at center,#000 0%,transparent 60%);
+            mask-image:radial-gradient(circle at center,#000 0%,transparent 60%);
+    pointer-events:none;
+  }
+
+  /* HUD alimentado por los callbacks del ScrollObserver */
+  .hud{ position:fixed; left:18px; bottom:18px; z-index:5; background:var(--bg-soft);
+    border-radius:12px; padding:12px 14px; font:500 11px var(--mono); color:var(--muted); min-width:170px; }
+  .hud .row{ display:flex; justify-content:space-between; gap:18px; }
+  .hud .row + .row{ margin-top:5px; }
+  .hud b{ color:var(--text); font-weight:700; }
+  .hud .bar{ height:4px; border-radius:2px; background:var(--line); margin-top:9px; overflow:hidden; }
+  .hud .bar i{ display:block; height:100%; width:0%; background:var(--cyan); }
+  .hud .state.in{ color:var(--cyan); }
+
+  .theme-toggle{ position:fixed; top:18px; right:18px; z-index:10; display:inline-flex; background:var(--bg-soft); border-radius:999px; padding:3px; gap:2px; }
+  .theme-opt{ font:600 11px var(--sans); color:var(--muted-2); padding:5px 11px; border-radius:999px; border:none; background:none; cursor:pointer; }
+  .theme-opt.active{ background:var(--bg-elev-2); color:var(--text); }
+  .sr-only{ position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0; }
+</style>
+</head>
+<body>
+
+<div class="theme-toggle">
+  <button class="theme-opt" data-val="dark" onclick="setTheme('dark')">Oscuro</button>
+  <button class="theme-opt" data-val="system" onclick="setTheme('system')">Sistema</button>
+  <button class="theme-opt" data-val="light" onclick="setTheme('light')">Claro</button>
+</div>
+
+<section class="spacer">
+  <p class="kicker">// scroll observer · anime.js v4</p>
+  <p class="hint">Scrolleá — el texto 3D se orbita y se arma con tu scroll</p>
+  <div class="arrow">↓</div>
+</section>
+
+<section class="fx-section" id="fx-section">
+  <div class="fx-sticky">
+    <div class="world" id="world">
+      <div class="grid-floor"></div>
+      <p class="fx-text">El ERP que se conecta con todo y automatiza tu operación.</p>
+    </div>
+  </div>
+</section>
+
+<section class="spacer">
+  <p class="hint">Subí y el efecto se revierte (scrub bidireccional).</p>
+</section>
+
+<!-- HUD -->
+<div class="hud">
+  <div class="row"><span>estado</span><span class="state" id="hud-state">fuera</span></div>
+  <div class="row"><span>progreso</span><b id="hud-progress">0%</b></div>
+  <div class="bar"><i id="hud-bar"></i></div>
+</div>
+
+<script>
+  const _mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const _res = v => v==='system' ? (_mq.matches?'dark':'light') : v;
+  function setTheme(v){ localStorage.setItem('yiqi-theme',v); document.documentElement.dataset.theme=_res(v);
+    document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active', b.dataset.val===v)); }
+  (function(){ const s=localStorage.getItem('yiqi-theme')||'dark'; document.documentElement.dataset.theme=_res(s);
+    document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.val===s))); })();
+</script>
+
+<script type="module">
+  import { createTimeline, onScroll } from 'https://cdn.jsdelivr.net/npm/animejs@4/+esm';
+
+  // HUD (alimentado por callbacks del observer)
+  const $state = document.getElementById('hud-state');
+  const $prog  = document.getElementById('hud-progress');
+  const $bar   = document.getElementById('hud-bar');
+
+  // Timeline 3D manejado por el Scroll Observer.
+  // La FRASE rota como un bloque entero: animamos solo .world (no las palabras).
+  createTimeline({
+    defaults: { ease: 'linear' },
+    autoplay: onScroll({
+      target: '#fx-section',
+      // Thresholds: arranca cuando el tope de la sección toca el tope del viewport
+      // y termina cuando el fondo toca el fondo (duración = recorrido sticky).
+      enter: 'top top',
+      leave: 'bottom bottom',
+      axis: 'y',
+      // Modo de sincronización: "eased scroll" (scrub con easing).
+      sync: 'inOutQuad',
+      // Callbacks -> HUD
+      onEnter:         () => { $state.textContent = 'en vista'; $state.classList.add('in'); },
+      onLeaveForward:  () => { $state.textContent = 'completo';  $state.classList.remove('in'); },
+      onLeaveBackward: () => { $state.textContent = 'fuera';     $state.classList.remove('in'); },
+      onUpdate: (self) => {
+        const p = Math.max(0, Math.min(1, self.progress || 0));
+        const pct = Math.round(p * 100);
+        $prog.textContent = pct + '%';
+        $bar.style.width = pct + '%';
+      },
+    }),
+  })
+  // Orbita la escena completa (turntable). La frase se mantiene entera.
+  .add('.world', {
+    rotateY: [-42, 42],
+    rotateX: [10, -8],
+  }, 0);
+</script>
+
+</body>
+</html>

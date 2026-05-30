@@ -190,11 +190,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 
   /* ── Formulario ──────────────────────────── */
   .form-card {
-    background: rgba(15,16,19,.62);
+    background: var(--bg-elev);
     border-radius: var(--radius);
     padding: 36px 32px;
   }
-  html[data-theme="light"] .form-card { background: rgba(246,244,239,.6); }
   .form-title {
     font: 700 var(--fs-panel-title)/1.2 var(--sans);
     color: var(--text);
@@ -407,8 +406,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .ds-label {
     display: block;
-    font: 600 var(--fs-meta)/1 var(--sans);
-    color: var(--text);
+    font: 500 var(--fs-meta)/1 var(--sans);
+    color: var(--muted);
     margin-bottom: 6px;
   }
   .ds-label .req { color: var(--cyan); margin-left: 2px; }
@@ -495,12 +494,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
         <div class="form-row">
           <div class="form-group">
             <label class="ds-label" for="cf-celular">Celular</label>
-            <input class="ds-input" type="tel" id="cf-celular" name="celular" placeholder="Ej. +54 11 1234-5678" autocomplete="tel" inputmode="tel" pattern="[\d\s+()\-]*" maxlength="25">
+            <input class="ds-input" type="tel" id="cf-celular" name="celular" placeholder="Celular" autocomplete="tel" inputmode="tel" pattern="[\d\s+()\-]*" maxlength="25">
           </div>
           <div class="form-group">
             <label class="ds-label" for="cf-pais">País</label>
             <select class="ds-select" id="cf-pais" name="pais">
-              <option value="" disabled selected>Selecciona tu país</option>
+              <option value="" disabled selected>País</option>
               <option>Argentina</option><option>Uruguay</option><option>Chile</option>
               <option>Paraguay</option><option>Bolivia</option><option>Colombia</option>
               <option>Perú</option><option>México</option><option>Brasil</option><option>Otro</option>
