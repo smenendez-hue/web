@@ -196,13 +196,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     display: grid;
     grid-template-columns: 1fr 420px;
     gap: 56px;
-    align-items: stretch;
+    align-items: start;
     max-width: 1100px;
     margin: 0 auto;
     padding: 38px 0 42px;
   }
   .hero-left { text-align: left; min-width: 0; overflow: hidden; }
-  .hero-right { display: flex; align-items: stretch; justify-content: center; }
+  .hero-right { display: flex; align-items: center; justify-content: center; }
   .hero-label {
     display: inline-flex; align-items: center; gap: 10px;
     margin-bottom: 28px;
@@ -268,20 +268,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     0%, 100% { opacity: 1; } 50% { opacity: 0; }
   }
   .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
-  /* hero sub */
-  .hero-sub strong { color: var(--text); font-weight: 600; }
-  /* Trust bar — componente DS .trust (inline) */
-  .hero-trust { margin-top: 26px; }
-  .trust--inline { display: flex; flex-wrap: wrap; gap: 16px 0; }
-  .trust--inline .trust-item { padding: 0 24px; border-left: 1px solid var(--line); }
-  .trust--inline .trust-item:first-child { padding-left: 0; border-left: none; }
-  .trust-num { font-family: var(--mono); font-weight: 700; font-size: 24px; line-height: 1; color: var(--text); letter-spacing: -.015em; white-space: nowrap; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1, "lnum" 1; }
-  .trust-unit { color: var(--cyan); }
-  .trust-label { display: block; margin-top: 6px; font: 500 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted-2); transition: color var(--tr); }
-  a.trust-item { text-decoration: none; color: inherit; cursor: pointer; }
-  .trust--inline a.trust-item:hover .trust-label { color: var(--text-cyan-muted); }
-  .trust--inline a.trust-item:hover .trust-num { color: var(--cyan); }
-  .trust--inline a.trust-item:focus-visible { outline: 2px solid var(--cyan); outline-offset: 5px; border-radius: var(--radius-xs); }
   /* responsive hero split */
   @media (max-width: 900px) {
     .hero-split-inner { grid-template-columns: 1fr; gap: 36px; padding: 40px 0 52px; }
@@ -295,13 +281,11 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ── Hero form ─────────────────────────────── */
   .hero-form-wrap {
     width: 100%; max-width: 440px;
-    margin-top: 0;
+    margin-top: 36px;
     background: #23242a;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: none;
-    /* misma altura que la columna izquierda: estira y centra su contenido */
-    display: flex; flex-direction: column; justify-content: center;
   }
 
   /* Dots ocultos — solo la barra */
@@ -2483,7 +2467,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <span class="tp-scramble tp-scramble-1" id="tp-scramble-1" aria-hidden="true">Se-conecta-</span>
     <span class="tp-scramble tp-scramble-2" id="tp-scramble-2" aria-hidden="true">con-todo.</span>
   </h1>
-  <p class="hero-sub"><strong>El ERP que integra ventas, stock, finanzas y tus canales</strong> y te da control de costos en una sola plataforma — lista para operar con IA.</p>
   <p class="hero-claim"><span class="claim-prefix">//</span><span id="hero-claim-text"></span><span class="claim-cursor" aria-hidden="true"></span></p>
 
   <div class="hero-actions">
@@ -2493,12 +2476,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <a href="#modulos" class="btn btn-ghost btn-lg">
       Ver módulos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
     </a>
-  </div>
-
-  <div class="hero-trust trust trust--inline">
-    <a class="trust-item" href="acerca-de.html" aria-label="+15 años de experiencia — Acerca de YiQi"><div class="trust-num">+15<span class="trust-unit"> años</span></div><span class="trust-label">de experiencia</span></a>
-    <a class="trust-item" href="integraciones.html" aria-label="30+ integraciones nativas — Ver integraciones"><div class="trust-num">30<span class="trust-unit">+</span></div><span class="trust-label">integraciones nativas</span></a>
-    <a class="trust-item" href="api-docs.html" aria-label="API REST completa y abierta — API Docs"><div class="trust-num">API<span class="trust-unit"> REST</span></div><span class="trust-label">completa y abierta</span></a>
   </div>
   </div><!-- /hero-left -->
 
@@ -5477,15 +5454,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-actions { gap: 10px; }
   .hero-actions .btn { padding: 11px 20px; font-size: 13px; }
 
-  /* Form: recupera separación en mobile (gap del grid es 0) */
-  .hero-form-wrap { margin-top: 22px; }
-  /* Trust bar mobile */
-  .hero-trust { margin-top: 20px; }
-  .trust--inline { gap: 14px 0; }
-  .trust--inline .trust-item { padding: 0 14px; }
-  .trust-num { font-size: 20px; }
-  .trust-label { font-size: 10px; letter-spacing: .04em; }
-
   /* Integrations strip — mismo tamaño que carrusel clientes */
   .int-logos-strip { padding: 16px 0 20px; }
   .int-logos-label { margin-bottom: 16px; font-size: 9px; text-align: left; padding-left: 20px; }
@@ -5613,8 +5581,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     ['B2B-y-B2C-',       'en-un-sistema.'],
     ['Tu-ERP-',          'conectado-a-la-IA.'],
     ['15-años-',         'de-experiencia.'],
-    ['Escala-',          'sin-cambiar-sistema.'],
-    ['iA',               'ready.']
+    ['Escala-',          'sin-cambiar-sistema.']
   ];
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

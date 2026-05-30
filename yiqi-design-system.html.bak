@@ -153,58 +153,6 @@ body.preview-open .ds-layout { display: none !important; }
 }
 
 
-
-/* ─── Trust / Stats — componente unificado (v1.2.7) ───
-   Reemplaza .fb-kpi, .about-stat, .tech3d-stat, .mkt-banner-stat y .hero-trust.
-   Cifras: IBM Plex Mono tabular · unidad en --cyan · label mono uppercase. */
-.trust { --trust-num: 26px; }
-.trust-item { min-width: 0; }
-.trust-num {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-weight: 700; font-size: var(--trust-num); line-height: 1;
-  color: var(--text); letter-spacing: -.015em; white-space: nowrap;
-  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1, "lnum" 1;
-}
-.trust-unit { color: var(--cyan); }
-.trust-label {
-  display: block; margin-top: 6px;
-  font: 500 11px "IBM Plex Mono", ui-monospace, monospace;
-  letter-spacing: .06em; text-transform: uppercase; color: var(--muted-2);
-}
-.trust-delta { display: block; margin-top: 6px; font: 600 11px var(--mono); }
-.trust-delta.is-up   { color: var(--green); }
-.trust-delta.is-down { color: var(--red); }
-.trust-delta.is-flat { color: var(--muted-2); }
-
-/* Tamaños */
-.trust--lg { --trust-num: 34px; }
-.trust--sm { --trust-num: 20px; }
-
-/* A) Inline con divisores */
-.trust--inline { display: flex; flex-wrap: wrap; gap: 18px 0; }
-.trust--inline .trust-item { padding: 0 26px; border-left: 1px solid var(--line); }
-.trust--inline .trust-item:first-child { padding-left: 0; border-left: none; }
-
-/* B) Cards (borderless + sombra) */
-.trust--cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
-.trust--cards .trust-item { background: var(--bg-elev); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 18px; }
-
-/* C) Grid compacto (borde superior) */
-.trust--grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 20px; padding-top: 22px; border-top: 1px solid var(--line); }
-
-/* D) Con ícono / sparkline */
-.trust-item.has-media { display: flex; align-items: flex-start; gap: 12px; }
-.trust-icon { flex-shrink: 0; width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--cyan-soft); color: var(--cyan); display: flex; align-items: center; justify-content: center; }
-.trust-icon svg { width: 18px; height: 18px; }
-.trust-spark { display: block; margin-top: 10px; opacity: .7; }
-
-@media (max-width: 720px) {
-  .trust--grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 460px) {
-  .trust--inline .trust-item { padding: 0 16px; }
-  .trust--grid { grid-template-columns: 1fr 1fr; }
-}
 </style>
 
 <link rel="preload" href="system/fonts/Greycliff-CF-Heavy.otf" as="font" type="font/otf" crossorigin>
@@ -300,7 +248,6 @@ body.preview-open .ds-layout { display: none !important; }
 <a class="ds-nav-item" href="#badges">Badges &amp; tags</a>
 <a class="ds-nav-item" href="#inputs">Inputs &amp; formularios</a>
 <a class="ds-nav-item" href="#cards">Cards &amp; KPIs</a>
-<a class="ds-nav-item" href="#trust">Trust / Stats <span class="ds-nav-badge">NEW</span></a>
 <a class="ds-nav-item" href="#navigation">Navegación</a>
 <a class="ds-nav-item" href="#tables">Tablas</a>
 <a class="ds-nav-item" href="#icons">Iconografía Phosphor</a>
@@ -1177,64 +1124,6 @@ body.preview-open .ds-layout { display: none !important; }
 <span style="font:600 11px var(--mono);color:var(--muted-2)">CHART AREA</span>
 </div>
 </div>
-</section>
-<!-- ─── TRUST / STATS ─── -->
-<section class="ds-section" id="trust">
-<div class="ds-section-header">
-<div class="ds-section-kicker">11b · Trust / Stats <span class="ds-nav-badge" style="vertical-align:middle">NEW v1.2.7</span></div>
-<h2 class="ds-section-title">Trust / Stats</h2>
-<p class="ds-section-sub">Componente único para cifras de prueba/credibilidad. Unifica los patrones dispersos (<code>fb-kpi</code>, <code>about-stat</code>, <code>tech3d-stat</code>, <code>mkt-banner-stat</code>, <code>hero-trust</code>). Cifra en <strong>IBM Plex Mono tabular</strong>, unidad en <code>--cyan</code>, label en mono mayúscula. Cuatro variantes, una sola base.</p>
-</div>
-
-<div class="subsection-title">A · Inline con divisores</div>
-<p style="font:400 12px/1.55 var(--sans);color:var(--muted);margin:-4px 0 14px;max-width:640px">Para el hero o franjas de credibilidad. Hasta ~5 ítems en una fila. <code>.trust.trust--inline</code></p>
-<div class="card" style="margin-bottom:24px">
-<div class="trust trust--inline">
-  <div class="trust-item"><div class="trust-num">+15<span class="trust-unit"> años</span></div><span class="trust-label">de experiencia</span></div>
-  <div class="trust-item"><div class="trust-num">30<span class="trust-unit">+</span></div><span class="trust-label">integraciones nativas</span></div>
-  <div class="trust-item"><div class="trust-num">API<span class="trust-unit"> REST</span></div><span class="trust-label">completa y abierta</span></div>
-</div>
-</div>
-
-<div class="subsection-title">B · Cards (borderless + sombra)</div>
-<p style="font:400 12px/1.55 var(--sans);color:var(--muted);margin:-4px 0 14px;max-width:640px">Para secciones con más respiro, con delta opcional. <code>.trust.trust--cards</code></p>
-<div class="trust trust--cards" style="margin-bottom:24px">
-  <div class="trust-item"><div class="trust-num" style="color:var(--cyan)">$2.84M</div><span class="trust-label">Facturación MTD</span><span class="trust-delta is-up">↑ +18.4%</span></div>
-  <div class="trust-item"><div class="trust-num">1.247</div><span class="trust-label">Pedidos activos</span><span class="trust-delta is-up">↑ +6.2%</span></div>
-  <div class="trust-item"><div class="trust-num">68,3<span class="trust-unit">%</span></div><span class="trust-label">Tasa conversión</span><span class="trust-delta is-flat">→ sin cambio</span></div>
-  <div class="trust-item"><div class="trust-num">$341K</div><span class="trust-label">Pagos pendientes</span><span class="trust-delta is-down">↑ +12%</span></div>
-</div>
-
-<div class="subsection-title">C · Grid compacto (borde superior)</div>
-<p style="font:400 12px/1.55 var(--sans);color:var(--muted);margin:-4px 0 14px;max-width:640px">Para banners densos de 4-5 cifras. <code>.trust.trust--grid</code></p>
-<div class="card" style="margin-bottom:24px">
-<div class="trust trust--grid trust--sm">
-  <div class="trust-item"><div class="trust-num">+16</div><span class="trust-label">Módulos</span></div>
-  <div class="trust-item"><div class="trust-num">+60</div><span class="trust-label">Objetos documentados</span></div>
-  <div class="trust-item"><div class="trust-num">3</div><span class="trust-label">Formas de integración</span></div>
-  <div class="trust-item"><div class="trust-num">+20</div><span class="trust-label">Eventos automatizables</span></div>
-</div>
-</div>
-
-<div class="subsection-title">D · Con ícono / sparkline</div>
-<p style="font:400 12px/1.55 var(--sans);color:var(--muted);margin:-4px 0 14px;max-width:640px">Ícono cyan-soft a la izquierda o mini-gráfico bajo la cifra. <code>.trust-item.has-media</code> · <code>.trust-icon</code> · <code>.trust-spark</code></p>
-<div class="trust trust--cards" style="margin-bottom:8px">
-  <div class="trust-item has-media"><div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="trust-num">99,9<span class="trust-unit">%</span></div><span class="trust-label">Uptime</span></div></div>
-  <div class="trust-item has-media"><div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v5"/></svg></div><div><div class="trust-num">30<span class="trust-unit">+</span></div><span class="trust-label">Integraciones</span></div></div>
-  <div class="trust-item"><div class="trust-num">$2.84M</div><span class="trust-label">Facturación MTD</span><svg class="trust-spark" width="86" height="22" viewBox="0 0 86 22" fill="none" aria-hidden="true"><polyline points="0,18 14,14 28,16 42,8 56,11 70,4 86,6" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-</div>
-
-<div class="subsection-title" style="margin-top:28px">Migración</div>
-<table class="table-demo" style="margin-bottom:4px">
-<thead><tr><th>Patrón viejo</th><th>Dónde</th><th>Reemplazar por</th></tr></thead>
-<tbody>
-<tr><td><code>.fb-kpi</code> (Poppins/Lora, naranja)</td><td>Banner feedback</td><td><code>.trust--cards</code></td></tr>
-<tr><td><code>.about-stat</code> (Inter 32px)</td><td>Acerca de</td><td><code>.trust--inline</code> ó <code>--cards</code></td></tr>
-<tr><td><code>.tech3d-stat</code> (Inter + mono)</td><td>Sección 3D</td><td><code>.trust--cards</code></td></tr>
-<tr><td><code>.mkt-banner-stat</code> (grid 4)</td><td>Banner marketplace</td><td><code>.trust--grid</code></td></tr>
-<tr><td><code>.hero-trust</code></td><td>Hero landing</td><td><code>.trust--inline</code></td></tr>
-</tbody>
-</table>
 </section>
 <!-- ─── NAVIGATION ─── -->
 <section class="ds-section" id="navigation">
