@@ -339,6 +339,18 @@ button{font:inherit;cursor:pointer}
 .table-demo tr:hover td { background: rgba(127,136,150,.04); }
 .mono-cell { font: 500 12px var(--mono); color: var(--muted); }
 
+/* Changelog: sin scroll horizontal — Detalle envuelve en multilínea.
+   Layout automático: las 3 primeras columnas se encogen a su contenido
+   (width:1% + nowrap) y Detalle se queda con el resto y envuelve. */
+#ds-changelog td { white-space: normal; vertical-align: top; line-height: 1.5; }
+#ds-changelog th:nth-child(1),
+#ds-changelog th:nth-child(2),
+#ds-changelog th:nth-child(3),
+#ds-changelog td:nth-child(1),
+#ds-changelog td:nth-child(2),
+#ds-changelog td:nth-child(3) { white-space: nowrap; width: 1%; }
+#ds-changelog td:nth-child(4) { overflow-wrap: anywhere; }
+
 
 /* Sortable table */
 .table-card-demo {

@@ -1428,7 +1428,7 @@ html[data-theme="light"] .skeleton-line {
 /* Estado abierto — text-cyan-muted, no cyan puro */
 .mod-card.open .mod-card-header-left {
   color: var(--text-cyan-muted);
-  background: linear-gradient(180deg, var(--cyan-soft), rgba(0, 204, 255, 0.03));
+  background: var(--cyan-soft);
 }
 .mod-card.open .mod-icon { color: var(--text-cyan-muted); }
 

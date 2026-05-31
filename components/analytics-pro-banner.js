@@ -240,6 +240,7 @@ html[data-theme="light"] .ds-pro-cta {
     0 8px 24px rgba(0,26,40,.22),
     0 2px 8px rgba(0,204,255,.05);
 }
+
 html[data-theme="light"] .ds-pro-mock {
   box-shadow:
     0 1px 0 rgba(255,255,255,.6) inset,

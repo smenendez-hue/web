@@ -346,12 +346,30 @@ body.preview-open .ds-layout { display: none !important; }
 </div>
 </div>
 <div class="subsection-title">Cambios de esta versión</div>
-<div class="card" style="overflow-x:auto">
-<table class="table-demo">
+<div class="card">
+<table class="table-demo" id="ds-changelog">
 <thead>
 <tr><th>Versión</th><th>Fecha</th><th>Tipo</th><th>Detalle</th></tr>
 </thead>
 <tbody>
+<tr>
+<td class="mono-cell">v1.2.6</td>
+<td class="mono-cell">31/05/2026</td>
+<td><span class="badge badge-amber">FIX</span></td>
+<td>Sombras recalibradas a navy/cyan suave (menos negro) en <code>--shadow-sm/md/lg</code>. Sombra del card del showcase a <code>0 1px 2px</code> en light; banner <strong>Analytics Pro</strong> suavizado.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.6</td>
+<td class="mono-cell">31/05/2026</td>
+<td><span class="badge badge-green">SISTEMA</span></td>
+<td>Módulos sin gradiente: hover plano con sombra sutil y header del módulo abierto a <code>var(--cyan-soft)</code> plano. Removido el efecto <strong>Side card gradient</strong> (huérfano); <strong>Nav item gradient</strong> reetiquetado a <strong>Módulo abierto · header</strong>.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.6</td>
+<td class="mono-cell">31/05/2026</td>
+<td><span class="badge badge-cyan">MOTION</span></td>
+<td>Banner <strong>Analytics Pro</strong> con animaciones de entrada (línea del chart dibujada, count-up de KPIs/deltas/categorías, checks de a uno) y sin relleno de área bajo la línea.</td>
+</tr>
 <tr>
 <td class="mono-cell">v1.2.6</td>
 <td class="mono-cell">15/05/2026</td>
@@ -903,19 +921,11 @@ body.preview-open .ds-layout { display: none !important; }
 </div>
 </div>
 <div class="effect-card">
-<div class="effect-demo" style="border:1px solid rgba(0,204,255,.22);background:linear-gradient(180deg,rgba(0,204,255,.06),transparent)"></div>
+<div class="effect-demo" style="border:1px solid rgba(0,204,255,.22);background:var(--cyan-soft)"></div>
 <div>
-<div class="effect-name">Nav item gradient</div>
-<div class="effect-code" style="margin-top:4px">background: linear-gradient(180deg, var(--cyan-soft), rgba(0,204,255,.06))</div>
-<div class="effect-code" style="color:var(--muted);margin-top:3px">Ítem de navegación activo</div>
-</div>
-</div>
-<div class="effect-card">
-<div class="effect-demo" style="background:linear-gradient(180deg,rgba(0,204,255,.05),transparent);border:1px solid var(--line)"></div>
-<div>
-<div class="effect-name">Side card gradient</div>
-<div class="effect-code" style="margin-top:4px">background: linear-gradient(180deg, rgba(0,204,255,.05), transparent)</div>
-<div class="effect-code" style="color:var(--muted);margin-top:3px">Panel lateral placeholder</div>
+<div class="effect-name">Módulo abierto · header</div>
+<div class="effect-code" style="margin-top:4px">background: var(--cyan-soft)</div>
+<div class="effect-code" style="color:var(--muted);margin-top:3px">Header del módulo accordion abierto</div>
 </div>
 </div>
 </div>
@@ -1785,19 +1795,19 @@ html[data-theme="light"] .bg-grid-demo-fade {
       radial-gradient(ellipse 55% 38% at 50% -6%, rgba(0,204,255,.16), transparent 62%),
       radial-gradient(ellipse 85% 50% at 50% 118%, rgba(0,204,255,.08), transparent 68%)"></div>
   <div style="position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, var(--shadow-md);min-height:78px">
       <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">VENTAS</div>
       <div class="swatch-hex">Omnicanalidad</div>
     </div>
-    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, var(--shadow-md);min-height:78px">
       <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">STOCK</div>
       <div class="swatch-hex">Tiempo real</div>
     </div>
-    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, var(--shadow-md);min-height:78px">
       <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">CRM</div>
       <div class="swatch-hex">Pipeline</div>
     </div>
-    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, 0 2px 6px rgba(8,16,32,.28), 0 14px 32px rgba(8,16,32,.40);min-height:78px">
+    <div style="background:linear-gradient(180deg,rgba(255,255,255,.024),transparent 38%),var(--bg-elev-2);border-radius:var(--radius-md);padding:14px;box-shadow:0 1px 0 rgba(255,255,255,.045) inset, var(--shadow-md);min-height:78px">
       <div class="logo-label" style="color:var(--cyan);margin-bottom:6px">POS</div>
       <div class="swatch-hex">Offline</div>
     </div>
