@@ -34,7 +34,7 @@
   /* Texto */
   --text:        #f3f5f7;
   --muted:       #908e8e;
-  --muted-2:     #625f5f;
+  --muted-2:     #7d7c82;
   /* Marca */
   --cyan:        #00ccff;
   --cyan-soft:   rgba(0,204,255,.10);
@@ -89,7 +89,7 @@ html[data-theme="light"] {
   --line-strong: rgba(0,0,0,.13);
   --text:        #17191c;
   --muted:       #5e5a57;
-  --muted-2:     #8a8580;
+  --muted-2:     #636875;
   --cyan:        #009fc7;
   --cyan-soft:   rgba(0,159,199,.10);
   --cyan-soft-2: rgba(0,159,199,.14);
@@ -142,7 +142,7 @@ site-header {
   /* tokens fijos para consistencia entre páginas */
   --radius-sm: 10px;
   --muted: #908e8e;
-  --muted-2: #625f5f;
+  --muted-2: #7d7c82;
   --fs-body: 13px;
 }
 html[data-theme="light"] site-header {
@@ -152,7 +152,7 @@ html[data-theme="light"] .topbar,
 html[data-theme="light"] .site-topbar {
   background: rgba(238,236,231,.88);
   --muted: #5e5a57;
-  --muted-2: #8a8580;
+  --muted-2: #636875;
 }
 .topbar-logo  { display: flex; align-items: center; flex-shrink: 0; }
 .topbar-spacer { flex: 1; }
