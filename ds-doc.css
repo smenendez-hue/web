@@ -351,6 +351,20 @@ button{font:inherit;cursor:pointer}
 #ds-changelog td:nth-child(3) { white-space: nowrap; width: 1%; }
 #ds-changelog td:nth-child(4) { overflow-wrap: anywhere; }
 
+/* Changelog en mobile: cada fila apilada como bloque (Detalle a todo el ancho) */
+@media (max-width: 640px){
+  #ds-changelog, #ds-changelog tbody, #ds-changelog tr, #ds-changelog td { display: block; width: auto !important; }
+  #ds-changelog thead { display: none; }
+  #ds-changelog tr { padding: 12px 2px; border-bottom: 1px solid var(--line); }
+  #ds-changelog tr:last-child { border-bottom: none; }
+  #ds-changelog tr:hover td { background: transparent; }
+  #ds-changelog td { white-space: normal !important; border: none !important; padding: 0 !important; }
+  #ds-changelog td:nth-child(1) { display: inline; font-weight: 600; color: var(--text); }
+  #ds-changelog td:nth-child(2) { display: inline; margin-left: 8px; color: var(--muted-2); }
+  #ds-changelog td:nth-child(3) { display: block; margin: 8px 0 6px; }
+  #ds-changelog td:nth-child(4) { display: block; line-height: 1.55; }
+}
+
 
 /* Sortable table */
 .table-card-demo {

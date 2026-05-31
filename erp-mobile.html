@@ -379,12 +379,7 @@ var mobileChartRef = null;
         pointRadius: 0,
         pointHoverRadius: 4,
         fill: true,
-        backgroundColor: (ctx) => {
-          const g = ctx.chart.ctx.createLinearGradient(0,0,0,72);
-          g.addColorStop(0, getCSSVar('--cyan-soft-2'));
-          g.addColorStop(1, 'transparent');
-          return g;
-        },
+        backgroundColor: getCSSVar('--cyan-soft-2'),
         tension: 0.4,
       }]
     },

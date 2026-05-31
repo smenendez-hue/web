@@ -210,6 +210,16 @@ html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18);backg
 .content::-webkit-scrollbar{width:4px}
 .content::-webkit-scrollbar-track{background:transparent}
 .content::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:2px}
+
+/* ── KPI cards más lindas: tendencia de ancho completo al pie ── */
+.kpi-card.with-trend{gap:5px}
+.kpi-trend{width:calc(100% + 32px);margin:8px -16px -14px;height:42px;display:block;opacity:.9}
+.kpi-trend polyline{vector-effect:non-scaling-stroke}
+/* Cashflow del mes — card destacada con área grande */
+.cashflow-feat{justify-content:flex-start}
+.cashflow-feat .kpi-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:2px}
+.cashflow-feat .kpi-value{font-size:24px}
+.cashflow-bars{width:calc(100% + 32px);margin:auto -16px -14px;height:96px;position:relative}
 </style>
 </head>
 <body>
@@ -324,7 +334,7 @@ html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18);backg
     <div class="kpi-grid" style="margin-bottom:10px">
 
       <!-- Facturación -->
-      <div class="kpi-card c-cyan">
+      <div class="kpi-card c-cyan with-trend">
         <div class="kpi-top">
           <span class="kpi-label">Facturación del mes</span>
           <div class="kpi-icon ic-cyan">
@@ -332,13 +342,11 @@ html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18);backg
           </div>
         </div>
         <div class="kpi-value" data-count="3.12" data-prefix="$" data-suffix="M">$3,12M</div>
-        <div class="kpi-bottom">
-          <div class="kpi-delta up">↑ 8,4% vs mes ant.</div>
-          <svg class="sparkline" width="56" height="22" viewBox="0 0 56 22" fill="none">
-            <polyline pathLength="1" points="0,18 8,14 16,16 24,10 32,12 40,6 48,8 56,4" stroke="#00ccff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <polygon points="0,18 8,14 16,16 24,10 32,12 40,6 48,8 56,4 56,22 0,22" fill="rgba(0,204,255,.08)"/>
-          </svg>
-        </div>
+        <div class="kpi-delta up">↑ 8,4% vs mes ant.</div>
+        <svg class="sparkline kpi-trend" viewBox="0 0 100 42" preserveAspectRatio="none" fill="none">
+          <polygon points="0,32 14,26 28,29 42,18 57,21 71,11 85,14 100,5 100,42 0,42" fill="rgba(0,204,255,.10)"/>
+          <polyline pathLength="1" points="0,32 14,26 28,29 42,18 57,21 71,11 85,14 100,5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
       </div>
 
       <!-- OOSS donut -->
@@ -350,7 +358,7 @@ html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18);backg
       </div>
 
       <!-- Ingresos Cashflow -->
-      <div class="kpi-card c-green">
+      <div class="kpi-card c-green with-trend">
         <div class="kpi-top">
           <span class="kpi-label">Ingresos Cashflow</span>
           <div class="kpi-icon ic-green">
@@ -358,13 +366,11 @@ html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18);backg
           </div>
         </div>
         <div class="kpi-value" data-count="14.6" data-prefix="$" data-suffix="M">$14,6M</div>
-        <div class="kpi-bottom">
-          <div class="kpi-delta up">↑ 12,1% vs mes ant.</div>
-          <svg class="sparkline" width="56" height="22" viewBox="0 0 56 22" fill="none">
-            <polyline pathLength="1" points="0,16 8,12 16,14 24,8 32,10 40,5 48,7 56,3" stroke="#15d49c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <polygon points="0,16 8,12 16,14 24,8 32,10 40,5 48,7 56,3 56,22 0,22" fill="rgba(21,212,156,.08)"/>
-          </svg>
-        </div>
+        <div class="kpi-delta up">↑ 12,1% vs mes ant.</div>
+        <svg class="sparkline kpi-trend" viewBox="0 0 100 42" preserveAspectRatio="none" fill="none">
+          <polygon points="0,30 14,25 28,27 42,16 57,19 71,9 85,12 100,4 100,42 0,42" fill="rgba(21,212,156,.10)"/>
+          <polyline pathLength="1" points="0,30 14,25 28,27 42,16 57,19 71,9 85,12 100,4" stroke="#15d49c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
       </div>
     </div>
 
@@ -424,16 +430,13 @@ html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18);backg
         <div class="chart-card-title">Rank Vendedores — mes</div>
         <div class="rank-list" id="rankList"></div>
       </div>
-      <div class="kpi-card c-cyan">
+      <div class="kpi-card c-cyan cashflow-feat">
         <div class="kpi-top"><span class="kpi-label">Cashflow del mes</span><div class="kpi-icon ic-cyan"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div></div>
-        <div class="kpi-value" data-count="12.2" data-prefix="$" data-suffix="M">$12,2M</div>
-        <div class="kpi-bottom">
+        <div class="kpi-head">
+          <div class="kpi-value" data-count="12.2" data-prefix="$" data-suffix="M">$12,2M</div>
           <div class="kpi-delta up">↑ 9,5% vs mes ant.</div>
-          <svg class="sparkline" width="80" height="36" viewBox="0 0 80 36" fill="none">
-            <polyline pathLength="1" points="0,28 10,22 20,24 30,14 40,18 50,8 60,12 70,6 80,4" stroke="#00ccff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <polygon points="0,28 10,22 20,24 30,14 40,18 50,8 60,12 70,6 80,4 80,36 0,36" fill="rgba(0,204,255,.07)"/>
-          </svg>
         </div>
+        <div class="cashflow-bars"><canvas id="cashflowBars"></canvas></div>
       </div>
     </div>
 
@@ -446,6 +449,7 @@ function getCSSVar(n){return getComputedStyle(document.documentElement).getPrope
 // ── Donut OOSS ──────────────────────────────────────────────────
 var _donutChart = null;
 var _trendChart = null;
+var _cashflowChart = null;
 (function(){
   const labels=['En espera','Facturada','Finalizada','Visitada'];
   const data=[28,35,25,12];
@@ -457,15 +461,35 @@ var _trendChart = null;
   }
   const s=sortDesc(labels,data,colors);
 
+  // Plugin: total al centro del anillo
+  const centerText={
+    id:'ooss-center',
+    afterDraw(chart){
+      const meta=chart.getDatasetMeta(0);
+      if(!meta||!meta.data||!meta.data[0]) return;
+      const {x,y}=meta.data[0];
+      const ctx=chart.ctx;
+      ctx.save();
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillStyle=getCSSVar('--text');
+      ctx.font='700 15px '+getCSSVar('--display');
+      ctx.fillText('248', x, y-5);
+      ctx.fillStyle=getCSSVar('--muted-2');
+      ctx.font='600 7px '+getCSSVar('--mono');
+      ctx.fillText('OOSS', x, y+8);
+      ctx.restore();
+    }
+  };
   _donutChart = new Chart(document.getElementById('donutOoss'),{
     type:'doughnut',
+    plugins:[centerText],
     data:{labels:s.labels,datasets:[{data:s.data,backgroundColor:s.colors,borderWidth:0,hoverOffset:4}]},
     options:{
-      responsive:true,maintainAspectRatio:false,cutout:'70%',
+      responsive:true,maintainAspectRatio:false,cutout:'72%',
       plugins:{
         legend:{
           position:'right',
-          labels:{color:getCSSVar('--muted'),font:{family:getCSSVar('--mono'),size:9},padding:8,usePointStyle:true,pointStyleWidth:6}
+          labels:{color:getCSSVar('--muted'),font:{family:getCSSVar('--mono'),size:9},padding:8,usePointStyle:true,pointStyle:'circle',boxWidth:7,boxHeight:7}
         },
         tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.parsed}%`}}
       }
@@ -493,6 +517,21 @@ var _trendChart = null;
         y:{ display:false, beginAtZero:true }
       },
       animation:{ duration:1000, easing:'easeOutQuart' }
+    }
+  });
+})();
+
+// ── Cashflow del mes (barras, sin gradiente) ────────────────────
+(function(){
+  const data=[6.0,7.4,7.0,9.1,8.6,10.8,10.4,12.2];
+  _cashflowChart = new Chart(document.getElementById('cashflowBars'),{
+    type:'bar',
+    data:{ labels:data.map((_,i)=>'S'+(i+1)), datasets:[{ data, backgroundColor:getCSSVar('--cyan'), borderRadius:3, barPercentage:.72, categoryPercentage:.86 }] },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:ctx=>' $'+ctx.parsed.y.toFixed(1).replace('.',',')+'M' } } },
+      scales:{ x:{display:false}, y:{display:false,beginAtZero:true} },
+      animation:{ duration:900, easing:'easeOutQuart' }
     }
   });
 })();
@@ -571,6 +610,7 @@ document.querySelectorAll('[data-count]').forEach(el=>{
     document.body.classList.add('anim-in');
     if(_donutChart){ _donutChart.reset(); _donutChart.update(); }
     if(_trendChart){ _trendChart.reset(); _trendChart.update(); }
+    if(_cashflowChart){ _cashflowChart.reset(); _cashflowChart.update(); }
   }
   window.addEventListener('message', function(e){ if(e.data && e.data.type==='yiqi-play') play(); });
   setTimeout(play, 1600);
