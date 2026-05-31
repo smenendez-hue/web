@@ -33,7 +33,7 @@ html[data-theme="light"] {
   --purple-soft:rgba(124,58,237,.1);
 
   /* Shadows (lighter for light bg) */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 8px rgba(0,0,0,.05);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.1), 0 1px 4px rgba(0,0,0,.06);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.15), 0 2px 8px rgba(0,0,0,.08);
+  --shadow-sm: 0 1px 3px rgba(16,36,54,.06);
+  --shadow-md: 0 4px 14px rgba(16,36,54,.08);
+  --shadow-lg: 0 8px 24px rgba(0,80,110,.09), 0 1px 4px rgba(0,80,110,.05);
 }

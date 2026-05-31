@@ -237,14 +237,14 @@ html[data-theme="light"] .ds-pro-cta {
   overflow: hidden;
   box-shadow:
     0 1px 0 rgba(255,255,255,.045) inset,
-    0 24px 48px rgba(8,16,32,.32),
-    0 4px 12px rgba(8,16,32,.18);
+    0 8px 24px rgba(0,26,40,.22),
+    0 2px 8px rgba(0,204,255,.05);
 }
 html[data-theme="light"] .ds-pro-mock {
   box-shadow:
     0 1px 0 rgba(255,255,255,.6) inset,
-    0 16px 32px rgba(16,36,54,.12),
-    0 4px 10px rgba(16,36,54,.06);
+    0 6px 18px rgba(16,36,54,.08),
+    0 1px 4px rgba(0,159,199,.05);
 }
 
 /* Topbar del mock */
@@ -413,6 +413,52 @@ html[data-theme="light"] .ds-pro-mock {
   .ds-pro-kpis { grid-template-columns: 1fr 1fr; }
   .ds-pro-bar-row { grid-template-columns: 80px 1fr 50px 32px; }
 }
+
+/* ── Animaciones de entrada (se disparan al entrar en viewport) ── */
+@media (prefers-reduced-motion: no-preference) {
+  .ds-pro-spark-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .ds-pro-banner.is-playing .ds-pro-spark-line {
+    animation: dsProDraw 1.4s cubic-bezier(.6,.04,.2,1) forwards;
+  }
+  .ds-pro-spark-end { opacity: 0; }
+  .ds-pro-banner.is-playing .ds-pro-spark-end { animation: dsProFade .45s ease 1.15s forwards; }
+  .ds-pro-spark-ring { opacity: 0; }
+  .ds-pro-banner.is-playing .ds-pro-spark-ring { animation: dsProRing 2.4s ease-out 1.5s infinite; }
+
+  .ds-pro-kpi { opacity: 0; transform: translateY(8px); }
+  .ds-pro-banner.is-playing .ds-pro-kpi { animation: dsProUp .55s cubic-bezier(.22,1,.36,1) forwards; }
+  .ds-pro-banner.is-playing .ds-pro-kpi:nth-child(1) { animation-delay: .05s; }
+  .ds-pro-banner.is-playing .ds-pro-kpi:nth-child(2) { animation-delay: .13s; }
+  .ds-pro-banner.is-playing .ds-pro-kpi:nth-child(3) { animation-delay: .21s; }
+  .ds-pro-banner.is-playing .ds-pro-kpi:nth-child(4) { animation-delay: .29s; }
+
+  .ds-pro-bar-fill { transform: scaleX(0); transform-origin: left center; }
+  .ds-pro-banner.is-playing .ds-pro-bar-fill { animation: dsProBar .9s cubic-bezier(.22,1,.36,1) forwards; }
+  .ds-pro-banner.is-playing .ds-pro-bar-row:nth-child(1) .ds-pro-bar-fill { animation-delay: .50s; }
+  .ds-pro-banner.is-playing .ds-pro-bar-row:nth-child(2) .ds-pro-bar-fill { animation-delay: .62s; }
+  .ds-pro-banner.is-playing .ds-pro-bar-row:nth-child(3) .ds-pro-bar-fill { animation-delay: .74s; }
+
+  .ds-pro-bullet { opacity: 0; transform: translateY(6px); }
+  .ds-pro-banner.is-playing .ds-pro-bullet { animation: dsProUp .5s cubic-bezier(.22,1,.36,1) forwards; }
+  .ds-pro-banner.is-playing .ds-pro-bullet:nth-child(1) { animation-delay: .08s; }
+  .ds-pro-banner.is-playing .ds-pro-bullet:nth-child(2) { animation-delay: .18s; }
+  .ds-pro-banner.is-playing .ds-pro-bullet:nth-child(3) { animation-delay: .28s; }
+
+  .ds-pro-check-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .ds-pro-banner.is-playing .ds-pro-bullet .ds-pro-check-line { animation: dsProDraw .45s ease forwards; }
+  .ds-pro-banner.is-playing .ds-pro-bullet:nth-child(1) .ds-pro-check-line { animation-delay: .70s; }
+  .ds-pro-banner.is-playing .ds-pro-bullet:nth-child(2) .ds-pro-check-line { animation-delay: 1.20s; }
+  .ds-pro-banner.is-playing .ds-pro-bullet:nth-child(3) .ds-pro-check-line { animation-delay: 1.70s; }
+}
+@keyframes dsProDraw { to { stroke-dashoffset: 0; } }
+@keyframes dsProFade { to { opacity: 1; } }
+@keyframes dsProUp   { to { opacity: 1; transform: none; } }
+@keyframes dsProBar  { to { transform: scaleX(1); } }
+@keyframes dsProRing {
+  0%   { r: 6;  opacity: .30; }
+  70%  { r: 16; opacity: 0; }
+  100% { r: 16; opacity: 0; }
+}
 `;
       document.head.appendChild(style);
     }
@@ -430,15 +476,15 @@ html[data-theme="light"] .ds-pro-mock {
 
       <ul class="ds-pro-bullets" aria-label="Lo que incluye">
         <li class="ds-pro-bullet">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline class="ds-pro-check-line" pathLength="1" points="4 12 9 17 20 6"/></svg>
           <span><b>23 KPIs out-of-the-box</b> — facturación, margen, conversión, cobranzas, stock</span>
         </li>
         <li class="ds-pro-bullet">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline class="ds-pro-check-line" pathLength="1" points="4 12 9 17 20 6"/></svg>
           <span><b>Drill-down + cohortes</b> — del KPI al ticket sin salir del panel</span>
         </li>
         <li class="ds-pro-bullet">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline class="ds-pro-check-line" pathLength="1" points="4 12 9 17 20 6"/></svg>
           <span><b>Forecast con IA</b> — proyección de cashflow a 90 días</span>
         </li>
       </ul>
@@ -467,23 +513,23 @@ html[data-theme="light"] .ds-pro-mock {
           <div class="ds-pro-kpis">
             <div class="ds-pro-kpi">
               <div class="ds-pro-kpi-label">INGRESOS</div>
-              <div class="ds-pro-kpi-value">$2,84<span class="ds-pro-kpi-suffix">M</span></div>
-              <div class="ds-pro-kpi-delta">↑ 18,4%</div>
+              <div class="ds-pro-kpi-value"><span class="ds-pro-count" data-to="2.84" data-dec="2" data-prefix="$" data-delay="120">$2,84</span><span class="ds-pro-kpi-suffix">M</span></div>
+              <div class="ds-pro-kpi-delta ds-pro-count" data-to="18.4" data-dec="1" data-prefix="↑ " data-suffix="%" data-delay="180">↑ 18,4%</div>
             </div>
             <div class="ds-pro-kpi">
               <div class="ds-pro-kpi-label">PEDIDOS</div>
-              <div class="ds-pro-kpi-value">1.247</div>
-              <div class="ds-pro-kpi-delta">↑ 6,2%</div>
+              <div class="ds-pro-kpi-value"><span class="ds-pro-count" data-to="1247" data-dec="0" data-delay="200">1.247</span></div>
+              <div class="ds-pro-kpi-delta ds-pro-count" data-to="6.2" data-dec="1" data-prefix="↑ " data-suffix="%" data-delay="260">↑ 6,2%</div>
             </div>
             <div class="ds-pro-kpi">
               <div class="ds-pro-kpi-label">MARGEN</div>
-              <div class="ds-pro-kpi-value">24,1<span class="ds-pro-kpi-suffix">%</span></div>
-              <div class="ds-pro-kpi-delta">↑ 1,8 pp</div>
+              <div class="ds-pro-kpi-value"><span class="ds-pro-count" data-to="24.1" data-dec="1" data-delay="280">24,1</span><span class="ds-pro-kpi-suffix">%</span></div>
+              <div class="ds-pro-kpi-delta ds-pro-count" data-to="1.8" data-dec="1" data-prefix="↑ " data-suffix=" pp" data-delay="340">↑ 1,8 pp</div>
             </div>
             <div class="ds-pro-kpi">
               <div class="ds-pro-kpi-label">CONV.</div>
-              <div class="ds-pro-kpi-value">68,3<span class="ds-pro-kpi-suffix">%</span></div>
-              <div class="ds-pro-kpi-delta is-neutral">→ 0,1%</div>
+              <div class="ds-pro-kpi-value"><span class="ds-pro-count" data-to="68.3" data-dec="1" data-delay="360">68,3</span><span class="ds-pro-kpi-suffix">%</span></div>
+              <div class="ds-pro-kpi-delta is-neutral ds-pro-count" data-to="0.1" data-dec="1" data-prefix="→ " data-suffix="%" data-delay="420">→ 0,1%</div>
             </div>
           </div>
 
@@ -495,26 +541,18 @@ html[data-theme="light"] .ds-pro-mock {
             </div>
             <div class="ds-pro-mock-chart" role="presentation">
               <svg viewBox="0 0 400 92" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="ds-pro-spark-fill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%"   stop-color="currentColor" stop-opacity=".34"/>
-                    <stop offset="100%" stop-color="currentColor" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
                 <!-- ejes -->
                 <line x1="0" y1="23" x2="400" y2="23" stroke="currentColor" stroke-opacity=".08"/>
                 <line x1="0" y1="46" x2="400" y2="46" stroke="currentColor" stroke-opacity=".08"/>
                 <line x1="0" y1="69" x2="400" y2="69" stroke="currentColor" stroke-opacity=".08"/>
-                <!-- área -->
-                <path d="M0,76 L40,70 L80,58 L120,64 L160,46 L200,52 L240,32 L280,38 L320,22 L360,26 L400,12 L400,92 L0,92 Z"
-                      fill="url(#ds-pro-spark-fill)" style="color:var(--cyan)"/>
                 <!-- línea -->
-                <path d="M0,76 L40,70 L80,58 L120,64 L160,46 L200,52 L240,32 L280,38 L320,22 L360,26 L400,12"
+                <path class="ds-pro-spark-line" pathLength="1"
+                      d="M0,76 L40,70 L80,58 L120,64 L160,46 L200,52 L240,32 L280,38 L320,22 L360,26 L400,12"
                       stroke="var(--cyan)" stroke-width="2" fill="none"
                       stroke-linecap="round" stroke-linejoin="round"/>
                 <!-- punto final -->
-                <circle cx="400" cy="12" r="6" fill="var(--cyan)" fill-opacity=".18"/>
-                <circle cx="400" cy="12" r="3" fill="var(--cyan)"/>
+                <circle class="ds-pro-spark-ring" cx="400" cy="12" r="6" fill="var(--cyan)" fill-opacity=".18"/>
+                <circle class="ds-pro-spark-end" cx="400" cy="12" r="3" fill="var(--cyan)"/>
               </svg>
             </div>
           </div>
@@ -529,19 +567,19 @@ html[data-theme="light"] .ds-pro-mock {
               <div class="ds-pro-bar-row">
                 <span class="ds-pro-bar-label">Indumentaria</span>
                 <span class="ds-pro-bar-track"><span class="ds-pro-bar-fill" style="width:92%"></span></span>
-                <span class="ds-pro-bar-value">$1,21M</span>
+                <span class="ds-pro-bar-value ds-pro-count" data-to="1.21" data-dec="2" data-prefix="$" data-suffix="M" data-delay="650">$1,21M</span>
                 <span class="ds-pro-bar-delta">↑12%</span>
               </div>
               <div class="ds-pro-bar-row">
                 <span class="ds-pro-bar-label">Calzado</span>
                 <span class="ds-pro-bar-track"><span class="ds-pro-bar-fill" style="width:64%"></span></span>
-                <span class="ds-pro-bar-value">$842K</span>
+                <span class="ds-pro-bar-value ds-pro-count" data-to="842" data-dec="0" data-prefix="$" data-suffix="K" data-delay="760">$842K</span>
                 <span class="ds-pro-bar-delta">↑8%</span>
               </div>
               <div class="ds-pro-bar-row">
                 <span class="ds-pro-bar-label">Accesorios</span>
                 <span class="ds-pro-bar-track"><span class="ds-pro-bar-fill" style="width:38%"></span></span>
-                <span class="ds-pro-bar-value">$418K</span>
+                <span class="ds-pro-bar-value ds-pro-count" data-to="418" data-dec="0" data-prefix="$" data-suffix="K" data-delay="870">$418K</span>
                 <span class="ds-pro-bar-delta">↑4%</span>
               </div>
             </div>
@@ -562,6 +600,55 @@ html[data-theme="light"] .ds-pro-mock {
         e.preventDefault();
         window.openPreview(previewUrl, 'YiQi Analytics Pro');
       });
+    }
+
+    /* Dispara las animaciones de entrada al hacerse visible (una sola vez) */
+    const bannerEl = this.querySelector('.ds-pro-banner');
+    if (bannerEl) {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const nf = (n, dec) => new Intl.NumberFormat('es-AR', {
+        minimumFractionDigits: dec, maximumFractionDigits: dec
+      }).format(n);
+      const render = (el, n) =>
+        el.textContent = (el.dataset.prefix || '') + nf(n, +(el.dataset.dec || 0)) + (el.dataset.suffix || '');
+
+      const counts = bannerEl.querySelectorAll('.ds-pro-count');
+      /* Arranque en 0 (sin flash) salvo reduced-motion, que deja el valor final */
+      if (!reduce) counts.forEach(el => render(el, 0));
+
+      const countUp = (el) => {
+        const to    = parseFloat(el.dataset.to);
+        const dur   = 1100;
+        const delay = parseInt(el.dataset.delay || '0', 10);
+        let start   = null;
+        const step = (now) => {
+          if (start === null) start = now + delay;
+          let t = (now - start) / dur;
+          if (t < 0) { requestAnimationFrame(step); return; }
+          if (t > 1) t = 1;
+          const e = 1 - Math.pow(1 - t, 3);
+          render(el, to * e);
+          if (t < 1) requestAnimationFrame(step);
+          else render(el, to);
+        };
+        requestAnimationFrame(step);
+      };
+
+      const play = () => {
+        bannerEl.classList.add('is-playing');
+        if (!reduce) counts.forEach(countUp);
+      };
+
+      if (!('IntersectionObserver' in window)) {
+        play();
+      } else {
+        const io = new IntersectionObserver((entries, obs) => {
+          entries.forEach(en => {
+            if (en.isIntersecting) { play(); obs.disconnect(); }
+          });
+        }, { threshold: 0.35 });
+        io.observe(bannerEl);
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 /* ============================================================
    YiQi Site Footer — Web Component
    Uso: <site-footer base="./|../"></site-footer>
-   DS v1.2.5
+   DS v1.2.6
    ============================================================ */
 
 class SiteFooter extends HTMLElement {
@@ -84,7 +84,7 @@ class SiteFooter extends HTMLElement {
 
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 YiQi S.A. · Todos los derechos reservados</p>
-      <a href="${r('yiqi-design-system.html')}" class="footer-version footer-version-link">DS v1.2.5</a>
+      <a href="${r('yiqi-design-system.html')}" class="footer-version footer-version-link">DS v1.2.6</a>
     </div>
   </div>
 </footer>`;

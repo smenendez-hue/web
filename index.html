@@ -71,7 +71,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     --tr:          180ms ease;
     --shadow-sm:   0 1px 4px rgba(0,0,0,.10);
     --shadow-md:   0 2px 16px rgba(0,0,0,.14);
-    --shadow-lg:   0 8px 32px rgba(0,0,0,.22);
+    --shadow-lg:   0 12px 40px rgba(0,26,40,.34), 0 2px 12px rgba(0,204,255,.06);
 
     /* ── Type scale ─────────────────────────── */
     --fs-section-hero:  24px;
@@ -110,7 +110,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     --text-cyan-muted: rgba(0,140,175,.58);
     --shadow-sm:   0 1px 4px rgba(0,0,0,.06);
     --shadow-md:   0 2px 12px rgba(0,0,0,.08);
-    --shadow-lg:   0 4px 18px rgba(0,0,0,.08);
+    --shadow-lg:   0 8px 24px rgba(0,80,110,.09), 0 1px 4px rgba(0,80,110,.05);
   }
 
   /* ═══════════════════════════════════════════
@@ -176,7 +176,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ── Hero split layout ── */
   .hero-centered {
     background: transparent;
-    padding: 0 40px 0;
+    padding: 56px 40px 0;
     overflow: hidden;
     position: relative;
   }
@@ -484,14 +484,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .logo-marquee-mask {
     overflow-x: hidden;
     position: relative;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
   }
-  .logo-marquee-mask::before,
-  .logo-marquee-mask::after {
-    content: ""; position: absolute; top: 0; bottom: 0;
-    width: 8%; pointer-events: none; z-index: 2;
-  }
-  .logo-marquee-mask::before { left: 0;  background: linear-gradient(90deg,  var(--bg) 0%, transparent 100%); }
-  .logo-marquee-mask::after  { right: 0; background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%); }
   .logo-marquee-track {
     display: flex; align-items: center; gap: 0;
     width: max-content;
@@ -535,8 +530,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1440px) {
     .logo-strip { padding: 56px 0 48px; }
     .logo-strip-label { font-size: 11px; margin-bottom: 24px; }
-    .logo-marquee-mask::before,
-    .logo-marquee-mask::after { width: 200px; }
+    .logo-marquee-mask {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 200px, #000 calc(100% - 200px), transparent 100%);
+    }
     .logo-marquee-track { animation-duration: 50s; }
     .logo-item { width: 200px; height: 56px; padding: 0 36px; }
     .logo-item.logo-wide { width: 232px; }
@@ -549,9 +546,11 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1920px) {
     .logo-strip { padding: 72px 0 60px; }
     .logo-strip-label { font-size: 12px; margin-bottom: 32px; }
-    .logo-marquee-mask { max-width: 1760px; margin: 0 auto; }
-    .logo-marquee-mask::before,
-    .logo-marquee-mask::after { width: 240px; }
+    .logo-marquee-mask {
+      max-width: 1760px; margin: 0 auto;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+    }
     .logo-marquee-track { animation-duration: 56s; }
     .logo-item { width: 220px; height: 64px; padding: 0 40px; }
     .logo-item.logo-wide { width: 256px; }
@@ -935,14 +934,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .modules-section::after {
     content: ""; position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 55% 38% at 50% -6%, rgba(0,204,255,.10), transparent 62%),
+      radial-gradient(ellipse 60% 42% at 50% 28%, rgba(0,204,255,.06), transparent 64%),
       radial-gradient(ellipse 85% 50% at 50% 118%, rgba(0,204,255,.045), transparent 68%);
     pointer-events: none;
     z-index: 0;
   }
   html[data-theme="light"] .modules-section::after {
     background:
-      radial-gradient(ellipse 55% 38% at 50% -6%, rgba(0,159,199,.08), transparent 62%),
+      radial-gradient(ellipse 60% 42% at 50% 28%, rgba(0,159,199,.05), transparent 64%),
       radial-gradient(ellipse 85% 50% at 50% 118%, rgba(0,159,199,.035), transparent 68%);
   }
   .modules-inner {
@@ -1004,7 +1003,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   /* xxl breakpoint (DS v1.2.6) — monitores anchos suman columna */
   @media (min-width: 1440px) {
-    .mod-grid { grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .mod-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
   }
   .mod-grid .mod-card {
     opacity: 0;
@@ -1029,31 +1028,20 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   /* ── Cards — DS v1.2.6 card treatment (profundidad mejorada, sombras tinted navy) ── */
   .modules-section .mod-card {
     --py: 0px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.024), transparent 38%),
-      var(--bg-elev-2);
+    background: var(--bg-elev-2);
     border: 1px solid transparent;
     border-radius: var(--radius-lg);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.045) inset,
-      0 2px 6px rgba(8,16,32,.28),
-      0 14px 32px rgba(8,16,32,.40);
-    transition: border-color var(--tr), background var(--tr), box-shadow var(--tr), opacity .3s ease;
+    box-shadow: none;
+    transition: border-color var(--tr), background var(--tr), transform var(--tr), opacity .3s ease;
     transform: translateY(var(--py));
     cursor: pointer;
     touch-action: manipulation;
   }
   @media (hover: hover) {
     .modules-section .mod-card:hover {
-      background:
-        linear-gradient(180deg, rgba(0,204,255,.05), transparent 55%),
-        var(--cyan-soft-2);
+      background: var(--cyan-soft-2);
       border-color: transparent;
-      box-shadow:
-        0 1px 0 rgba(0,204,255,.20) inset,
-        0 4px 14px rgba(8,16,32,.32),
-        0 18px 44px rgba(0,204,255,.10),
-        0 22px 56px rgba(8,16,32,.44);
+      box-shadow: var(--shadow-md);
       transform: translateY(calc(var(--py) - 3px));
     }
     .modules-section .mod-card:hover .mod-icon {
@@ -1072,26 +1060,15 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     transform: none;
   }
   html[data-theme="light"] .modules-section .mod-card {
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.55), transparent 40%),
-      var(--bg-elev-2);
+    background: var(--bg-elev-2);
     border-color: transparent;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.7) inset,
-      0 1px 3px rgba(16,36,54,.06),
-      0 10px 24px rgba(16,36,54,.08);
+    box-shadow: none;
   }
   @media (hover: hover) {
     html[data-theme="light"] .modules-section .mod-card:hover {
-      background:
-        linear-gradient(180deg, rgba(0,159,199,.05), transparent 55%),
-        var(--cyan-soft-2);
+      background: var(--cyan-soft-2);
       border-color: transparent;
-      box-shadow:
-        0 1px 0 rgba(0,159,199,.18) inset,
-        0 4px 12px rgba(16,36,54,.08),
-        0 18px 36px rgba(0,159,199,.10),
-        0 18px 40px rgba(16,36,54,.12);
+      box-shadow: var(--shadow-md);
     }
     html[data-theme="light"] .modules-section .mod-card:hover .mod-icon {
       background: transparent;
@@ -2145,14 +2122,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .int-logos-mask {
     overflow: hidden;
     position: relative; z-index: 1;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%);
   }
-  .int-logos-mask::before,
-  .int-logos-mask::after {
-    content: ""; position: absolute; top: 0; bottom: 0;
-    width: 180px; pointer-events: none; z-index: 2;
-  }
-  .int-logos-mask::before { left: 0;  background: linear-gradient(90deg,  var(--bg) 0%, transparent 100%); }
-  .int-logos-mask::after  { right: 0; background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%); }
   .int-logos-track {
     display: flex;
     align-items: center;
@@ -2193,8 +2165,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1440px) {
     .int-logos-strip { padding: 56px 0 60px; }
     .int-logos-label { font-size: 11px; margin-bottom: 24px; }
-    .int-logos-mask::before,
-    .int-logos-mask::after { width: 280px; }
+    .int-logos-mask {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 280px, #000 calc(100% - 280px), transparent 100%);
+    }
     .int-logos-track { animation-duration: 26s; }
     .int-logo-item { width: 188px; height: 56px; padding: 0 30px; }
     .int-logo-item.int-logo-wide { width: 280px; }
@@ -2207,9 +2181,11 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   @media (min-width: 1920px) {
     .int-logos-strip { padding: 72px 0 76px; }
     .int-logos-label { font-size: 12px; margin-bottom: 32px; }
-    .int-logos-mask { max-width: 1760px; margin: 0 auto; }
-    .int-logos-mask::before,
-    .int-logos-mask::after { width: 240px; }
+    .int-logos-mask {
+      max-width: 1760px; margin: 0 auto;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 240px, #000 calc(100% - 240px), transparent 100%);
+    }
     .int-logos-track { animation-duration: 29s; }
     .int-logo-item { width: 208px; height: 64px; padding: 0 34px; }
     .int-logo-item.int-logo-wide { width: 320px; }
@@ -2224,8 +2200,10 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .int-logo-item.int-logo-wide { width: 220px; }
     .int-logo-img { height: 24px; }
     .int-logos-track { animation-duration: 24s; } /* ~82 px/s */
-    .int-logos-mask::before,
-    .int-logos-mask::after { width: 32px; }
+    .int-logos-mask {
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+    }
   }
 
   /* ─── Reduced motion — track estático con scroll horizontal ─── */
@@ -3219,6 +3197,30 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
             <span class="mod-tag t-cyan" onclick="filterByTag(this)" style="cursor:pointer">Servicios</span>
             <span class="mod-tag t-green" onclick="filterByTag(this)" style="cursor:pointer">Operaciones</span>
             <span class="mod-tag t-amber" onclick="filterByTag(this)" style="cursor:pointer">SLA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editorial -->
+      <div class="mod-card" data-tags="Derechos de autor,Comisiones" data-order="13" onclick="toggleModCard(this)">
+        <div class="mod-card-header">
+          <div class="mod-card-header-left">
+            <div class="mod-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <span class="mod-card-name">Editorial</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+        <p class="mod-card-desc">Comisiones y liquidación de derechos de autor.</p>
+        <div class="mod-body">
+          <div class="mod-items">
+            <a class="mod-item-link" href="#">Comisión por artículo</a>
+            <a class="mod-item-link" href="#">Registro comisión por autor</a>
+            <a class="mod-item-link" href="#">Det Liq Derechos de Autor</a>
+            <a class="mod-item-link" href="#">Liq. Derechos de Autor</a>
+          </div>
+          <div class="mod-tags">
+            <span class="mod-tag t-cyan" onclick="filterByTag(this)" style="cursor:pointer">Derechos de autor</span>
+            <span class="mod-tag t-green" onclick="filterByTag(this)" style="cursor:pointer">Comisiones</span>
           </div>
         </div>
       </div>
@@ -4840,12 +4842,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     border-radius: var(--radius-lg);
     border: 1px solid var(--line-strong);
     overflow: hidden;
-    box-shadow: 0 24px 64px rgba(0,0,0,.32), 0 0 0 1px rgba(255,255,255,.04) inset;
+    box-shadow: 0 16px 48px rgba(0,26,40,.30), 0 4px 16px rgba(0,204,255,.06), 0 0 0 1px rgba(255,255,255,.04) inset;
     background: #252830;
   }
   html[data-theme="light"] .showcase-browser {
     background: #dedad2;
-    box-shadow: 0 8px 32px rgba(0,0,0,.10);
+    box-shadow: 0 1px 2px rgba(16,36,54,.12);
     border-color: rgba(0,0,0,.09);
   }
   .showcase-chrome {
@@ -5171,10 +5173,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       browser.classList.add('tilting');
       browser.classList.remove('tilt-reset');
       browser.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(${MAX_LIFT}px)`;
+      const _t = document.documentElement.dataset.theme;
+      const _light = _t === 'light' || (_t !== 'dark' && !window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const _base = _light ? 'rgba(0,40,60,.14)' : 'rgba(0,18,28,.40)';
+      const _glow = _light ? 'rgba(0,159,199,.12)' : 'rgba(0,204,255,.16)';
       browser.style.boxShadow = `
-        ${-rotY * 6}px ${rotX * 6 + 48}px 100px rgba(0,0,0,.6),
-        0 0 0 1px rgba(255,255,255,.08) inset,
-        0 0 ${40 + Math.abs(cx) * 40}px rgba(0,204,255,.18)
+        ${-rotY * 4}px ${rotX * 4 + 30}px 70px ${_base},
+        0 0 0 1px rgba(255,255,255,.06) inset,
+        0 0 ${36 + Math.abs(cx) * 36}px ${_glow}
       `;
     });
   });

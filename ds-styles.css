@@ -43,9 +43,9 @@
   /* Efectos */
   --glow:      0 0 0 3px rgba(0, 204, 255, 0.22);
   /* v1.2.5 — Sistema de sombras: blur máx 32px, opacidad máx .22 */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 8px rgba(0, 0, 0, 0.18);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.28);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.36);
+  --shadow-sm: 0 1px 3px rgba(0,18,28,0.30);
+  --shadow-md: 0 4px 14px rgba(0,20,30,0.26);
+  --shadow-lg: 0 12px 40px rgba(0,26,40,.34), 0 2px 12px rgba(0,204,255,.06);
 
   /* Interacción */
   --tr: 180ms ease;
@@ -137,9 +137,9 @@ html[data-theme="light"] {
 
   /* Efectos */
   --glow:      0 0 0 3px rgba(0, 159, 199, 0.22);
-  --shadow-sm: 0 2px 8px rgba(16, 36, 54, 0.08);
-  --shadow-md: 0 8px 24px rgba(16, 36, 54, 0.12);
-  --shadow-lg: 0 16px 32px rgba(16, 36, 54, 0.16);
+  --shadow-sm: 0 1px 3px rgba(16,36,54,0.06);
+  --shadow-md: 0 4px 14px rgba(16,36,54,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,80,110,.09), 0 1px 4px rgba(0,80,110,.05);
 
   --tr: 180ms ease;
   --red-soft:   rgba(212, 72, 94, 0.12);
