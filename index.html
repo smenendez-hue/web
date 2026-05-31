@@ -2154,6 +2154,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   html[data-theme="light"] .int-logo-img {
     filter: brightness(0) saturate(100%) invert(38%) sepia(55%) saturate(648%) hue-rotate(162deg) opacity(.65); /* cyan-soft light */
   }
+  .int-logo-img.int-logo-anymarket { transform: scale(.82); }
   .int-logo-sep {
     width: 1px;
     height: 22px;
@@ -2635,7 +2636,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
+      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img int-logo-anymarket"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
@@ -2662,7 +2663,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/WOO COMMERCE.svg" alt="WooCommerce" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
-      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img"></div>
+      <div class="int-logo-item int-logo-wide"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ANYMARKET.svg" alt="ANYMARKET" class="int-logo-img int-logo-anymarket"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
       <div class="int-logo-item"><img loading="eager" decoding="async" fetchpriority="high" src="system/icons/LOGOS INTEGRACIONES/ZAPIER.svg" alt="Zapier" class="int-logo-img"></div>
       <div class="int-logo-sep" aria-hidden="true"></div>
@@ -2737,14 +2738,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 </section>
 
 <script>
-  /* Init iframes con tema invertido al sitio (sin flash) */
+  /* Init iframes en tema CLARO fijo (sin flash) */
   (function() {
     const stored = localStorage.getItem('yiqi-theme') || 'system';
     const mq     = window.matchMedia('(prefers-color-scheme: dark)');
     const resolved = stored === 'system' ? (mq.matches ? 'dark' : 'light') : stored;
     const inverted = resolved === 'dark' ? 'light' : 'dark';
     document.querySelectorAll('iframe[data-src]').forEach(iframe => {
-      iframe.src = iframe.dataset.src + '?theme=' + inverted;
+      iframe.src = iframe.dataset.src + '?theme=light';
     });
   })();
 </script>
@@ -3695,13 +3696,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     document.querySelectorAll('.theme-opt').forEach(b => b.classList.toggle('active', b.dataset.val === v));
   }
   function syncIframe(resolved) {
-    // Los mockups van con tema invertido al sitio — parent dark → mock light, parent light → mock dark
+    // Los mockups van SIEMPRE en tema claro, sin importar el tema del sitio
     const r = resolved || document.documentElement.dataset.theme;
     const actual = (r === 'system') ? (mq.matches ? 'dark' : 'light') : r;
     const inverted = actual === 'dark' ? 'light' : 'dark';
     document.querySelectorAll('.showcase-screen iframe, .phone-screen iframe').forEach(iframe => {
       if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage({ type: 'yiqi-theme', theme: inverted }, '*');
+        iframe.contentWindow.postMessage({ type: 'yiqi-theme', theme: 'light' }, '*');
       }
     });
   }
@@ -5149,6 +5150,34 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 })();
 </script>
 
+
+<script>
+/* ── Dispara las animaciones de los mocks cuando el showcase es visible ── */
+(function(){
+  const sc = document.querySelector('.product-showcase');
+  if (!sc) return;
+  let done = false;
+  function playAll(){
+    sc.querySelectorAll('.showcase-screen iframe, .phone-screen iframe').forEach(function(fr){
+      try { fr.contentWindow.postMessage({ type: 'yiqi-play' }, '*'); } catch(e){}
+    });
+  }
+  if (!('IntersectionObserver' in window)) { setTimeout(playAll, 600); return; }
+  const io = new IntersectionObserver(function(entries, obs){
+    entries.forEach(function(en){
+      if (en.isIntersecting && !done){
+        done = true;
+        /* reintentos para cubrir la carga async de los iframes */
+        setTimeout(playAll, 250);
+        setTimeout(playAll, 900);
+        setTimeout(playAll, 1600);
+        obs.disconnect();
+      }
+    });
+  }, { threshold: 0.4 });
+  io.observe(sc);
+})();
+</script>
 
 <script>
 /* ── Showcase 3D tilt ─────────────────────── */

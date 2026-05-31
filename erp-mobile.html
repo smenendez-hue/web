@@ -401,25 +401,40 @@ var mobileChartRef = null;
 })();
 
 // Counter animation
-document.querySelectorAll('[data-count]').forEach(el => {
-  const target  = parseFloat(el.dataset.count);
-  const prefix  = el.dataset.prefix || '';
-  const suffix  = el.dataset.suffix || '';
-  const isInt   = Number.isInteger(target);
-  let start = null;
-  function fmt(v) {
-    return isInt ? prefix + Math.round(v) + suffix
-                 : prefix + v.toFixed(1).replace('.', ',') + suffix;
+function runCounters(){
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target  = parseFloat(el.dataset.count);
+    const prefix  = el.dataset.prefix || '';
+    const suffix  = el.dataset.suffix || '';
+    const isInt   = Number.isInteger(target);
+    let start = null;
+    function fmt(v) {
+      return isInt ? prefix + Math.round(v) + suffix
+                   : prefix + v.toFixed(1).replace('.', ',') + suffix;
+    }
+    el.textContent = fmt(0);
+    function step(ts) {
+      if (!start) start = ts;
+      const p    = Math.min((ts - start) / 900, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(ease * target);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+// Reproducción de animaciones cuando el mock es visible (mensaje del padre) + fallback standalone
+(function(){
+  let played = false;
+  function play(){
+    if (played) return; played = true;
+    runCounters();
+    if (mobileChartRef) { mobileChartRef.reset(); mobileChartRef.update(); }
   }
-  function step(ts) {
-    if (!start) start = ts;
-    const p    = Math.min((ts - start) / 800, 1);
-    const ease = 1 - Math.pow(1 - p, 3);
-    el.textContent = fmt(ease * target);
-    if (p < 1) requestAnimationFrame(step);
-  }
-  setTimeout(() => requestAnimationFrame(step), 150);
-});
+  window.addEventListener('message', function(e){ if (e.data && e.data.type === 'yiqi-play') play(); });
+  setTimeout(play, 1600);
+})();
 
 // Live clock
 (function(){
