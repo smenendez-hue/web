@@ -56,7 +56,7 @@ class SiteFooter extends HTMLElement {
           <a href="${r('capacitaciones.html')}">Capacitaciones</a>
           <a href="${r('novedades.html')}">Novedades</a>
           <a href="${r('ia-ready.html')}">IA Ready</a>
-          <a href="${r('api-docs.html')}">API Docs</a>
+          <a href="https://apidoc.yiqi.com.ar/" target="_blank" rel="noopener">API Docs</a>
           <a href="${r('faq.html')}">FAQ</a>
           <a href="https://me.yiqi.com.ar" target="_blank" rel="noopener">Login</a>
         </div>
@@ -178,22 +178,13 @@ class SiteFooter extends HTMLElement {
         const _home = _link.getAttribute('href');
         _link.addEventListener('click', (e) => {
           if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-          if (!window.YiQiLogo) return;
           const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          let _abs = null; try { _abs = new URL(_home, location.href).href; } catch(err){}
-          const _samePage = _abs && _abs.split('#')[0] === location.href.split('#')[0];
-          if (_samePage) {
-            e.preventDefault();
-            if (!reduce) { try { window.YiQiLogo.play(_svg, {phase:'all', force:true}); } catch(err){} }
-            return;
-          }
-          if (reduce) return;
+          if (reduce || !window.YiQiLogo) return;
           e.preventDefault();
           let _done = false;
           const _go = () => { if (_done) return; _done = true; try { sessionStorage.setItem('yiqiLogoContinue','1'); } catch(err){} window.location.href = _home; };
-          let _anims = [];
-          try { _anims = window.YiQiLogo.play(_svg, {phase:'rise', force:true}) || []; } catch(err){ _go(); return; }
-          if (_anims.length) { Promise.all(_anims.map(a => a.finished)).then(_go).catch(_go); setTimeout(_go, 600); }
+          const _anims = window.YiQiLogo.play(_svg, {phase:'rise', force:true});
+          if (_anims && _anims.length) { Promise.all(_anims.map(a => a.finished)).then(_go).catch(_go); setTimeout(_go, 520); }
           else _go();
         });
       }

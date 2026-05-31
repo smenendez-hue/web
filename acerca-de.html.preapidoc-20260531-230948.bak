@@ -296,7 +296,7 @@ html, body { overflow-x: clip; }
         <a href="ayuda-erp.html" class="tag tag-link">Ecommerce</a>
         <a href="ayuda-erp.html" class="tag tag-link">Bancos</a>
         <a href="ayuda-erp.html" class="tag tag-link">Logística</a>
-        <a href="api-docs.html" class="tag tag-link">YiQi API ↗</a>
+        <a href="https://apidoc.yiqi.com.ar" target="_blank" rel="noopener" class="tag tag-link">YiQi API ↗</a>
       </div>
     </div>
   </div>

@@ -1,13 +1,28 @@
 /* ============================================================
-   YiQi Site Footer — Web Component
-   Uso: <site-footer base="./|../"></site-footer>
-   DS v1.2.6
+   YiQi Site Header — Web Component
+   DS v1.2.5
    ============================================================ */
 
-class SiteFooter extends HTMLElement {
+class SiteHeader extends HTMLElement {
   connectedCallback() {
+    const page = this.getAttribute('current-page') || '';
+    document.documentElement.dataset.page = page;
     const base = this.getAttribute('base') || './';
     const r = (path) => base + path;
+
+    const navItems = [
+      { label: 'API Docs',      href: r('api-docs.html'),      page: 'api-docs'               },
+      { label: 'Novedades',     href: r('novedades.html'),      page: 'novedades'             },
+      { label: 'Capacitaciones',href: r('capacitaciones.html'), page: 'capacitaciones'        },
+      { label: 'FAQ',           href: r('faq.html'),            page: 'faq'                   },
+      { label: 'Acerca de',     href: r('acerca-de.html'),      page: 'acerca-de'             },
+      { label: 'Ayuda ERP',     href: r('ayuda-erp.html'),      page: 'soporte'               },
+      { label: 'Contacto',      href: r('contacto.html'),       page: 'contacto'              },
+    ].map(n => {
+      const active = n.page === page ? ' active" aria-current="page' : '';
+      const ext    = n.external ? ' target="_blank" rel="noopener"' : '';
+      return `<a href="${n.href}"${ext} class="nav-link${active}">${n.label}</a>`;
+    }).join('\n');
 
     const logo = `<svg class="yq-logo-anim" data-yiqi-logo data-axis="y" width="60" height="39" viewBox="0 0 100 65" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g class="yq-all anim">
@@ -20,78 +35,46 @@ class SiteFooter extends HTMLElement {
       </g>
     </svg>`;
 
-    const socials = `
-<div class="footer-socials">
-  <a href="https://www.linkedin.com/company/yiqi-sa" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
-    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2" fill="currentColor" stroke="none"/></svg>
-  </a>
-  <a href="https://instagram.com/yiqisa" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
-    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-  </a>
-  <a href="https://facebook.com/yiqi.com.ar" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
-    <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-  </a>
-  <a href="https://youtube.com/@yiqi3369" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.94 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
-  </a>
-</div>`;
+    const themeToggle = `<div class="theme-switch" role="group" aria-label="Tema">
+      <button class="theme-opt" data-val="dark"   title="Oscuro"  onclick="setTheme('dark')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="theme-opt" data-val="system" title="Sistema" onclick="setTheme('system')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </button>
+      <button class="theme-opt" data-val="light"  title="Claro"   onclick="setTheme('light')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>`;
 
     this.innerHTML = `
-<footer class="footer">
-  <div class="footer-terminal">
-    <div class="footer-grid">
+<div class="ds-overlay" id="overlay"></div>
 
-      <!-- Col 1: Logo -->
-      <div class="footer-block footer-block--brand">
-        <a href="${r('index.html')}" class="footer-logo-link" aria-label="YiQi — inicio">
-          ${logo}
-        </a>
-        ${socials}
-      </div>
+<nav class="mobile-nav" id="mobileNav">
+  ${navItems}
+  ${themeToggle}
+  <a href="https://me.yiqi.com.ar" target="_blank" class="nav-link">Login</a>
+</nav>
 
-      <!-- Col 2: Producto -->
-      <div class="footer-block">
-        <p class="footer-block-label">Producto</p>
-        <div class="footer-contacts">
-          <a href="${r('capacitaciones.html')}">Capacitaciones</a>
-          <a href="${r('novedades.html')}">Novedades</a>
-          <a href="${r('ia-ready.html')}">IA Ready</a>
-          <a href="${r('api-docs.html')}">API Docs</a>
-          <a href="${r('faq.html')}">FAQ</a>
-          <a href="https://me.yiqi.com.ar" target="_blank" rel="noopener">Login</a>
-        </div>
-      </div>
+<header class="topbar">
+  <a href="${r('index.html')}" class="topbar-logo">${logo}</a>
 
-      <!-- Col 3: Empresa -->
-      <div class="footer-block">
-        <p class="footer-block-label">Empresa</p>
-        <div class="footer-contacts">
-          <a href="${r('acerca-de.html')}">Acerca de YiQi</a>
-          <a href="mailto:cv@yiqi.com.ar">Trabaja con nosotros</a>
-          <a href="${r('contacto.html')}">Contacto</a>
-          <a href="https://yiqi.com.ar" target="_blank" rel="noopener">yiqi.com.ar</a>
-        </div>
-      </div>
+  <div class="topbar-spacer"></div>
 
-      <!-- Col 4: Ayuda ERP -->
-      <div class="footer-block">
-        <p class="footer-block-label">Ayuda ERP</p>
-        <div class="footer-contacts">
-          <a href="${r('ayuda-erp.html')}">Ayuda ERP</a>
-          <a href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
-          <a href="mailto:comercial@yiqi.com.ar">comercial@yiqi.com.ar</a>
-          <a href="https://wa.me/5491123727422" target="_blank" rel="noopener">+54 11 2372 7422</a>
-        </div>
-      </div>
+  <nav class="topbar-nav">
+    ${navItems}
+  </nav>
 
-    </div>
+  ${themeToggle}
 
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 YiQi S.A. · Todos los derechos reservados</p>
-      <a href="${r('yiqi-design-system.html')}" class="footer-version footer-version-link">DS v1.2.6</a>
-    </div>
-  </div>
-</footer>`;
+  <a href="https://me.yiqi.com.ar" target="_blank" class="btn-login">
+    Login
+  </a>
+
+  <button class="mobile-menu-btn" id="menuBtn" style="margin-left:auto" aria-label="Menú">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</header>`;
 
     /* ── yq-logo-anim: rise al tocar → la Q gira al entrar a la otra pagina ── */
     (function(){
@@ -172,34 +155,70 @@ class SiteFooter extends HTMLElement {
         st.textContent = '[data-yiqi-logo] .anim{transform-box:fill-box;transform-origin:center}';
         document.head.appendChild(st);
       }
-      const _link = this.querySelector('.footer-logo-link');
+      const _link = this.querySelector('.topbar-logo');
       const _svg  = _link && _link.querySelector('[data-yiqi-logo]');
       if (_link && _svg) {
         const _home = _link.getAttribute('href');
         _link.addEventListener('click', (e) => {
           if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-          if (!window.YiQiLogo) return;
           const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          let _abs = null; try { _abs = new URL(_home, location.href).href; } catch(err){}
-          const _samePage = _abs && _abs.split('#')[0] === location.href.split('#')[0];
-          if (_samePage) {
-            e.preventDefault();
-            if (!reduce) { try { window.YiQiLogo.play(_svg, {phase:'all', force:true}); } catch(err){} }
-            return;
-          }
-          if (reduce) return;
+          if (reduce || !window.YiQiLogo) return;
           e.preventDefault();
           let _done = false;
           const _go = () => { if (_done) return; _done = true; try { sessionStorage.setItem('yiqiLogoContinue','1'); } catch(err){} window.location.href = _home; };
-          let _anims = [];
-          try { _anims = window.YiQiLogo.play(_svg, {phase:'rise', force:true}) || []; } catch(err){ _go(); return; }
-          if (_anims.length) { Promise.all(_anims.map(a => a.finished)).then(_go).catch(_go); setTimeout(_go, 600); }
+          const _anims = window.YiQiLogo.play(_svg, {phase:'rise', force:true});
+          if (_anims && _anims.length) { Promise.all(_anims.map(a => a.finished)).then(_go).catch(_go); setTimeout(_go, 520); }
           else _go();
         });
       }
     }).call(this);
 
+
+    /* ── Overlay + mobile nav ── */
+    const overlay   = this.querySelector('#overlay');
+    const mobileNav = this.querySelector('#mobileNav');
+
+    this.querySelector('#menuBtn').addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+      overlay.classList.toggle('show');
+    });
+    overlay.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      overlay.classList.remove('show');
+    });
+
+    /* ── Theme (solo si no está definido ya en la página) ── */
+    if (!window._yiqiHeaderTheme) {
+      window._yiqiHeaderTheme = true;
+      const _mq = window.matchMedia('(prefers-color-scheme: dark)');
+      const _resolve = v => v === 'system' ? (_mq.matches ? 'dark' : 'light') : v;
+
+      if (!window.setTheme) {
+        window.setTheme = function(v) {
+          localStorage.setItem('yiqi-theme', v);
+          document.documentElement.dataset.theme = _resolve(v);
+          document.querySelectorAll('.theme-opt[data-val]').forEach(b =>
+            b.classList.toggle('active', b.dataset.val === v));
+        };
+        _mq.addEventListener('change', () => {
+          if ((localStorage.getItem('yiqi-theme') || 'system') === 'system') window.setTheme('system');
+        });
+      }
+
+      const _init = () => {
+        const saved = localStorage.getItem('yiqi-theme') || 'system';
+        document.documentElement.dataset.theme = _resolve(saved);
+        document.querySelectorAll('.theme-opt[data-val]').forEach(b =>
+          b.classList.toggle('active', b.dataset.val === saved));
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', _init);
+      } else {
+        _init();
+      }
+    }
   }
 }
 
-customElements.define('site-footer', SiteFooter);
+customElements.define('site-header', SiteHeader);

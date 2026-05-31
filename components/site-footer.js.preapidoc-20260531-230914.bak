@@ -56,7 +56,7 @@ class SiteFooter extends HTMLElement {
           <a href="${r('capacitaciones.html')}">Capacitaciones</a>
           <a href="${r('novedades.html')}">Novedades</a>
           <a href="${r('ia-ready.html')}">IA Ready</a>
-          <a href="${r('api-docs.html')}">API Docs</a>
+          <a href="https://apidoc.yiqi.com.ar/" target="_blank" rel="noopener">API Docs</a>
           <a href="${r('faq.html')}">FAQ</a>
           <a href="https://me.yiqi.com.ar" target="_blank" rel="noopener">Login</a>
         </div>

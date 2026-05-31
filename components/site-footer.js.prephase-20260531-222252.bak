@@ -56,7 +56,7 @@ class SiteFooter extends HTMLElement {
           <a href="${r('capacitaciones.html')}">Capacitaciones</a>
           <a href="${r('novedades.html')}">Novedades</a>
           <a href="${r('ia-ready.html')}">IA Ready</a>
-          <a href="${r('api-docs.html')}">API Docs</a>
+          <a href="https://apidoc.yiqi.com.ar/" target="_blank" rel="noopener">API Docs</a>
           <a href="${r('faq.html')}">FAQ</a>
           <a href="https://me.yiqi.com.ar" target="_blank" rel="noopener">Login</a>
         </div>
@@ -93,14 +93,13 @@ class SiteFooter extends HTMLElement {
   </div>
 </footer>`;
 
-    /* ── yq-logo-anim: rise al tocar → la Q gira al entrar a la otra pagina ── */
+    /* ── yq-logo-anim: flip vertical al tocar → home ── */
     (function(){
       if (!window.YiQiLogo) {
         (function (global) {
           'use strict';
-          const T = { body:260, qDur:680, yDelay:0, i1sDelay:40, i2sDelay:80, qDelay:80, dotGap1:60, dotGap2:120 };
-          const LETTERS = ['yq-y','yq-i1s','yq-i2s'];
-          const ALLP = ['yq-all','yq-y','yq-i1s','yq-i2s','yq-q','yq-i1d','yq-i2d'];
+          const PARTS = { all:'yq-all', y:'yq-y', i1s:'yq-i1s', i2s:'yq-i2s', q:'yq-q', i1d:'yq-i1d', i2d:'yq-i2d' };
+          const T = { body:520, qDur:820, yDelay:0, i1sDelay:90, i2sDelay:160, qDelay:260, dotGap1:90, dotGap2:170 };
           const reduceMotion = () => global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
           const $ = (svg, cls) => svg.querySelector('.' + cls);
           function qFrames(axis){
@@ -120,47 +119,27 @@ class SiteFooter extends HTMLElement {
               { opacity:1,   transform:f(1.05,1),   offset:.88 },
               { opacity:1,   transform:f(1,1),      offset:1   } ]};
           }
-          function clear(svg){ ALLP.forEach(c=>{ const el=$(svg,c); if(el) el.getAnimations().forEach(a=>a.cancel()); }); }
-          function reset(svg){ clear(svg); ALLP.forEach(c=>{ const el=$(svg,c); if(el){ el.style.opacity=''; el.style.transform=''; } }); }
-          function showLetters(svg){ LETTERS.forEach(c=>{ const el=$(svg,c); if(el){ el.style.opacity=''; el.style.transform=''; } }); }
-          function rise(svg, k, ease){
-            const fr = [{opacity:0,transform:'translateY(7px)'},{opacity:1,transform:'translateY(0)'}];
-            const A = (c, o) => { const el=$(svg,c); return el ? el.animate(fr, Object.assign({fill:'both'}, o)) : null; };
-            return [
-              A('yq-y',   {duration:T.body*k, delay:T.yDelay*k,   easing:ease}),
-              A('yq-i1s', {duration:T.body*k, delay:T.i1sDelay*k, easing:ease}),
-              A('yq-i2s', {duration:T.body*k, delay:T.i2sDelay*k, easing:ease})
-            ].filter(Boolean);
-          }
-          function spin(svg, k, axis){
-            const qf = qFrames(axis);
-            const A = (c, delay) => { const el=$(svg,c); return el ? el.animate(qf.frames, {duration:T.qDur*k, delay:delay*k, easing:qf.easing, fill:'both'}) : null; };
-            return [
-              A('yq-q',   T.qDelay),
-              A('yq-i1d', T.qDelay+T.dotGap1),
-              A('yq-i2d', T.qDelay+T.dotGap2)
-            ].filter(Boolean);
-          }
+          function clear(svg){ Object.values(PARTS).forEach(c=>{ const el=$(svg,c); if(el) el.getAnimations().forEach(a=>a.cancel()); }); }
+          function reset(svg){ clear(svg); Object.values(PARTS).forEach(c=>{ const el=$(svg,c); if(el){ el.style.opacity=''; el.style.transform=''; } }); }
           function play(svg, opts){
             opts = opts || {};
             const axis = (opts.axis || svg.dataset.axis || 'y').toLowerCase();
             const rate = opts.rate != null ? +opts.rate : 1;
             const k = 1 / rate;
             clear(svg);
-            if (reduceMotion() && !opts.force) { reset(svg); return []; }
+            if (reduceMotion() && !opts.force) { reset(svg); return; }
             const ease = 'cubic-bezier(.22,1,.36,1)';
-            const phase = opts.phase || 'all';
-            let anims = [];
-            if (phase === 'q') showLetters(svg);
-            if (phase === 'all' || phase === 'rise') anims = anims.concat(rise(svg, k, ease));
-            if (phase === 'all' || phase === 'q')    anims = anims.concat(spin(svg, k, axis));
-            return anims;
+            const A = (c, frames, o) => $(svg,c) && $(svg,c).animate(frames, Object.assign({fill:'both'}, o));
+            const rise = [{opacity:0,transform:'translateY(7px)'},{opacity:1,transform:'translateY(0)'}];
+            A(PARTS.y,   rise, {duration:T.body*k, delay:T.yDelay*k,   easing:ease});
+            A(PARTS.i1s, rise, {duration:T.body*k, delay:T.i1sDelay*k, easing:ease});
+            A(PARTS.i2s, rise, {duration:T.body*k, delay:T.i2sDelay*k, easing:ease});
+            const qf = qFrames(axis);
+            A(PARTS.q,   qf.frames, {duration:T.qDur*k, delay:T.qDelay*k, easing:qf.easing});
+            A(PARTS.i1d, qf.frames, {duration:T.qDur*k, delay:(T.qDelay+T.dotGap1)*k, easing:qf.easing});
+            A(PARTS.i2d, qf.frames, {duration:T.qDur*k, delay:(T.qDelay+T.dotGap2)*k, easing:qf.easing});
           }
-          function autoInit(){
-            let cont = false;
-            try { cont = sessionStorage.getItem('yiqiLogoContinue') === '1'; if (cont) sessionStorage.removeItem('yiqiLogoContinue'); } catch(e){}
-            document.querySelectorAll('[data-yiqi-logo]').forEach(svg => play(svg, cont ? {phase:'q', force:true} : {}));
-          }
+          function autoInit(){ document.querySelectorAll('[data-yiqi-logo]').forEach(svg=>play(svg)); }
           if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autoInit);
           else autoInit();
           global.YiQiLogo = { play, reset };
@@ -178,23 +157,18 @@ class SiteFooter extends HTMLElement {
         const _home = _link.getAttribute('href');
         _link.addEventListener('click', (e) => {
           if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-          if (!window.YiQiLogo) return;
           const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          let _abs = null; try { _abs = new URL(_home, location.href).href; } catch(err){}
-          const _samePage = _abs && _abs.split('#')[0] === location.href.split('#')[0];
-          if (_samePage) {
-            e.preventDefault();
-            if (!reduce) { try { window.YiQiLogo.play(_svg, {phase:'all', force:true}); } catch(err){} }
-            return;
-          }
-          if (reduce) return;
+          if (reduce || !window.YiQiLogo) return;
           e.preventDefault();
-          let _done = false;
-          const _go = () => { if (_done) return; _done = true; try { sessionStorage.setItem('yiqiLogoContinue','1'); } catch(err){} window.location.href = _home; };
-          let _anims = [];
-          try { _anims = window.YiQiLogo.play(_svg, {phase:'rise', force:true}) || []; } catch(err){ _go(); return; }
-          if (_anims.length) { Promise.all(_anims.map(a => a.finished)).then(_go).catch(_go); setTimeout(_go, 600); }
-          else _go();
+          window.YiQiLogo.play(_svg, {axis:'y', force:true});
+          const _go = () => { window.location.href = _home; };
+          const _anims = _svg.getAnimations ? _svg.getAnimations({subtree:true}) : [];
+          if (_anims.length) {
+            let _done = false;
+            const _nav = () => { if (!_done) { _done = true; _go(); } };
+            Promise.all(_anims.map(a => a.finished)).then(_nav).catch(_nav);
+            setTimeout(_nav, 1600); /* fallback: anim total ~1250ms */
+          } else { _go(); }
         });
       }
     }).call(this);
