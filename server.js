@@ -392,6 +392,12 @@ function inferHttpStatusFromErrorMessage(message) {
   return status;
 }
 
+function isDuplicateContactoError(message) {
+  if (!isNonEmptyString(message)) return false;
+  return /duplicate key row/i.test(message)
+    && (/ENT_CONTACTO/i.test(message) || /UQ_CONTACTO/i.test(message));
+}
+
 /* ─────────────────────────────────────────────────────────────
    /api/contact — recibe el formulario y lo persiste
    1) Siempre guarda a contact-submissions.jsonl (no se pierde data)
@@ -619,10 +625,44 @@ const server = http.createServer((req, res) => {
 
         sendRequest()
           .then((result) => {
-            sendJson(res, 200, { ok: true, result });
+            const apiError = result && typeof result === "object"
+              ? (result.ok === false || isNonEmptyString(result.error))
+              : false;
+
+            if (apiError) {
+              sendJson(res, 502, {
+                ok: false,
+                error: "La API devolvio error al crear la consulta comercial",
+                details: isNonEmptyString(result?.error) ? result.error : "Unknown error",
+                result,
+              });
+              return;
+            }
+
+            const candidateId = Number(result?.newId ?? result?.id ?? result?.data?.id);
+            if (!Number.isFinite(candidateId) || candidateId <= 0) {
+              sendJson(res, 502, {
+                ok: false,
+                error: "La API no devolvio un id de alta para la consulta comercial",
+                result,
+              });
+              return;
+            }
+
+            sendJson(res, 200, { ok: true, id: candidateId, result });
           })
           .catch((error) => {
             const message = error instanceof Error ? error.message : "Unknown error";
+
+            if (isDuplicateContactoError(message)) {
+              sendJson(res, 409, {
+                code: "DUPLICATE_CONTACT",
+                error: "El contacto ya existe en la base de datos",
+                details: "Ya existe un contacto con ese nombre y email. Usa otro email o actualiza el contacto existente.",
+              });
+              return;
+            }
+
             const inferredStatus = inferHttpStatusFromErrorMessage(message);
             const statusCode = inferredStatus && inferredStatus >= 400 && inferredStatus < 500 ? 400 : 500;
 

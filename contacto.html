@@ -821,8 +821,11 @@ body {
       });
 
       const body = await response.json().catch(() => ({}));
-      if (!response.ok || !body?.ok) {
-        throw new Error(body?.details || body?.error || 'No se pudo enviar la consulta.');
+      const apiError = body?.result?.ok === false || Boolean(body?.result?.error);
+      const createdId = Number(body?.id ?? body?.result?.newId ?? body?.result?.id ?? body?.result?.data?.id);
+
+      if (!response.ok || !body?.ok || apiError || !Number.isFinite(createdId) || createdId <= 0) {
+        throw new Error(body?.result?.error || body?.details || body?.error || 'No se pudo confirmar el alta de la consulta.');
       }
 
       // Redirect a gracias.html (donde se dispara el evento Lead de Meta)
