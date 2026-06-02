@@ -457,74 +457,56 @@ function appendContactSubmission(payload, extra = {}) {
   });
 }
 
-function buildOnPayloadFromContact(p) {
-  // Mapeo provisorio del payload del form a un registro de ON.
-  // Ajustar nombres de campos según la entidad real en YiQi ERP.
-  const rubros = Array.isArray(p.rubros) ? p.rubros.join(", ") : "";
+function buildConsultaPayloadFromContact(p) {
+  const rubros  = Array.isArray(p.rubros)  ? p.rubros.join(", ")  : "";
   const modulos = Array.isArray(p.modulos) ? p.modulos.join(", ") : "";
-  const origenFmt = (p?.meta?.form === "hero-index")
-    ? "Web yiqi.com.ar (hero)"
-    : "Web yiqi.com.ar (contacto)";
-
+  const config  = getYiqiConfig();
   return {
-    record: {
-      EMPRESA: (p.empresa || "").trim(),
-      CONTACTO_NOMBRE: `${p.nombre} ${p.apellido}`.trim(),
-      CONTACTO_EMAIL: (p.email || "").trim(),
-      CONTACTO_TELEFONO: (p.celular || "").trim(),
-      ORIGEN: origenFmt,
-      PAIS: (p.pais || "").trim(),
-      TITULO: `Contacto web — ${p.empresa || "sin empresa"}`,
-      DESCRIPCION: [
+    schemaId: config.contactSchemaId,
+    data: {
+      COCO_CONTACTO:           `${p.nombre || ""} ${p.apellido || ""}`.trim(),
+      COCO_CLIENTE:            (p.empresa  || "").trim(),
+      COCO_CONSULTA:           [
         p.mensaje || "",
-        "",
-        rubros  ? `Rubros: ${rubros}`   : "",
-        modulos ? `Módulos: ${modulos}` : "",
+        rubros  ? `Rubros: ${rubros}`    : "",
+        modulos ? `Módulos: ${modulos}`  : "",
         p.empleados ? `Empleados: ${p.empleados}` : "",
-        p.source    ? `¿Cómo nos conoció?: ${p.source}` : "",
       ].filter(Boolean).join("\n").trim(),
+      COCO_TELEFONO:           (p.celular  || "").trim(),
+      COCO_MAIL:               (p.email    || "").trim(),
+      COCO_CANT_EMPLEADOS:     (p.empleados || "").trim(),
+      COCO_RUBRO_PRINCIPAL:    rubros,
+      COCO_MODULOS_DE_INTERES: modulos,
+      COCO_CANAL_DE_CONTACTO:  (p.source   || "").trim(),
+      ORCO_ID_ORCO:            109574,
     },
+    countryName: (p.pais || "").trim(),
   };
 }
 
 async function tryCreateOnInYiqi(payload) {
-  const config = getYiqiConfig();
-  const missing = getMissingYiqiAuthEnv(config);
-  if (missing.length > 0) {
-    throw new Error(`Missing YiQi API auth env: ${missing.join(", ")}`);
+  const consultaPayload = buildConsultaPayloadFromContact(payload);
+
+  // Resolver PAIS_ID_PAIS si hay país
+  if (consultaPayload.countryName && !Number.isFinite(Number(consultaPayload.data.PAIS_ID_PAIS))) {
+    try {
+      const paisId = await resolvePaisIdByName(consultaPayload.schemaId, consultaPayload.countryName);
+      consultaPayload.data.PAIS_ID_PAIS = paisId;
+    } catch (e) {
+      console.warn("[contact] PAIS_ID_PAIS no resuelto:", e.message);
+    }
   }
 
-  let token = await getYiqiToken(config);
-  const body = buildOnPayloadFromContact(payload);
-  const url = `${config.publicBaseUrl}/${CONTACT_ENTITY}/insert?schemaId=${config.schemaId}`;
+  const result = await sendConsultaComercial(consultaPayload);
 
-  const doFetch = async (tk) => fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${tk}`,
-    },
-    body: JSON.stringify(body),
-  });
+  const apiError = result && typeof result === "object"
+    ? (result.ok === false || isNonEmptyString(result.error))
+    : false;
+  if (apiError) throw new Error(result?.error || "CONSULTA_COMERCIAL devolvió error");
 
-  let response = await doFetch(token);
-
-  // Refresh de token si expiró
-  if (response.status === 401 || response.status === 403) {
-    cachedToken = null;
-    token = await getYiqiToken(config, true);
-    response = await doFetch(token);
-  }
-
-  if (!response.ok) {
-    const details = await response.text().catch(() => "");
-    throw new Error(`Insert ${CONTACT_ENTITY} failed (${response.status}): ${details || "No details"}`);
-  }
-
-  const result = await response.json().catch(() => ({}));
-  return result?.id || result?.data?.id || null;
+  const id = Number(result?.newId ?? result?.id ?? result?.data?.id);
+  return Number.isFinite(id) && id > 0 ? id : null;
 }
-
 async function handleContactSubmission(req, res) {
   let payload;
   try {
