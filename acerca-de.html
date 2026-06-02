@@ -40,14 +40,14 @@ html, body { overflow-x: clip; }
     }
 
     /* ── SECTIONS ── */
-    .section { max-width: 1120px; margin: 0 auto; padding: 40px 24px 80px; }
+    .section { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; }
     .section + .section { padding-top: 0; }
 
     /* ── HERO ── */
     .hero {
       text-align: left;
       max-width: 1120px; margin: 0 auto;
-      padding: 48px 24px 8px;
+      padding: 48px 24px 0;
     }
     .landing-kicker { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--cyan-soft); color: var(--cyan); font: 700 10px var(--mono); letter-spacing: .10em; text-transform: uppercase; margin-bottom: 20px; border: none; }
     .hero-title {
@@ -59,7 +59,7 @@ html, body { overflow-x: clip; }
     .hero-title .hl { color: var(--cyan); }
     .hero-desc {
       font-size: 17px; color: var(--muted); line-height: 1.7;
-      max-width: 560px; margin: 0 0 40px;
+      max-width: 560px; margin: 0;
     }
     .hero-actions { display: flex; align-items: center; justify-content: flex-start; gap: 12px; flex-wrap: wrap; }
     .btn {
@@ -104,19 +104,19 @@ html, body { overflow-x: clip; }
       background: var(--bg-elev);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-sm);
-      padding: 28px 24px;
+      padding: 18px 20px;
       text-align: left;
       transition: box-shadow var(--tr);
     }
     .stat-card:hover { box-shadow: 0 0 0 1px rgba(0,204,255,.10) inset, var(--shadow-md); }
     .stat-num {
       font-family: var(--display);
-      font-size: 36px; font-weight: 800; letter-spacing: -.03em;
+      font-size: 24px; font-weight: 800; letter-spacing: -.03em;
       color: var(--text); line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .stat-num span { color: var(--cyan); }
-    .stat-label { font: 500 13px var(--sans); color: var(--muted); }
+    .stat-label { font: 500 12px var(--sans); color: var(--muted); }
 
     /* ── MISSION BLOCK ── */
     .mission-grid {
@@ -250,8 +250,8 @@ html, body { overflow-x: clip; }
     .tag {
       display: inline-flex; align-items: center;
       padding: 5px 12px; border-radius: var(--radius-pill);
-      background: var(--bg-elev); border: none;
-      font: 500 12px var(--sans); color: var(--muted);
+      background: var(--cyan-soft); border: none;
+      font: 600 11px var(--mono); color: var(--cyan);
       transition: all var(--tr);
     }
     .tag-link { text-decoration: none; }
@@ -269,7 +269,7 @@ html, body { overflow-x: clip; }
 <section class="hero">
   <div class="landing-kicker">// Acerca de YiQi</div>
   <h1 class="hero-title">Software hecho para la operación real.</h1>
-  <p class="hero-desc">ERP moderno para empresas latinoamericanas que necesitan conectar toda su operación desde un solo sistema.</p>
+  <p class="hero-desc">No vendemos licencias. Acompañamos operaciones.</p>
 </section>
 
 <!-- SOBRE YIQI -->
@@ -301,6 +301,7 @@ html, body { overflow-x: clip; }
     </div>
   </div>
 </div>
+
 
 <div class="divider"></div>
 
