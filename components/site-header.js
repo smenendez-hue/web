@@ -167,6 +167,7 @@ class SiteHeader extends HTMLElement {
           const _samePage = _abs && _abs.split('#')[0] === location.href.split('#')[0];
           if (_samePage) {
             e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             if (!reduce) { try { window.YiQiLogo.play(_svg, {phase:'all', force:true}); } catch(err){} }
             return;
           }

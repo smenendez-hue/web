@@ -150,26 +150,72 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .ty-steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 0;
       margin: 0 auto 48px;
-      text-align: left;
+      text-align: center;
       width: 100%;
+      position: relative;
     }
-    @media (max-width: 640px) { .ty-steps { grid-template-columns: 1fr; } }
+    .ty-steps::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: calc(100% / 6);
+      right: calc(100% / 6);
+      height: 1px;
+      background: var(--line);
+      z-index: 0;
+    }
+    @media (max-width: 640px) {
+      .ty-steps {
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+      .ty-steps::before {
+        top: 18px;
+        left: 17px;
+        right: auto;
+        width: 1px;
+        height: calc(100% - 36px);
+      }
+    }
     .ty-step {
-      padding: 20px;
-      background: var(--bg-elev);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px;
+      position: relative;
+      background: none;
+      box-shadow: none;
+    }
+    @media (max-width: 640px) {
+      .ty-step {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 0 0 28px;
+      }
+      .ty-step:last-child { padding-bottom: 0; }
     }
     .ty-step-num {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 28px; height: 28px;
+      width: 36px; height: 36px; flex-shrink: 0;
       background: var(--cyan-soft); color: var(--cyan);
       font: 700 13px var(--mono);
       border-radius: 50%;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      position: relative; z-index: 1;
+      box-shadow: 0 0 0 5px var(--bg);
     }
+    .ty-step.upcoming .ty-step-num {
+      background: var(--bg-elev-2);
+      color: var(--muted-2);
+      box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--line);
+    }
+    .ty-step.upcoming .ty-step-title { color: var(--muted); }
+    html[data-theme="light"] .ty-step-num { box-shadow: 0 0 0 5px var(--bg); }
+    html[data-theme="light"] .ty-step.upcoming .ty-step-num { box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px var(--line); }
+    @media (max-width: 640px) { .ty-step-num { margin-bottom: 0; } }
     .ty-step-title {
       font: 600 14px var(--sans); color: var(--text); margin: 0 0 4px;
     }
@@ -262,20 +308,26 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     </p>
 
     <div class="ty-steps">
-      <div class="ty-step">
+      <div class="ty-step done">
         <div class="ty-step-num">1</div>
-        <div class="ty-step-title">Mensaje recibido</div>
-        <p class="ty-step-text">Tu solicitud ya está con nuestro equipo comercial.</p>
+        <div>
+          <div class="ty-step-title">Mensaje recibido</div>
+          <p class="ty-step-text">Tu solicitud ya está con nuestro equipo comercial.</p>
+        </div>
       </div>
-      <div class="ty-step">
+      <div class="ty-step upcoming">
         <div class="ty-step-num">2</div>
-        <div class="ty-step-title">Te respondemos</div>
-        <p class="ty-step-text">En menos de 24 horas hábiles, por mail o teléfono.</p>
+        <div>
+          <div class="ty-step-title">Te respondemos</div>
+          <p class="ty-step-text">En menos de 24 horas hábiles, por mail o teléfono.</p>
+        </div>
       </div>
-      <div class="ty-step">
+      <div class="ty-step upcoming">
         <div class="ty-step-num">3</div>
-        <div class="ty-step-title">Coordinamos una demo</div>
-        <p class="ty-step-text">Te mostramos YiQi enfocado en lo que necesitas.</p>
+        <div>
+          <div class="ty-step-title">Coordinamos una demo</div>
+          <p class="ty-step-text">Te mostramos YiQi enfocado en lo que necesitas.</p>
+        </div>
       </div>
     </div>
 
