@@ -23,11 +23,12 @@ fbq('track', 'PageView');
 if (['yiqi.com.ar','www.yiqi.com.ar'].indexOf(location.hostname) > -1) (function() {
   var qs = new URLSearchParams(window.location.search);
   var fromParam = qs.get('from');
-    if (fromParam) {
+  var statusParam = qs.get('status');
+  if (fromParam && statusParam !== 'error') {
     fbq('track', 'Lead', {
       content_name: 'Contacto YiQi',
       content_category: 'Formulario sitio',
-        source: fromParam
+      source: fromParam
     });
   }
 })();
@@ -221,6 +222,24 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       transition: color var(--tr);
     }
     .ty-link:hover { color: var(--text); }
+
+    /* ── Estado error ── */
+    .ty-icon.is-error {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+    .ty-icon.is-error::after {
+      animation: pulseRed 2.4s ease-out 1s infinite;
+    }
+    @keyframes pulseRed {
+      0%   { box-shadow: 0 0 0 0 rgba(242,95,92,.35); }
+      70%  { box-shadow: 0 0 0 18px rgba(242,95,92,0); }
+      100% { box-shadow: 0 0 0 0 rgba(242,95,92,0); }
+    }
+    .ty-eyebrow.is-error {
+      background: var(--red-soft);
+      color: var(--red);
+    }
   </style>
 </head>
 <body>
@@ -294,6 +313,34 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
         document.documentElement.dataset.theme = _mq.matches ? 'dark' : 'light';
       }
     });
+  })();
+
+  /* ── Detectar estado de error ── */
+  (function() {
+    const qs = new URLSearchParams(window.location.search);
+    if (qs.get('status') !== 'error') return;
+
+    // Ícono: verde → rojo
+    const icon = document.querySelector('.ty-icon');
+    if (icon) {
+      icon.classList.add('is-error');
+      icon.innerHTML = '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    }
+
+    // Badge
+    const eyebrow = document.querySelector('.ty-eyebrow');
+    if (eyebrow) { eyebrow.textContent = 'Problema al enviar'; eyebrow.classList.add('is-error'); }
+
+    // Título y subtítulo
+    const title = document.querySelector('.ty-title');
+    if (title) title.textContent = 'Algo salió mal.';
+
+    const lead = document.querySelector('.ty-lead');
+    if (lead) lead.innerHTML = 'No pudimos registrar tu mensaje en este momento. <strong>Tu información fue guardada</strong> y lo reintentamos automáticamente. Para asegurarte, escríbenos directo o reserva tu demo.';
+
+    // Ocultar los pasos (no aplican en error)
+    const steps = document.querySelector('.ty-steps');
+    if (steps) steps.style.display = 'none';
   })();
 </script>
 <script src="./components/meta-pixel-events.js" defer></script>

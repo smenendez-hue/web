@@ -831,6 +831,7 @@ body {
       // Redirect a gracias.html (donde se dispara el evento Lead de Meta)
       window.location.href = '/gracias.html?from=contact';
     } catch (error) {
+      savePending(buildPayload());
       formError.textContent = error instanceof Error ? error.message : 'Error enviando la consulta.';
       formError.classList.add('show');
       btn.disabled = false;

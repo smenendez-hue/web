@@ -3977,7 +3977,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     if (!ok) hfSavePending(payload);
 
     try { sessionStorage.setItem('yiqi-last-email', payload.email); } catch {}
-    window.location.href = '/gracias.html?from=hero';
+    window.location.href = '/gracias.html?from=hero' + (ok ? '' : '&status=error');
   }
 
   function toggleChip(el, groupId, multi) {
