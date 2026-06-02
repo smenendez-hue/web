@@ -62,6 +62,7 @@
   /* Layout */
   --topbar-h:  56px;
   --sidebar-w: 240px;
+  --page-px:   28px;
   /* Radios */
   --radius-xs:   6px;
   --radius-sm:   10px;
@@ -135,7 +136,7 @@ site-header {
 .topbar, .site-topbar {
   position: relative;
   height: var(--topbar-h, 56px);
-  display: flex; align-items: center; gap: 16px; padding: 0 28px;
+  display: flex; align-items: center; gap: 16px; padding: 0 var(--page-px);
   background: rgba(12,12,14,.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -154,7 +155,7 @@ html[data-theme="light"] .site-topbar {
   --muted: #5e5a57;
   --muted-2: #636875;
 }
-.topbar-logo  { display: flex; align-items: center; flex-shrink: 0; }
+.topbar-logo  { display: flex; align-items: center; flex-shrink: 0; margin-left: -8px; }
 .topbar-spacer { flex: 1; }
 .topbar-nav   { display: flex; align-items: center; gap: 2px; }
 
@@ -265,7 +266,7 @@ html[data-theme="light"] .site-topbar {
 }
 .footer-terminal {
   max-width: 1080px; margin: 0 auto;
-  padding: clamp(40px,5vw,64px) clamp(24px,5vw,64px);
+  padding: clamp(40px,5vw,64px) var(--page-px);
 }
 .footer-grid {
   display: grid;
@@ -277,7 +278,7 @@ html[data-theme="light"] .site-topbar {
 
 /* Col 1 — brand */
 .footer-block--brand { display: flex; flex-direction: column; gap: 24px; }
-.footer-logo-link    { display: inline-flex; text-decoration: none; opacity: 1; transition: opacity var(--tr, 180ms ease); }
+.footer-logo-link    { display: inline-flex; text-decoration: none; opacity: 1; transition: opacity var(--tr, 180ms ease); margin-left: -8px; }
 .footer-logo-link:hover { opacity: 1; }
 .footer-logo-link .yql { fill: var(--text); }
 .footer-logo-link .yqs { fill: var(--cyan); }
@@ -308,7 +309,7 @@ html[data-theme="light"] .site-topbar {
 .social-btn {
   width: 28px; height: 28px;
   background: none; border: none; border-radius: 0;
-  color: var(--muted-2); display: grid; place-items: center;
+  color: var(--muted-2); display: flex; align-items: center; justify-content: flex-start;
   transition: color var(--tr, 180ms ease); cursor: pointer; text-decoration: none;
 }
 .social-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -330,7 +331,7 @@ html[data-theme="light"] .site-topbar {
   .footer-block--brand { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 32px; }
 }
 @media (max-width: 600px) {
-  .topbar, .site-topbar { padding: 0 20px; }
+  :root { --page-px: 20px; }
 }
 
 @media (max-width: 540px) {

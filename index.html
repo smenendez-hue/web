@@ -293,7 +293,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
   }
   /* Autofill — ghost izquierda */
-  .hf-btn-autofill {
     height: 34px; padding: 0 12px;
     background: none; border: none;
     border-radius: var(--radius-sm);
@@ -302,7 +301,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     transition: color .15s, background .15s;
     white-space: nowrap; flex-shrink: 0;
   }
-  .hf-btn-autofill:hover { color: var(--cyan); background: var(--cyan-soft); }
   /* CTA — DS v1.2.5 .btn-primary */
   .hf-btn-cta {
     padding: 9px 16px;
@@ -317,8 +315,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hf-btn-cta:hover { background: rgba(0,204,255,.24); border-color: rgba(0,204,255,.40); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-cta { background: var(--cyan-soft-2); border-color: rgba(0,159,199,.28); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-cta:hover { background: rgba(0,159,199,.24); border-color: rgba(0,159,199,.40); color: var(--cyan); }
-  html[data-theme="light"] .hf-btn-autofill { color: var(--muted); }
-  html[data-theme="light"] .hf-btn-autofill:hover { color: var(--cyan); background: var(--cyan-soft); }
   html[data-theme="light"] .hf-btn-ghost { color: var(--muted-2); }
   html[data-theme="light"] .hf-btn-back  { color: var(--muted-2); }
   /* Ghost — texto */
@@ -2405,10 +2401,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <!-- Footer paso 1 -->
     <div class="hf-footer" id="hf-footer-1">
       <div class="hf-footer-actions">
-        <button class="hf-btn-autofill" style="display:none" onclick="hfAutofill()" title="Completar con datos de prueba">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          autofill
-        </button>
         <button class="hf-btn-cta" onclick="hfGoStep(2)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
       <p class="hf-legal" style="display:none">Al continuar aceptas nuestra <a href="https://yiqi.com.ar">política de privacidad</a>.</p>
@@ -2446,10 +2438,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <!-- Footer paso 2 -->
     <div class="hf-footer" id="hf-footer-2">
       <div class="hf-footer-actions">
-        <button class="hf-btn-autofill" style="display:none" onclick="hfAutofill()" title="Completar con datos de prueba">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          autofill
-        </button>
         <button class="hf-btn-cta" onclick="hfGoStep(3)">Continuar <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
     </div>
@@ -3854,23 +3842,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     hfCurrentStep = step;
   }
 
-  function hfAutofill() {
-    const v = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
-    v('hf-nombre',   'Sebastián');
-    v('hf-apellido', 'García');
-    v('hf-email',    'sgarcia@distribuidora.com.ar');
-    v('hf-phone',    '+54 9 11 4523-8901');
-    v('hf-country',  'Argentina');
-    v('hf-empresa',  'Distribuidora del Sur S.A.');
-    v('hf-source',   'LinkedIn');
-    /* chips paso 3: seleccionar primeras opciones */
-    document.querySelectorAll('#hf-size .hero-form-chip').forEach((c, i) => {
-      c.classList.toggle('active', i === 1);
-    });
-    document.querySelectorAll('#hf-modules .hero-form-chip').forEach((c, i) => {
-      c.classList.toggle('active', i < 3);
-    });
-  }
 
   function hfGoStep(step) {
     if (step === 2 && !hfValidate1()) return;
@@ -3989,7 +3960,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       h.endsWith('.local') || h.startsWith('192.168.') ||
       new URLSearchParams(location.search).get('dev') === '1';
     if (isDev) {
-      document.querySelectorAll('.hf-btn-autofill').forEach(b => b.style.display = '');
     }
   })();
 
