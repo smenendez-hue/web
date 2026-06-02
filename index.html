@@ -292,15 +292,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hf-footer-actions {
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
   }
-  /* Autofill — ghost izquierda */
-    height: 34px; padding: 0 12px;
-    background: none; border: none;
-    border-radius: var(--radius-sm);
-    color: var(--muted-2); font: 500 11px var(--mono); letter-spacing: .02em;
-    cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
-    transition: color .15s, background .15s;
-    white-space: nowrap; flex-shrink: 0;
-  }
   /* CTA — DS v1.2.5 .btn-primary */
   .hf-btn-cta {
     padding: 9px 16px;
@@ -4135,12 +4126,12 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
 
   /* ── Hero sub: word scramble ── */
-  const SUB_TOKENS = ['El ', 'sistema ', 'que ', 'opera ', 'mientras ', 'tú ', 'decides ', 'a ', 'dónde ', 'llevar ', 'el ', 'negocio.'];
+  const SUB_TOKENS = ['El ', 'sistema ', 'que ', 'opera ', 'mientras ', 'tú ', 'decides ', '\n', 'a ', 'dónde ', 'llevar ', 'el ', 'negocio.'];
   const subEl = document.getElementById('hero-sub-text');
 
   function buildScrambleSpans(el, tokens) {
     el.innerHTML = tokens.map(t =>
-      '<span data-final="' + t.replace(/"/g, '&quot;') + '">' + t + '</span>'
+      t === '\n' ? '<br>' : '<span data-final="' + t.replace(/"/g, '&quot;') + '">' + t + '</span>'
     ).join('');
   }
 
