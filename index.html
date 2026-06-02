@@ -4013,23 +4013,27 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   })();
 
   /* ── Filtro nombre y apellido: solo letras, espacios, ', - ── */
+
   (function() {
     const ALLOWED = /[^\p{L}\s'\-]/gu;
+    const capWords = s => s.split(' ').map(w => w ? w[0].toUpperCase() + w.slice(1) : w).join(' ');
     ['hf-nombre','hf-apellido'].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
       el.addEventListener('input', function() {
         const start = this.selectionStart;
         const clean = this.value.replace(ALLOWED, '');
-        if (clean !== this.value) {
-          this.value = clean;
-          try { this.setSelectionRange(start - 1, start - 1); } catch {}
+        const capped = capWords(clean);
+        const removed = this.value.length - clean.length;
+        if (capped !== this.value) {
+          this.value = capped;
+          try { this.setSelectionRange(start - removed, start - removed); } catch {}
         }
       });
       el.addEventListener('paste', function(e) {
         e.preventDefault();
         const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
-        document.execCommand('insertText', false, txt.replace(ALLOWED, ''));
+        document.execCommand('insertText', false, capWords(txt.replace(ALLOWED, '')));
       });
     });
   })();
