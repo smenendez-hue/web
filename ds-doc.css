@@ -72,7 +72,7 @@ button{font:inherit;cursor:pointer}
 
 /* ── CONTENT ── */
 .ds-content { padding: 36px 40px 80px; max-width: 1100px; }
-.ds-section { margin-bottom: 64px; }
+.ds-section { margin-bottom: 64px; scroll-margin-top: calc(var(--topbar-h, 56px) + 20px); }
 .ds-section-header { margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
 .ds-section-kicker { font: 700 10px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
 .ds-section-title { font-size: 26px; letter-spacing: -.03em; font-weight: 700; white-space: nowrap; }

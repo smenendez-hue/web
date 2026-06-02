@@ -1,4 +1,4 @@
-# YiQi Design System — Guía maestra v1.2.5
+# YiQi Design System — Guía maestra v1.2.6
 
 > Fuente única de verdad para implementación de UI en productos YiQi ERP.
 > Este archivo reemplaza cualquier versión anterior de `yiqi-design.md`.
@@ -31,6 +31,8 @@
 - **Topbar universal:** letras `var(--text)`, símbolo Q `var(--cyan)`
 - No rotar, deformar, recolorear ni aplicar efectos
 - **Tamaño canónico en topbar:** `height: 39px; width: auto` — nunca tamaño fijo por ancho
+- **Wordmark en displays estáticos:** sin animación — solo SVG inline sin `data-yiqi-logo`
+- **Animación canónica (único eje aprobado):** `data-axis="y"` (flip vertical). Los ejes `x` y `z` están descartados.
 
 ### Logo iA Ready
 
@@ -64,34 +66,34 @@
 ```css
 :root {
   /* Backgrounds */
-  --bg:        #0c0c0e;
-  --bg-elev:   #111114;
-  --bg-elev-2: #18181c;
-  --bg-soft:   rgba(255,255,255,.04);
+  --bg:        #0a0a0b;
+  --bg-elev:   #0f1013;
+  --bg-elev-2: #14161b;
+  --bg-soft:   #181b21;
 
   /* Borders */
   --line:        rgba(255,255,255,.08);
   --line-strong: rgba(255,255,255,.14);
 
   /* Text */
-  --text:    #f0f1f3;
+  --text:    #f3f5f7;
   --muted:   #908e8e;
   --muted-2: #7d7c82;  /* WCAG AA 4.6:1 */
 
   /* Brand — Cyan */
   --cyan:            #00ccff;
-  --cyan-soft:       rgba(0,204,255,.12);
-  --cyan-soft-2:     rgba(0,204,255,.18);
-  --cyan-label:      rgba(0,204,255,.7);
+  --cyan-soft:       rgba(0,204,255,.10);
+  --cyan-soft-2:     rgba(0,204,255,.16);
+  --cyan-label:      rgba(0,204,255,.52);
   --text-cyan-muted: rgba(0,195,240,.45);  /* subtítulos activos, labels acento */
 
   /* Semantic */
-  --green:       #00c48c;
-  --green-soft:  rgba(0,196,140,.12);
-  --amber:       #f6a623;
-  --amber-soft:  rgba(246,166,35,.12);
-  --red:         #f25f5c;
-  --red-soft:    rgba(242,95,92,.12);
+  --green:       #15d49c;
+  --green-soft:  rgba(21,212,156,.10);
+  --amber:       #ffb020;
+  --amber-soft:  rgba(255,176,32,.10);
+  --red:         #ff637d;
+  --red-soft:    rgba(255,99,125,.10);
   --purple:      #a78bfa;
   --purple-soft: rgba(167,139,250,.12);
 
@@ -100,7 +102,7 @@
 
   /* Typography */
   --sans:    "Inter", system-ui, sans-serif;
-  --display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --display: "Greycliff CF", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   --mono:    "IBM Plex Mono", monospace;
 
   /* Font weights */
@@ -120,15 +122,15 @@
   --space-8: 48px;
 
   /* Border radius */
-  --radius-xs:   5px;
-  --radius-sm:   7px;
-  --radius:      10px;
-  --radius-pill: 99px;
+  --radius-xs:   6px;
+  --radius-sm:   10px;
+  --radius:      14px;
+  --radius-pill: 999px;
 
   /* Elevation / Shadows */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.4), 0 1px 4px rgba(0,0,0,.2);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.25);
+  --shadow-sm: 0 1px 3px rgba(0,18,28,.30);
+  --shadow-md: 0 4px 14px rgba(0,20,30,.26);
+  --shadow-lg: 0 12px 40px rgba(0,26,40,.34), 0 2px 12px rgba(0,204,255,.06);
 
   /* Transitions */
   --transition-fast: 120ms ease;
@@ -149,17 +151,17 @@
 ```css
 html[data-theme="light"] {
   /* Backgrounds */
-  --bg:        #f5f4f0;
-  --bg-elev:   #eeece7;
-  --bg-elev-2: #e6e4df;
-  --bg-soft:   rgba(0,0,0,.04);
+  --bg:        #eeece7;
+  --bg-elev:   #f6f4ef;
+  --bg-elev-2: #ffffff;
+  --bg-soft:   #ece9e2;
 
   /* Borders */
   --line:        rgba(0,0,0,.08);
-  --line-strong: rgba(0,0,0,.14);
+  --line-strong: rgba(0,0,0,.13);
 
   /* Text */
-  --text:    #1a1a1e;
+  --text:    #17191c;
   --muted:   #5e5a57;
   --muted-2: #636875;  /* WCAG AA 4.8:1 */
 
@@ -167,23 +169,23 @@ html[data-theme="light"] {
   --cyan:            #009fc7;
   --cyan-soft:       rgba(0,159,199,.1);
   --cyan-soft-2:     rgba(0,159,199,.16);
-  --cyan-label:      rgba(0,159,199,.65);
+  --cyan-label:      rgba(0,159,199,.52);
   --text-cyan-muted: rgba(0,140,175,.48);
 
   /* Semantic */
-  --green:       #007a58;
-  --green-soft:  rgba(0,122,88,.1);
-  --amber:       #c47c00;
-  --amber-soft:  rgba(196,124,0,.1);
-  --red:         #c93c39;
-  --red-soft:    rgba(201,60,57,.1);
+  --green:       #0c9b6d;
+  --green-soft:  rgba(12,155,109,.10);
+  --amber:       #c78000;
+  --amber-soft:  rgba(199,128,0,.10);
+  --red:         #d4485e;
+  --red-soft:    rgba(212,72,94,.10);
   --purple:      #7c3aed;
-  --purple-soft: rgba(124,58,237,.1);
+  --purple-soft: rgba(124,58,237,.12);
 
   /* Shadows (más suaves en fondo claro) */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 8px rgba(0,0,0,.05);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.1), 0 1px 4px rgba(0,0,0,.06);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.15), 0 2px 8px rgba(0,0,0,.08);
+  --shadow-sm: 0 1px 3px rgba(16,36,54,.06);
+  --shadow-md: 0 4px 14px rgba(16,36,54,.08);
+  --shadow-lg: 0 8px 24px rgba(0,80,110,.09), 0 1px 4px rgba(0,80,110,.05);
 }
 ```
 
@@ -954,6 +956,9 @@ applyTheme(resolveTheme());
 10. **Spacing múltiplos de 4** — sin valores arbitrarios.
 11. **Archivos self-contained** — fuentes y scripts embebidos o desde CDN confiable.
 12. **Convención de nombres** — `[proyecto]-v1_0_0.html` (puntos → guiones bajos).
+13. **Trazabilidad obligatoria de KPIs** — cada indicador visible debe incluir origen validable: módulo + campo(s) + agregado/fórmula + periodo.
+14. **Composición de cuentas visible** — cuando un indicador represente una cuenta o total compuesto, debe aclarar qué incluye, qué excluye y con qué criterio.
+15. **No inventar datos faltantes** — si la fuente no está disponible, mostrar estado "No disponible" o "Dato de ejemplo" explícitamente.
 
 ---
 
@@ -972,7 +977,10 @@ applyTheme(resolveTheme());
 - [ ] Colores hardcodeados reemplazados por custom properties
 - [ ] CTA canónica: **"Reserva tu demo"** (sin voseo)
 - [ ] Nombre de marca: **YiQi**
-- [ ] Footer con versión DS: `· DS v1.2.5`
+- [ ] Footer con versión DS: `· DS v1.2.6`
+- [ ] Todo KPI visible muestra fuente validable (módulo + campo(s) + agregado/fórmula + periodo)
+- [ ] KPIs derivados o cuentas compuestas incluyen fórmula/composición en ayuda contextual
+- [ ] KPIs sin fuente disponible se muestran como no disponibles o demo, nunca como reales
 
 ---
 
@@ -993,5 +1001,102 @@ applyTheme(resolveTheme());
 
 ---
 
-*YiQi ERP · Design System v1.2.5 · Última actualización: 14/05/2026*
+---
+
+## 16. Patrón — Tabla de implementación
+
+Combina un **timeline de 4 pasos numerados** con una **infografía de plazos por fases**. Se usa en propuestas e informes para comunicar el proceso de puesta en marcha.
+
+### Clases
+
+Prefijo `impl-` en todas las clases para evitar colisiones.
+
+| Clase | Elemento |
+|---|---|
+| `.impl-timeline` | Grid de 4 columnas para los pasos |
+| `.impl-tl-step` | Contenedor de cada paso (nodo + contenido) |
+| `.impl-tl-node` | Círculo numerado en `var(--cyan)` |
+| `.impl-tl-content` | Título + descripción centrados bajo el nodo |
+| `.impl-plazos-card` | Card de plazos con barra + detalle |
+| `.impl-plazos-bar` | Barra de 3 fases: cyan · green · amber |
+| `.impl-plazos-phases` | Grid de 3 columnas con descripción por fase |
+| `.impl-plazos-note` | Nota al pie con íconos y lista de aclaraciones |
+
+### Tokens usados
+
+`--bg-elev-2` · `--radius-lg` · `--shadow-sm` · `--cyan` · `--green` · `--amber` · `--mono` · `--display` · `--line`
+
+### Fases de la barra (colores)
+
+| Fase | Color | Semanas orientativas |
+|---|---|---|
+| Configuración | `--cyan` (25%) | Sem 1–3 |
+| Módulos e integraciones | `--green` (42%) | Sem 4–8 |
+| Ajuste · Go live | `--amber` (33%) | Sem 9–12 |
+
+### Reglas
+
+- El total de semanas se destaca con `font-size: 18px` en `var(--text)`, antecedido por el número en negrita.
+- La nota al pie usa flex con ícono SVG inline alineado al tope + lista con `›` en `var(--cyan)`.
+- Responsive: en `≤ 760px` el timeline pasa a 2 columnas; en `≤ 480px` a 1 columna y la línea conectora desaparece.
+
+---
+
+## 17. Patrón — Contador animado
+
+Función `runCounters()` que anima cifras de `0` al valor destino con easing cúbico en 900 ms. Sin dependencias. Activación por `IntersectionObserver`.
+
+### Atributos HTML
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| `data-count` | number | Valor destino. Requerido. |
+| `data-prefix` | string | Texto antes de la cifra. Ej: `$` |
+| `data-suffix` | string | Texto después de la cifra. Ej: `%`, ` ped.` |
+
+### Función canónica
+
+```js
+function runCounters(root = document) {
+  root.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseFloat(el.dataset.count);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const isInt  = Number.isInteger(target);
+    const dur    = 900;
+    let start = null;
+    function fmt(v) {
+      return isInt
+        ? prefix + Math.round(v) + suffix
+        : prefix + v.toFixed(1).replace('.', ',') + suffix;
+    }
+    el.textContent = fmt(0);
+    function step(ts) {
+      if (!start) start = ts;
+      const p    = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3); // ease-out-cubic
+      el.textContent = fmt(ease * target);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+// Activación por IntersectionObserver
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { runCounters(e.target); io.unobserve(e.target); } });
+}, { threshold: 0.3 });
+document.querySelectorAll('.kpi-block').forEach(b => io.observe(b));
+```
+
+### Reglas
+
+- Siempre inicializar los elementos en `0` antes de que el usuario los vea (evitar flash del valor final).
+- Decimales: usar coma como separador decimal (`toFixed(1).replace('.', ',')`).
+- Activar por `IntersectionObserver` cuando la cifra está fuera del viewport inicial.
+- Tipografía canónica para cifras: `IBM Plex Mono`, `font-variant-numeric: tabular-nums`.
+
+---
+
+*YiQi ERP · Design System v1.2.6 · Última actualización: 02/06/2026*
 *Reemplaza todas las versiones anteriores de yiqi-design.md*
