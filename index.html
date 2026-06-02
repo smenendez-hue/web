@@ -127,6 +127,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .hero-left { text-align: left; min-width: 0; overflow: hidden; }
   .hero-right { display: flex; align-items: stretch; justify-content: center; }
+  @media (max-width: 900px) { .hero-right { justify-content: flex-start; } }
   .hero-label {
     display: inline-flex; align-items: center; gap: 10px;
     margin-bottom: 28px;
@@ -172,28 +173,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     font: 400 16px/1.4 var(--sans); color: var(--muted);
     max-width: 520px; margin-bottom: 10px;
   }
-  .hero-claim {
-    font: 500 12px/1.5 var(--mono); color: var(--muted);
-    max-width: 560px; margin-bottom: 28px;
-    letter-spacing: .01em;
-  }
-  .hero-claim .claim-prefix {
-    color: var(--muted-2); margin-right: 6px; user-select: none;
-  }
-  /* Claim words — usa token del theme */
-  #hero-claim-text span { color: var(--text); }
-  .hero-claim .claim-cursor {
-    display: inline-block; width: 0.6em; height: 1.1em;
-    background: var(--cyan); margin-left: 2px;
-    vertical-align: text-bottom;
-    animation: cursorBlink .9s steps(1) infinite;
-  }
-  @keyframes cursorBlink {
-    0%, 100% { opacity: 1; } 50% { opacity: 0; }
-  }
+
   .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
-  /* hero sub */
-  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-sub span[data-final] { color: var(--text); }
   /* responsive hero split */
   @media (max-width: 900px) {
     .hero-split-inner { grid-template-columns: 1fr; gap: 36px; padding: 40px 0 52px; }
@@ -2375,8 +2357,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <span class="tp-scramble tp-scramble-1" id="tp-scramble-1" aria-hidden="true">Se conecta </span>
     <span class="tp-scramble tp-scramble-2" id="tp-scramble-2" aria-hidden="true">con todo.</span>
   </h1>
-  <p class="hero-sub">El sistema que opera mientras tú decides a dónde llevar el negocio.</p>
-  <p class="hero-claim"><span class="claim-prefix">//</span><span id="hero-claim-text"></span><span class="claim-cursor" aria-hidden="true"></span></p>
+  <p class="hero-sub" id="hero-sub-text">El sistema que opera mientras tú decides a dónde llevar el negocio.</p>
 
   <div class="hero-actions">
     <a href="contacto.html" class="btn btn-primary btn-lg">
@@ -4183,28 +4164,21 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     el._scrambleTimeout = setTimeout(() => { raf = requestAnimationFrame(tick); el._scrambleRaf = raf; }, delay);
   }
 
-  /* ── Hero claim: syntax-highlighted word scramble ── */
-  const CLAIM_TOKENS = [
-    'Construye', ' con ', 'IA', ', ', 'conecta', ' y ', 'automatiza'
-  ];
-  const claimEl = document.getElementById('hero-claim-text');
+  /* ── Hero sub: word scramble ── */
+  const SUB_TOKENS = ['El ', 'sistema ', 'que ', 'opera ', 'mientras ', 'tú ', 'decides ', 'a ', 'dónde ', 'llevar ', 'el ', 'negocio.'];
+  const subEl = document.getElementById('hero-sub-text');
 
-  function buildClaimSpans() {
-    claimEl.innerHTML = '';
-    CLAIM_TOKENS.forEach(t => {
-      const s = document.createElement('span');
-      s.dataset.final = t;
-      s.textContent = t;
-      claimEl.appendChild(s);
-    });
+  function buildScrambleSpans(el, tokens) {
+    el.innerHTML = tokens.map(t =>
+      '<span data-final="' + t.replace(/"/g, '&quot;') + '">' + t + '</span>'
+    ).join('');
   }
 
-  function scrambleClaimWords(initialDelay = 0) {
-    const spans = claimEl.querySelectorAll('span[data-final]');
-    spans.forEach((span, i) => {
+  function scrambleWords(el, initialDelay = 0) {
+    el.querySelectorAll('span[data-final]').forEach((span, i) => {
       const FINAL = span.dataset.final;
       const totalFrames = Math.max(22, Math.min(44, FINAL.trim().length * 1.6));
-      const resolveAt  = idx => Math.floor((idx / FINAL.length) * totalFrames * 0.68);
+      const resolveAt = idx => Math.floor((idx / FINAL.length) * totalFrames * 0.68);
       let frame = 0;
       clearTimeout(span._st);
       cancelAnimationFrame(span._rf);
@@ -4219,22 +4193,22 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
           }
           span.textContent = out;
           frame++;
-          if (frame <= totalFrames) {
-            span._rf = requestAnimationFrame(tick);
-          } else {
-            span.textContent = FINAL;
-            /* vuelve a blanco con transición */
-            span.style.color = '';
-          }
+          if (frame <= totalFrames) span._rf = requestAnimationFrame(tick);
+          else span.textContent = FINAL;
         }
         span._rf = requestAnimationFrame(tick);
-      }, initialDelay + i * 90);
+      }, initialDelay + i * 55);
     });
   }
 
-  buildClaimSpans();
-  scrambleClaimWords(700);
-  setInterval(() => scrambleClaimWords(0), 6000);
+  buildScrambleSpans(subEl, SUB_TOKENS);
+  // Fijar altura antes de animar para evitar layout shift por caracteres más anchos
+  requestAnimationFrame(() => {
+    const h = subEl.offsetHeight;
+    if (h > 0) { subEl.style.height = h + 'px'; subEl.style.overflow = 'hidden'; }
+  });
+  scrambleWords(subEl, 500);
+  setInterval(() => scrambleWords(subEl, 0), 8000);
 
   /* text-fx solo en el hero — sección ya no tiene scramble en títulos */
 
@@ -4830,13 +4804,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       padding: 32px 0 0;
       overflow: hidden;
     }
+    .product-showcase { justify-content: flex-start; padding-left: 20px; }
     .showcase-wrap,
     .showcase-wrap.showcase-reveal,
     .showcase-wrap.reveal {
       opacity: 1 !important;
       perspective: none;
       width: 1120px;          /* base fija igual que desktop */
-      transform-origin: top center;
+      transform-origin: top left;
       transform: scale(0.30) !important;
       margin-bottom: -445px;  /* 636px × (1 - 0.30) */
     }
@@ -4850,6 +4825,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     .product-showcase {
       padding: 32px 0 0;
       overflow: hidden;
+      justify-content: flex-start;
+      padding-left: 20px;
     }
     .showcase-wrap,
     .showcase-wrap.showcase-reveal,
@@ -4857,7 +4834,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
       opacity: 1 !important;
       perspective: none;
       width: 1120px;          /* base fija igual que desktop */
-      transform-origin: top center;
+      transform-origin: top left;
       transform: scale(0.58) !important;
       margin-bottom: -268px;  /* 636px × (1 - 0.58) */
     }
@@ -4903,17 +4880,21 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 .hero-label,
 .hero-headline,
 .hero-sub,
-.hero-claim,
-.hero-actions {
+.hero-actions,
+.hero-right {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
 }
-.hero-anim-in .hero-label   { opacity:1; transform:none; transition-delay: .05s; }
+.hero-anim-in .hero-label    { opacity:1; transform:none; transition-delay: .05s; }
 .hero-anim-in .hero-headline { opacity:1; transform:none; transition-delay: .18s; }
-.hero-anim-in .hero-sub     { opacity:1; transform:none; transition-delay: .30s; }
-.hero-anim-in .hero-claim   { opacity:1; transform:none; transition-delay: .40s; }
-.hero-anim-in .hero-actions { opacity:1; transform:none; transition-delay: .50s; }
+.hero-anim-in .hero-sub      { opacity:1; transform:none; transition-delay: .30s; }
+.hero-anim-in .hero-actions  { opacity:1; transform:none; transition-delay: .50s; }
+.hero-anim-in .hero-right    { opacity:1; transform:none; transition-delay: .50s; }
+@media (max-width: 900px) {
+  .hero-right { transform: none !important; }
+  .hero-anim-in .hero-right { transition-delay: .55s; }
+}
 
 /* Showcase — entra desde abajo con sombra expandida */
 .showcase-browser {
@@ -5411,19 +5392,19 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 @media (max-width: 600px) {
 
   /* Hero — padding compacto */
-  .hero-centered { padding: 28px 20px 20px !important; }
+  .hero-centered { padding: 40px 20px 32px !important; }
   .hero-split-inner { padding: 0 !important; gap: 0 !important; }
 
   /* Headline más compacto */
-  .hero-headline { font-size: 38px !important; margin-bottom: 12px; }
-  .hero-label { margin-bottom: 18px; }
-  .hero-sub { font-size: 14px; margin-bottom: 8px; }
-  .hero-claim { margin-bottom: 20px; }
-  .hero-actions { gap: 10px; }
+  .hero-headline { font-size: 38px !important; margin-bottom: 16px; }
+  .hero-label { margin-bottom: 22px; }
+  .hero-sub { font-size: 15px; margin-bottom: 24px; }
+
+  .hero-actions { gap: 12px; }
   .hero-actions .btn { padding: 11px 20px; font-size: 13px; }
 
   /* Form: recupera separación en mobile (gap del grid es 0) */
-  .hero-form-wrap { margin-top: 22px; }
+  .hero-form-wrap { margin-top: 22px; max-width: 100%; }
 
   /* Integrations strip — mismo tamaño que carrusel clientes */
   .int-logos-strip { padding: 16px 0 20px; }
@@ -5507,6 +5488,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .faq-cta-wrap { text-align: left; }
   .int-label { text-align: left; padding-left: 20px; }
   .pricing-title { text-align: left; }
+  .modules-header { text-align: left; }
+  .modules-section .section-sub { margin: 0; }
 
 }
 
