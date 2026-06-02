@@ -8,99 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./site.css">
+  <script src="./components/site-header.js" defer></script>
+  <script src="./components/site-footer.js" defer></script>
   <style>
-    /* ── DS v1.2.5 TOKENS ────────────────────────────────────── */
-    :root {
-  /* ════════════════════════════════════════════════════════════
-     YiQi Design System — TOKENS CANÓNICOS (fuente única)
-     No redefinir :root en páginas; consumir estos tokens vía var().
-     ════════════════════════════════════════════════════════════ */
-  /* Backgrounds */
-  --bg:          #0a0a0b;
-  --bg-elev:     #0f1013;
-  --bg-elev-2:   #14161b;
-  --bg-soft:     #181b21;
-  /* Bordes */
-  --line:        rgba(255,255,255,.08);
-  --line-strong: rgba(255,255,255,.14);
-  /* Texto */
-  --text:        #f3f5f7;
-  --muted:       #908e8e;
-  --muted-2:     #7d7c82;
-  /* Marca */
-  --cyan:        #00ccff;
-  --cyan-soft:   rgba(0,204,255,.10);
-  --cyan-soft-2: rgba(0,204,255,.16);
-  --cyan-label:  rgba(0,204,255,.52);
-  --text-cyan-muted: rgba(0,195,240,.62);
-  --gridline:    rgba(0,204,255,.16);
-  /* Semánticos */
-  --green:  #15d49c;  --green-soft:  rgba(21,212,156,.10);
-  --amber:  #ffb020;  --amber-soft:  rgba(255,176,32,.10);
-  --red:    #ff637d;  --red-soft:    rgba(255,99,125,.10);
-  --blue:   #7ab7ff;  --blue-soft:   rgba(122,183,255,.10);
-  --purple: #a78bfa;  --purple-soft: rgba(167,139,250,.12);
-  --warm:   #b5a090;  --warm-soft:   rgba(181,160,144,.10);
-  /* Efectos — sombras navy/cyan suaves (no negro de desplazamiento) */
-  --glow:      0 0 0 3px rgba(0,204,255,.22);
-  --shadow-sm: 0 1px 3px rgba(0,18,28,.30);
-  --shadow-md: 0 4px 14px rgba(0,20,30,.26);
-  --shadow-lg: 0 12px 40px rgba(0,26,40,.34), 0 2px 12px rgba(0,204,255,.06);
-  /* Tipografía */
-  --font-display: "Greycliff CF", "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --display: var(--font-display);
-  --sans:    "Inter", ui-sans-serif, system-ui, sans-serif;
-  --mono:    "IBM Plex Mono", ui-monospace, monospace;
-  /* Layout */
-  --topbar-h:  56px;
-  --sidebar-w: 240px;
-  /* Radios */
-  --radius-xs:   6px;
-  --radius-sm:   10px;
-  --radius:      14px;
-  --radius-md:   16px;
-  --radius-lg:   18px;
-  --radius-xl:   24px;
-  --radius-pill: 999px;
-  --tr: 180ms ease;
-  /* Escala tipográfica */
-  --fs-section-hero: 24px;
-  --fs-panel-title:  14px;
-  --fs-module-title: 13px;
-  --fs-body:         13px;
-  --fs-meta:         12px;
-  --fs-caption:      11px;
-  --fs-placeholder-title: 30px;
-}
-
-    html[data-theme="light"] {
-  --bg:          #eeece7;
-  --bg-elev:     #f6f4ef;
-  --bg-elev-2:   #ffffff;
-  --bg-soft:     #ece9e2;
-  --line:        rgba(0,0,0,.08);
-  --line-strong: rgba(0,0,0,.13);
-  --text:        #17191c;
-  --muted:       #5e5a57;
-  --muted-2:     #636875;
-  --cyan:        #009fc7;
-  --cyan-soft:   rgba(0,159,199,.10);
-  --cyan-soft-2: rgba(0,159,199,.14);
-  --cyan-label:  rgba(0,159,199,.58);
-  --text-cyan-muted: rgba(0,140,175,.58);
-  --gridline:    rgba(0,159,199,.18);
-  --green:  #0c9b6d;  --green-soft:  rgba(12,155,109,.10);
-  --amber:  #c78000;  --amber-soft:  rgba(199,128,0,.10);
-  --red:    #d4485e;  --red-soft:    rgba(212,72,94,.10);
-  --blue:   #347de6;  --blue-soft:   rgba(52,125,230,.10);
-  --purple: #7c3aed;  --purple-soft: rgba(124,58,237,.12);
-  --warm:   #8b7260;  --warm-soft:   rgba(139,114,96,.10);
-  --glow:      0 0 0 3px rgba(0,159,199,.22);
-  --shadow-sm: 0 1px 3px rgba(16,36,54,.06);
-  --shadow-md: 0 4px 14px rgba(16,36,54,.08);
-  --shadow-lg: 0 8px 24px rgba(0,80,110,.09), 0 1px 4px rgba(0,80,110,.05);
-}
-
     /* ── RESET ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; overflow-x: clip; }
@@ -131,45 +42,8 @@
     }
 
     /* ── TOPBAR ──────────────────────────────────────────────── */
-    .topbar {
-      position: sticky; top: 0; z-index: 100;
-      height: var(--topbar-h);
-      display: flex; align-items: center;
-      padding: 0 28px; gap: 16px;
-      background: rgba(12,12,14,.82);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
-    }
-    html[data-theme="light"] .topbar { background: rgba(238,236,231,.88); }
-    .topbar-brand { display: flex; align-items: center; gap: 14px; flex: 1; }
-    .topbar-divider {
-      width: 1px; height: 20px; background: var(--line);
-    }
-    .topbar-title {
-      font: 600 13px var(--sans); color: var(--text); letter-spacing: -.01em;
-    }
-    .topbar-sub {
-      font: 500 12px var(--mono); color: var(--muted);
-    }
-    .topbar-actions { display: flex; align-items: center; gap: 10px; }
-
+    
     /* Theme toggle */
-    .theme-toggle {
-      display: inline-flex; gap: 2px; padding: 3px;
-      background: var(--bg-elev-2);
-      border-radius: var(--radius-pill);
-      box-shadow: var(--shadow-sm);
-    }
-    .theme-opt {
-      width: 26px; height: 26px;
-      display: inline-flex; align-items: center; justify-content: center;
-      border: none; background: transparent; color: var(--muted);
-      cursor: pointer; border-radius: 50%;
-      transition: background var(--tr), color var(--tr);
-    }
-    .theme-opt:hover { color: var(--text); }
-    .theme-opt.active { background: var(--cyan-soft-2); color: var(--cyan); }
 
     /* CTA topbar */
     .btn {
@@ -190,44 +64,36 @@
     .btn-ghost:hover { background: var(--bg-soft); color: var(--text); }
 
     /* ── LAYOUT ──────────────────────────────────────────────── */
-    main { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+    main { width: 100%; }
     section { padding: 96px 0; }
     section + section { border-top: 0; }
-    @media (max-width: 720px) { section { padding: 64px 0; } main { padding: 0 20px; } }
+    @media (max-width: 720px) { section { padding: 64px 0; } }
 
     /* ── HERO ────────────────────────────────────────────────── */
-    .hero { padding: 120px 0 96px; text-align: left; }
+    .hero { max-width: 1120px; margin: 0 auto; padding: 120px 28px 96px; text-align: left; }
 
-    .hero-partner {
-      display: inline-flex; align-items: center; gap: 10px;
-      margin-bottom: 20px;
-    }
-    .hero-partner-label {
-      font: 600 10px var(--mono); letter-spacing: .12em;
-      text-transform: uppercase; color: var(--muted-2);
-    }
-    .hero-partner-logo {
-      height: 18px; width: auto;
-      filter: brightness(0) invert(1) opacity(.7);
-    }
-    html[data-theme="light"] .hero-partner-logo {
-      filter: brightness(0) opacity(.55);
-    }
-    .hero-partner-sep {
-      width: 1px; height: 14px; background: var(--line-strong);
-    }
     .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 5px 12px;
-      background: var(--cyan-soft); color: var(--cyan);
-      font: 600 11px var(--mono); letter-spacing: .04em;
-      border-radius: var(--radius-pill);
-      margin-bottom: 24px;
-      text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: flex-start;
+      gap: 100px; margin-bottom: 12px;
     }
-    .hero-eyebrow .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--cyan); animation: pulse 2s ease-in-out infinite;
+    .hero-eyebrow-logo {
+      height: 40px; width: auto;
+      filter: brightness(0) invert(1);
+    }
+    html[data-theme="light"] .hero-eyebrow-logo {
+      filter: brightness(0);
+    }
+    .hero-eyebrow-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 10px;
+      background: var(--cyan-soft);
+      border-radius: var(--radius-pill);
+      font: 600 10px var(--mono); letter-spacing: .10em;
+      text-transform: uppercase; color: var(--cyan);
+    }
+    .hero-eyebrow-badge-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--cyan); flex-shrink: 0;
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -251,7 +117,7 @@
       border-radius: var(--radius-md);
     }
     @media (max-width: 720px) {
-      .hero { padding: 72px 0 56px; }
+      .hero { max-width: 1120px; margin: 0 auto; padding: 72px 28px 56px; }
       .hero-title { font-size: 36px; }
       .hero-lead { font-size: 16px; }
     }
@@ -273,13 +139,14 @@
     @media (max-width: 720px) { .section-title { font-size: 28px; } }
 
     .grid-features {
-      display: grid; grid-template-columns: repeat(2, 1fr);
+      display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
-    @media (max-width: 720px) { .grid-features { grid-template-columns: 1fr; } }
+    @media (max-width: 880px) { .grid-features { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .grid-features { grid-template-columns: 1fr; } }
     .feature-card {
       padding: 24px;
-      background: var(--bg-elev);
+      background: var(--bg-elev-2);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-sm);
       transition: box-shadow var(--tr), transform var(--tr);
@@ -306,21 +173,14 @@
 
     /* ── BLOQUE DESTACADO: multi-ubicación ───────────────────── */
     .highlight-card {
-      background: var(--bg-elev-2);
-      border-radius: var(--radius-xl);
-      padding: 56px;
-      box-shadow: var(--shadow-md);
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
-    .highlight-card::before {
-      content: '';
-      position: absolute;
-      top: -40%; right: -10%;
-      width: 520px; height: 520px;
-      background: radial-gradient(circle, var(--cyan-soft), transparent 70%);
-      pointer-events: none;
-    }
+
     .highlight-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 48px; align-items: center;
@@ -425,7 +285,7 @@
     @media (max-width: 480px) { .pillars { grid-template-columns: 1fr; } }
     .pillar {
       padding: 24px;
-      background: var(--bg-elev);
+      background: var(--bg-elev-2);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-sm);
     }
@@ -490,15 +350,12 @@
     }
 
     /* ── FOOTER ──────────────────────────────────────────────── */
-    .page-footer {
-      padding: 32px 28px;
-      border-top: 1px solid var(--line);
-      font: 500 12px var(--mono); color: var(--muted-2);
-      text-align: center;
-    }
-    .page-footer a { color: var(--cyan); }
-    .page-footer a:hover { color: var(--text); }
 
+
+    /* ── RITMO DE SECCIONES ──────────────────────────────────── */
+    .section-dark  { background: var(--bg); padding: 80px 0; }
+    .section-mid   { background: var(--bg-elev); padding: 80px 0; }
+    .section-inner { max-width: 1120px; margin: 0 auto; padding: 0 28px; width: 100%; box-sizing: border-box; }
     /* ── REVEAL ──────────────────────────────────────────────── */
     .reveal {
       opacity: 0; transform: translateY(20px);
@@ -522,63 +379,19 @@
 <a href="#main" class="skip-link">Saltar al contenido</a>
 
 <!-- ── TOPBAR ─────────────────────────────────────────────── -->
-<header class="topbar" role="banner">
-  <div class="topbar-brand">
-    <a href="https://yiqi.com.ar" aria-label="YiQi" style="display:inline-flex">
-      <svg viewBox="15 14 75 36" width="60" height="39" xmlns="http://www.w3.org/2000/svg"
-           aria-label="YiQi" role="img" style="flex-shrink:0;display:block"
-           preserveAspectRatio="xMidYMid meet">
-        <path style="fill:var(--text)" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
-        <path style="fill:var(--text)" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
-        <path style="fill:var(--cyan)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
-        <path style="fill:var(--text)" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23ZM77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
-      </svg>
-    </a>
-    <div class="topbar-divider" aria-hidden="true"></div>
-    <span class="topbar-title">YiQi + Tienda Nube</span>
-    <div class="topbar-divider" aria-hidden="true"></div>
-    <span class="topbar-sub">Integración oficial · 2026</span>
-  </div>
-  <div class="topbar-actions">
-    <div class="theme-toggle" role="group" aria-label="Tema">
-      <button class="theme-opt" data-val="dark" onclick="setTheme('dark')" title="Oscuro" aria-label="Tema oscuro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-      <button class="theme-opt" data-val="system" onclick="setTheme('system')" title="Sistema" aria-label="Tema del sistema">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-        </svg>
-      </button>
-      <button class="theme-opt" data-val="light" onclick="setTheme('light')" title="Claro" aria-label="Tema claro">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      </button>
-    </div>
-    <a class="btn btn-primary" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
-  </div>
-</header>
+<site-header base="./" current-page="tiendanube"></site-header>
 
 <main id="main">
 
   <!-- ── HERO ────────────────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero-partner">
-      <span class="hero-partner-label">Integración oficial con</span>
-      <div class="hero-partner-sep"></div>
-      <img src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="Tienda Nube" class="hero-partner-logo">
+    <div class="hero-eyebrow">
+      <img src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="Tienda Nube" class="hero-eyebrow-logo">
+      <span class="hero-eyebrow-badge"><span class="hero-eyebrow-badge-dot"></span>Integración oficial</span>
     </div>
-    <div class="hero-eyebrow"><span class="dot"></span>Homologación Tienda Nube · junio 2026</div>
     <h1 class="hero-title">
-      Tu tienda en Tienda Nube,<br>
-      conectada a un ERP <span class="hl">que opera</span><br>
-      <span class="hl-soft">mientras tú decides.</span>
+      Tu tienda conectada.<br>
+      <span class="hl">Tu operación</span> automatizada.
     </h1>
     <p class="hero-lead">
       YiQi sincroniza tu catálogo, stock y pedidos con Tienda Nube. Trabaja con
@@ -592,7 +405,8 @@
   </section>
 
   <!-- ── POR QUÉ INTEGRAR ────────────────────────────────────── -->
-  <section id="integracion" class="reveal">
+  <section id="integracion" class="reveal section-mid">
+    <div class="section-inner">
     <div class="section-eyebrow">Integración</div>
     <h2 class="section-title">Todo tu negocio sincronizado con Tienda Nube.</h2>
     <p class="section-lead">
@@ -651,10 +465,12 @@
         </p>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ── DESTACADO: MÚLTIPLES UBICACIONES ────────────────────── -->
-  <section class="reveal">
+  <section class="reveal section-dark" id="diferenciador">
+    <div class="section-inner">
     <div class="highlight-card">
       <div class="highlight-grid">
         <div>
@@ -723,8 +539,10 @@
     </div>
   </section>
 
+    </div>
   <!-- ── CÓMO FUNCIONA ───────────────────────────────────────── -->
-  <section class="reveal">
+  <section class="reveal section-mid" id="como-funciona">
+    <div class="section-inner">
     <div class="section-eyebrow">Cómo funciona</div>
     <h2 class="section-title">Tres pasos, sin código.</h2>
     <p class="section-lead">
@@ -757,8 +575,10 @@
   </section>
 
   <!-- ── PILARES YiQi ────────────────────────────────────────── -->
-  <section class="reveal">
-    <div class="section-eyebrow">YiQi en cuatro verbos</div>
+  <section class="reveal section-dark" id="erp-completo">
+    </div>
+    <div class="section-inner">
+    <div class="section-eyebrow">Por qué va más allá de una integración</div>
     <h2 class="section-title">No es solo una integración. Es un ERP completo.</h2>
     <p class="section-lead">
       Cuando conectas Tienda Nube con YiQi, no sumas un plugin. Conectas
@@ -776,89 +596,53 @@
         <div class="pillar-verb">Adapta.</div>
         <p class="pillar-text">
           Si tu negocio tiene un proceso único, el ERP se ajusta. No al revés.
-          Eso lo construimos en cada implementación.
         </p>
       </div>
       <div class="pillar">
         <div class="pillar-verb">Acompaña.</div>
         <p class="pillar-text">
-          15 años haciendo esto. Si aparece algo que el sistema no contempla,
-          estamos del otro lado para resolverlo.
+          15 años de experiencia operativa. Si el sistema no contempla algo, hay solución.
         </p>
       </div>
       <div class="pillar">
-        <div class="pillar-verb">Decide.</div>
+        <div class="pillar-verb">Escala.</div>
         <p class="pillar-text">
-          Tu tiempo y tu energía quedan libres para mirar márgenes, abrir mercados,
-          atender clientes. Para decidir.
+          Más canales, más volumen, más módulos — sin cambiar de sistema. YiQi crece con el negocio.
         </p>
       </div>
     </div>
   </section>
 
   <!-- ── CTA FINAL ──────────────────────────────────────────── -->
-  <section class="reveal">
-    <div class="cta-final">
-      <h2 class="cta-final-title">En 30 minutos te mostramos cómo <svg style="height:1em;width:auto;vertical-align:-0.21em;display:inline-block;color:currentColor" viewBox="13 12 72 38" xmlns="http://www.w3.org/2000/svg" aria-label="YiQi"><g><path class="yql" style="fill:currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/><path class="yql" style="fill:currentColor" d="M38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><g><path style="fill:var(--cyan,#00ccff)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/></g><path class="yql" style="fill:currentColor" d="M77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path class="yql" style="fill:currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/><path class="yql" style="fill:currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/></g></svg> opera detrás de tu tienda.</h2>
-      <p class="cta-final-lead">
-        Reserva una demo. Te mostramos en tu propio rubro cómo se sincroniza
-        Tienda Nube con YiQi y qué se libera cuando el sistema opera por ti.
-      </p>
-      <a class="btn btn-primary btn-lg" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+  <section class="reveal" id="demo">
+    <div class="section-inner">
+      <div class="cta-final">
+        <h2 class="cta-final-title">En 30 minutos te mostramos cómo <svg style="height:1em;width:auto;vertical-align:-0.21em;display:inline-block;color:currentColor" viewBox="13 12 72 38" xmlns="http://www.w3.org/2000/svg" aria-label="YiQi"><g><path class="yql" style="fill:currentColor" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/><path class="yql" style="fill:currentColor" d="M38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><g><path style="fill:var(--cyan,#00ccff)" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/></g><path class="yql" style="fill:currentColor" d="M77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path class="yql" style="fill:currentColor" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/><path class="yql" style="fill:currentColor" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/></g></svg> opera detrás de tu tienda.</h2>
+        <p class="cta-final-lead">
+          Reserva una demo. Te mostramos en tu propio rubro cómo se sincroniza
+          Tienda Nube con YiQi y qué se libera cuando el sistema opera por ti.
+        </p>
+        <a class="btn btn-primary btn-lg" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
+      </div>
     </div>
   </section>
 
 </main>
 
-<footer class="page-footer">
-  © 2026 YiQi S.A. · Integración Tienda Nube · <a href="https://yiqi.com.ar/yiqi-design-system.html" target="_blank" rel="noopener">DS v1.2.5</a>
-</footer>
+<site-footer base="./"></site-footer>
+
 
 <script>
-/* ─── THEME (DS v1.2.5) ─────────────────────────────────────── */
-const _mq = window.matchMedia('(prefers-color-scheme: dark)');
-function resolveTheme(v) { return v === 'system' ? (_mq.matches ? 'dark' : 'light') : v; }
-function applyTheme(v)   { document.documentElement.dataset.theme = resolveTheme(v); }
-function setTheme(v) {
-  localStorage.setItem('yiqi-theme', v);
-  applyTheme(v);
-  document.querySelectorAll('.theme-opt').forEach(b =>
-    b.classList.toggle('active', b.dataset.val === v));
-}
-_mq.addEventListener('change', () => {
-  if ((localStorage.getItem('yiqi-theme') || 'system') === 'system') applyTheme('system');
-});
-(function() {
-  const s = localStorage.getItem('yiqi-theme') || 'system';
-  applyTheme(s);
-  document.addEventListener('DOMContentLoaded', () =>
-    document.querySelectorAll('.theme-opt').forEach(b =>
-      b.classList.toggle('active', b.dataset.val === s)));
-})();
-
-/* ─── REVEAL ON SCROLL ──────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
+(function(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-});
-
-/* ─── SMOOTH SCROLL ─────────────────────────────────────────── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    const offset = document.querySelector('.topbar')?.offsetHeight || 56;
-    window.scrollTo({
-      top: target.getBoundingClientRect().top + window.scrollY - offset - 12,
-      behavior: 'smooth'
-    });
-  });
-});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
 </script>
 
 <script>
@@ -866,7 +650,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   var mockup = document.querySelector('.mockup');
   if(!mockup) return;
   function runMockupCounters(){
-    // Animar barras
     mockup.querySelectorAll('.mockup-bar-fill[data-bar]').forEach(function(bar){
       bar.style.width = bar.dataset.bar + '%';
     });
@@ -892,8 +675,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
       if(entries[0].isIntersecting && !played){ played=true; io.disconnect(); runMockupCounters(); }
     },{threshold:0.5});
     io.observe(mockup);
-  }
+  } else { runMockupCounters(); }
 })();
 </script>
+<script src="./components/meta-pixel-events.js" defer></script>
 </body>
 </html>
