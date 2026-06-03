@@ -70,6 +70,19 @@ jobs:
           fi
           echo "resource_group=$RG" >> "$GITHUB_OUTPUT"
 
+      - name: Diagnose web app runtime before deploy
+        run: |
+          az webapp show \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --query "{state:state,host:defaultHostName,kind:kind,reserved:reserved}" \
+            -o json
+          az webapp config show \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --query "{linuxFxVersion:linuxFxVersion,appCommandLine:appCommandLine,alwaysOn:alwaysOn,http20Enabled:http20Enabled}" \
+            -o json
+
       - name: Configure app settings and reset startup command
         run: |
           az webapp config appsettings set \
@@ -100,4 +113,51 @@ jobs:
             sleep 30
           done
           echo "Deploy fallo tras 3 intentos"
+
+          HOST=$(az webapp show \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --query defaultHostName -o tsv)
+          SCM_HOST="${HOST/.azurewebsites.net/.scm.azurewebsites.net}"
+
+          echo "Intentando fallback ZipDeploy directo a Kudu: $SCM_HOST"
+          USER=$(az webapp deployment list-publishing-credentials \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --query publishingUserName -o tsv)
+          PASS=$(az webapp deployment list-publishing-credentials \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --query publishingPassword -o tsv)
+
+          HTTP_CODE=$(curl -sS -o /tmp/zipdeploy.json -D /tmp/zipdeploy.headers \
+            -u "$USER:$PASS" \
+            -H "Content-Type: application/zip" \
+            --data-binary "@deploy.zip" \
+            -w "%{http_code}" \
+            "https://$SCM_HOST/api/zipdeploy?isAsync=true" || true)
+
+          echo "Fallback ZipDeploy HTTP: $HTTP_CODE"
+          LOCATION=$(grep -i '^Location:' /tmp/zipdeploy.headers | awk '{print $2}' | tr -d '\r' || true)
+          if [ -n "$LOCATION" ]; then
+            echo "Polling deployment status: $LOCATION"
+            for i in $(seq 1 60); do
+              BODY=$(curl -sS -u "$USER:$PASS" "$LOCATION" || true)
+              STATUS=$(echo "$BODY" | sed -n 's/.*"status"[[:space:]]*:[[:space:]]*\([0-9]\+\).*/\1/p' | head -n 1)
+              echo "Fallback intento $i status=$STATUS"
+              if [ "$STATUS" = "4" ]; then
+                echo "Fallback ZipDeploy OK"
+                exit 0
+              fi
+              if [ "$STATUS" = "3" ]; then
+                echo "Fallback ZipDeploy FAILED"
+                break
+              fi
+              sleep 10
+            done
+          fi
+
+          echo "Deployment latest (si disponible):"
+          curl -sS -u "$USER:$PASS" "https://$SCM_HOST/api/deployments/latest" || true
+          echo
           exit 1
