@@ -70,34 +70,16 @@ jobs:
           fi
           echo "resource_group=$RG" >> "$GITHUB_OUTPUT"
 
-      - name: Configure app settings and startup
+      - name: Configure app settings and reset startup command
         run: |
           az webapp config appsettings set \
             --resource-group "${{ steps.app.outputs.resource_group }}" \
             --name "web-yiqi-nueva" \
-            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false WEBSITES_PORT=8080 PORT=8080
+            --settings SCM_DO_BUILD_DURING_DEPLOYMENT=false ENABLE_ORYX_BUILD=false PORT=8080
           az webapp config set \
             --resource-group "${{ steps.app.outputs.resource_group }}" \
             --name "web-yiqi-nueva" \
-            --startup-file "node server.js"
-
-      - name: Ensure app running and wait for Kudu/SCM
-        run: |
-          # Cambiar app settings reinicia el contenedor; Kudu/SCM tarda en volver.
-          az webapp start \
-            --resource-group "${{ steps.app.outputs.resource_group }}" \
-            --name "web-yiqi-nueva" || true
-          SCM="https://web-yiqi-nueva.scm.azurewebsites.net"
-          echo "Esperando a que Kudu/SCM responda en $SCM ..."
-          for i in $(seq 1 30); do
-            CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$SCM" || echo 000)
-            echo "Intento $i: HTTP $CODE"
-            if [ "$CODE" != "503" ] && [ "$CODE" != "000" ]; then
-              echo "SCM disponible (HTTP $CODE)."
-              break
-            fi
-            sleep 10
-          done
+            --startup-file ""
 
       - name: Clean deploy to Azure Web App (con reintentos)
         run: |
