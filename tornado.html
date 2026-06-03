@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YiQi + Tienda Nube — el ERP que opera mientras tú decides</title>
-  <meta name="description" content="YiQi se integra con Tienda Nube y sincroniza stock, pedidos y facturación. Multi-ubicación, operación automática, acompañamiento real.">
+  <title>YiQi + Tornado Store — el ERP que opera detrás de tu negocio</title>
+  <meta name="description" content="YiQi se integra con Tornado Store y sincroniza stock, pedidos y facturación. Multi-ubicación, operación automática, acompañamiento real.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -12,46 +12,27 @@
   <script src="./components/site-header.js" defer></script>
   <script src="./components/site-footer.js" defer></script>
   <style>
-  /* ── Acento por partner: Tienda Nube (azul) ─────────────── */
-  .partner-tiendanube {
-    --cyan: #3b82f6;
-    --accent-rgb: 59,130,246;
-    --cyan-soft: rgba(59,130,246,.10);
-    --cyan-soft-2: rgba(59,130,246,.16);
-    --cyan-label: rgba(59,130,246,.58);
-    --text-cyan-muted: rgba(59,130,246,.66);
-    --gridline: rgba(59,130,246,.16);
-    --glow: 0 0 0 3px rgba(59,130,246,.22);
+  /* ── Acento por partner: Tornado Store (azul de marca) ── */
+  .partner-tornado {
+    --cyan: #0972b5;
+    --accent-rgb: 9,114,181;
+    --cyan-soft: rgba(9,114,181,.12);
+    --cyan-soft-2: rgba(9,114,181,.18);
+    --cyan-label: rgba(9,114,181,.66);
+    --text-cyan-muted: rgba(20,130,200,.74);
+    --gridline: rgba(9,114,181,.18);
+    --glow: 0 0 0 3px rgba(9,114,181,.26);
   }
-  html[data-theme="light"] .partner-tiendanube {
-    --cyan: #1d5fd8;
-    --accent-rgb: 29,95,216;
-    --cyan-soft: rgba(29,95,216,.10);
-    --cyan-soft-2: rgba(29,95,216,.14);
-    --cyan-label: rgba(29,95,216,.60);
-    --text-cyan-muted: rgba(29,95,216,.62);
-    --gridline: rgba(29,95,216,.18);
-    --glow: 0 0 0 3px rgba(29,95,216,.22);
+  html[data-theme="light"] .partner-tornado {
+    --cyan: #086099;
+    --accent-rgb: 8,96,153;
+    --cyan-soft: rgba(8,96,153,.10);
+    --cyan-soft-2: rgba(8,96,153,.16);
+    --cyan-label: rgba(8,96,153,.64);
+    --text-cyan-muted: rgba(8,96,153,.66);
+    --gridline: rgba(8,96,153,.20);
+    --glow: 0 0 0 3px rgba(8,96,153,.24);
   }
-  /* ── Chat Nube mockup ───────────────────────────────────── */
-  .chat-mock { width:100%; max-width:440px; background:var(--bg-elev-2); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); }
-  .chat-body { padding:14px; display:flex; flex-direction:column; gap:8px; }
-  .chat-msg { max-width:82%; padding:8px 11px; border-radius:13px; font:400 12.5px/1.4 var(--sans); }
-  .chat-msg.in  { align-self:flex-start; background:var(--bg-soft); color:var(--text); border-bottom-left-radius:4px; }
-  .chat-msg.out { align-self:flex-end; background:var(--cyan-soft-2); color:var(--text); border-bottom-right-radius:4px; }
-  /* ── Planes ─────────────────────────────────────────────── */
-  .plan-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:8px; }
-  .plan-card { background:var(--bg-elev-2); border:1px solid var(--line); border-radius:var(--radius-lg); padding:20px 16px; display:flex; flex-direction:column; gap:6px; align-items:flex-start; transition:border-color var(--tr), transform var(--tr); }
-  .plan-card:hover { border-color:var(--line-strong); transform:translateY(-2px); }
-  .plan-card.featured { border-color:var(--cyan); box-shadow:0 0 0 1px var(--cyan-soft-2); }
-  .plan-name { font:600 11px var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--cyan); }
-  .plan-price { font:700 22px var(--display); color:var(--text); letter-spacing:-.02em; }
-  .plan-price small { font:500 12px var(--sans); color:var(--muted-2); }
-  .plan-note { font:400 12px var(--sans); color:var(--muted); }
-  .plan-foot { font:400 13px/1.5 var(--sans); color:var(--muted-2); max-width:660px; margin:22px auto 0; text-align:center; }
-  .plan-foot strong { color:var(--text); }
-  @media (max-width:880px){ .plan-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:480px){ .plan-grid { grid-template-columns:1fr; } }
     /* ── RESET ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; overflow-x: clip; }
@@ -300,6 +281,9 @@
     .mockup-status.nostock {
       color: var(--muted-2); background: var(--bg-soft);
     }
+    /* Mockup con valores de texto/precio: columna flexible + texto compacto */
+    .mockup-vlist .mockup-row { grid-template-columns: 1fr auto auto; gap: 12px; align-items: baseline; }
+    .mockup-vlist .mockup-qty { font: 700 14px var(--sans); color: var(--cyan); letter-spacing: 0; white-space: nowrap; text-align: right; }
 
     /* ── BLOQUE: cómo funciona ───────────────────────────────── */
 
@@ -676,19 +660,6 @@
     /* ── RITMO DE SECCIONES ──────────────────────────────────── */
     .section-dark  { background: var(--bg); padding: 80px 0; }
     .section-mid   { background: var(--bg-elev); padding: 80px 0; }
-    /* Corte de marca full-width: banda sólida del acento */
-    .section-brand {
-      padding: 80px 0;
-      background: var(--cyan);
-    }
-    /* Texto adaptado para leer sobre la banda de color sólido */
-    .section-brand .highlight-tag { background: rgba(255,255,255,.22); color: #fff; }
-    .section-brand .highlight-title { color: #fff; }
-    .section-brand .highlight-text { color: rgba(255,255,255,.92); }
-    .section-brand .highlight-text strong { color: #fff; }
-    .section-brand .highlight-claim { background: rgba(255,255,255,.14); }
-    .section-brand .highlight-claim-text { color: #fff; }
-    .section-brand .tag { background: rgba(255,255,255,.18); color: #fff; }
     .section-inner { max-width: 1120px; margin: 0 auto; padding: 0 28px; width: 100%; box-sizing: border-box; }
     /* ── REVEAL ──────────────────────────────────────────────── */
     .reveal {
@@ -709,27 +680,27 @@
   </style>
   <script src="./components/clarity.js"></script>
 </head>
-<body class="partner-tiendanube">
+<body class="partner-tornado">
 
 <a href="#main" class="skip-link">Saltar al contenido</a>
 
 <!-- ── TOPBAR ─────────────────────────────────────────────── -->
-<site-header base="./" current-page="tiendanube"></site-header>
+<site-header base="./" current-page="tornado"></site-header>
 
 <main id="main">
 
   <!-- ── HERO ────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-eyebrow">
-      <img src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="Tienda Nube" class="hero-eyebrow-logo">
+      <img src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="hero-eyebrow-logo">
       <span class="hero-eyebrow-badge"><span class="hero-eyebrow-badge-dot"></span>Integración oficial</span>
     </div>
     <h1 class="hero-title">
-      Vende en todos lados.<br>
-      <span class="hl">Factura</span> en un solo lugar.
+      Mayorista y minorista.<br>
+      <span class="hl">Cero comisiones.</span>
     </h1>
     <p class="hero-lead">
-      Tu tienda, Instagram, WhatsApp y tu local venden a la vez. YiQi mantiene un solo stock y una sola facturación detrás de todos los canales de Tienda Nube.
+      Tornado Store te deja vender a consumidores y distribuidores en un mismo sitio, sin comisiones. YiQi sincroniza stock, listas de precios y facturación de los dos canales en un solo ERP.
     </p>
     <div class="hero-ctas">
       <a class="btn btn-primary btn-lg" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
@@ -737,38 +708,36 @@
     </div>
   </section>
 
-  <!-- ── CAPACIDADES TIENDA NUBE ─────────────────────────────── -->
+  <!-- ── CAPACIDADES TORNADO STORE ───────────────────────────── -->
   <section class="reveal section-dark" id="capacidades">
     <div class="section-inner">
     <div class="section-eyebrow">Capacidades</div>
-    <h2 class="section-title">El ecosistema de Tienda Nube,<br>conectado a tu ERP.</h2>
+    <h2 class="section-title">El ecosistema de Tornado Store,<br>conectado a tu ERP.</h2>
     <p class="section-lead">
-      Tienda Nube pone los canales, las herramientas y la IA para vender; YiQi administra
-      stock, precios y facturación detrás. Estas son las capacidades que sumas al conectarlos.
+      Tornado Store es tu canal de venta; YiQi administra stock, precios y facturación
+      detrás. Estas son las capacidades que sumas a tu operación al conectarlos.
     </p>
     <div class="grid-features">
       <div class="feature-card">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3z"/>
+            <path d="M12 2 2 7l10 5 10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/>
           </svg>
         </div>
-        <h3 class="feature-title">Diseño con IA · 65+ plantillas</h3>
+        <h3 class="feature-title">Omnicanal y catálogo web</h3>
         <p class="feature-text">
-          Más de 65 plantillas listas para vender y una IA que redacta las
-          descripciones de tus productos. Sin la página en blanco.
+          Unifica tus canales de venta y atención en una experiencia omnicanal. Y si recién arrancas, el módulo Catálogo exhibe todos tus productos online.
         </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
+            <circle cx="12" cy="12" r="9"/><path d="M8.5 15.5l7-7"/><circle cx="9" cy="9" r="1.3"/><circle cx="15" cy="15" r="1.3"/>
           </svg>
         </div>
-        <h3 class="feature-title">Venta omnicanal</h3>
+        <h3 class="feature-title">Promociones y marketing</h3>
         <p class="feature-text">
-          Catálogo conectado a Instagram, Facebook, Pinterest y tu local físico, con
-          stock, pedidos y pagos sincronizados.
+          Módulos para vender más: Maniquí con link directo a productos y una App promocional para potenciar tus campañas.
         </p>
       </div>
       <div class="feature-card">
@@ -777,22 +746,22 @@
             <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
           </svg>
         </div>
-        <h3 class="feature-title">Pago Nube y Envío Nube</h3>
+        <h3 class="feature-title">Pagos y envíos integrados</h3>
         <p class="feature-text">
-          Checkout de alta aprobación, pagos en cuotas y logística integrada, nativos
-          dentro de la tienda.
+          Pasarelas como Mercado Pago, Mobbex, PayWay y PayPal, y operadores logísticos
+          como Zipnova, EnvíoPack, Andreani, OCA y Correo Argentino.
         </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+            <path d="M9.5 14.5l5-5"/><path d="M11.5 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"/><path d="M12.5 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"/>
           </svg>
         </div>
-        <h3 class="feature-title">Marketing Nube</h3>
+        <h3 class="feature-title">DropShipping con distribuidores</h3>
         <p class="feature-text">
-          Automatizaciones de e-mail que recuperan carritos y fidelizan clientes:
-          hasta un 20% más de ventas.
+          Conecta tu tienda con proveedores mayoristas —INVID, New Bytes, Elit,
+          Microglobal y más— desde el módulo de DropShipping de Tornado Store.
         </p>
       </div>
     </div>
@@ -803,7 +772,7 @@
   <section id="integracion" class="reveal section-mid">
     <div class="section-inner">
     <div class="section-eyebrow">Integración</div>
-    <h2 class="section-title">Todo tu negocio sincronizado con Tienda Nube.</h2>
+    <h2 class="section-title">Todo tu negocio sincronizado con Tornado Store.</h2>
     <p class="section-lead">
       Lo que entra por tu tienda, sale automático al ERP. Stock, pedidos, facturación
       y cobranza dejan de ser tareas separadas: son un mismo flujo continuo.
@@ -817,9 +786,9 @@
         </div>
         <h3 class="feature-title">Stock vivo</h3>
         <p class="feature-text">
-          El inventario de YiQi y el de Tienda Nube quedan en línea. Cuando vendes
-          en la tienda, el stock baja en el ERP. Cuando ingresas mercadería, se publica
-          actualizada en segundos.
+          El inventario de YiQi y el de Tornado Store quedan en línea, en B2B y B2C.
+          Cuando vendes, el stock baja en el ERP; cuando ingresas mercadería, se publica
+          actualizado en segundos.
         </p>
       </div>
       <div class="feature-card">
@@ -830,8 +799,8 @@
         </div>
         <h3 class="feature-title">Pedidos automáticos</h3>
         <p class="feature-text">
-          Cada compra en Tienda Nube llega al ERP como un pedido de venta. Sin cargar
-          a mano, sin esperar al cierre del día. Tu equipo recibe la orden lista para armar.
+          Cada compra en Tornado Store —mayorista o minorista— llega a YiQi como pedido de
+          venta, con cliente, productos, precios y método de envío. Sin cargar a mano.
         </p>
       </div>
       <div class="feature-card">
@@ -842,7 +811,7 @@
         </div>
         <h3 class="feature-title">Facturación centralizada</h3>
         <p class="feature-text">
-          Las ventas de Tienda Nube se facturan en YiQi con tus puntos de venta,
+          Las ventas de Tornado Store se facturan en YiQi con tus puntos de venta,
           alícuotas y condiciones fiscales. Una sola fuente de verdad para AFIP y
           para tu contador.
         </p>
@@ -863,69 +832,69 @@
     </div>
   </section>
 
-  <!-- ── SECCIÓN ESTRELLA: OMNICANAL ───────────────────────── -->
-  <section class="reveal section-brand" id="diferenciador">
+  <!-- ── SECCIÓN ESTRELLA: B2B/B2C DUAL ──────────────────────── -->
+  <section class="reveal section-dark" id="diferenciador">
     <div class="section-inner">
     <div class="highlight-card">
       <div class="highlight-grid">
         <div>
-          <span class="highlight-tag">Omnicanal</span>
-          <h2 class="highlight-title">Vende donde estén tus clientes.</h2>
+          <span class="highlight-tag">B2B + B2C</span>
+          <h2 class="highlight-title">Vende mayorista y minorista. Sin comisiones.</h2>
           <p class="highlight-text">
-            Tienda Nube publica tu catálogo en tu web, Instagram, Facebook, Pinterest,
-            WhatsApp (con Chat Nube IA) y tu local. <strong>YiQi mantiene un solo stock y
-            una sola facturación</strong> detrás de todos.
+            Con la modalidad <strong>Dual</strong> de Tornado Store, el mismo sitio atiende
+            a consumidores y a distribuidores, cada uno con su lista de precios. YiQi mantiene
+            stock y precios sincronizados para los dos canales.
           </p>
           <div class="highlight-claim">
-            <span class="highlight-claim-text">Vendas donde vendas, el inventario y los números viven en un único lugar.</span>
+            <span class="highlight-claim-text">Tornado Store no cobra comisión por venta ni por pedido: el 100% de cada operación es tuyo.</span>
           </div>
-          <p class="highlight-text">Sin planillas paralelas ni stock desfasado entre canales.</p>
+          <p class="highlight-text">Un catálogo, dos públicos, una sola operación administrada desde YiQi.</p>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-            <span class="tag">Tienda online</span>
-            <span class="tag">Instagram &amp; Facebook</span>
-            <span class="tag">WhatsApp · Chat Nube</span>
-            <span class="tag">Local / PDV</span>
+            <span class="tag">Venta B2B</span>
+            <span class="tag">Venta B2C</span>
+            <span class="tag">Modalidad Dual</span>
+            <span class="tag">0% comisión</span>
           </div>
         </div>
         <div>
-          <div class="mockup" aria-label="Pedidos del día por canal, con stock unificado en YiQi">
+          <div class="mockup mockup-vlist" aria-label="Ejemplo de producto con doble lista de precios">
             <div class="mockup-chrome">
               <div class="mockup-dots"><span></span><span></span><span></span></div>
-              <span class="mockup-chrome-label">Pedidos de hoy · Todos los canales</span>
+              <span class="mockup-chrome-label">Producto · Zapatilla Runner Pro</span>
               <div style="width:40px"></div>
             </div>
             <div class="mockup-body">
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Tienda online</span>
+                  <span class="mockup-loc">Precio minorista · B2C</span>
                   <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="100"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="34">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty">$ 89.900</span>
+                <span class="mockup-status">Público</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Instagram + Facebook</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="55"></div></div>
+                  <span class="mockup-loc">Precio mayorista · B2B</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="70"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="18">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty">$ 62.400</span>
+                <span class="mockup-status">Distribuidor</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">WhatsApp · Chat Nube</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="38"></div></div>
+                  <span class="mockup-loc">Stock sincronizado · YiQi</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="90"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="12">0</span>
-                <span class="mockup-status">IA 24/7</span>
+                <span class="mockup-qty">128</span>
+                <span class="mockup-status">En vivo</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Local / PDV</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="26"></div></div>
+                  <span class="mockup-loc">Comisión Tornado Store</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="9">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty">$ 0</span>
+                <span class="mockup-status">Siempre</span>
               </div>
             </div>
           </div>
@@ -949,7 +918,7 @@
         <div class="impl-tl-node">01</div>
         <div class="impl-tl-content">
           <h3>Conecta tu tienda</h3>
-          <p><span class="tl-yiqi">YiQi gestiona toda la conexión técnica con Tienda Nube.</span><br><span class="tl-user">Solo autorizas en un clic.</span></p>
+          <p><span class="tl-yiqi">YiQi gestiona toda la conexión técnica con Tornado Store.</span><br><span class="tl-user">Solo autorizas en un clic.</span></p>
         </div>
       </div>
       <div class="impl-tl-step">
@@ -969,68 +938,134 @@
     </div>
   </section>
 
-  <!-- ── SPOTLIGHT: CHAT NUBE (IA) ───────────────────────────── -->
-  <section class="reveal section-dark" id="chat-nube">
+  <!-- ── PILARES YiQi ────────────────────────────────────────── -->
+  <section class="reveal section-dark" id="erp-completo">
+    </div>
     <div class="section-inner">
-    <div class="highlight-card">
-      <div class="highlight-grid">
-        <div>
-          <span class="highlight-tag">Chat Nube · IA</span>
-          <h2 class="highlight-title">Una IA que vende por ti, 24/7.</h2>
-          <p class="highlight-text">
-            <strong>Chat Nube</strong> atiende por WhatsApp las 24 horas: responde, arma el
-            pedido y lo cierra, hablando con la personalidad de tu marca. Cada venta entra a
-            YiQi como un pedido, con su stock descontado.
-          </p>
-          <div class="highlight-claim">
-            <span class="highlight-claim-text">No pierdas una venta por responder tarde: la IA cierra mientras tu equipo descansa.</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-            <span class="tag">Atiende 24/7</span>
-            <span class="tag">Cierra pedidos</span>
-            <span class="tag">Tono de tu marca</span>
-            <span class="tag">Sincronizado con YiQi</span>
+    <div class="section-eyebrow">Por qué va más allá de una integración</div>
+    <h2 class="section-title">No es solo una integración.<br>Es un ERP completo.</h2>
+    <p class="section-lead">
+      Cuando conectas Tornado Store con YiQi, no sumas un plugin. Conectas
+      tu tienda con un sistema que cubre toda la operación del negocio.
+    </p>
+    <div class="feat-tabs">
+      <div class="feat-tablist" role="tablist" aria-label="Capacidades del ERP" aria-orientation="vertical">
+        <button class="feat-tab" role="tab" id="feat-tab-0" aria-selected="true" aria-controls="feat-panel-0" tabindex="0">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></svg><span>Control de costos</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-1" aria-selected="false" aria-controls="feat-panel-1" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><span>Automatización de procesos</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-2" aria-selected="false" aria-controls="feat-panel-2" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1 0 4 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 2 2 0 0 0 0-4 2 2 0 0 1 0-4Z"/><path d="M14 6v12"/></svg><span>Gestión de tickets</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-3" aria-selected="false" aria-controls="feat-panel-3" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1V3l-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span>Facturación automática</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-4" aria-selected="false" aria-controls="feat-panel-4" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1 13H6L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span>Venta multicanal</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-5" aria-selected="false" aria-controls="feat-panel-5" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15v-3M12 15V8M16 15v-5"/></svg><span>Tablero en tiempo real</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-6" aria-selected="false" aria-controls="feat-panel-6" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 14.5l5-5"/><path d="M11.5 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"/><path d="M12.5 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"/></svg><span>Integraciones y API abierta</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-7" aria-selected="false" aria-controls="feat-panel-7" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.5a3.5 3.5 0 0 1 .5 8H7Z"/></svg><span>100% en la nube</span>
+        </button>
+      </div>
+      <div class="feat-panel-wrap">
+        <div class="feat-panel active" role="tabpanel" id="feat-panel-0" aria-labelledby="feat-tab-0" tabindex="0">
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></svg>Control de costos</span>
+          <h3 class="feat-panel-title">Margen real, no solo facturación.</h3>
+          <p class="feat-panel-text">YiQi calcula el costo y la rentabilidad de cada venta de Tornado Store — por producto, canal y período. Sabes qué deja cada operación, no solo cuánto vendiste.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Margen por producto</span>
+            <span class="feat-chip"><span class="dot"></span>Costo actualizado</span>
+            <span class="feat-chip"><span class="dot"></span>Rentabilidad por canal</span>
           </div>
         </div>
-        <div>
-          <div class="chat-mock">
-            <div class="mockup-chrome">
-              <div class="mockup-dots"><span></span><span></span><span></span></div>
-              <span class="mockup-chrome-label">WhatsApp · Chat Nube</span>
-              <div style="width:40px"></div>
-            </div>
-            <div class="chat-body">
-              <div class="chat-msg in">Hola 👋 ¿Tienen la campera en talle M?</div>
-              <div class="chat-msg out">¡Hola! Sí, quedan 3 en stock 😊 ¿Te la reservo?</div>
-              <div class="chat-msg in">Dale</div>
-              <div class="chat-msg out">Listo ✅ Pedido #1042 confirmado. ¿Quieres pagarlo ahora?</div>
-            </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-1" aria-labelledby="feat-tab-1" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Automatización de procesos</span>
+          <h3 class="feat-panel-title">El sistema actúa solo.</h3>
+          <p class="feat-panel-text">Reglas que disparan acciones sin intervención: el stock bajo genera la orden de compra, el pago acreditado libera la preparación del envío y la factura se emite al confirmarse la venta.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Reglas configurables</span>
+            <span class="feat-chip"><span class="dot"></span>Sin tareas manuales</span>
+            <span class="feat-chip"><span class="dot"></span>Opera 24/7</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-2" aria-labelledby="feat-tab-2" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1 0 4 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 2 2 0 0 0 0-4 2 2 0 0 1 0-4Z"/><path d="M14 6v12"/></svg>Gestión de tickets</span>
+          <h3 class="feat-panel-title">Postventa ordenada.</h3>
+          <p class="feat-panel-text">Reclamos, cambios y consultas centralizados y atados a cada pedido y cliente. Nada se pierde entre mails y chats sueltos.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Atado al pedido</span>
+            <span class="feat-chip"><span class="dot"></span>Estados y SLA</span>
+            <span class="feat-chip"><span class="dot"></span>Historial por cliente</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-3" aria-labelledby="feat-tab-3" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1V3l-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Facturación automática</span>
+          <h3 class="feat-panel-title">De la venta a la factura, sin cargar nada.</h3>
+          <p class="feat-panel-text">Cada venta de Tornado Store se factura automáticamente ante AFIP/ARCA y queda conciliada con la cobranza. Tu equipo deja de emitir comprobantes a mano.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>AFIP / ARCA</span>
+            <span class="feat-chip"><span class="dot"></span>Conciliación automática</span>
+            <span class="feat-chip"><span class="dot"></span>Cero carga manual</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-4" aria-labelledby="feat-tab-4" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1 13H6L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Venta multicanal</span>
+          <h3 class="feat-panel-title">Una sola operación para todos tus canales.</h3>
+          <p class="feat-panel-text">Vende en Tornado Store, Mercado Libre y tu local físico con un único stock, una sola facturación y un solo lugar para ver todo.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Tornado Store</span>
+            <span class="feat-chip"><span class="dot"></span>Mercado Libre</span>
+            <span class="feat-chip"><span class="dot"></span>Local físico</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-5" aria-labelledby="feat-tab-5" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15v-3M12 15V8M16 15v-5"/></svg>Tablero en tiempo real</span>
+          <h3 class="feat-panel-title">Decisiones con datos al instante.</h3>
+          <p class="feat-panel-text">Un tablero que muestra ventas, stock y rentabilidad en vivo, con reportes por canal y alertas cuando algo necesita tu atención.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>KPIs en vivo</span>
+            <span class="feat-chip"><span class="dot"></span>Reportes por canal</span>
+            <span class="feat-chip"><span class="dot"></span>Alertas</span>
+          </div>
+          <div class="feat-panel-links">
+            <a class="feat-link" href="erp-panel.html">Ver el panel<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-6" aria-labelledby="feat-tab-6" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 14.5l5-5"/><path d="M11.5 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"/><path d="M12.5 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"/></svg>Integraciones y API abierta</span>
+          <h3 class="feat-panel-title">Conecta lo que ya usas.</h3>
+          <p class="feat-panel-text">API abierta, webhooks y conectores listos para integrar YiQi con las herramientas que ya usas. Con IA Ready, lo extiendes con inteligencia artificial.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>API y webhooks</span>
+            <span class="feat-chip"><span class="dot"></span>Conectores</span>
+            <span class="feat-chip"><span class="dot"></span>IA Ready</span>
+          </div>
+          <div class="feat-panel-links">
+            <a class="feat-link" href="ia-ready.html">Conoce IA Ready<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="feat-link" href="api-docs.html">Ver la API<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-7" aria-labelledby="feat-tab-7" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.5a3.5 3.5 0 0 1 .5 8H7Z"/></svg>100% en la nube</span>
+          <h3 class="feat-panel-title">Tu operación, desde cualquier lugar.</h3>
+          <p class="feat-panel-text">YiQi corre en la nube: sin instalaciones ni servidores propios, con actualizaciones automáticas y respaldo continuo. Entras desde el navegador.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Sin instalación</span>
+            <span class="feat-chip"><span class="dot"></span>Actualizaciones automáticas</span>
+            <span class="feat-chip"><span class="dot"></span>Respaldo continuo</span>
           </div>
         </div>
       </div>
     </div>
-    </div>
-  </section>
-
-  <!-- ── PLANES TIENDA NUBE ──────────────────────────────────── -->
-  <section class="reveal section-mid" id="planes">
-    <div class="section-inner">
-    <div class="section-eyebrow">Planes de Tienda Nube</div>
-    <h2 class="section-title">Empieza gratis.<br>Escala cuando vendas más.</h2>
-    <p class="section-lead">
-      Tienda Nube tiene un plan para cada etapa, y YiQi se conecta con todos: el ERP
-      es el mismo crezca lo que crezca tu tienda.
-    </p>
-    <div class="plan-grid">
-      <div class="plan-card"><span class="plan-name">Inicial</span><span class="plan-price">Gratis</span><span class="plan-note">Para empezar a vender</span></div>
-      <div class="plan-card"><span class="plan-name">Esencial</span><span class="plan-price">$24.999<small>/mes</small></span><span class="plan-note">Profesionaliza tu tienda</span></div>
-      <div class="plan-card featured"><span class="plan-name">Impulso</span><span class="plan-price">$73.999<small>/mes</small></span><span class="plan-note">El salto de crecimiento</span></div>
-      <div class="plan-card"><span class="plan-name">Escala</span><span class="plan-price">$219.999<small>/mes</small></span><span class="plan-note">Alto volumen</span></div>
-      <div class="plan-card"><span class="plan-name">Evolución</span><span class="plan-price">A medida</span><span class="plan-note">Grandes marcas</span></div>
-    </div>
-    <p class="plan-foot">Precios de referencia de Tienda Nube en ARS (planes mensuales). Con <strong>Marketing Nube</strong>, las automatizaciones pueden sumar hasta un <strong>20% de ventas</strong>.</p>
-    </div>
-  </section>
+    </section>
 
   <!-- ── CTA FINAL ──────────────────────────────────────────── -->
   <section class="reveal" id="demo">
@@ -1040,7 +1075,7 @@
         <h2 class="cta-final-title">En 30 minutos te mostramos cómo YiQi opera detrás de tu tienda.</h2>
         <p class="cta-final-lead">
           Una demo personalizada en tu rubro, sin compromiso: ves la sincronización
-          con Tienda Nube y todo lo que el sistema empieza a hacer solo.
+          con Tornado Store y todo lo que el sistema empieza a hacer solo.
         </p>
         <div class="cta-trust">
           <a class="cta-trust-item" href="#como-funciona">
@@ -1070,7 +1105,7 @@
     <!-- Header dinámico -->
     <div class="hf-header">
       
-      <div class="hf-title" id="hf-title">Tu demo de YiQi + Tienda Nube</div>
+      <div class="hf-title" id="hf-title">Tu demo de YiQi + Tornado Store</div>
       <div class="hf-sub" id="hf-sub">Sin compromiso. Te contactamos en menos de 24 hs.</div>
     </div>
 
@@ -1312,7 +1347,7 @@ const HF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       if (i < step)  d.classList.add('done');
       if (i === step) d.classList.add('active');
     }
-    const titles = ['Tu demo de YiQi + Tienda Nube','Tus datos de contacto','Hablemos de tu empresa'];
+    const titles = ['Tu demo de YiQi + Tornado Store','Tus datos de contacto','Hablemos de tu empresa'];
     const subs   = ['Sin compromiso. Te contactamos en menos de 24 hs.','Necesitamos un número para coordinar la demo.','Nos ayuda a personalizar la presentación.'];
     document.getElementById('hf-title').textContent = titles[step - 1];
     document.getElementById('hf-sub').textContent   = subs[step - 1];
@@ -1391,7 +1426,7 @@ const HF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
         referrer:  document.referrer || '',
         userAgent: navigator.userAgent,
         timestamp: new Date().toISOString(),
-        form:      'tiendanube'
+        form:      'tornado'
       }
     };
   }
@@ -1446,7 +1481,7 @@ const HF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!ok) hfSavePending(payload);
 
     try { sessionStorage.setItem('yiqi-last-email', payload.email); } catch {}
-    window.location.href = '/gracias.html?from=tiendanube' + (ok ? '' : '&status=error');
+    window.location.href = '/gracias.html?from=tornado' + (ok ? '' : '&status=error');
   }
 
   function toggleChip(el, groupId, multi) {

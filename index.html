@@ -419,6 +419,36 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .logo-item:has(img.logo-xl-wide) { width: 208px; }
   .logo-item img.logo-xl-wide { max-width: 100%; max-height: 100%; }
   .logo-divider { width: 1px; height: 24px; background: var(--line); flex-shrink: 0; }
+  /* ── Partners ─────────────────────────────── */
+  .partners-section { padding: 88px 0; background: var(--bg-elev); }
+  .partners-inner { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+  .partners-head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
+  .partners-kicker { font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--cyan-label); margin: 0 0 12px; }
+  .partners-title { font: 700 34px/1.15 var(--display); letter-spacing: -.02em; color: var(--text); margin: 0 0 14px; }
+  .partners-lead { font: 400 17px/1.55 var(--sans); color: var(--muted); margin: 0; }
+  .partners-note { text-align: center; margin: 30px 0 0; font: 400 14px var(--sans); color: var(--muted-2); }
+  .partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .partner-card {
+    position: relative; background: var(--bg-elev-2);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
+    padding: 36px 24px; min-height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    transition: box-shadow var(--tr);
+  }
+  .partner-card:hover { box-shadow: 0 0 0 1px rgba(0,204,255,.12) inset, var(--shadow-md); }
+  a.partner-card { text-decoration: none; }
+  .partner-card img {
+    width: auto; object-fit: contain;
+    filter: brightness(0) invert(1) opacity(.82); transition: filter var(--tr);
+  }
+  /* Ajuste óptico: wordmarks anchos vs marca cuadrada */
+  .partner-card img.plg-wide   { max-height: 28px; max-width: 168px; }
+  .partner-card img.plg-square { max-height: 46px; max-width: 64px; }
+  html[data-theme="light"] .partner-card img { filter: brightness(0) opacity(.72); }
+  .partner-card:hover img { filter: brightness(0) invert(1) opacity(1); }
+  html[data-theme="light"] .partner-card:hover img { filter: brightness(0) opacity(1); }
+  @media (max-width: 760px) { .partners-grid { grid-template-columns: repeat(2, 1fr); } .partners-title { font-size: 26px; } .partners-section { padding: 64px 0; } }
+  @media (max-width: 440px) { .partners-grid { grid-template-columns: 1fr; } }
 
   /* ─── Widescreen (xxl ≥ 1440px) — clientes más grandes, más respiro ─── */
   @media (min-width: 1440px) {
@@ -2309,6 +2339,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <link rel="preload" href="system/fonts/Greycliff-CF-Heavy.woff2" as="font" type="font/woff2" crossorigin>
+  <script src="./components/clarity.js"></script>
 </head>
 <body>
 <div class="star-field" aria-hidden="true"></div>
@@ -3117,6 +3148,27 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     </div>
 </section>
 
+
+
+<!-- ══════════════════════════════════════════
+     PARTNERS
+══════════════════════════════════════════ -->
+<section class="partners-section" aria-labelledby="partners-title" hidden style="display:none" data-oculto="pre-lanzamiento">
+  <div class="partners-inner">
+    <div class="partners-head">
+      <p class="partners-kicker">// partners</p>
+      <h2 class="partners-title" id="partners-title">Partners estratégicos para tu operación.</h2>
+      <p class="partners-lead">Nos aliamos con socios clave del ecosistema para que tu negocio funcione conectado de punta a punta. Y nos integramos con muchas plataformas más.</p>
+    </div>
+    <div class="partners-grid">
+      <a class="partner-card" href="tiendanube.html"><img loading="lazy" decoding="async" src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="Tienda Nube" class="partner-logo plg-wide"></a>
+      <a class="partner-card" href="drubbit.html"><img loading="lazy" decoding="async" src="system/icons/LOGOS INTEGRACIONES/DRUBBIT.svg" alt="Drubbit" class="partner-logo plg-wide"></a>
+      <a class="partner-card" href="tornado.html"><img loading="lazy" decoding="async" src="system/icons/LOGOS INTEGRACIONES/TORNADO STORE.svg" alt="Tornado Store" class="partner-logo plg-wide"></a>
+      <a class="partner-card" href="sell2ship.html"><img loading="lazy" decoding="async" src="system/icons/LOGOS INTEGRACIONES/SELL2SHIP.svg" alt="Sell2Ship" class="partner-logo plg-wide"></a>
+    </div>
+    <p class="partners-note">Y muchas integraciones más.</p>
+  </div>
+</section>
 
 
 <!-- ══════════════════════════════════════════

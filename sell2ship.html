@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YiQi + Tienda Nube — el ERP que opera mientras tú decides</title>
-  <meta name="description" content="YiQi se integra con Tienda Nube y sincroniza stock, pedidos y facturación. Multi-ubicación, operación automática, acompañamiento real.">
+  <title>YiQi + Sell2Ship — el ERP que opera detrás de tu negocio</title>
+  <meta name="description" content="YiQi se integra con Sell2Ship: envía tus órdenes a fulfillment, sincroniza el stock del depósito y trae el seguimiento de cada envío. Operación automática, acompañamiento real.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -12,46 +12,30 @@
   <script src="./components/site-header.js" defer></script>
   <script src="./components/site-footer.js" defer></script>
   <style>
-  /* ── Acento por partner: Tienda Nube (azul) ─────────────── */
-  .partner-tiendanube {
-    --cyan: #3b82f6;
-    --accent-rgb: 59,130,246;
-    --cyan-soft: rgba(59,130,246,.10);
-    --cyan-soft-2: rgba(59,130,246,.16);
-    --cyan-label: rgba(59,130,246,.58);
-    --text-cyan-muted: rgba(59,130,246,.66);
-    --gridline: rgba(59,130,246,.16);
-    --glow: 0 0 0 3px rgba(59,130,246,.22);
+  /* ── Acento por partner: Sell2Ship (naranja) ───────────── */
+  .partner-sell2ship {
+    --cyan: #ef4444;
+    --accent-rgb: 239,68,68;
+    --cyan-soft: rgba(239,68,68,.10);
+    --cyan-soft-2: rgba(239,68,68,.16);
+    --cyan-label: rgba(239,68,68,.62);
+    --text-cyan-muted: rgba(239,68,68,.70);
+    --gridline: rgba(239,68,68,.16);
+    --glow: 0 0 0 3px rgba(239,68,68,.22);
   }
-  html[data-theme="light"] .partner-tiendanube {
-    --cyan: #1d5fd8;
-    --accent-rgb: 29,95,216;
-    --cyan-soft: rgba(29,95,216,.10);
-    --cyan-soft-2: rgba(29,95,216,.14);
-    --cyan-label: rgba(29,95,216,.60);
-    --text-cyan-muted: rgba(29,95,216,.62);
-    --gridline: rgba(29,95,216,.18);
-    --glow: 0 0 0 3px rgba(29,95,216,.22);
+  html[data-theme="light"] .partner-sell2ship {
+    --cyan: #d62828;
+    --accent-rgb: 214,40,40;
+    --cyan-soft: rgba(214,40,40,.10);
+    --cyan-soft-2: rgba(214,40,40,.14);
+    --cyan-label: rgba(214,40,40,.62);
+    --text-cyan-muted: rgba(214,40,40,.64);
+    --gridline: rgba(214,40,40,.18);
+    --glow: 0 0 0 3px rgba(214,40,40,.22);
   }
-  /* ── Chat Nube mockup ───────────────────────────────────── */
-  .chat-mock { width:100%; max-width:440px; background:var(--bg-elev-2); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); }
-  .chat-body { padding:14px; display:flex; flex-direction:column; gap:8px; }
-  .chat-msg { max-width:82%; padding:8px 11px; border-radius:13px; font:400 12.5px/1.4 var(--sans); }
-  .chat-msg.in  { align-self:flex-start; background:var(--bg-soft); color:var(--text); border-bottom-left-radius:4px; }
-  .chat-msg.out { align-self:flex-end; background:var(--cyan-soft-2); color:var(--text); border-bottom-right-radius:4px; }
-  /* ── Planes ─────────────────────────────────────────────── */
-  .plan-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:8px; }
-  .plan-card { background:var(--bg-elev-2); border:1px solid var(--line); border-radius:var(--radius-lg); padding:20px 16px; display:flex; flex-direction:column; gap:6px; align-items:flex-start; transition:border-color var(--tr), transform var(--tr); }
-  .plan-card:hover { border-color:var(--line-strong); transform:translateY(-2px); }
-  .plan-card.featured { border-color:var(--cyan); box-shadow:0 0 0 1px var(--cyan-soft-2); }
-  .plan-name { font:600 11px var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--cyan); }
-  .plan-price { font:700 22px var(--display); color:var(--text); letter-spacing:-.02em; }
-  .plan-price small { font:500 12px var(--sans); color:var(--muted-2); }
-  .plan-note { font:400 12px var(--sans); color:var(--muted); }
-  .plan-foot { font:400 13px/1.5 var(--sans); color:var(--muted-2); max-width:660px; margin:22px auto 0; text-align:center; }
-  .plan-foot strong { color:var(--text); }
-  @media (max-width:880px){ .plan-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:480px){ .plan-grid { grid-template-columns:1fr; } }
+  .grid-features.cov-grid { grid-template-columns: repeat(3,1fr); }
+  @media (max-width:880px){ .grid-features.cov-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width:480px){ .grid-features.cov-grid { grid-template-columns: 1fr; } }
     /* ── RESET ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; overflow-x: clip; }
@@ -300,6 +284,9 @@
     .mockup-status.nostock {
       color: var(--muted-2); background: var(--bg-soft);
     }
+    /* Mockup con valores de texto/precio: columna flexible + texto compacto */
+    .mockup-vlist .mockup-row { grid-template-columns: 1fr auto auto; gap: 12px; align-items: baseline; }
+    .mockup-vlist .mockup-qty { font: 700 14px var(--sans); color: var(--cyan); letter-spacing: 0; white-space: nowrap; text-align: right; }
 
     /* ── BLOQUE: cómo funciona ───────────────────────────────── */
 
@@ -676,7 +663,7 @@
     /* ── RITMO DE SECCIONES ──────────────────────────────────── */
     .section-dark  { background: var(--bg); padding: 80px 0; }
     .section-mid   { background: var(--bg-elev); padding: 80px 0; }
-    /* Corte de marca full-width: banda sólida del acento */
+    /* Corte de marca full-width: banda con wash del acento */
     .section-brand {
       padding: 80px 0;
       background: var(--cyan);
@@ -709,27 +696,27 @@
   </style>
   <script src="./components/clarity.js"></script>
 </head>
-<body class="partner-tiendanube">
+<body class="partner-sell2ship">
 
 <a href="#main" class="skip-link">Saltar al contenido</a>
 
 <!-- ── TOPBAR ─────────────────────────────────────────────── -->
-<site-header base="./" current-page="tiendanube"></site-header>
+<site-header base="./" current-page="sell2ship"></site-header>
 
 <main id="main">
 
   <!-- ── HERO ────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-eyebrow">
-      <img src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="Tienda Nube" class="hero-eyebrow-logo">
+      <img src="system/icons/LOGOS INTEGRACIONES/SELL2SHIP.svg" alt="Sell2Ship" class="hero-eyebrow-logo">
       <span class="hero-eyebrow-badge"><span class="hero-eyebrow-badge-dot"></span>Integración oficial</span>
     </div>
     <h1 class="hero-title">
-      Vende en todos lados.<br>
-      <span class="hl">Factura</span> en un solo lugar.
+      Despacha el mismo día en AMBA.<br>
+      <span class="hl">Sin mover</span> un dedo.
     </h1>
     <p class="hero-lead">
-      Tu tienda, Instagram, WhatsApp y tu local venden a la vez. YiQi mantiene un solo stock y una sola facturación detrás de todos los canales de Tienda Nube.
+      Tus ventas entran a YiQi y salen a Sell2Ship: almacenan, preparan y despachan same-day. Y sigues cada envío en tiempo real, sin salir del ERP.
     </p>
     <div class="hero-ctas">
       <a class="btn btn-primary btn-lg" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
@@ -737,62 +724,58 @@
     </div>
   </section>
 
-  <!-- ── CAPACIDADES TIENDA NUBE ─────────────────────────────── -->
+  <!-- ── CAPACIDADES SELL2SHIP ───────────────────────────────── -->
   <section class="reveal section-dark" id="capacidades">
     <div class="section-inner">
     <div class="section-eyebrow">Capacidades</div>
-    <h2 class="section-title">El ecosistema de Tienda Nube,<br>conectado a tu ERP.</h2>
+    <h2 class="section-title">La logística de Sell2Ship,<br>conectada a tu ERP.</h2>
     <p class="section-lead">
-      Tienda Nube pone los canales, las herramientas y la IA para vender; YiQi administra
-      stock, precios y facturación detrás. Estas son las capacidades que sumas al conectarlos.
+      YiQi administra la venta; Sell2Ship almacena, prepara y despacha. Estas son las
+      capacidades que sumas a tu operación al conectarlos.
     </p>
     <div class="grid-features">
       <div class="feature-card">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3z"/>
+            <path d="M1 4h13v12H1z"/><path d="M14 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/>
           </svg>
         </div>
-        <h3 class="feature-title">Diseño con IA · 65+ plantillas</h3>
+        <h3 class="feature-title">Fulfillment end-to-end</h3>
         <p class="feature-text">
-          Más de 65 plantillas listas para vender y una IA que redacta las
-          descripciones de tus productos. Sin la página en blanco.
+          Almacenamos, preparamos y despachamos tus pedidos. Delegas toda la logística y te enfocas en vender.
         </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
           </svg>
         </div>
-        <h3 class="feature-title">Venta omnicanal</h3>
+        <h3 class="feature-title">Área fiscal y aduanera</h3>
         <p class="feature-text">
-          Catálogo conectado a Instagram, Facebook, Pinterest y tu local físico, con
-          stock, pedidos y pagos sincronizados.
+          Gestión aduanera, libramiento de contenedor, verificación de carga y transporte interno para tus envíos internacionales.
         </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
           </svg>
         </div>
-        <h3 class="feature-title">Pago Nube y Envío Nube</h3>
+        <h3 class="feature-title">Onboarding en depósito</h3>
         <p class="feature-text">
-          Checkout de alta aprobación, pagos en cuotas y logística integrada, nativos
-          dentro de la tienda.
+          Soporte para el ingreso de mercadería: etiquetado, códigos de barra y alta en el maestro de artículos (WMS).
         </p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+            <path d="M12 2 4 5v6c0 5 3.5 8 8 11 4.5-3 8-6 8-11V5z"/><path d="M9 12l2 2 4-4"/>
           </svg>
         </div>
-        <h3 class="feature-title">Marketing Nube</h3>
+        <h3 class="feature-title">Envíos protegidos</h3>
         <p class="feature-text">
-          Automatizaciones de e-mail que recuperan carritos y fidelizan clientes:
-          hasta un 20% más de ventas.
+          Sumas cobertura opcional a cada despacho, para que ningún envío quede expuesto.
         </p>
       </div>
     </div>
@@ -803,10 +786,9 @@
   <section id="integracion" class="reveal section-mid">
     <div class="section-inner">
     <div class="section-eyebrow">Integración</div>
-    <h2 class="section-title">Todo tu negocio sincronizado con Tienda Nube.</h2>
+    <h2 class="section-title">Toda tu operación sincronizada con Sell2Ship.</h2>
     <p class="section-lead">
-      Lo que entra por tu tienda, sale automático al ERP. Stock, pedidos, facturación
-      y cobranza dejan de ser tareas separadas: son un mismo flujo continuo.
+      Lo que se vende en tus canales sale automático a fulfillment. Órdenes, stock del depósito, despacho y seguimiento dejan de ser tareas separadas: son un mismo flujo continuo.
     </p>
     <div class="grid-features">
       <div class="feature-card">
@@ -815,11 +797,9 @@
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
           </svg>
         </div>
-        <h3 class="feature-title">Stock vivo</h3>
+        <h3 class="feature-title">Stock en depósito vivo</h3>
         <p class="feature-text">
-          El inventario de YiQi y el de Tienda Nube quedan en línea. Cuando vendes
-          en la tienda, el stock baja en el ERP. Cuando ingresas mercadería, se publica
-          actualizada en segundos.
+          El stock que tienes almacenado en Sell2Ship queda en línea con YiQi. Cuando vendes, baja en el ERP. Cuando ingresas mercadería al depósito, queda disponible en segundos.
         </p>
       </div>
       <div class="feature-card">
@@ -828,10 +808,9 @@
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
           </svg>
         </div>
-        <h3 class="feature-title">Pedidos automáticos</h3>
+        <h3 class="feature-title">Despacho automático</h3>
         <p class="feature-text">
-          Cada compra en Tienda Nube llega al ERP como un pedido de venta. Sin cargar
-          a mano, sin esperar al cierre del día. Tu equipo recibe la orden lista para armar.
+          Cada venta llega a Sell2Ship como una orden de preparación. Sin cargar a mano, sin esperar al cierre del día. El depósito recibe el pedido listo para armar y enviar.
         </p>
       </div>
       <div class="feature-card">
@@ -842,9 +821,7 @@
         </div>
         <h3 class="feature-title">Facturación centralizada</h3>
         <p class="feature-text">
-          Las ventas de Tienda Nube se facturan en YiQi con tus puntos de venta,
-          alícuotas y condiciones fiscales. Una sola fuente de verdad para AFIP y
-          para tu contador.
+          Tus ventas se facturan en YiQi con tus puntos de venta, alícuotas y condiciones fiscales, mientras Sell2Ship se encarga del envío. Una sola fuente de verdad para AFIP y para tu contador.
         </p>
       </div>
       <div class="feature-card">
@@ -863,69 +840,69 @@
     </div>
   </section>
 
-  <!-- ── SECCIÓN ESTRELLA: OMNICANAL ───────────────────────── -->
+  <!-- ── SECCIÓN ESTRELLA: SAME-DAY ─────────────────────────── -->
   <section class="reveal section-brand" id="diferenciador">
     <div class="section-inner">
     <div class="highlight-card">
       <div class="highlight-grid">
         <div>
-          <span class="highlight-tag">Omnicanal</span>
-          <h2 class="highlight-title">Vende donde estén tus clientes.</h2>
+          <span class="highlight-tag">Same-day</span>
+          <h2 class="highlight-title">Vende hoy. Entrega hoy.</h2>
           <p class="highlight-text">
-            Tienda Nube publica tu catálogo en tu web, Instagram, Facebook, Pinterest,
-            WhatsApp (con Chat Nube IA) y tu local. <strong>YiQi mantiene un solo stock y
-            una sola facturación</strong> detrás de todos.
+            La orden entra a YiQi y sale a Sell2Ship en el acto. Preparan, empaquetan y
+            despachan <strong>el mismo día</strong> en CABA, GBA y AMBA, sin que tu equipo
+            arme un solo pedido.
           </p>
           <div class="highlight-claim">
-            <span class="highlight-claim-text">Vendas donde vendas, el inventario y los números viven en un único lugar.</span>
+            <span class="highlight-claim-text">Del clic del cliente al reparto, en horas — no en días.</span>
           </div>
-          <p class="highlight-text">Sin planillas paralelas ni stock desfasado entre canales.</p>
+          <p class="highlight-text">Y cuando el envío sale, el tracking en tiempo real vuelve a YiQi: ves cada estado sin salir del sistema.</p>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-            <span class="tag">Tienda online</span>
-            <span class="tag">Instagram &amp; Facebook</span>
-            <span class="tag">WhatsApp · Chat Nube</span>
-            <span class="tag">Local / PDV</span>
+            <span class="tag">Same-day</span>
+            <span class="tag">Envíos Flex</span>
+            <span class="tag">Tracking en vivo</span>
+            <span class="tag">Cero armado propio</span>
           </div>
         </div>
         <div>
-          <div class="mockup" aria-label="Pedidos del día por canal, con stock unificado en YiQi">
+          <div class="mockup mockup-vlist" aria-label="Seguimiento de un envío same-day">
             <div class="mockup-chrome">
               <div class="mockup-dots"><span></span><span></span><span></span></div>
-              <span class="mockup-chrome-label">Pedidos de hoy · Todos los canales</span>
+              <span class="mockup-chrome-label">Envío #SS-2048 · Same-day</span>
               <div style="width:40px"></div>
             </div>
             <div class="mockup-body">
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Tienda online</span>
+                  <span class="mockup-loc">Orden recibida</span>
                   <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="100"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="34">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty">10:02</span>
+                <span class="mockup-status">Listo</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Instagram + Facebook</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="55"></div></div>
+                  <span class="mockup-loc">En preparación</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="100"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="18">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty">10:48</span>
+                <span class="mockup-status">Listo</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">WhatsApp · Chat Nube</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="38"></div></div>
+                  <span class="mockup-loc">Despachado</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="100"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="12">0</span>
-                <span class="mockup-status">IA 24/7</span>
+                <span class="mockup-qty">11:40</span>
+                <span class="mockup-status">Listo</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Local / PDV</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="26"></div></div>
+                  <span class="mockup-loc">En camino al cliente</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="60"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="9">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty">ETA</span>
+                <span class="mockup-status">Hoy</span>
               </div>
             </div>
           </div>
@@ -948,8 +925,8 @@
       <div class="impl-tl-step">
         <div class="impl-tl-node">01</div>
         <div class="impl-tl-content">
-          <h3>Conecta tu tienda</h3>
-          <p><span class="tl-yiqi">YiQi gestiona toda la conexión técnica con Tienda Nube.</span><br><span class="tl-user">Solo autorizas en un clic.</span></p>
+          <h3>Conecta tu operación</h3>
+          <p><span class="tl-yiqi">YiQi gestiona toda la conexión técnica con Sell2Ship.</span><br><span class="tl-user">Solo autorizas en un clic.</span></p>
         </div>
       </div>
       <div class="impl-tl-step">
@@ -963,72 +940,59 @@
         <div class="impl-tl-node">03</div>
         <div class="impl-tl-content">
           <h3>Empieza a vender</h3>
-          <p><span class="tl-yiqi">YiQi sincroniza stock, recibe pedidos, factura y arma la trazabilidad.</span><br><span class="tl-user">Solo revisas resultados.</span></p>
+          <p><span class="tl-yiqi">YiQi sincroniza stock, envía las órdenes a fulfillment, factura y arma la trazabilidad de cada envío.</span><br><span class="tl-user">Solo revisas resultados.</span></p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── SPOTLIGHT: CHAT NUBE (IA) ───────────────────────────── -->
-  <section class="reveal section-dark" id="chat-nube">
+  <!-- ── COBERTURA Y ALCANCE ─────────────────────────────────── -->
+  <section class="reveal section-dark" id="cobertura">
     <div class="section-inner">
-    <div class="highlight-card">
-      <div class="highlight-grid">
-        <div>
-          <span class="highlight-tag">Chat Nube · IA</span>
-          <h2 class="highlight-title">Una IA que vende por ti, 24/7.</h2>
-          <p class="highlight-text">
-            <strong>Chat Nube</strong> atiende por WhatsApp las 24 horas: responde, arma el
-            pedido y lo cierra, hablando con la personalidad de tu marca. Cada venta entra a
-            YiQi como un pedido, con su stock descontado.
-          </p>
-          <div class="highlight-claim">
-            <span class="highlight-claim-text">No pierdas una venta por responder tarde: la IA cierra mientras tu equipo descansa.</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-            <span class="tag">Atiende 24/7</span>
-            <span class="tag">Cierra pedidos</span>
-            <span class="tag">Tono de tu marca</span>
-            <span class="tag">Sincronizado con YiQi</span>
-          </div>
-        </div>
-        <div>
-          <div class="chat-mock">
-            <div class="mockup-chrome">
-              <div class="mockup-dots"><span></span><span></span><span></span></div>
-              <span class="mockup-chrome-label">WhatsApp · Chat Nube</span>
-              <div style="width:40px"></div>
-            </div>
-            <div class="chat-body">
-              <div class="chat-msg in">Hola 👋 ¿Tienen la campera en talle M?</div>
-              <div class="chat-msg out">¡Hola! Sí, quedan 3 en stock 😊 ¿Te la reservo?</div>
-              <div class="chat-msg in">Dale</div>
-              <div class="chat-msg out">Listo ✅ Pedido #1042 confirmado. ¿Quieres pagarlo ahora?</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <!-- ── PLANES TIENDA NUBE ──────────────────────────────────── -->
-  <section class="reveal section-mid" id="planes">
-    <div class="section-inner">
-    <div class="section-eyebrow">Planes de Tienda Nube</div>
-    <h2 class="section-title">Empieza gratis.<br>Escala cuando vendas más.</h2>
+    <div class="section-eyebrow">Cobertura</div>
+    <h2 class="section-title">Llega a todo el país.<br>Y al mundo.</h2>
     <p class="section-lead">
-      Tienda Nube tiene un plan para cada etapa, y YiQi se conecta con todos: el ERP
-      es el mismo crezca lo que crezca tu tienda.
+      Sell2Ship despacha donde estén tus clientes, y YiQi sigue cada envío desde el ERP.
     </p>
-    <div class="plan-grid">
-      <div class="plan-card"><span class="plan-name">Inicial</span><span class="plan-price">Gratis</span><span class="plan-note">Para empezar a vender</span></div>
-      <div class="plan-card"><span class="plan-name">Esencial</span><span class="plan-price">$24.999<small>/mes</small></span><span class="plan-note">Profesionaliza tu tienda</span></div>
-      <div class="plan-card featured"><span class="plan-name">Impulso</span><span class="plan-price">$73.999<small>/mes</small></span><span class="plan-note">El salto de crecimiento</span></div>
-      <div class="plan-card"><span class="plan-name">Escala</span><span class="plan-price">$219.999<small>/mes</small></span><span class="plan-note">Alto volumen</span></div>
-      <div class="plan-card"><span class="plan-name">Evolución</span><span class="plan-price">A medida</span><span class="plan-note">Grandes marcas</span></div>
+    <div class="grid-features cov-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 4h13v12H1z"/><path d="M14 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18" cy="18.5" r="1.8"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Todo el país</h3>
+        <p class="feature-text">Envíos a cualquier punto del país. Consultas la cobertura de tu localidad y listo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Same-day</h3>
+        <p class="feature-text">Entregas en el mismo día en CABA, GBA y AMBA. También envíos Flex.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
+          </svg>
+        </div>
+        <h3 class="feature-title">Internacional con DHL</h3>
+        <p class="feature-text">Exportación al mundo a través de DHL, con gestión aduanera y verificación de carga.</p>
+      </div>
     </div>
-    <p class="plan-foot">Precios de referencia de Tienda Nube en ARS (planes mensuales). Con <strong>Marketing Nube</strong>, las automatizaciones pueden sumar hasta un <strong>20% de ventas</strong>.</p>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIO B2B ──────────────────────────────────────── -->
+  <section class="reveal section-mid" id="testimonios">
+    <div class="section-inner">
+      <div class="quote-block">
+        <p class="quote-text">Extremadamente organizados y muy rápidos con los envíos. La atención al cliente es increíble.</p>
+        <p class="quote-source">Cliente B2B de Sell2Ship</p>
+      </div>
     </div>
   </section>
 
@@ -1037,10 +1001,9 @@
     <div class="section-inner">
       <div class="cta-final">
         <p class="cta-eyebrow">// reserva tu demo</p>
-        <h2 class="cta-final-title">En 30 minutos te mostramos cómo YiQi opera detrás de tu tienda.</h2>
+        <h2 class="cta-final-title">En 30 minutos te mostramos cómo YiQi opera detrás de tu logística.</h2>
         <p class="cta-final-lead">
-          Una demo personalizada en tu rubro, sin compromiso: ves la sincronización
-          con Tienda Nube y todo lo que el sistema empieza a hacer solo.
+          Una demo personalizada en tu rubro, sin compromiso: ves la sincronización con Sell2Ship y todo lo que el sistema empieza a hacer solo.
         </p>
         <div class="cta-trust">
           <a class="cta-trust-item" href="#como-funciona">
@@ -1070,7 +1033,7 @@
     <!-- Header dinámico -->
     <div class="hf-header">
       
-      <div class="hf-title" id="hf-title">Tu demo de YiQi + Tienda Nube</div>
+      <div class="hf-title" id="hf-title">Tu demo de YiQi + Sell2Ship</div>
       <div class="hf-sub" id="hf-sub">Sin compromiso. Te contactamos en menos de 24 hs.</div>
     </div>
 
@@ -1312,7 +1275,7 @@ const HF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       if (i < step)  d.classList.add('done');
       if (i === step) d.classList.add('active');
     }
-    const titles = ['Tu demo de YiQi + Tienda Nube','Tus datos de contacto','Hablemos de tu empresa'];
+    const titles = ['Tu demo de YiQi + Sell2Ship','Tus datos de contacto','Hablemos de tu empresa'];
     const subs   = ['Sin compromiso. Te contactamos en menos de 24 hs.','Necesitamos un número para coordinar la demo.','Nos ayuda a personalizar la presentación.'];
     document.getElementById('hf-title').textContent = titles[step - 1];
     document.getElementById('hf-sub').textContent   = subs[step - 1];
@@ -1391,7 +1354,7 @@ const HF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
         referrer:  document.referrer || '',
         userAgent: navigator.userAgent,
         timestamp: new Date().toISOString(),
-        form:      'tiendanube'
+        form:      'sell2ship'
       }
     };
   }
@@ -1446,7 +1409,7 @@ const HF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!ok) hfSavePending(payload);
 
     try { sessionStorage.setItem('yiqi-last-email', payload.email); } catch {}
-    window.location.href = '/gracias.html?from=tiendanube' + (ok ? '' : '&status=error');
+    window.location.href = '/gracias.html?from=sell2ship' + (ok ? '' : '&status=error');
   }
 
   function toggleChip(el, groupId, multi) {
