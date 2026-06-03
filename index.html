@@ -125,7 +125,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     margin: 0 auto;
     padding: 38px 0 42px;
   }
-  .hero-left { text-align: left; min-width: 0; overflow: hidden; }
+  .hero-left { text-align: left; min-width: 0; overflow: visible; }
   .hero-right { display: flex; align-items: stretch; justify-content: center; }
   @media (max-width: 900px) { .hero-right { justify-content: flex-start; } }
   .hero-label {
@@ -141,12 +141,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     border-right: 1px solid var(--line-strong); padding-right: 10px;
   }
   .hero-headline {
-    font: 800 58px/1.0 var(--display);
+    font: 800 58px/.80 var(--display);
     letter-spacing: -.03em;
     color: var(--text);
     margin-bottom: 16px; max-width: 800px;
+    padding-bottom: 0.22em;
     /* Siempre 2 líneas — no mueve el lockup al cambiar phrase */
-    min-height: 2.24em;
+    min-height: 1.60em;
   }
   /* Scramble — siempre corre, decodifica entre phrases */
   .tp-scramble {
@@ -171,7 +172,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   .hero-sub {
     font: 400 16px/1.4 var(--sans); color: var(--muted);
-    max-width: 520px; margin-bottom: 10px;
+    max-width: 520px; margin-bottom: 20px;
   }
 
   .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
@@ -2765,7 +2766,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   <div class="modules-inner">
     <div class="modules-header">
       <span class="section-kicker">// Módulos</span>
-      <h2 class="section-title">Cada proceso de tu empresa, en un solo lugar.</h2>
+      <h2 class="section-title">Cada proceso de tu empresa,<br class="mob-br"> en un solo lugar.</h2>
       <p class="section-sub">Activa solo lo que usas. Cada módulo se conecta con el resto del sistema desde el día uno.</p>
     </div>
 
