@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YiQi + Tienda Nube — el ERP que opera mientras tú decides</title>
+  <title>YiQi + Interbanking — el ERP que opera detrás de tu negocio</title>
   <meta name="description" content="YiQi se integra con Tienda Nube y sincroniza stock, pedidos y facturación. Multi-ubicación, operación automática, acompañamiento real.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,46 +12,6 @@
   <script src="./components/site-header.js" defer></script>
   <script src="./components/site-footer.js" defer></script>
   <style>
-  /* ── Acento por partner: Tienda Nube (azul) ─────────────── */
-  .partner-tiendanube {
-    --cyan: #3b82f6;
-    --accent-rgb: 59,130,246;
-    --cyan-soft: rgba(59,130,246,.10);
-    --cyan-soft-2: rgba(59,130,246,.16);
-    --cyan-label: rgba(59,130,246,.58);
-    --text-cyan-muted: rgba(59,130,246,.66);
-    --gridline: rgba(59,130,246,.16);
-    --glow: 0 0 0 3px rgba(59,130,246,.22);
-  }
-  html[data-theme="light"] .partner-tiendanube {
-    --cyan: #1d5fd8;
-    --accent-rgb: 29,95,216;
-    --cyan-soft: rgba(29,95,216,.10);
-    --cyan-soft-2: rgba(29,95,216,.14);
-    --cyan-label: rgba(29,95,216,.60);
-    --text-cyan-muted: rgba(29,95,216,.62);
-    --gridline: rgba(29,95,216,.18);
-    --glow: 0 0 0 3px rgba(29,95,216,.22);
-  }
-  /* ── Chat Nube mockup ───────────────────────────────────── */
-  .chat-mock { width:100%; max-width:440px; background:var(--bg-elev-2); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); }
-  .chat-body { padding:14px; display:flex; flex-direction:column; gap:8px; }
-  .chat-msg { max-width:82%; padding:8px 11px; border-radius:13px; font:400 12.5px/1.4 var(--sans); }
-  .chat-msg.in  { align-self:flex-start; background:var(--bg-soft); color:var(--text); border-bottom-left-radius:4px; }
-  .chat-msg.out { align-self:flex-end; background:var(--cyan-soft-2); color:var(--text); border-bottom-right-radius:4px; }
-  /* ── Planes ─────────────────────────────────────────────── */
-  .plan-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:8px; }
-  .plan-card { background:var(--bg-elev-2); border:1px solid var(--line); border-radius:var(--radius-lg); padding:20px 16px; display:flex; flex-direction:column; gap:6px; align-items:flex-start; transition:border-color var(--tr), transform var(--tr); }
-  .plan-card:hover { border-color:var(--line-strong); transform:translateY(-2px); }
-  .plan-card.featured { border-color:var(--cyan); box-shadow:0 0 0 1px var(--cyan-soft-2); }
-  .plan-name { font:600 11px var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--cyan); }
-  .plan-price { font:700 22px var(--display); color:var(--text); letter-spacing:-.02em; }
-  .plan-price small { font:500 12px var(--sans); color:var(--muted-2); }
-  .plan-note { font:400 12px var(--sans); color:var(--muted); }
-  .plan-foot { font:400 13px/1.5 var(--sans); color:var(--muted-2); max-width:660px; margin:22px auto 0; text-align:center; }
-  .plan-foot strong { color:var(--text); }
-  @media (max-width:880px){ .plan-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:480px){ .plan-grid { grid-template-columns:1fr; } }
     /* ── RESET ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; overflow-x: clip; }
@@ -64,8 +24,8 @@
       min-height: 100vh;
       /* Variante B — landing: radiales + grilla */
       background:
-        radial-gradient(circle at 72% 8%,  rgba(var(--accent-rgb),.07), transparent 28%),
-        radial-gradient(circle at 12% 60%, rgba(var(--accent-rgb),.04), transparent 22%),
+        radial-gradient(circle at 72% 8%,  rgba(0,204,255,.07), transparent 28%),
+        radial-gradient(circle at 12% 60%, rgba(0,204,255,.04), transparent 22%),
         linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
         var(--bg);
@@ -192,7 +152,7 @@
       transition: box-shadow var(--tr), transform var(--tr);
     }
     .feature-card:hover {
-      box-shadow: 0 0 0 1px rgba(var(--accent-rgb),.12) inset, var(--shadow-md);
+      box-shadow: 0 0 0 1px rgba(0,204,255,.12) inset, var(--shadow-md);
       transform: translateY(-1px);
     }
     .feature-icon {
@@ -583,14 +543,14 @@
   .hf-btn-cta {
     padding: 9px 16px;
     background: var(--cyan-soft-2);
-    border: 1px solid rgba(var(--accent-rgb),.28);
+    border: 1px solid rgba(0,204,255,.28);
     border-radius: var(--radius);
     color: var(--cyan); font: 500 13px var(--sans);
     cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
     transition: all var(--tr);
     margin-left: auto;
   }
-  .hf-btn-cta:hover { background: rgba(var(--accent-rgb),.24); border-color: rgba(var(--accent-rgb),.40); color: var(--cyan); }
+  .hf-btn-cta:hover { background: rgba(0,204,255,.24); border-color: rgba(0,204,255,.40); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-cta { background: var(--cyan-soft-2); border-color: rgba(0,159,199,.28); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-cta:hover { background: rgba(0,159,199,.24); border-color: rgba(0,159,199,.40); color: var(--cyan); }
   html[data-theme="light"] .hf-btn-ghost { color: var(--muted-2); }
@@ -618,10 +578,6 @@
     text-align: center; line-height: 1.5;
   }
   .hf-legal a { color: var(--muted-2); text-decoration: underline; }
-  .hf-trust { display:flex; flex-wrap:wrap; gap:6px 14px; padding:12px 24px 0; }
-  .hf-trust span { display:inline-flex; align-items:center; gap:5px; font:600 9px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); }
-  .hf-trust svg { width:11px; height:11px; color:var(--cyan); flex:none; }
-  @media (max-width: 600px) { .hf-trust { padding:10px 16px 0; } }
   /* Divider */
   .hf-divider { height: 1px; background: var(--line); margin: 4px 24px 0; display: none; }
   /* Éxito */
@@ -668,7 +624,7 @@
     a.cta-trust-item { transition: transform var(--tr); }
     a.cta-trust-item:hover .cta-trust-title { color: var(--cyan); }
     a.cta-trust-item:hover .cta-trust-ico { background: var(--cyan-soft-2); }
-    .cta-final .hero-form-wrap { max-width: 560px; margin: 24px auto 0; }
+    .cta-final .hero-form-wrap { margin: 24px auto 0; }
 
     /* ── FOOTER ──────────────────────────────────────────────── */
 
@@ -676,19 +632,6 @@
     /* ── RITMO DE SECCIONES ──────────────────────────────────── */
     .section-dark  { background: var(--bg); padding: 80px 0; }
     .section-mid   { background: var(--bg-elev); padding: 80px 0; }
-    /* Corte de marca full-width: banda sólida del acento */
-    .section-brand {
-      padding: 80px 0;
-      background: var(--cyan);
-    }
-    /* Texto adaptado para leer sobre la banda de color sólido */
-    .section-brand .highlight-tag { background: rgba(255,255,255,.22); color: #fff; }
-    .section-brand .highlight-title { color: #fff; }
-    .section-brand .highlight-text { color: rgba(255,255,255,.92); }
-    .section-brand .highlight-text strong { color: #fff; }
-    .section-brand .highlight-claim { background: rgba(255,255,255,.14); }
-    .section-brand .highlight-claim-text { color: #fff; }
-    .section-brand .tag { background: rgba(255,255,255,.18); color: #fff; }
     .section-inner { max-width: 1120px; margin: 0 auto; padding: 0 28px; width: 100%; box-sizing: border-box; }
     /* ── REVEAL ──────────────────────────────────────────────── */
     .reveal {
@@ -709,7 +652,7 @@
   </style>
   <script src="./components/clarity.js"></script>
 </head>
-<body class="partner-tiendanube">
+<body>
 
 <a href="#main" class="skip-link">Saltar al contenido</a>
 
@@ -721,81 +664,21 @@
   <!-- ── HERO ────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-eyebrow">
-      <img src="system/icons/LOGOS INTEGRACIONES/TIENDA NUBE.svg" alt="Tienda Nube" class="hero-eyebrow-logo">
+      <img src="system/icons/LOGOS INTEGRACIONES/interbanking.svg" alt="Interbanking" class="hero-eyebrow-logo">
       <span class="hero-eyebrow-badge"><span class="hero-eyebrow-badge-dot"></span>Integración oficial</span>
     </div>
     <h1 class="hero-title">
-      Vende en todos lados.<br>
-      <span class="hl">Factura</span> en un solo lugar.
+      Tu tienda conectada.<br>
+      <span class="hl">Tu operación</span> automatizada.
     </h1>
     <p class="hero-lead">
-      Tu tienda, Instagram, WhatsApp y tu local venden a la vez. YiQi mantiene un solo stock y una sola facturación detrás de todos los canales de Tienda Nube.
+      YiQi sincroniza tu catálogo, stock y pedidos con Tienda Nube. Trabaja con
+      múltiples ubicaciones de stock, factura sin intervención y deja tu tiempo libre
+      para lo que solo tú puedes hacer: decidir.
     </p>
     <div class="hero-ctas">
       <a class="btn btn-primary btn-lg" href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener">Reserva tu demo</a>
       <a class="btn btn-ghost btn-lg" href="#integracion">Ver cómo funciona</a>
-    </div>
-  </section>
-
-  <!-- ── CAPACIDADES TIENDA NUBE ─────────────────────────────── -->
-  <section class="reveal section-dark" id="capacidades">
-    <div class="section-inner">
-    <div class="section-eyebrow">Capacidades</div>
-    <h2 class="section-title">El ecosistema de Tienda Nube,<br>conectado a tu ERP.</h2>
-    <p class="section-lead">
-      Tienda Nube pone los canales, las herramientas y la IA para vender; YiQi administra
-      stock, precios y facturación detrás. Estas son las capacidades que sumas al conectarlos.
-    </p>
-    <div class="grid-features">
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3l2.2 5.8L20 11l-5.8 2.2L12 19l-2.2-5.8L4 11l5.8-2.2L12 3z"/>
-          </svg>
-        </div>
-        <h3 class="feature-title">Diseño con IA · 65+ plantillas</h3>
-        <p class="feature-text">
-          Más de 65 plantillas listas para vender y una IA que redacta las
-          descripciones de tus productos. Sin la página en blanco.
-        </p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
-          </svg>
-        </div>
-        <h3 class="feature-title">Venta omnicanal</h3>
-        <p class="feature-text">
-          Catálogo conectado a Instagram, Facebook, Pinterest y tu local físico, con
-          stock, pedidos y pagos sincronizados.
-        </p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
-          </svg>
-        </div>
-        <h3 class="feature-title">Pago Nube y Envío Nube</h3>
-        <p class="feature-text">
-          Checkout de alta aprobación, pagos en cuotas y logística integrada, nativos
-          dentro de la tienda.
-        </p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
-          </svg>
-        </div>
-        <h3 class="feature-title">Marketing Nube</h3>
-        <p class="feature-text">
-          Automatizaciones de e-mail que recuperan carritos y fidelizan clientes:
-          hasta un 20% más de ventas.
-        </p>
-      </div>
-    </div>
     </div>
   </section>
 
@@ -863,78 +746,78 @@
     </div>
   </section>
 
-  <!-- ── SECCIÓN ESTRELLA: OMNICANAL ───────────────────────── -->
-  <section class="reveal section-brand" id="diferenciador">
+  <!-- ── DESTACADO: MÚLTIPLES UBICACIONES ────────────────────── -->
+  <section class="reveal section-dark" id="diferenciador">
     <div class="section-inner">
     <div class="highlight-card">
       <div class="highlight-grid">
         <div>
-          <span class="highlight-tag">Omnicanal</span>
-          <h2 class="highlight-title">Vende donde estén tus clientes.</h2>
+          <span class="highlight-tag">Diferenciador</span>
+          <h2 class="highlight-title">Múltiples ubicaciones de stock, sincronizadas con Tienda Nube.</h2>
           <p class="highlight-text">
-            Tienda Nube publica tu catálogo en tu web, Instagram, Facebook, Pinterest,
-            WhatsApp (con Chat Nube IA) y tu local. <strong>YiQi mantiene un solo stock y
-            una sola facturación</strong> detrás de todos.
+            Si vendes desde varios depósitos o locales, Tienda Nube puede decirle
+            al comprador <strong>desde dónde sale el producto</strong>. Pero esa
+            funcionalidad solo se activa si el ERP del otro lado la entiende.
           </p>
           <div class="highlight-claim">
-            <span class="highlight-claim-text">Vendas donde vendas, el inventario y los números viven en un único lugar.</span>
+            <span class="highlight-claim-text">Pocos ERPs pueden hacerlo. YiQi lo maneja nativamente.</span>
           </div>
-          <p class="highlight-text">Sin planillas paralelas ni stock desfasado entre canales.</p>
+          <p class="highlight-text">Stock por ubicación, traslados, reservas y puntos de venta físicos — todo sincronizado con Tienda Nube.</p>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-            <span class="tag">Tienda online</span>
-            <span class="tag">Instagram &amp; Facebook</span>
-            <span class="tag">WhatsApp · Chat Nube</span>
-            <span class="tag">Local / PDV</span>
+            <span class="tag">Retailers con locales</span>
+            <span class="tag">Varios depósitos</span>
+            <span class="tag">Franquicias</span>
+            <span class="tag">Multicanal</span>
           </div>
         </div>
         <div>
-          <div class="mockup" aria-label="Pedidos del día por canal, con stock unificado en YiQi">
+          <div class="mockup" aria-label="Ejemplo de stock por ubicación">
             <div class="mockup-chrome">
               <div class="mockup-dots"><span></span><span></span><span></span></div>
-              <span class="mockup-chrome-label">Pedidos de hoy · Todos los canales</span>
+              <span class="mockup-chrome-label">Stock — Buzo polar negro · Talle M</span>
               <div style="width:40px"></div>
             </div>
             <div class="mockup-body">
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Tienda online</span>
+                  <span class="mockup-loc">Depósito Central</span>
                   <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="100"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="34">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty" data-count="42">0</span>
+                <span class="mockup-status">Disponible</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Instagram + Facebook</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="55"></div></div>
+                  <span class="mockup-loc">Local Palermo</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="19"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="18">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty" data-count="8">0</span>
+                <span class="mockup-status">Disponible</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">WhatsApp · Chat Nube</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="38"></div></div>
+                  <span class="mockup-loc">Local Córdoba</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="7"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="12">0</span>
-                <span class="mockup-status">IA 24/7</span>
+                <span class="mockup-qty" data-count="3">0</span>
+                <span class="mockup-status">Disponible</span>
               </div>
               <div class="mockup-row">
                 <div class="mockup-row-info">
-                  <span class="mockup-loc">Local / PDV</span>
-                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill" data-bar="26"></div></div>
+                  <span class="mockup-loc">Depósito Norte</span>
+                  <div class="mockup-bar-wrap"><div class="mockup-bar-fill"></div></div>
                 </div>
-                <span class="mockup-qty" data-count="9">0</span>
-                <span class="mockup-status">Sincronizado</span>
+                <span class="mockup-qty zero">—</span>
+                <span class="mockup-status nostock">Sin stock</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
   </section>
 
+    </div>
   <!-- ── CÓMO FUNCIONA ───────────────────────────────────────── -->
   <section class="reveal section-mid" id="como-funciona">
     <div class="section-inner">
@@ -969,68 +852,134 @@
     </div>
   </section>
 
-  <!-- ── SPOTLIGHT: CHAT NUBE (IA) ───────────────────────────── -->
-  <section class="reveal section-dark" id="chat-nube">
+  <!-- ── PILARES YiQi ────────────────────────────────────────── -->
+  <section class="reveal section-dark" id="erp-completo">
+    </div>
     <div class="section-inner">
-    <div class="highlight-card">
-      <div class="highlight-grid">
-        <div>
-          <span class="highlight-tag">Chat Nube · IA</span>
-          <h2 class="highlight-title">Una IA que vende por ti, 24/7.</h2>
-          <p class="highlight-text">
-            <strong>Chat Nube</strong> atiende por WhatsApp las 24 horas: responde, arma el
-            pedido y lo cierra, hablando con la personalidad de tu marca. Cada venta entra a
-            YiQi como un pedido, con su stock descontado.
-          </p>
-          <div class="highlight-claim">
-            <span class="highlight-claim-text">No pierdas una venta por responder tarde: la IA cierra mientras tu equipo descansa.</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
-            <span class="tag">Atiende 24/7</span>
-            <span class="tag">Cierra pedidos</span>
-            <span class="tag">Tono de tu marca</span>
-            <span class="tag">Sincronizado con YiQi</span>
+    <div class="section-eyebrow">Por qué va más allá de una integración</div>
+    <h2 class="section-title">No es solo una integración.<br>Es un ERP completo.</h2>
+    <p class="section-lead">
+      Cuando conectas Tienda Nube con YiQi, no sumas un plugin. Conectas
+      tu tienda con un sistema que cubre toda la operación del negocio.
+    </p>
+    <div class="feat-tabs">
+      <div class="feat-tablist" role="tablist" aria-label="Capacidades del ERP" aria-orientation="vertical">
+        <button class="feat-tab" role="tab" id="feat-tab-0" aria-selected="true" aria-controls="feat-panel-0" tabindex="0">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></svg><span>Control de costos</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-1" aria-selected="false" aria-controls="feat-panel-1" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><span>Automatización de procesos</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-2" aria-selected="false" aria-controls="feat-panel-2" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1 0 4 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 2 2 0 0 0 0-4 2 2 0 0 1 0-4Z"/><path d="M14 6v12"/></svg><span>Gestión de tickets</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-3" aria-selected="false" aria-controls="feat-panel-3" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1V3l-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span>Facturación automática</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-4" aria-selected="false" aria-controls="feat-panel-4" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1 13H6L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><span>Venta multicanal</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-5" aria-selected="false" aria-controls="feat-panel-5" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15v-3M12 15V8M16 15v-5"/></svg><span>Tablero en tiempo real</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-6" aria-selected="false" aria-controls="feat-panel-6" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 14.5l5-5"/><path d="M11.5 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"/><path d="M12.5 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"/></svg><span>Integraciones y API abierta</span>
+        </button>
+        <button class="feat-tab" role="tab" id="feat-tab-7" aria-selected="false" aria-controls="feat-panel-7" tabindex="-1">
+          <svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.5a3.5 3.5 0 0 1 .5 8H7Z"/></svg><span>100% en la nube</span>
+        </button>
+      </div>
+      <div class="feat-panel-wrap">
+        <div class="feat-panel active" role="tabpanel" id="feat-panel-0" aria-labelledby="feat-tab-0" tabindex="0">
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></svg>Control de costos</span>
+          <h3 class="feat-panel-title">Margen real, no solo facturación.</h3>
+          <p class="feat-panel-text">YiQi calcula el costo y la rentabilidad de cada venta de Tienda Nube — por producto, canal y período. Sabes qué deja cada operación, no solo cuánto vendiste.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Margen por producto</span>
+            <span class="feat-chip"><span class="dot"></span>Costo actualizado</span>
+            <span class="feat-chip"><span class="dot"></span>Rentabilidad por canal</span>
           </div>
         </div>
-        <div>
-          <div class="chat-mock">
-            <div class="mockup-chrome">
-              <div class="mockup-dots"><span></span><span></span><span></span></div>
-              <span class="mockup-chrome-label">WhatsApp · Chat Nube</span>
-              <div style="width:40px"></div>
-            </div>
-            <div class="chat-body">
-              <div class="chat-msg in">Hola 👋 ¿Tienen la campera en talle M?</div>
-              <div class="chat-msg out">¡Hola! Sí, quedan 3 en stock 😊 ¿Te la reservo?</div>
-              <div class="chat-msg in">Dale</div>
-              <div class="chat-msg out">Listo ✅ Pedido #1042 confirmado. ¿Quieres pagarlo ahora?</div>
-            </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-1" aria-labelledby="feat-tab-1" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Automatización de procesos</span>
+          <h3 class="feat-panel-title">El sistema actúa solo.</h3>
+          <p class="feat-panel-text">Reglas que disparan acciones sin intervención: el stock bajo genera la orden de compra, el pago acreditado libera la preparación del envío y la factura se emite al confirmarse la venta.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Reglas configurables</span>
+            <span class="feat-chip"><span class="dot"></span>Sin tareas manuales</span>
+            <span class="feat-chip"><span class="dot"></span>Opera 24/7</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-2" aria-labelledby="feat-tab-2" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1 0 4 2 2 0 0 1-2 2H5a2 2 0 0 1-2-2 2 2 0 0 0 0-4 2 2 0 0 1 0-4Z"/><path d="M14 6v12"/></svg>Gestión de tickets</span>
+          <h3 class="feat-panel-title">Postventa ordenada.</h3>
+          <p class="feat-panel-text">Reclamos, cambios y consultas centralizados y atados a cada pedido y cliente. Nada se pierde entre mails y chats sueltos.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Atado al pedido</span>
+            <span class="feat-chip"><span class="dot"></span>Estados y SLA</span>
+            <span class="feat-chip"><span class="dot"></span>Historial por cliente</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-3" aria-labelledby="feat-tab-3" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1V3l-2 1-2-1-2 1-2-1-2 1-2-1Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Facturación automática</span>
+          <h3 class="feat-panel-title">De la venta a la factura, sin cargar nada.</h3>
+          <p class="feat-panel-text">Cada venta de Tienda Nube se factura automáticamente ante AFIP/ARCA y queda conciliada con la cobranza. Tu equipo deja de emitir comprobantes a mano.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>AFIP / ARCA</span>
+            <span class="feat-chip"><span class="dot"></span>Conciliación automática</span>
+            <span class="feat-chip"><span class="dot"></span>Cero carga manual</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-4" aria-labelledby="feat-tab-4" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1 13H6L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Venta multicanal</span>
+          <h3 class="feat-panel-title">Una sola operación para todos tus canales.</h3>
+          <p class="feat-panel-text">Vende en Tienda Nube, Mercado Libre y tu local físico con un único stock, una sola facturación y un solo lugar para ver todo.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Tienda Nube</span>
+            <span class="feat-chip"><span class="dot"></span>Mercado Libre</span>
+            <span class="feat-chip"><span class="dot"></span>Local físico</span>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-5" aria-labelledby="feat-tab-5" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15v-3M12 15V8M16 15v-5"/></svg>Tablero en tiempo real</span>
+          <h3 class="feat-panel-title">Decisiones con datos al instante.</h3>
+          <p class="feat-panel-text">Un tablero que muestra ventas, stock y rentabilidad en vivo, con reportes por canal y alertas cuando algo necesita tu atención.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>KPIs en vivo</span>
+            <span class="feat-chip"><span class="dot"></span>Reportes por canal</span>
+            <span class="feat-chip"><span class="dot"></span>Alertas</span>
+          </div>
+          <div class="feat-panel-links">
+            <a class="feat-link" href="erp-panel.html">Ver el panel<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-6" aria-labelledby="feat-tab-6" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 14.5l5-5"/><path d="M11.5 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"/><path d="M12.5 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"/></svg>Integraciones y API abierta</span>
+          <h3 class="feat-panel-title">Conecta lo que ya usas.</h3>
+          <p class="feat-panel-text">API abierta, webhooks y conectores listos para integrar YiQi con las herramientas que ya usas. Con IA Ready, lo extiendes con inteligencia artificial.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>API y webhooks</span>
+            <span class="feat-chip"><span class="dot"></span>Conectores</span>
+            <span class="feat-chip"><span class="dot"></span>IA Ready</span>
+          </div>
+          <div class="feat-panel-links">
+            <a class="feat-link" href="ia-ready.html">Conoce IA Ready<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="feat-link" href="api-docs.html">Ver la API<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <div class="feat-panel" role="tabpanel" id="feat-panel-7" aria-labelledby="feat-tab-7" tabindex="0" hidden>
+          <span class="feat-panel-kicker"><svg class="feat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.5-7.97A5 5 0 0 1 16 9.5a3.5 3.5 0 0 1 .5 8H7Z"/></svg>100% en la nube</span>
+          <h3 class="feat-panel-title">Tu operación, desde cualquier lugar.</h3>
+          <p class="feat-panel-text">YiQi corre en la nube: sin instalaciones ni servidores propios, con actualizaciones automáticas y respaldo continuo. Entras desde el navegador.</p>
+          <div class="feat-chips">
+            <span class="feat-chip"><span class="dot"></span>Sin instalación</span>
+            <span class="feat-chip"><span class="dot"></span>Actualizaciones automáticas</span>
+            <span class="feat-chip"><span class="dot"></span>Respaldo continuo</span>
           </div>
         </div>
       </div>
     </div>
-    </div>
-  </section>
-
-  <!-- ── PLANES TIENDA NUBE ──────────────────────────────────── -->
-  <section class="reveal section-mid" id="planes">
-    <div class="section-inner">
-    <div class="section-eyebrow">Planes de Tienda Nube</div>
-    <h2 class="section-title">Empieza gratis.<br>Escala cuando vendas más.</h2>
-    <p class="section-lead">
-      Tienda Nube tiene un plan para cada etapa, y YiQi se conecta con todos: el ERP
-      es el mismo crezca lo que crezca tu tienda.
-    </p>
-    <div class="plan-grid">
-      <div class="plan-card"><span class="plan-name">Inicial</span><span class="plan-price">Gratis</span><span class="plan-note">Para empezar a vender</span></div>
-      <div class="plan-card"><span class="plan-name">Esencial</span><span class="plan-price">$24.999<small>/mes</small></span><span class="plan-note">Profesionaliza tu tienda</span></div>
-      <div class="plan-card featured"><span class="plan-name">Impulso</span><span class="plan-price">$73.999<small>/mes</small></span><span class="plan-note">El salto de crecimiento</span></div>
-      <div class="plan-card"><span class="plan-name">Escala</span><span class="plan-price">$219.999<small>/mes</small></span><span class="plan-note">Alto volumen</span></div>
-      <div class="plan-card"><span class="plan-name">Evolución</span><span class="plan-price">A medida</span><span class="plan-note">Grandes marcas</span></div>
-    </div>
-    <p class="plan-foot">Precios de referencia de Tienda Nube en ARS (planes mensuales). Con <strong>Marketing Nube</strong>, las automatizaciones pueden sumar hasta un <strong>20% de ventas</strong>.</p>
-    </div>
-  </section>
+    </section>
 
   <!-- ── CTA FINAL ──────────────────────────────────────────── -->
   <section class="reveal" id="demo">
@@ -1070,15 +1019,8 @@
     <!-- Header dinámico -->
     <div class="hf-header">
       
-      <div class="hf-title" id="hf-title">Tu demo de YiQi + Tienda Nube</div>
-      <div class="hf-sub" id="hf-sub">Sin compromiso. Te contactamos en menos de 24 hs.</div>
-    </div>
-
-    <!-- Señales de confianza -->
-    <div class="hf-trust">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sin compromiso</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Respuesta en 24 hs</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Datos protegidos</span>
+      <div class="hf-title" id="hf-title">Comenzar ahora</div>
+      <div class="hf-sub" id="hf-sub">Nuestro equipo te contacta en menos de 24 hs.</div>
     </div>
 
     <!-- ══ PASO 1: Nombre · Apellido · Email ══ -->
@@ -1192,7 +1134,7 @@
     <!-- Divider + Footer paso 3 -->
     <div class="hf-divider" id="hf-divider-3"></div>
     <div class="hf-footer" id="hf-footer-3">
-      <button class="hf-btn-cta" onclick="hfSubmit()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Reservar mi demo</button>
+      <button class="hf-btn-cta" onclick="hfSubmit()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitud</button>
       <button class="hf-btn-ghost" onclick="hfGoStep(2)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Volver</button>
       <p class="hf-legal">Tu información es confidencial y no se comparte con terceros.</p>
     </div>
@@ -1312,8 +1254,8 @@ const HF_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       if (i < step)  d.classList.add('done');
       if (i === step) d.classList.add('active');
     }
-    const titles = ['Tu demo de YiQi + Tienda Nube','Tus datos de contacto','Hablemos de tu empresa'];
-    const subs   = ['Sin compromiso. Te contactamos en menos de 24 hs.','Necesitamos un número para coordinar la demo.','Nos ayuda a personalizar la presentación.'];
+    const titles = ['Comenzar ahora','Tus datos de contacto','Hablemos de tu empresa'];
+    const subs   = ['Nuestro equipo te contacta en menos de 24 hs.','Necesitamos un número para coordinar la demo.','Nos ayuda a personalizar la presentación.'];
     document.getElementById('hf-title').textContent = titles[step - 1];
     document.getElementById('hf-sub').textContent   = subs[step - 1];
   }

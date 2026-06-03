@@ -37,6 +37,7 @@
   --muted-2:     #7d7c82;
   /* Marca */
   --cyan:        #00ccff;
+  --accent-rgb:  0,204,255;
   --cyan-soft:   rgba(0,204,255,.10);
   --cyan-soft-2: rgba(0,204,255,.16);
   --cyan-label:  rgba(0,204,255,.52);
@@ -92,6 +93,7 @@ html[data-theme="light"] {
   --muted:       #5e5a57;
   --muted-2:     #636875;
   --cyan:        #009fc7;
+  --accent-rgb:  0,159,199;
   --cyan-soft:   rgba(0,159,199,.10);
   --cyan-soft-2: rgba(0,159,199,.14);
   --cyan-label:  rgba(0,159,199,.58);
@@ -119,6 +121,15 @@ h2,
 .page-hero-title,
 .ds-pro-title {
   font-family: var(--font-display);
+}
+
+/* Corte de títulos en dos líneas — reparto equilibrado automático (DS) */
+h1, h2,
+.hero-title, .hero-headline,
+.section-title, .ds-section-title,
+.highlight-title, .cta-final-title,
+.partners-title, .page-hero-title, .ds-pro-title {
+  text-wrap: balance;
 }
 
 /* ──────────────────────────────────────────────────────────────── */
