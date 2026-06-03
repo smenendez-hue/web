@@ -1573,7 +1573,7 @@ html[data-theme="light"] .bg-grid-lg {
   width: 100%; height: 38px;
   background: var(--bg-elev); border: none;
   border-radius: var(--radius-sm); padding: 0 12px;
-  color: var(--text); font: 400 12px var(--sans);
+  color: var(--text); font: 400 16px var(--sans);
   transition: box-shadow .18s ease, background .18s ease;
   outline: none; appearance: none;
 }

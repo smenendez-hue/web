@@ -372,7 +372,7 @@ html[data-theme="light"] .topbar-search-wrap:focus-within {
 .topbar-search-wrap svg { color: var(--muted-2); flex-shrink: 0; }
 .topbar-search-input {
   flex: 1; background: none; border: none; outline: none;
-  font: 400 12px var(--sans); color: var(--text);
+  font: 400 16px var(--sans); color: var(--text);
   caret-color: var(--cyan); min-width: 0;
 }
 .topbar-search-input::placeholder { color: var(--muted-2); }
@@ -453,7 +453,7 @@ html[data-theme="light"] .topbar-search-kbd {
   background: var(--bg-elev-2);
   border: 1px solid transparent;
   border-radius: var(--radius);
-  color: var(--text); font: 400 13px var(--sans);
+  color: var(--text); font: 400 16px var(--sans);
   outline: none; caret-color: var(--cyan);
   transition: background var(--tr), border-color var(--tr), box-shadow var(--tr);
   box-sizing: border-box;
