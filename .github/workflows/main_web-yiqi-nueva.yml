@@ -118,7 +118,12 @@ jobs:
             --resource-group "${{ steps.app.outputs.resource_group }}" \
             --name "web-yiqi-nueva" \
             --query defaultHostName -o tsv)
-          SCM_HOST="${HOST/.azurewebsites.net/.scm.azurewebsites.net}"
+          # En hostnames regionales (p.ej. app.region.azurewebsites.net), Kudu es app.scm.region.azurewebsites.net.
+          SCM_HOST="${HOST/./.scm.}"
+          if [ "$SCM_HOST" = "$HOST" ] || ! echo "$SCM_HOST" | grep -q '\.scm\.'; then
+            echo "No se pudo construir SCM host desde defaultHostName: $HOST"
+            exit 1
+          fi
 
           echo "Intentando fallback ZipDeploy directo a Kudu: $SCM_HOST"
           USER=$(az webapp deployment list-publishing-credentials \
