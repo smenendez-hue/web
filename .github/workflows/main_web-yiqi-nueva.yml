@@ -118,10 +118,20 @@ jobs:
             --resource-group "${{ steps.app.outputs.resource_group }}" \
             --name "web-yiqi-nueva" \
             --query defaultHostName -o tsv)
-          # En hostnames regionales (p.ej. app.region.azurewebsites.net), Kudu es app.scm.region.azurewebsites.net.
-          SCM_HOST="${HOST/./.scm.}"
-          if [ "$SCM_HOST" = "$HOST" ] || ! echo "$SCM_HOST" | grep -q '\.scm\.'; then
-            echo "No se pudo construir SCM host desde defaultHostName: $HOST"
+          SCM_HOST=$(az webapp show \
+            --resource-group "${{ steps.app.outputs.resource_group }}" \
+            --name "web-yiqi-nueva" \
+            --query "enabledHostNames[?contains(@, '.scm.')]|[0]" -o tsv)
+
+          if [ -z "$SCM_HOST" ]; then
+            # En hostnames regionales (p.ej. app.region.azurewebsites.net), Kudu es app.scm.region.azurewebsites.net.
+            SCM_HOST=$(echo "$HOST" | sed -E 's/^([^.]+)\.(.+)$/\1.scm.\2/')
+          fi
+
+          echo "App host: $HOST"
+          echo "SCM host: $SCM_HOST"
+          if [ -z "$SCM_HOST" ] || [ "$SCM_HOST" = "$HOST" ] || ! echo "$SCM_HOST" | grep -q '\.scm\.'; then
+            echo "No se pudo resolver SCM host desde Azure/defaultHostName: $HOST"
             exit 1
           fi
 
