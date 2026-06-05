@@ -672,6 +672,8 @@ body.nav-open { overflow: hidden; }
   min-width: 0;
   overflow: hidden;
 }
+/* El popover de la "i" (.kpi-help-pop) debe poder salir del grid */
+.kpi-grid { overflow: visible; }
 img, svg { max-width: 100%; height: auto; }
 .page-hero, .ds-content { width: 100%; }
 .table-card-top { flex-wrap: wrap; }

@@ -60,6 +60,7 @@
   --display: var(--font-display);
   --sans:    "Inter", ui-sans-serif, system-ui, sans-serif;
   --mono:    "IBM Plex Mono", ui-monospace, monospace;
+  --kpi-num: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   /* Layout */
   --topbar-h:  56px;
   --sidebar-w: 240px;

@@ -205,7 +205,8 @@ html[data-theme="light"] {
 
 - **Plus Jakarta Sans (`--display`)** → títulos de página, hero headlines, headings grandes
 - **Inter (`--sans`)** → todo el texto de interfaz: body, labels, botones, nav
-- **IBM Plex Mono (`--mono`)** → tokens, badges, kickers, valores numéricos, IDs, atajos de teclado
+- **IBM Plex Mono (`--mono`)** → tokens, badges, kickers, IDs, atajos de teclado
+- **Plus Jakarta Sans 500 (`--kpi-num`, tabular-nums)** → cifras de KPI cards
 
 ### Escala tipográfica
 
@@ -1094,7 +1095,7 @@ document.querySelectorAll('.kpi-block').forEach(b => io.observe(b));
 - Siempre inicializar los elementos en `0` antes de que el usuario los vea (evitar flash del valor final).
 - Decimales: usar coma como separador decimal (`toFixed(1).replace('.', ',')`).
 - Activar por `IntersectionObserver` cuando la cifra está fuera del viewport inicial.
-- Tipografía canónica para cifras: `IBM Plex Mono`, `font-variant-numeric: tabular-nums`.
+- Tipografía canónica para cifras de KPI: `Plus Jakarta Sans` peso 500 (`--kpi-num`), `font-variant-numeric: tabular-nums`.
 
 ---
 
