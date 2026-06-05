@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<title>YiQi ERP — Design System v1.2.6</title>
+<title>YiQi ERP — Design System v1.2.7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -15,7 +15,7 @@
 <script src="components/llm-fab.js" defer></script>
 <script src="components/analytics-pro-banner.js" defer></script>
 <style>
-/* ─── DS v1.2.6 ─────────────────────────────────────────── */
+/* ─── DS v1.2.7 ─────────────────────────────────────────── */
 
 /* Nav badge (versión / nuevo) */
 .ds-nav-badge {
@@ -181,7 +181,7 @@
 </g>
 </svg>
 </a>
-<div class="topbar-pill">Design System v1.2.6</div>
+<div class="topbar-pill">Design System v1.2.7</div>
 </div>
 <div class="topbar-search-wrap" id="topbar-search-wrap">
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -274,7 +274,7 @@
 <section class="ds-section" id="release-notes">
 <div class="ds-section-header">
 <div class="ds-section-kicker">00 · Novedades</div>
-<h2 class="ds-section-title">Novedades · v1.2.6</h2>
+<h2 class="ds-section-title">Novedades · v1.2.7</h2>
 <p class="ds-section-sub">Patrón <strong>depth stack</strong> para secciones de marketing, breakpoint <code>xxl ≥ 1440px</code> con 5 columnas para grids densos, y preview en sidebar del Panel Gerencial Analytics Pro.</p>
 </div>
 <div class="token-grid-2">
@@ -296,6 +296,42 @@
 <tr><th>Versión</th><th>Fecha</th><th>Tipo</th><th>Detalle</th></tr>
 </thead>
 <tbody>
+<tr>
+<td class="mono-cell">v1.2.7</td>
+<td class="mono-cell">05/06/2026</td>
+<td><span class="badge badge-green">DATOS</span></td>
+<td><strong>Panel gerencial</strong>: <strong>Embudo operativo</strong> conectado a datos reales del ERP — embudo de cumplimiento (pedidos del período → entregados → entregados a tiempo) con fugas calculadas y SLA. Deja de ser placeholder.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.7</td>
+<td class="mono-cell">05/06/2026</td>
+<td><span class="badge badge-cyan">DATA-VIZ</span></td>
+<td>Nuevo <strong>donut</strong> "Participación por origen" (inline + modal) con leyenda propia y agrupación de cola en <em>Otros</em>. <strong>Semáforo diario</strong> con estado general computado + métrica destacada por señal. <strong>Actividad horaria</strong> pasa a mini-histograma vertical.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.7</td>
+<td class="mono-cell">05/06/2026</td>
+<td><span class="badge badge-green">SISTEMA</span></td>
+<td><strong>Barras horizontales unificadas</strong> (canal · franja · sucursal · embudo): track <code>--line-strong</code> visible, sin bordes, <code>min-width</code> para valores chicos y animación de entrada <code>scaleX</code>. Día pico resaltado en franjas y tendencia.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.7</td>
+<td class="mono-cell">05/06/2026</td>
+<td><span class="badge badge-green">SISTEMA</span></td>
+<td><strong>Tints de color tokenizados</strong> (<code>--cyan-a24</code>, <code>--amber-a20</code>, …) + tokens de chart (<code>--cyan-chart-bar/line</code>), todos con override en modo claro. Los gráficos leen <code>--cyan</code> vía <code>getComputedStyle</code> y se adaptan al tema.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.7</td>
+<td class="mono-cell">05/06/2026</td>
+<td><span class="badge badge-amber">PATRÓN</span></td>
+<td><strong>No permitido</strong>: callouts/cards con borde de un solo lado (<code>border-left/top</code> de acento). Usar fondo tonal borderless. <strong>Backlog</strong> con status pills, borderless.</td>
+</tr>
+<tr>
+<td class="mono-cell">v1.2.7</td>
+<td class="mono-cell">05/06/2026</td>
+<td><span class="badge badge-cyan">A11Y</span></td>
+<td>Modal con focus trap + Esc + retorno de foco; popover de ayuda (<code>.kpi-help</code>) abre hacia abajo (no se corta arriba); red global <code>:focus-visible</code>. Estados vacíos discretos (medios de pago, devoluciones) y plurales/acentos corregidos.</td>
+</tr>
 <tr>
 <td class="mono-cell">v1.2.6</td>
 <td class="mono-cell">31/05/2026</td>
@@ -393,8 +429,28 @@
 </tr>
 </tbody>
 </table>
+<button class="btn" id="changelog-toggle" type="button" style="margin-top:14px" aria-expanded="false" hidden>Ver todos</button>
 </div>
 </section>
+<script>
+(function(){
+  var table=document.getElementById('ds-changelog');
+  var btn=document.getElementById('changelog-toggle');
+  if(!table||!btn||!table.tBodies[0])return;
+  var rows=Array.prototype.slice.call(table.tBodies[0].rows);
+  var LIMIT=10;
+  if(rows.length<=LIMIT)return;
+  var expanded=false;
+  function apply(){
+    for(var i=0;i<rows.length;i++){rows[i].style.display=(expanded||i<LIMIT)?'':'none';}
+    btn.textContent=expanded?'Ver menos':('Ver todos ('+rows.length+')');
+    btn.setAttribute('aria-expanded',expanded?'true':'false');
+  }
+  btn.hidden=false;
+  btn.addEventListener('click',function(){expanded=!expanded;apply();});
+  apply();
+})();
+</script>
 <!-- ─── BRAND ─── -->
 <section class="ds-section" id="brand">
 <div class="ds-section-header">
@@ -867,6 +923,18 @@
 <div class="effect-code" style="margin-top:4px">background: var(--cyan-soft)</div>
 <div class="effect-code" style="color:var(--muted);margin-top:3px">Header del módulo accordion abierto</div>
 </div>
+</div>
+</div>
+<div class="subsection-title" style="margin-top:36px">No permitido — borde de un solo lado</div>
+<p class="ds-section-sub" style="margin:0 0 14px">Callouts, notas y cards con borde en un solo lado (<span class="code-chip">border-left</span> o <span class="code-chip">border-top</span> de acento) quedan <strong style="color:var(--red)">prohibidos</strong>: rompen el sistema flat &amp; borderless y combinan mal con esquinas redondeadas. El énfasis se logra con <strong style="color:var(--text)">fondo tonal</strong> (<span class="code-chip">--amber-soft</span>, <span class="code-chip">--cyan-soft</span>, etc.), nunca con bordes parciales.</p>
+<div class="token-grid-2">
+<div>
+<div style="border-left:3px solid var(--amber);background:var(--bg-elev-2);border-radius:var(--radius-lg);padding:14px 16px;color:var(--muted);font:400 13px/1.5 var(--sans)"><strong style="color:var(--text)">Observaciones</strong><br/>Callout con acento lateral y esquinas redondeadas.</div>
+<div style="margin-top:8px;font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--red)">&#10005; No permitido &middot; borde de un solo lado</div>
+</div>
+<div>
+<div style="background:var(--amber-soft);border-radius:var(--radius-lg);padding:14px 16px;color:var(--muted);font:400 13px/1.5 var(--sans)"><strong style="color:var(--amber)">Observaciones</strong><br/>Callout con fondo tonal, sin bordes.</div>
+<div style="margin-top:8px;font:700 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green)">&#10003; Correcto &middot; fondo tonal borderless</div>
 </div>
 </div>
 </section>
@@ -2522,7 +2590,7 @@ function dsCopyCode(btn){
 <div class="ds-section-header">
 <div class="ds-section-kicker">20 · Aplicación</div>
 <h2 class="ds-section-title">Panel Gerencial · Componentes</h2>
-<p class="ds-section-sub">Componentes sueltos de <strong>YiQi Analytics Pro</strong>. Cada pieza vive acá como fuente única: si cambia en la app, se actualiza en el DS.</p>
+<p class="ds-section-sub">Componentes de <strong>YiQi Analytics Pro</strong>. Cada pieza vive acá como fuente única: si cambia en la app, se actualiza en el DS. Actualizado a <strong>v1.2.7</strong> con embudo real, donut de origen, semáforo con métrica, histograma de actividad y status pills.</p>
 </div>
 
 <div class="subsection-title">KPI card</div>
@@ -2607,7 +2675,7 @@ function dsCopyCode(btn){
 <p style="font:400 13px/1.6 var(--sans);color:var(--muted);max-width:66ch;margin:-4px 0 16px">Las 7 secciones de módulo reutilizan los mismos componentes, así que estas reglas se definen <strong>una vez a nivel de clase</strong> y aplican a todas. Todo el panel es <strong>flat y borderless</strong>: la profundidad va por fondo/sombra, nunca por borde, y no hay degradés ni glows en datos.</p>
 <table class="table-demo" style="max-width:560px;margin-bottom:14px"><thead><tr><th>Patrón</th><th>Regla</th></tr></thead><tbody>
   <tr><td>Tablas (<code>.data-table</code>)</td><td>Header en <code>--bg-elev</code>, mono 700 <code>.12em</code> <code>--muted-2</code>; hover gris neutro; última fila sin borde. Columnas numéricas <code>.num</code> → <strong>mono tabular, alineadas a la derecha</strong>.</td></tr>
-  <tr><td>Barras (trend, franja, canales, sucursal, progreso)</td><td><strong>Cyan sólido</strong>, flat. Track borderless en <code>--bg-soft</code>, <em>sin</em> sombra 3D <code>inset</code>.</td></tr>
+  <tr><td>Barras (franja · sucursal · embudo · progreso)</td><td>Track <strong>borderless</strong> en <code>--line-strong</code> (visible en claro/oscuro), fill <strong>cyan sólido</strong> con <code>min-width</code> para valores chicos y animación de entrada <code>scaleX</code> (<code>funnelGrow</code>). El <strong>valor pico</strong> en cyan sólido y el resto atenuado (<code>--cyan-chart-bar</code>).</td></tr>
   <tr><td>Cards / paneles internos</td><td><strong>Borderless</strong>: <code>--bg-elev-2</code> + <code>--shadow-sm</code>. Embudo y cards de listas igual.</td></tr>
   <tr><td>Charts</td><td>Toda card con gráfico es <strong>clickeable</strong> (<code>.card-clickable</code> + <code>data-chart</code>) y abre el modal de detalle.</td></tr>
   <tr><td>Sin datos</td><td>Estado discreto: etiqueta + valor en 13px <code>--muted-2</code>, sin icono ni valor grande.</td></tr>
@@ -2619,7 +2687,142 @@ function dsCopyCode(btn){
   <tr><td>Crema · ARCREMA</td><td style="text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums">17</td><td style="text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums">$ 110.600</td></tr>
 </tbody></table>
 
-<p style="font:400 12px var(--sans);color:var(--muted-2);margin-top:20px">Próximos componentes a documentar acá: cockpit (headline + sparkline), heat ribbon, chip de usuario/esquema.</p>
+<div class="subsection-title" style="margin-top:36px">Componentes de datos · v1.2.7</div>
+<p style="font:400 13px/1.6 var(--sans);color:var(--muted);max-width:66ch;margin:-4px 0 14px">Piezas de visualización del panel conectadas a datos reales del ERP. Todas flat &amp; borderless, con tokens y animación de entrada.</p>
+<table class="table-demo" style="max-width:700px;margin-bottom:16px"><thead><tr><th>Componente</th><th>Clases</th><th>Regla</th></tr></thead><tbody>
+  <tr><td><strong>Embudo operativo</strong></td><td><code>.funnel</code> · <code>.funnel-step</code> · <code>.funnel-track/-fill</code> · <code>.funnel-leak</code> · <code>.funnel-total</code> · <code>.funnel-note</code></td><td>Embudo de cumplimiento con datos reales: <em>pedidos → entregados → entregados a tiempo</em>. Cada etapa = barra full-width con fuga (<code>−N</code>); última en verde (<code>.is-end</code>). SLA/total a la derecha del header.</td></tr>
+  <tr><td><strong>Donut — origen</strong></td><td><code>.donut-block</code> · <code>.donut-chart</code> · <code>.donut-legend</code> · <code>.legend-row</code> · <code>.donut-center</code></td><td>Composición parte-todo (Chart.js doughnut, <code>cutout 68%</code>, <code>sortDonutDesc</code>). Agrupa la cola en «Otros»; leyenda propia; paleta DS <strong>sin <code>--blue</code></strong>. En el modal: rosca + desglose en 2 columnas con cifra al centro.</td></tr>
+  <tr><td><strong>Semáforo diario</strong></td><td><code>.signal-summary.tone-*</code> · <code>.signal</code> · <code>.signal-metric</code></td><td>Encabezado «Estado general» computado del peor tono; filas con punto de tono + título + <strong>métrica destacada</strong> (neutral, a la derecha). Punto plano, sin glow.</td></tr>
+  <tr><td><strong>Actividad horaria</strong></td><td><code>.rib-col</code> · <code>.rib-track</code> · <code>.rib-fill</code></td><td>Mini-histograma vertical; barra pico en cyan sólido, resto atenuado (<code>--cyan-chart-bar</code>); animación <code>ribGrow</code>.</td></tr>
+  <tr><td><strong>Status pills</strong></td><td><code>.status-pill.pill-muted/-amber/-cyan</code></td><td>Estado de roadmap / backlog. Mono, mayúsculas, fondo tonal soft, borderless.</td></tr>
+</tbody></table>
+<div class="comp-row" style="gap:10px;margin-bottom:24px">
+  <span class="status-pill pill-muted">Planificado</span>
+  <span class="status-pill pill-amber">En análisis</span>
+  <span class="status-pill pill-cyan">En curso</span>
+</div>
+<div class="subsection-title" style="margin-top:32px">Cockpit &amp; chrome de aplicación</div>
+<p style="font:400 13px/1.6 var(--sans);color:var(--muted);max-width:66ch;margin:-4px 0 14px">Estructura del Resumen ejecutivo y los controles del topbar. Clases definidas a nivel de app; reglas canónicas acá.</p>
+<table class="table-demo" style="max-width:700px;margin-bottom:16px"><thead><tr><th>Componente</th><th>Clases</th><th>Regla</th></tr></thead><tbody>
+  <tr><td><strong>Cockpit — headline</strong></td><td><code>.cp-headline</code> · <code>.cph-kicker</code> · <code>.cph-val</code> · <code>.cph-row</code> · <code>.cph-spark</code></td><td>Hero del Resumen: kicker + cifra grande (count-up) + delta + <strong>sparkline</strong> (Chart.js) embebido. Card <code>.card-clickable</code> → abre el modal de facturación.</td></tr>
+  <tr><td><strong>Spark toggle</strong></td><td><code>.spark-toggle</code> · <code>.spark-opt[data-spark]</code></td><td>Conmutador línea/barras del sparkline; <strong>barras por defecto</strong> en series diarias. <code>.is-active</code> marca el tipo vigente.</td></tr>
+  <tr><td><strong>Panel de acción</strong></td><td><code>.cp-action</code> · <code>.cpa-head</code> · <code>.cpa-list</code></td><td>Aside «Lo que requiere acción»: lista priorizada al lado del headline.</td></tr>
+  <tr><td><strong>Chip de usuario</strong></td><td><code>.account-chip</code> · <code>.account-avatar</code> · <code>.account-user</code></td><td>Identidad en el topbar: avatar con iniciales + nombre de usuario YiQi.</td></tr>
+  <tr><td><strong>Selector de esquema</strong></td><td><code>.schema-toggle</code> · <code>.schema-menu</code> · <code>.schema-chev</code></td><td>Botón <code>aria-haspopup</code> que despliega menú de esquemas <strong>borderless</strong>. En mobile/tablet el chip + período se reubican al drawer.</td></tr>
+</tbody></table>
+<div class="subsection-title" style="margin-top:38px">Galería visual</div>
+<p style="font:400 13px/1.6 var(--sans);color:var(--muted);max-width:64ch;margin:-4px 0 6px">Render en vivo de cada componente del panel, con su nombre.</p>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Embudo operativo</div>
+<div class="funnel" style="max-width:440px">
+  <div class="funnel-step"><div class="funnel-step-top"><span class="funnel-step-name">Pedidos del período</span><span class="funnel-step-count">1.926</span></div><div class="funnel-track"><div class="funnel-fill" style="width:100%"></div></div></div>
+  <div class="funnel-step"><div class="funnel-step-top"><span class="funnel-step-name">Entregados <span class="funnel-leak">&minus;118</span></span><span class="funnel-step-count">1.808 &middot; 94%</span></div><div class="funnel-track"><div class="funnel-fill" style="width:94%"></div></div></div>
+  <div class="funnel-step"><div class="funnel-step-top"><span class="funnel-step-name">Entregados a tiempo <span class="funnel-leak">&minus;28</span></span><span class="funnel-step-count">1.780 &middot; 92%</span></div><div class="funnel-track"><div class="funnel-fill is-end" style="width:92%"></div></div></div>
+  <p class="funnel-note">118 sin entregar y 28 demorados en el período. Mayor fuga: <strong>pendientes (76)</strong>.</p>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Donut — participación por origen</div>
+<div class="donut-block" style="max-width:460px">
+  <div class="donut-chart"><canvas id="ds-demo-donut" role="img" aria-label="Donut de participación por origen de pedido"></canvas></div>
+  <div class="donut-legend" id="ds-demo-legend"></div>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Semáforo diario</div>
+<ul class="signal-list" style="max-width:440px;list-style:none;padding:0">
+  <li class="signal-summary tone-amber"><span class="signal signal-amber"></span><div><strong>Estado general — <span class="signal-summary-state">Atención</span></strong><p>1 punto requiere seguimiento · 2 OK</p></div></li>
+  <li><span class="signal signal-green"></span><div class="signal-body"><div class="signal-head"><strong>Facturación consolidada</strong><span class="signal-metric">$157,4 M</span></div><p>$157,4 M en 1335 pedidos procesados.</p></div></li>
+  <li><span class="signal signal-amber"></span><div class="signal-body"><div class="signal-head"><strong>Estado operativo de pedidos</strong><span class="signal-metric">1 incid.</span></div><p>0 pendientes, 0 demorados y 1 cancelado en el período.</p></div></li>
+  <li><span class="signal signal-cyan"></span><div class="signal-body"><div class="signal-head"><strong>Franja de mayor actividad</strong><span class="signal-metric">31%</span></div><p>10-12 concentra 31% del flujo operativo.</p></div></li>
+</ul>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Actividad horaria · histograma</div>
+<div class="heat-ribbon" style="max-width:600px">
+  <div class="rib-col"><div class="rib-val">11%</div><div class="rib-track"><div class="rib-fill is-dim" style="height:35%"></div></div><div class="rib-lbl">08-10</div></div>
+  <div class="rib-col"><div class="rib-val is-peak">31%</div><div class="rib-track"><div class="rib-fill is-peak" style="height:100%"></div></div><div class="rib-lbl">10-12</div></div>
+  <div class="rib-col"><div class="rib-val is-peak">31%</div><div class="rib-track"><div class="rib-fill is-peak" style="height:100%"></div></div><div class="rib-lbl">12-14</div></div>
+  <div class="rib-col"><div class="rib-val">14%</div><div class="rib-track"><div class="rib-fill" style="height:45%"></div></div><div class="rib-lbl">14-16</div></div>
+  <div class="rib-col"><div class="rib-val">6%</div><div class="rib-track"><div class="rib-fill" style="height:19%"></div></div><div class="rib-lbl">16-18</div></div>
+  <div class="rib-col"><div class="rib-val">3%</div><div class="rib-track"><div class="rib-fill" style="height:10%"></div></div><div class="rib-lbl">18-20</div></div>
+  <div class="rib-col"><div class="rib-val">3%</div><div class="rib-track"><div class="rib-fill" style="height:10%"></div></div><div class="rib-lbl">20-22</div></div>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Status pills</div>
+<div class="comp-row" style="gap:10px;margin-bottom:6px">
+  <span class="status-pill pill-muted">Planificado</span>
+  <span class="status-pill pill-amber">En análisis</span>
+  <span class="status-pill pill-cyan">En curso</span>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Cockpit · headline + sparkline</div>
+<div style="max-width:460px;background:var(--bg-elev-2);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px 22px">
+  <div style="font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)">Facturación total del período</div>
+  <div style="font:500 30px var(--kpi-num);color:var(--text);letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:4px">$ 157,4 M</div>
+  <div style="margin-top:6px"><span class="kpi-delta is-positive">↑ +18,4% vs período anterior</span></div>
+  <div style="display:flex;align-items:flex-end;gap:3px;height:48px;margin-top:14px"><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:38%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:55%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:52%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:60%"></span><span style="flex:1;background:var(--cyan);border-radius:3px 3px 0 0;height:100%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:90%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:46%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:30%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:55%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:40%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:35%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:42%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:72%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:3px 3px 0 0;height:18%"></span></div>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Chip de usuario / esquema</div>
+<div style="display:inline-flex;align-items:center;gap:12px;background:var(--bg-elev-2);border-radius:var(--radius-pill);box-shadow:var(--shadow-sm);padding:6px 8px 6px 6px">
+  <span style="display:inline-flex;align-items:center;gap:8px"><span style="width:30px;height:30px;border-radius:50%;background:var(--cyan-soft);color:var(--cyan);display:inline-flex;align-items:center;justify-content:center;font:700 11px var(--mono)">SM</span><span style="font:500 13px var(--sans);color:var(--text)">Usuario YiQi</span></span>
+  <span style="display:inline-flex;align-items:center;gap:6px;background:var(--bg-soft);border-radius:var(--radius-pill);padding:5px 10px;font:600 12px var(--sans);color:var(--muted)">Febo · 2026 <svg width="11" height="11" viewBox="0 0 256 256" fill="none" style="opacity:.6"><polyline points="48 96 128 176 208 96" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"></polyline></svg></span>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Toggle de gráfico · línea / barras</div>
+<p style="font:400 12px/1.55 var(--sans);color:var(--muted-2);max-width:60ch;margin:-4px 0 10px">Conmuta el tipo del sparkline/chart. <code>.is-active</code> marca el vigente; <strong>barras por defecto</strong> en series diarias.</p>
+<div class="spark-toggle" aria-label="Tipo de gráfico" style="margin-bottom:6px">
+  <button type="button" class="spark-opt" aria-label="Línea"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button type="button" class="spark-opt is-active" aria-label="Barras"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="4" height="10" fill="currentColor"/><rect x="10" y="5" width="4" height="15" fill="currentColor"/><rect x="16" y="13" width="4" height="7" fill="currentColor"/></svg></button>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Modal de detalle — serie diaria</div>
+<div style="max-width:560px;background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--line)"><div><div style="font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)">Tendencia</div><div style="font:500 16px var(--sans);color:var(--text)">Facturación diaria</div></div><span style="color:var(--muted-2);font-size:20px;line-height:1">&times;</span></div>
+  <div style="padding:18px">
+    <div style="display:flex;align-items:flex-end;gap:4px;height:96px;margin-bottom:16px"><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:40%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:58%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:55%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:62%"></span><span style="flex:1;background:var(--cyan);border-radius:4px 4px 0 0;min-height:6px;height:100%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:92%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:48%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:32%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:58%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:42%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:36%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:44%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:75%"></span><span style="flex:1;background:var(--cyan-chart-bar);border-radius:4px 4px 0 0;min-height:6px;height:20%"></span></div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px"><div style="background:var(--bg-elev);border-radius:var(--radius-md);padding:10px 12px"><div style="font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)">Total</div><div style="font:700 15px var(--mono);color:var(--text);font-variant-numeric:tabular-nums;text-align:center;margin-top:3px">$157,4 M</div></div><div style="background:var(--bg-elev);border-radius:var(--radius-md);padding:10px 12px"><div style="font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)">Promedio</div><div style="font:700 15px var(--mono);color:var(--text);font-variant-numeric:tabular-nums;text-align:center;margin-top:3px">$11,2 M</div></div><div style="background:var(--bg-elev);border-radius:var(--radius-md);padding:10px 12px"><div style="font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)">Máx</div><div style="font:700 15px var(--mono);color:var(--text);font-variant-numeric:tabular-nums;text-align:center;margin-top:3px">$18,9 M</div></div><div style="background:var(--bg-elev);border-radius:var(--radius-md);padding:10px 12px"><div style="font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)">Mín</div><div style="font:700 15px var(--mono);color:var(--text);font-variant-numeric:tabular-nums;text-align:center;margin-top:3px">$2,1 M</div></div></div>
+  </div>
+</div>
+
+<div style="font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin:26px 0 10px">Modal de composición — donut</div>
+<div style="max-width:560px;background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--line)"><div><div style="font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)">Canales</div><div style="font:500 16px var(--sans);color:var(--text)">Participación por origen</div></div><span style="color:var(--muted-2);font-size:20px;line-height:1">&times;</span></div>
+  <div style="padding:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:center">
+    <div class="donut-chart" style="height:180px;position:relative"><canvas id="ds-demo-donut2" role="img" aria-label="Donut de composición en modal"></canvas><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none"><div style="font:700 26px var(--kpi-num);color:var(--text);line-height:1;font-variant-numeric:tabular-nums">65%</div><div style="font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-top:2px">POS</div></div></div>
+    <div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px">
+        <div style="background:var(--bg-elev);border-radius:var(--radius-md);padding:9px 10px"><div style="font:700 8px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)">Origen líder</div><div style="font:700 12px var(--mono);color:var(--text);margin-top:3px">POS · 65%</div></div>
+        <div style="background:var(--bg-elev);border-radius:var(--radius-md);padding:9px 10px"><div style="font:700 8px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)">Top 3</div><div style="font:700 12px var(--mono);color:var(--text);margin-top:3px">99%</div></div>
+        <div style="background:var(--bg-elev);border-radius:var(--radius-md);padding:9px 10px"><div style="font:700 8px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)">Orígenes</div><div style="font:700 12px var(--mono);color:var(--text);margin-top:3px">4</div></div>
+      </div>
+      <div class="donut-legend" id="ds-demo-legend2" style="border-top:1px solid var(--line);padding-top:12px"></div>
+    </div>
+  </div>
+</div>
+
+<p style="font:400 12px var(--sans);color:var(--muted-2);margin-top:20px">Inventario completo: todos los componentes del Panel Gerencial (Analytics Pro) están documentados en esta sección a <strong>v1.2.7</strong>.</p>
+<script>
+(function(){
+  var c=document.getElementById('ds-demo-donut2'); if(!c||!window.Chart)return;
+  var cs=getComputedStyle(document.documentElement); var v=function(n){return cs.getPropertyValue(n).trim();};
+  var labels=['POS','Shopify Febo','SEV F2','SEV F1']; var data=[65,32,2,1];
+  var pal=[v('--cyan'),v('--green'),v('--amber'),v('--purple')];
+  new Chart(c,{type:'doughnut',data:{labels:labels,datasets:[{data:data,backgroundColor:pal,borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'64%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return ' '+x.label+': '+x.parsed+'%';}}}}}});
+  var leg=document.getElementById('ds-demo-legend2');
+  if(leg){leg.innerHTML=labels.map(function(l,i){return '<div class="legend-row"><span class="legend-dot" style="background:'+pal[i]+'"></span><span class="legend-label">'+l+'</span><span class="legend-pct">'+data[i]+'%</span></div>';}).join('');}
+})();
+</script>
+<script>
+(function(){
+  var c=document.getElementById('ds-demo-donut'); if(!c||!window.Chart)return;
+  var cs=getComputedStyle(document.documentElement); var v=function(n){return cs.getPropertyValue(n).trim();};
+  var labels=['POS','Shopify Febo','SEV F2','SEV F1']; var data=[65,32,2,1];
+  var pal=[v('--cyan'),v('--green'),v('--amber'),v('--purple')];
+  new Chart(c,{type:'doughnut',data:{labels:labels,datasets:[{data:data,backgroundColor:pal,borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return ' '+x.label+': '+x.parsed+'%';}}}}}});
+  var leg=document.getElementById('ds-demo-legend');
+  if(leg){leg.innerHTML=labels.map(function(l,i){return '<div class="legend-row"><span class="legend-dot" style="background:'+pal[i]+'"></span><span class="legend-label">'+l+'</span><span class="legend-pct">'+data[i]+'%</span></div>';}).join('');}
+})();
+</script>
+
 </section>
 <script>
 (function(){
