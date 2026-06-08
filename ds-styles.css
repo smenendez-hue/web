@@ -1,6 +1,6 @@
 /* ============================================================
    YiQi Design System — styles.css
-   Versión: DS v1.2.5
+   Versión: DS v1.2.7
    Fecha: 30/04/2026
    Fuente canónica: yiqi-design-system.html
    ============================================================ */
@@ -1414,7 +1414,7 @@ html[data-theme="light"] .skeleton-line {
 .card-reveal.visible { opacity: 1; transform: none; }
 
 /* ── FOOTER CANÓNICO ──────────────────────────────────────── */
-/* © 2026 YiQi S.A. · styles.css · DS v1.2.5 · 30/04/2026  */
+/* © 2026 YiQi S.A. · styles.css · DS v1.2.7 · 04/06/2026  */
 
 /* ── 42. INPUTS — COMPONENTES DS (v1.2.5) ────────────────── */
 /* Borderless: sin border, fondo elevado, focus ring cyan.    */
@@ -1859,3 +1859,37 @@ html[data-theme="light"] .hf-btn-back:hover { color: var(--muted); }
 .spark-opt { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 24px; border: 0; background: none; color: var(--muted); border-radius: var(--radius-pill); cursor: pointer; transition: all 0.15s ease; }
 .spark-opt svg { width: 15px; height: 15px; }
 .spark-opt.is-active { background: var(--cyan-soft); color: var(--cyan); }
+
+/* ════════════════════════════════════════════════════════════════════
+   App shell · componentes de aplicación (v1.2.7)
+   Catálogo: yiqi-design-system.html §27 (Aplicaciones · Kit base)
+   ════════════════════════════════════════════════════════════════════ */
+.topbar-l{ display:flex; align-items:center; gap:10px; min-width:0; }
+.topbar-r{ display:flex; align-items:center; gap:8px; min-width:0; margin-left:auto; }
+
+.t-pill{ display:inline-flex; align-items:center; height:30px; padding:0 12px; border:1px solid var(--line); border-radius:var(--radius-pill); background:var(--bg-elev-2); color:var(--muted); font:700 10px var(--mono); letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; }
+
+.btn-refresh{ height:32px; padding:0 12px; display:inline-flex; align-items:center; gap:6px; border:none; border-radius:var(--radius-pill); background:var(--cyan-soft-2); color:var(--cyan); font:600 12px var(--sans); cursor:pointer; transition:all .18s ease; white-space:nowrap; }
+.btn-refresh:hover{ background:var(--cyan-soft); }
+.btn-refresh:disabled{ opacity:.6; cursor:default; }
+.btn-refresh .rico{ width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.btn-refresh.is-loading .rico{ animation: ricospin .7s linear infinite; }
+@keyframes ricospin{ to{ transform:rotate(360deg); } }
+
+.btn-exit{ height:32px; padding:0 14px; display:inline-flex; align-items:center; border:none; border-radius:var(--radius-pill); background:var(--bg-elev-2); color:var(--muted); font:600 12px var(--sans); cursor:pointer; transition:all .18s ease; }
+.btn-exit:hover{ color:var(--red); }
+
+.nav-icon{ width:26px; height:26px; border-radius:var(--radius-xs); background:var(--bg-soft); color:var(--muted); display:grid; place-items:center; transition:background .15s, color .15s; }
+.nav-icon svg{ width:14px; height:14px; }
+.nav-item:hover .nav-icon{ color:var(--text); }
+.nav-item.active .nav-icon, .nav-item.is-active .nav-icon{ background:var(--cyan-soft-2); color:var(--cyan); }
+
+.sb-footer{ margin-top:auto; padding-top:14px; border-top:1px solid var(--line); }
+.sb-theme-switch{ display:flex; width:100%; gap:2px; padding:3px; border:1px solid var(--line); background:var(--bg-elev-2); border-radius:var(--radius-pill); margin-bottom:10px; }
+.sb-theme-switch .theme-opt, .sb-theme-switch .theme-option{ flex:1; min-width:0; height:30px; display:inline-flex; align-items:center; justify-content:center; padding:0; background:transparent; border:none; color:var(--muted); border-radius:var(--radius-pill); cursor:pointer; transition:all .15s; }
+.sb-theme-switch .theme-opt svg, .sb-theme-switch .theme-option svg{ width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+.sb-theme-switch .theme-opt:hover, .sb-theme-switch .theme-option:hover{ color:var(--text); }
+.sb-theme-switch .theme-opt.active, .sb-theme-switch .theme-option.active{ background:var(--cyan-soft); color:var(--cyan); }
+.sb-copy{ color:var(--muted-2); font:500 10px/1.45 var(--mono); padding-left:2px; }
+
+.card-flush{ background:transparent; box-shadow:none; border:none; padding:0; }
