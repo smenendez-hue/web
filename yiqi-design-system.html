@@ -290,7 +290,7 @@
 <div class="card">
 <div class="card-kicker">Filosofía de diseño</div>
 <div style="margin-top:10px;font-size:18px;font-weight:700;letter-spacing:-.02em">Borderless por defecto</div>
-<div style="margin-top:10px;font-size:13px;color:var(--muted);line-height:1.7">Los elementos van sin borde siempre que sea posible. La profundidad se construye con elevación de fondo y <code>box-shadow</code>. Inputs y controles compuestos son la excepción.</div>
+<div style="margin-top:10px;font-size:13px;color:var(--muted);line-height:1.7">Los elementos van sin borde siempre que sea posible. La profundidad se construye con elevación de fondo y <code>box-shadow</code>. Los inputs también van borderless: fondo tonal + focus ring cyan, sin borde.</div>
 </div>
 </div>
 <div class="subsection-title">Cambios de esta versión</div>
@@ -1088,7 +1088,7 @@
 <div class="ds-section-header">
 <div class="ds-section-kicker">11 · Inputs</div>
 <h2 class="ds-section-title">Inputs &amp; Formularios</h2>
-<p class="ds-section-sub">Altura estándar 40px. Focus ring con cyan. Todos con border-radius-14.</p>
+<p class="ds-section-sub">Borderless: sin borde. El campo se <strong>identifica por diferencia de color</strong> — su fondo es un escalón más elevado que el contenedor (ej. input <code>--bg-elev-2</code> sobre card <code>--bg-elev</code>). Altura 40px, focus ring cyan, <code>--radius-sm</code>.</p>
 </div>
 <div class="subsection-title">Input text</div>
 <div style="display:grid;gap:10px;max-width:480px;margin-bottom:20px">
