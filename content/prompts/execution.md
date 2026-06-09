@@ -36,6 +36,7 @@ Vas a actuar como un experto en UI implementando estrictamente el YiQi Design Sy
 - Spacing múltiplos de 4
 - **Filosofía borderless:** cards, panels, KPIs, badges y tags sin `border` — profundidad solo con `box-shadow: var(--shadow-sm)`
 - **Excepción borderless:** inputs, selects, textareas y checkboxes sí llevan `border: 1px solid var(--line)`
+- **CTA `.btn-primary`:** lleva borde `1px solid rgba(0,204,255,.28)` — excepción a la regla borderless de botones
 - **Fondo sin grilla** — solo 2 radiales cyan + `var(--bg)`. Sin `background-size` de grid
 - `data-theme="system"` en `<html>` — nunca "dark" ni "light" hardcodeado
 - Toggle 3 pasos: Oscuro / Sistema / Claro — usar `setTheme(v)`, no `toggleTheme()`
@@ -236,21 +237,23 @@ html[data-theme="light"] body {
 
 ```css
 :root {
-  --bg: #0c0c0e;  --bg-elev: #111114;  --bg-elev-2: #18181c;
-  --bg-soft: rgba(255,255,255,.04);
+  --bg: #0a0a0b;  --bg-elev: #0f1013;  --bg-elev-2: #14161b;
+  --bg-soft: #181b21;
   --line: rgba(255,255,255,.08);  --line-strong: rgba(255,255,255,.14);
-  --text: #f0f1f3;  --muted: #908e8e;  --muted-2: #7d7c82;
-  --cyan: #00ccff;  --cyan-soft: rgba(0,204,255,.12);
-  --cyan-soft-2: rgba(0,204,255,.18);
-  --text-cyan-muted: rgba(0,195,240,.45);
-  --green: #00c48c;  --green-soft: rgba(0,196,140,.12);
-  --amber: #f6a623;  --amber-soft: rgba(246,166,35,.12);
-  --red: #f25f5c;    --red-soft: rgba(242,95,92,.12);
+  --text: #f3f5f7;  --muted: #908e8e;  --muted-2: #7d7c82;
+  --cyan: #00ccff;  --cyan-soft: rgba(0,204,255,.10);
+  --cyan-soft-2: rgba(0,204,255,.16);
+  --text-cyan-muted: rgba(0,195,240,.62);
+  --green: #15d49c;  --green-soft: rgba(21,212,156,.10);
+  --amber: #ffb020;  --amber-soft: rgba(255,176,32,.10);
+  --red: #ff637d;    --red-soft: rgba(255,99,125,.10);
   --purple: #a78bfa; --purple-soft: rgba(167,139,250,.12);
   --glow: 0 0 0 3px rgba(0,204,255,.22);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.35), 0 1px 8px rgba(0,0,0,.18);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.4), 0 1px 4px rgba(0,0,0,.2);
-  --radius: 10px;  --radius-sm: 7px;  --radius-pill: 99px;
+  --shadow-sm: 0 1px 3px rgba(0,18,28,.30);
+  --shadow-md: 0 4px 14px rgba(0,20,30,.26);
+  --shadow-lg: 0 12px 40px rgba(0,26,40,.34), 0 2px 12px rgba(0,204,255,.06);
+  --radius-xs: 6px;  --radius-sm: 10px;  --radius: 14px;
+  --radius-md: 16px; --radius-lg: 18px;  --radius-xl: 24px;  --radius-pill: 999px;
   --sans: "Inter", system-ui, sans-serif;
   --display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   --mono: "IBM Plex Mono", monospace;
@@ -262,19 +265,20 @@ html[data-theme="light"] body {
 
 ```css
 html[data-theme="light"] {
-  --bg: #f5f4f0;  --bg-elev: #eeece7;  --bg-elev-2: #e6e4df;
-  --bg-soft: rgba(0,0,0,.04);
-  --line: rgba(0,0,0,.08);  --line-strong: rgba(0,0,0,.14);
-  --text: #1a1a1e;  --muted: #6b6e78;  --muted-2: #636875;
-  --cyan: #009fc7;  --cyan-soft: rgba(0,159,199,.1);
-  --cyan-soft-2: rgba(0,159,199,.16);
-  --text-cyan-muted: rgba(0,140,175,.48);
-  --green: #007a58;  --green-soft: rgba(0,122,88,.1);
-  --amber: #c47c00;  --amber-soft: rgba(196,124,0,.1);
-  --red: #c93c39;    --red-soft: rgba(201,60,57,.1);
-  --purple: #7c3aed; --purple-soft: rgba(124,58,237,.1);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 8px rgba(0,0,0,.05);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.1), 0 1px 4px rgba(0,0,0,.06);
+  --bg: #eeece7;  --bg-elev: #f6f4ef;  --bg-elev-2: #ffffff;
+  --bg-soft: #ece9e2;
+  --line: rgba(0,0,0,.08);  --line-strong: rgba(0,0,0,.13);
+  --text: #17191c;  --muted: #5e5a57;  --muted-2: #636875;
+  --cyan: #009fc7;  --cyan-soft: rgba(0,159,199,.10);
+  --cyan-soft-2: rgba(0,159,199,.14);
+  --text-cyan-muted: rgba(0,140,175,.58);
+  --green: #0c9b6d;  --green-soft: rgba(12,155,109,.10);
+  --amber: #c78000;  --amber-soft: rgba(199,128,0,.10);
+  --red: #d4485e;    --red-soft: rgba(212,72,94,.10);
+  --purple: #7c3aed; --purple-soft: rgba(124,58,237,.12);
+  --shadow-sm: 0 1px 3px rgba(16,36,54,.06);
+  --shadow-md: 0 4px 14px rgba(16,36,54,.08);
+  --shadow-lg: 0 8px 24px rgba(0,80,110,.09), 0 1px 4px rgba(0,80,110,.05);
 }
 ```
 
@@ -301,11 +305,11 @@ KPI value: `font: 700 28px/1 var(--display); letter-spacing: -.03em;`
   box-shadow: var(--shadow-sm);
 }
 
-/* Button — borderless */
+/* Button (CTA) — excepción: lleva borde */
 .btn-primary {
-  background: var(--cyan-soft-2);
+  background: var(--cyan-soft);
   color: var(--cyan);
-  border: none;
+  border: 1px solid rgba(0,204,255,.28);
 }
 
 /* Input — excepción: controles interactivos llevan borde */

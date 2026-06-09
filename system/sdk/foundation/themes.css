@@ -1,36 +1,36 @@
-/* ── YiQi Design System v1.2.5 — Light mode overrides ── */
+/* ── YiQi Design System v1.2.7 — Light mode overrides ── */
 html[data-theme="light"] {
   /* Backgrounds */
-  --bg:        #f5f4f0;
-  --bg-elev:   #eeece7;
-  --bg-elev-2: #e6e4df;
-  --bg-soft:   rgba(0,0,0,.04);
+  --bg:        #eeece7;
+  --bg-elev:   #f6f4ef;
+  --bg-elev-2: #ffffff;
+  --bg-soft:   #ece9e2;
 
   /* Borders */
   --line:        rgba(0,0,0,.08);
-  --line-strong: rgba(0,0,0,.14);
+  --line-strong: rgba(0,0,0,.13);
 
   /* Text */
-  --text:    #1a1a1e;
-  --muted:   #6b6e78;
-  --muted-2: #9b9ea8;
+  --text:    #17191c;
+  --muted:   #5e5a57;
+  --muted-2: #636875;
 
   /* Brand — Cyan (shifted for light bg) */
   --cyan:           #009fc7;
-  --cyan-soft:      rgba(0,159,199,.1);
-  --cyan-soft-2:    rgba(0,159,199,.16);
-  --cyan-label:     rgba(0,159,199,.65);
-  --text-cyan-muted:rgba(0,140,175,.48);
+  --cyan-soft:      rgba(0,159,199,.10);
+  --cyan-soft-2:    rgba(0,159,199,.14);
+  --cyan-label:     rgba(0,159,199,.58);
+  --text-cyan-muted:rgba(0,140,175,.58);
 
   /* Semantic */
-  --green:      #007a58;
-  --green-soft: rgba(0,122,88,.1);
-  --amber:      #c47c00;
-  --amber-soft: rgba(196,124,0,.1);
-  --red:        #c93c39;
-  --red-soft:   rgba(201,60,57,.1);
+  --green:      #0c9b6d;
+  --green-soft: rgba(12,155,109,.10);
+  --amber:      #c78000;
+  --amber-soft: rgba(199,128,0,.10);
+  --red:        #d4485e;
+  --red-soft:   rgba(212,72,94,.10);
   --purple:     #7c3aed;
-  --purple-soft:rgba(124,58,237,.1);
+  --purple-soft:rgba(124,58,237,.12);
 
   /* Shadows (lighter for light bg) */
   --shadow-sm: 0 1px 3px rgba(16,36,54,.06);

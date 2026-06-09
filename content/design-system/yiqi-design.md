@@ -85,7 +85,7 @@
   --cyan-soft:       rgba(0,204,255,.10);
   --cyan-soft-2:     rgba(0,204,255,.16);
   --cyan-label:      rgba(0,204,255,.52);
-  --text-cyan-muted: rgba(0,195,240,.45);  /* subtítulos activos, labels acento */
+  --text-cyan-muted: rgba(0,195,240,.62);  /* subtítulos activos, labels acento */
 
   /* Semantic */
   --green:       #15d49c;
@@ -168,9 +168,9 @@ html[data-theme="light"] {
   /* Brand — Cyan (shifted para fondo claro) */
   --cyan:            #009fc7;
   --cyan-soft:       rgba(0,159,199,.1);
-  --cyan-soft-2:     rgba(0,159,199,.16);
-  --cyan-label:      rgba(0,159,199,.52);
-  --text-cyan-muted: rgba(0,140,175,.48);
+  --cyan-soft-2:     rgba(0,159,199,.14);
+  --cyan-label:      rgba(0,159,199,.58);
+  --text-cyan-muted: rgba(0,140,175,.58);
 
   /* Semantic */
   --green:       #0c9b6d;
@@ -247,7 +247,7 @@ body { line-height: 1.4; }  /* compact — default del sistema */
 **Regla:** los elementos de display van **sin borde** siempre que sea posible. La profundidad se logra con elevación de fondo y `box-shadow`.
 
 ```
-borde visible → solo en controles interactivos (input, select, textarea, switch, checkbox, search)
+borde visible → controles interactivos (input, select, textarea, switch, checkbox, search) y el CTA `.btn-primary`
 sin borde     → cards, panels, KPIs, badges, tags, nav items, modales, accordions, icon cards
 ```
 
@@ -431,10 +431,10 @@ img, svg { max-width: 100%; }
 .btn {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 10px 16px; border-radius: var(--radius);
-  border: none; font: 600 13px var(--sans);
+  border: 1px solid transparent; font: 600 13px var(--sans);
   transition: all var(--transition-base); cursor: pointer;
 }
-.btn-primary   { background: var(--cyan-soft-2); color: var(--cyan); }
+.btn-primary   { background: var(--cyan-soft); border-color: rgba(0,204,255,.28); color: var(--cyan); }
 .btn-secondary { background: var(--bg-elev-2);   color: var(--text); }
 .btn-ghost     { background: var(--bg-elev-2);   color: var(--muted); }
 .btn-danger    { background: var(--red-soft);     color: var(--red); }

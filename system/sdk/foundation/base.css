@@ -1,4 +1,4 @@
-/* ── YiQi Design System v1.2.5 — Base styles ── */
+/* ── YiQi Design System v1.2.7 — Base styles ── */
 
 /* Importar fuentes (necesario en entornos standalone) */
 /* @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap'); */
@@ -72,12 +72,13 @@ body {
 }
 
 .btn-primary {
-  background: var(--cyan-soft-2);
+  background: var(--cyan-soft);
+  border: 1px solid rgba(0,204,255,.28);
   color: var(--cyan);
 }
 
 .btn-primary:hover {
-  background: rgba(0,204,255,.25);
+  background: var(--cyan-soft-2);
 }
 
 .btn-ghost {
