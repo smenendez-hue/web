@@ -88,7 +88,7 @@ class SiteFooter extends HTMLElement {
 
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 YiQi S.A. · Todos los derechos reservados</p>
-      <a href="${r('yiqi-design-system.html')}" class="footer-version footer-version-link">DS v1.2.6</a>
+      <span class="footer-version">DS v1.2.6</span>
     </div>
   </div>
 </footer>`;

@@ -377,8 +377,6 @@ html[data-theme="light"] .site-topbar {
 }
 .footer-copy    { font: 400 10px var(--mono, monospace); color: var(--muted-2); letter-spacing: .04em; }
 .footer-version { font: 600 9px var(--mono, monospace);  color: var(--muted-2); letter-spacing: .1em; }
-.footer-version-link { text-decoration: none; transition: color var(--tr, 180ms ease); }
-.footer-version-link:hover { color: var(--cyan); }
 
 @media (max-width: 860px) {
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 40px; }
