@@ -1,12 +1,9 @@
-# ✅ Fuente canónica del YiQi Design System
+# El Design System no vive en este repo
 
-Este repositorio (`www.yiqi`) es la **única fuente** del Design System.
-Archivos del DS:
-- `content/design-system/yiqi-design.md` — documentación.
-- `yiqi-design-system.html` + `ds-styles.css` — catálogo y estilos.
+La **fuente única del YiQi Design System** es el repositorio **`diguardia/yiqi-imagen`**
+(tokens, componentes, catálogo, documentación y templates).
 
-No mantener copias paralelas. Las carpetas `yiqi-design-system/` (clon viejo)
-y `yiqi-imagen-1/` (copia de trabajo) quedaron archivadas el 2026-06-04.
+Este repo (`www.yiqi`) es solo el sitio. Ya **no** mantiene copias del DS:
+el catálogo y la documentación se quitaron el 2026-06-11 y viven únicamente en `yiqi-imagen`.
 
-Los **componentes sueltos del Panel Gerencial (Analytics Pro)** se documentan
-en la sección `#panel-gerencial` del catálogo, bajo el grupo "Aplicaciones".
+Para estilos, consumir el bundle publicado: `https://diguardia.github.io/yiqi-imagen/styles.css`
