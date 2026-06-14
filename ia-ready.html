@@ -129,6 +129,12 @@
     padding: 14px 16px; border-radius: var(--radius);
     background: var(--bg-elev-2);
   }
+  a.what-visual-row { text-decoration: none; color: inherit; cursor: pointer;
+    transition: background .16s ease, box-shadow .16s ease, transform .16s ease; }
+  a.what-visual-row:hover { background: var(--bg-soft);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cyan) 30%, transparent);
+    transform: translateY(-1px); }
+  a.what-visual-row:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 28%, transparent); }
   .what-visual-icon {
     width: 32px; height: 32px; border-radius: var(--radius-sm);
     background: var(--cyan-soft);
@@ -332,21 +338,21 @@
         <p class="section-sub">IA Ready es la capa técnica de YiQi que permite conectar el ERP con cualquier sistema externo y construir soluciones sobre los datos reales de la operación. No es un módulo más — es la base que hace que YiQi se conecte con todo.</p>
       </div>
       <div class="what-visual">
-        <div class="what-visual-row">
+        <a class="what-visual-row" href="api-docs.html">
           <div class="what-visual-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
           <span class="what-visual-label">API REST pública</span>
           <span class="what-visual-badge">OpenAPI v2.5</span>
-        </div>
+        </a>
         <div class="what-visual-row">
           <div class="what-visual-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
           <span class="what-visual-label">Webhooks y eventos</span>
           <span class="what-visual-badge">+20 eventos</span>
         </div>
-        <div class="what-visual-row">
+        <a class="what-visual-row" href="https://diguardia.github.io/yiqi-imagen/examples/showcase.html" target="_blank" rel="noopener">
           <div class="what-visual-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
           <span class="what-visual-label">Interfaces nativas</span>
           <span class="what-visual-badge">En desarrollo</span>
-        </div>
+        </a>
         <div class="what-visual-row">
           <div class="what-visual-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
           <span class="what-visual-label">Marketplace de apps</span>
