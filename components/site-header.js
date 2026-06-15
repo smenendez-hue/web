@@ -51,6 +51,9 @@ class SiteHeader extends HTMLElement {
 <div class="ds-overlay" id="overlay"></div>
 
 <nav class="mobile-nav" id="mobileNav">
+  <button class="close-btn" id="mobileNavClose" type="button" aria-label="Cerrar menú">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
   ${navItems}
   ${themeToggle}
   <a href="https://me.yiqi.com.ar" target="_blank" class="nav-link">Login</a>
@@ -193,6 +196,12 @@ class SiteHeader extends HTMLElement {
       overlay.classList.toggle('show');
     });
     overlay.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      overlay.classList.remove('show');
+    });
+
+    const navClose = this.querySelector('#mobileNavClose');
+    if (navClose) navClose.addEventListener('click', () => {
       mobileNav.classList.remove('open');
       overlay.classList.remove('show');
     });
