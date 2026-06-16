@@ -546,6 +546,18 @@ function safePathFromUrl(urlPath) {
   return path.join(ROOT, normalized);
 }
 
+// Seguridad: archivos que NUNCA deben servirse por web (datos de leads, codigo backend, backups).
+const BLOCKED_BASENAMES = new Set(["server.js", "reprocesar-contactos.js", "package.json", "package-lock.json"]);
+const BLOCKED_EXTS = new Set([".jsonl", ".bak", ".env", ".log"]);
+function isBlockedStaticPath(filePath) {
+  const base = path.basename(filePath).toLowerCase();
+  const ext = path.extname(filePath).toLowerCase();
+  if (base.startsWith(".")) return true;        // dotfiles: .env, .git, etc.
+  if (BLOCKED_BASENAMES.has(base)) return true; // codigo backend
+  if (BLOCKED_EXTS.has(ext)) return true;       // logs / backups
+  return false;
+}
+
 function sendFile(res, filePath) {
   fs.readFile(filePath, (err, data) => {
     if (err) {
@@ -684,6 +696,13 @@ const server = http.createServer((req, res) => {
 
   const requestPath = req.url === "/" ? "/index.html" : req.url;
   let filePath = safePathFromUrl(requestPath);
+
+  // Seguridad: no exponer archivos sensibles por web (logs de leads, backend, backups).
+  if (isBlockedStaticPath(filePath)) {
+    res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+    res.end("Not Found");
+    return;
+  }
 
   fs.stat(filePath, (err, stats) => {
     if (!err && stats.isDirectory()) {
