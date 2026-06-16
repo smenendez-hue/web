@@ -709,6 +709,19 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Static server listening on port ${PORT}`);
-});
+// Solo levantar el servidor si se ejecuta directo (node server.js).
+// Al importarlo (require) desde un script, no escucha — así se reutilizan sus funciones.
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`Static server listening on port ${PORT}`);
+  });
+}
+
+module.exports = {
+  getYiqiConfig,
+  sendConsultaComercial,
+  resolvePaisIdByName,
+  buildConsultaPayloadFromContact,
+  appendContactSubmission,
+  tryCreateOnInYiqi,
+};
