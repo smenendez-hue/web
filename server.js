@@ -435,7 +435,7 @@ function readJsonBody(req) {
 
 function validateContactPayload(p) {
   if (!p || typeof p !== "object") return "Payload vacío o inválido";
-  const reqFields = ["nombre", "apellido", "email", "empresa", "mensaje"];
+  const reqFields = ["nombre", "apellido", "email"]; // empresa/mensaje opcionales (la home no los exige)
   for (const k of reqFields) {
     if (!p[k] || typeof p[k] !== "string" || !p[k].trim()) {
       return `Campo requerido: ${k}`;

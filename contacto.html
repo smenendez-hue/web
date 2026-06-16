@@ -669,37 +669,6 @@ body {
       .filter(Boolean);
   }
 
-  function buildConsultaPayload() {
-    const nombre = document.getElementById('cf-nombre').value.trim();
-    const apellido = document.getElementById('cf-apellido').value.trim();
-    const empresa = document.getElementById('cf-empresa').value.trim();
-    const source = document.getElementById('cf-source').value.trim();
-    const mensaje = document.getElementById('cf-mensaje').value.trim();
-    const celular = document.getElementById('cf-celular').value.trim();
-    const email = document.getElementById('cf-email').value.trim();
-    const countryName = document.getElementById('cf-pais').value.trim();
-
-    const empleadosBadge = getSelectedChipValues('cf-size')[0] || '';
-    const rubros = getSelectedChipValues('cf-sector');
-    const modulos = getSelectedChipValues('cf-modules');
-
-    return {
-      schemaId: 23,
-      countryName,
-      data: {
-        COCO_CONTACTO: [nombre, apellido].filter(Boolean).join(' '),
-        COCO_CLIENTE: empresa,
-        COCO_CONSULTA: mensaje,
-        COCO_TELEFONO: celular,
-        COCO_MAIL: email,
-        COCO_CANT_EMPLEADOS: empleadosBadge,
-        COCO_RUBRO_PRINCIPAL: rubros.join(', '),
-        COCO_MODULOS_DE_INTERES: modulos.join(', '),
-        ORCO_ID_ORCO: 109574,
-        COCO_CANAL_DE_CONTACTO: source,
-      },
-    };
-  }
 
   /* ── Payload ─────────────────────────────────────────── */
   function chipValues(groupId) {
@@ -774,33 +743,25 @@ body {
     btn.disabled = true;
     btn.classList.add('loading');
 
+    const payload = buildPayload();
+
+    let ok = false;
     try {
-      const payload = buildConsultaPayload();
-      const response = await fetch('/api/contacto', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-
-      const body = await response.json().catch(() => ({}));
-      const apiError = body?.result?.ok === false || Boolean(body?.result?.error);
-      const createdId = Number(body?.id ?? body?.result?.newId ?? body?.result?.id ?? body?.result?.data?.id);
-
-      if (!response.ok || !body?.ok || apiError || !Number.isFinite(createdId) || createdId <= 0) {
-        throw new Error(body?.result?.error || body?.details || body?.error || 'No se pudo confirmar el alta de la consulta.');
-      }
-
-      // Redirect a gracias.html (donde se dispara el evento Lead de Meta)
-      window.location.href = '/gracias.html?from=contact';
-    } catch (error) {
-      savePending(buildPayload());
-      formError.textContent = error instanceof Error ? error.message : 'Error enviando la consulta.';
-      formError.classList.add('show');
-      btn.disabled = false;
-      btn.classList.remove('loading');
+      ok = res.ok;
+      if (!ok) console.warn('[contact-form] backend respondió', res.status);
+    } catch (err) {
+      console.warn('[contact-form] error de red:', err);
     }
+    if (!ok) savePending(payload);
+
+    // Reusa el mensaje de error ya existente en gracias.html (?status=error)
+    try { sessionStorage.setItem('yiqi-last-email', payload.email); } catch {}
+    window.location.href = '/gracias.html?from=contact' + (ok ? '' : '&status=error');
   });
 </script>
 <script src="./components/meta-pixel-events.js" defer></script>
