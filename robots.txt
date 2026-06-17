@@ -1,0 +1,17 @@
+# robots.txt — yiqi.com.ar
+User-agent: *
+Allow: /
+
+# No indexar: post-formulario, borradores y paginas aun no lanzadas
+Disallow: /gracias.html
+Disallow: /propuesta-iaready-hero.html
+Disallow: /efecto-splittext.html
+Disallow: /marketplace.html
+Disallow: /tiendanube.html
+Disallow: /enviopack.html
+Disallow: /interbanking.html
+Disallow: /drubbit.html
+Disallow: /sell2ship.html
+Disallow: /tornado.html
+
+Sitemap: https://yiqi.com.ar/sitemap.xml
