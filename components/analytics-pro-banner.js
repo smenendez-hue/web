@@ -50,9 +50,9 @@ analytics-pro-banner {
   --text:        #17191c;
   --muted:       #586170;
   --muted-2:     #7f8896;
-  --cyan:        #009fc7;
-  --cyan-soft:   rgba(0,159,199,.12);
-  --cyan-soft-2: rgba(0,159,199,.18);
+  --cyan:        #7c5cf0;
+  --cyan-soft:   rgba(124,92,240,.12);
+  --cyan-soft-2: rgba(124,92,240,.18);
   --green:       #0c9b6d;
 
   border-radius: var(--radius-xl, 20px);
@@ -80,9 +80,9 @@ html[data-theme="light"] .ds-pro-banner {
   --text:        #f0f1f3;
   --muted:       #a4a8b0;
   --muted-2:     #767a83;
-  --cyan:        #00ccff;
-  --cyan-soft:   rgba(0,204,255,.14);
-  --cyan-soft-2: rgba(0,204,255,.22);
+  --cyan:        #8b5cf6;
+  --cyan-soft:   rgba(139,92,246,.14);
+  --cyan-soft-2: rgba(139,92,246,.22);
   --green:       #00c48c;
 
   /* Sombra suave en página clara — menos negro, tinte cyan-blue suave.
@@ -95,19 +95,19 @@ html[data-theme="light"] .ds-pro-banner {
 }
 
 /* Capa 1 — radiales spotlight (depth-stack pattern v1.2.6).
-   Página dark → banner light → tint cyan light (#009fc7).
-   Página light → banner dark → tint cyan dark (#00ccff). */
+   Página dark → banner light → tint cyan light (#7c5cf0).
+   Página light → banner dark → tint cyan dark (#8b5cf6). */
 .ds-pro-banner::before {
   content: ""; position: absolute; inset: 0; z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 55% 65% at 85% 50%, rgba(0,159,199,.12), transparent 70%),
-    radial-gradient(ellipse 40% 50% at 15% 100%, rgba(0,159,199,.06), transparent 70%);
+    radial-gradient(ellipse 55% 65% at 85% 50%, rgba(124,92,240,.12), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 15% 100%, rgba(124,92,240,.06), transparent 70%);
 }
 html[data-theme="light"] .ds-pro-banner::before {
   background:
-    radial-gradient(ellipse 55% 65% at 85% 50%, rgba(0,204,255,.14), transparent 70%),
-    radial-gradient(ellipse 40% 50% at 15% 100%, rgba(0,204,255,.08), transparent 70%);
+    radial-gradient(ellipse 55% 65% at 85% 50%, rgba(139,92,246,.14), transparent 70%),
+    radial-gradient(ellipse 40% 50% at 15% 100%, rgba(139,92,246,.08), transparent 70%);
 }
 
 /* Capa 2 — grilla con fade radial.
@@ -204,7 +204,7 @@ html[data-theme="light"] .ds-pro-banner::after {
   padding: 12px 20px;
   border-radius: var(--radius);
   background: var(--cyan-soft);
-  border: 1px solid rgba(0,204,255,.28);
+  border: 1px solid rgba(139,92,246,.28);
   color: var(--cyan);
   font: 600 13px var(--sans);
   letter-spacing: -.005em;
@@ -213,7 +213,7 @@ html[data-theme="light"] .ds-pro-banner::after {
   transition: background var(--tr);
 }
 html[data-theme="light"] .ds-pro-cta {
-  border-color: rgba(0,159,199,.28);
+  border-color: rgba(124,92,240,.28);
 }
 .ds-pro-cta:hover { background: var(--cyan-soft-2); }
 .ds-pro-cta svg {
@@ -238,14 +238,14 @@ html[data-theme="light"] .ds-pro-cta {
   box-shadow:
     0 1px 0 rgba(255,255,255,.045) inset,
     0 8px 24px rgba(0,26,40,.22),
-    0 2px 8px rgba(0,204,255,.05);
+    0 2px 8px rgba(139,92,246,.05);
 }
 
 html[data-theme="light"] .ds-pro-mock {
   box-shadow:
     0 1px 0 rgba(255,255,255,.6) inset,
     0 6px 18px rgba(16,36,54,.08),
-    0 1px 4px rgba(0,159,199,.05);
+    0 1px 4px rgba(124,92,240,.05);
 }
 
 /* Topbar del mock */

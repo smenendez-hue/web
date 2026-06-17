@@ -76,8 +76,8 @@ html,body{
 }
 .ah-avatar{
   width:32px;height:32px;border-radius:var(--radius-pill);
-  background:linear-gradient(135deg,#2563eb,#7c3aed);
-  display:grid;place-items:center;font:700 11px var(--sans);color:#fff;
+  background:var(--cyan-soft);
+  display:grid;place-items:center;font:700 11px var(--sans);color:var(--cyan);
 }
 
 /* ── Content ── */
@@ -108,10 +108,10 @@ html,body{
   border-radius:var(--radius);padding:12px;
   display:flex;flex-direction:column;gap:8px;
 }
-.kpi-card.c-cyan{border-color:rgba(0,204,255,.18);background:linear-gradient(135deg,rgba(0,204,255,.07),var(--bg-elev))}
-.kpi-card.c-green{border-color:rgba(21,212,156,.18);background:linear-gradient(135deg,rgba(21,212,156,.06),var(--bg-elev))}
-html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18);background:linear-gradient(135deg,rgba(0,159,199,.07),var(--bg-elev))}
-html[data-theme="light"] .kpi-card.c-green{border-color:rgba(12,155,109,.18);background:linear-gradient(135deg,rgba(12,155,109,.06),var(--bg-elev))}
+.kpi-card.c-cyan{border-color:rgba(0,204,255,.18);background:var(--cyan-soft)}
+.kpi-card.c-green{border-color:rgba(21,212,156,.18);background:var(--green-soft)}
+html[data-theme="light"] .kpi-card.c-cyan{border-color:rgba(0,159,199,.18)}
+html[data-theme="light"] .kpi-card.c-green{border-color:rgba(12,155,109,.18)}
 .kpi-top{display:flex;justify-content:space-between;align-items:center}
 .kpi-icon{width:26px;height:26px;border-radius:var(--radius-sm);display:grid;place-items:center}
 .ic-cyan{background:rgba(0,204,255,.12);color:var(--cyan)}

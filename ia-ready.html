@@ -12,6 +12,8 @@
   <script src="./components/site-header.js" defer></script>
   <script src="./components/site-footer.js" defer></script>
   <script src="./components/analytics-pro-banner.js" defer></script>
+  <script src="./components/app-banner.js" defer></script>
+  <script src="./components/carousel.js" defer></script>
   <style>
 [data-theme="light"] {
     --bg:          #f5f4f0;
@@ -273,7 +275,19 @@
     /* hero-ia-logo-label visible */
     .section-title { font-size: 24px; }
   }
-  </style>
+  
+  /* Carrusel auto-loop de banners de apps */
+  .abc-wrap { position: relative; margin: 24px auto 36px; max-width: 1240px; padding-inline: clamp(20px,4vw,56px); box-sizing: border-box; }
+  .abc-track { display: flex; gap: 1040px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .abc-track::-webkit-scrollbar { display: none; }
+  .abc-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+  .abc-slide app-banner { margin: 0 auto; max-width: 1040px; padding-inline: 0; }
+  .abc-slide app-banner { display: block; height: 100%; }
+  .abc-slide .ab-shell { height: 100%; }
+  .abc-dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+  .abc-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--line-strong); border: none; cursor: pointer; padding: 0; transition: all var(--tr,.18s); }
+  .abc-dot.active { background: var(--cyan); width: 22px; }
+</style>
 
   <link rel="preload" href="./system/fonts/Greycliff-CF-Heavy.otf" as="font" type="font/otf" crossorigin>
   <script src="./components/clarity.js"></script>
@@ -329,7 +343,10 @@
   </section>
 
   <!-- Banner Analytics Pro (componente DS v1.2.6) -->
-  <analytics-pro-banner base="./" preview="examples/panel-gerencial.html"></analytics-pro-banner>
+  <div class="abc-wrap">
+  <div class="abc-track" id="iaBannerCarousel" aria-label="Apps del Marketplace" data-carousel data-carousel-dots=".abc-dots" data-carousel-interval="5000"><div class="abc-slide"><app-banner app="ana"></app-banner></div><div class="abc-slide"><app-banner app="prov"></app-banner></div><div class="abc-slide"><app-banner app="inv"></app-banner></div><div class="abc-slide"><app-banner app="pos"></app-banner></div><div class="abc-slide"><app-banner app="pick"></app-banner></div><div class="abc-slide"><app-banner app="cons"></app-banner></div></div>
+  <div class="abc-dots" role="tablist" aria-label="Navegación"><button class="abc-dot active" aria-label="App 1"></button><button class="abc-dot" aria-label="App 2"></button><button class="abc-dot" aria-label="App 3"></button><button class="abc-dot" aria-label="App 4"></button><button class="abc-dot" aria-label="App 5"></button><button class="abc-dot" aria-label="App 6"></button></div>
+</div>
 
 
   <!-- QUÉ ES -->
@@ -469,6 +486,7 @@
           Reserva tu demo
         </a>
         <a href="api-docs.html" class="btn btn-ghost">Ver documentación</a>
+        <button type="button" class="btn btn-ghost" data-tally-open="81rY7k" data-tally-layout="modal" data-tally-width="720" data-tally-overlay="1" data-tally-emoji-text="" ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Sumá tu app</button>
       </div>
     </div>
   </div>
@@ -489,5 +507,7 @@ _mq.addEventListener('change', () => {
 </script>
 
 <script src="./components/meta-pixel-events.js" defer></script>
+<script async src="https://tally.so/widgets/embed.js"></script>
+
 </body>
 </html>

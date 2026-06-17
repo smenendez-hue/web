@@ -50,6 +50,10 @@
   --blue:   #4d9fff;  --blue-soft:   rgba(77,159,255,.10);
   --purple: #a78bfa;  --purple-soft: rgba(167,139,250,.12);
   --warm:   #b5a090;  --warm-soft:   rgba(181,160,144,.10);
+  /* App brand (Marketplace) — uno por app, NO cyan */
+  --violet:  #8b5cf6;  --violet-soft:  rgba(139,92,246,.12);  --violet-soft-2:  rgba(139,92,246,.18);
+  --orange:  #ff8a3d;  --orange-soft:  rgba(255,138,61,.12);  --orange-soft-2:  rgba(255,138,61,.18);
+  --magenta: #ff5da2;  --magenta-soft: rgba(255,93,162,.12);  --magenta-soft-2: rgba(255,93,162,.18);
   /* tints tokenizados (sync panel) */
   --amber-a08: rgba(255, 176, 32, 0.08);
   --amber-a12: rgba(255, 176, 32, 0.12);
@@ -127,6 +131,9 @@ html[data-theme="light"] {
   --blue:   #4d9fff;  --blue-soft:   rgba(77,159,255,.10);
   --purple: #7c3aed;  --purple-soft: rgba(124,58,237,.12);
   --warm:   #8b7260;  --warm-soft:   rgba(139,114,96,.10);
+  --violet:  #7c3aed;  --violet-soft:  rgba(124,58,237,.10);  --violet-soft-2:  rgba(124,58,237,.16);
+  --orange:  #e07628;  --orange-soft:  rgba(224,118,40,.10);  --orange-soft-2:  rgba(224,118,40,.16);
+  --magenta: #d6336c;  --magenta-soft: rgba(214,51,108,.10);  --magenta-soft-2: rgba(214,51,108,.16);
   /* tints tokenizados (sync panel) */
   --amber-a08: rgba(199, 128, 0, 0.08);
   --amber-a12: rgba(199, 128, 0, 0.12);
@@ -314,7 +321,7 @@ html[data-theme="light"] .site-topbar {
 @media (max-width: 860px) {
   .topbar-nav   { display: none; }
   .btn-login    { display: none; }
-  .theme-switch { display: none; }
+  .topbar > .theme-switch { display: none; } /* solo el del header; el del menú queda visible */
   .mobile-menu-btn { display: flex; }
 }
 
@@ -555,3 +562,9 @@ html[data-theme="light"] .search-kbd {
 /* ── Mobile line breaks ── */
 .mob-br { display: none; }
 @media (max-width: 600px) { .mob-br { display: block; } }
+
+
+/* ── Logo de proveedor (iAready) — compartido por marketplace.html y app.html ── */
+.app-prov-logo{ display:inline-flex; align-items:center; color:var(--text); margin:0 6px 0 4px; vertical-align:middle; }
+.app-prov-logo .ia-logo{ height:14px; width:auto; display:block; }
+.app-prov-logo.big .ia-logo{ height:22px; }

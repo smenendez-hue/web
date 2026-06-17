@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html data-theme="system" lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventariado Mobile — Ficha de app · YiQi Marketplace</title>
+<link rel="stylesheet" href="./site.css">
+<script src="./components/site-header.js" defer></script>
+<script src="./components/site-footer.js" defer></script>
+<script src="./components/carousel.js" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:clip}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.45;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:52px 52px;}
+html[data-theme="light"] body{background-image:linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px);}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit}
+img,svg{max-width:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* Volver */
+.fa-back{display:inline-flex;align-items:center;gap:7px;margin:20px 0 4px;font:600 13px var(--sans);color:var(--muted);transition:color var(--tr)}
+.fa-back:hover{color:var(--app,var(--cyan))}
+.fa-back svg{transition:transform var(--tr)}
+.fa-back:hover svg{transform:translateX(-2px)}
+/* Breadcrumb */
+.crumb{font:500 12px var(--sans);color:var(--muted-2);padding:18px 0 0}
+.crumb a:hover{color:var(--cyan)}
+
+/* Layout ficha */
+.ficha{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;padding:18px 0 64px;align-items:start}
+.ficha>main{min-width:0}
+@media(max-width:880px){.ficha{grid-template-columns:1fr}}
+
+/* App head */
+.app-head{display:flex;gap:18px;align-items:flex-start;margin-bottom:18px}
+.app-icon{width:76px;height:76px;border-radius:18px;flex-shrink:0;background:var(--app-soft,var(--green-soft));color:var(--app,var(--green));display:grid;place-items:center;box-shadow:var(--shadow-md);border:1px solid var(--line)}
+.app-titles{flex:1;min-width:0}
+.app-cat{font:700 9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--app,var(--cyan));margin-bottom:5px}
+.app-h1{font:800 28px/1.1 var(--display);letter-spacing:-.02em;margin-bottom:6px}
+.app-by{font:400 13px var(--sans);color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.app-by .dot{width:3px;height:3px;border-radius:50%;background:var(--muted-2)}
+.stars{color:var(--amber);font:600 13px var(--mono)}
+.badge{font:600 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;border-radius:var(--radius-pill);padding:3px 9px;display:inline-flex;align-items:center;gap:5px}
+.badge-homo{color:var(--green);background:var(--green-soft)}
+.badge-yiqi{color:var(--cyan);background:var(--cyan-soft)}
+.tagline{font:400 16px/1.45 var(--sans);color:var(--muted);margin:14px 0 18px;max-width:60ch}
+
+/* CTA row */
+.cta-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.fa-btn{height:44px;padding:0 22px;border-radius:var(--radius-sm);font:600 14px var(--sans);border:none;display:inline-flex;align-items:center;gap:8px;transition:all var(--tr)}
+.fa-btn-primary{background:var(--app,var(--cyan));color:var(--app-ink,#04222b);font-weight:700;box-shadow:0 1px 0 rgba(255,255,255,.18) inset}
+.fa-btn-primary:hover{filter:brightness(1.07)}
+.fa-btn-primary:active{transform:translateY(1px)}
+.fa-btn:focus-visible{outline:none;box-shadow:var(--glow)}
+.fa-btn-primary:hover{filter:brightness(1.08)}
+.fa-btn-ghost{background:none;border:1px solid var(--line-strong);color:var(--text)}
+.fa-btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.fa-btn-icon{width:44px;height:44px;padding:0;justify-content:center;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-sm);color:var(--muted)}
+.fa-btn-icon:hover{color:var(--cyan);border-color:var(--cyan)}
+.fa-btn-icon.copied{color:var(--green);border-color:var(--green)}
+
+/* Trust row */
+.trust-row{display:flex;gap:18px;flex-wrap:wrap;font:500 12px var(--sans);color:var(--muted-2);padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.trust-item{display:flex;align-items:center;gap:6px}
+.trust-item svg{color:var(--app,var(--cyan));opacity:.85}
+
+/* Gallery */
+.gallery{display:flex;gap:12px;overflow-x:auto;padding:22px 0 6px;scroll-snap-type:x mandatory;min-width:0;scrollbar-width:thin;scrollbar-color:var(--line-strong) transparent}
+.gallery::-webkit-scrollbar{height:8px}
+.gallery::-webkit-scrollbar-track{background:transparent}
+.gallery::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:999px}
+.gallery::-webkit-scrollbar-thumb:hover{background:var(--muted-2)}
+.by-prov{display:inline-flex;align-items:center;gap:5px}
+.gallery>div{flex:0 0 100%;min-width:0;scroll-snap-align:start}
+.shot{width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#060e0d}
+.shot svg{width:100%;height:100%;display:block}
+.shot-cap{font:500 11px var(--sans);color:var(--muted-2);padding:6px 2px 0}
+
+/* Sections */
+.sec{padding:26px 0;border-top:1px solid var(--line)}
+.sec h2{font:700 17px var(--display);letter-spacing:-.01em;margin-bottom:14px}
+.sec p{font:400 14px/1.6 var(--sans);color:var(--muted);max-width:68ch;margin-bottom:10px}
+
+/* Highlights */
+.highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-top:8px}
+@media(max-width:880px){.highlights{grid-template-columns:1fr}}
+.hl{background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.hl-ic{width:34px;height:34px;border-radius:var(--radius-xs);background:var(--app-soft,var(--cyan-soft));color:var(--app,var(--cyan));display:grid;place-items:center;margin-bottom:10px}
+.hl h3{font:600 14px var(--sans);margin-bottom:4px}
+.hl p{font:400 12.5px/1.5 var(--sans);color:var(--muted);margin:0}
+
+/* Feature list */
+.feat{display:flex;gap:12px;padding:11px 0;align-items:flex-start;border-bottom:1px solid var(--line)}
+.feat:last-child{border-bottom:none}
+.feat svg{color:var(--green);flex-shrink:0;margin-top:2px}
+.feat span{font:400 13.5px/1.5 var(--sans);color:var(--text)}
+
+/* Security block */
+.sec-sec{background:var(--bg-elev-2);border:1px solid var(--line-strong);border-radius:var(--radius);padding:18px 20px}
+.sec-sec .seal{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-sec .seal svg{color:var(--green)}
+.sec-sec .seal b{font:700 14px var(--sans)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font:400 13px var(--sans)}
+.kv dt{color:var(--muted-2)}
+.kv dd{color:var(--text);text-align:right}
+
+/* Reviews */
+.rev-summary{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.rev-big{font:800 40px var(--display);color:var(--text);line-height:1}
+.rev-meta{font:400 12.5px var(--sans);color:var(--muted-2)}
+.rev{padding:14px 0;border-top:1px solid var(--line)}
+.rev-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.rev-top b{font:600 13px var(--sans)}
+.rev-ver{font:600 9px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--green);background:var(--green-soft);border-radius:var(--radius-pill);padding:2px 7px}
+.rev p{font:400 13px/1.55 var(--sans);color:var(--muted);margin:0}
+
+/* FAQ */
+.faq{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:13px 0;font:600 14px var(--sans);display:flex;justify-content:space-between;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .chev{transition:transform var(--tr);color:var(--muted-2)}
+.faq[open] summary .chev{transform:rotate(180deg)}
+.faq p{font:400 13px/1.6 var(--sans);color:var(--muted);padding:0 0 14px;margin:0;max-width:64ch}
+
+/* Aside */
+.aside{position:sticky;top:68px;display:flex;flex-direction:column;gap:16px}
+@media(max-width:880px){.aside{position:static}}
+.card{background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-md)}
+.price-trial{font:600 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:var(--green-soft);border-radius:var(--radius-pill);padding:4px 10px;display:inline-flex;align-items:center;gap:6px;margin-bottom:14px}
+.price-line{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font:400 13px var(--sans);color:var(--muted)}
+.price-line b{font:600 13px var(--sans);color:var(--text)}
+.price-est{margin:14px 0 4px}
+.price-est label{font:500 12px var(--sans);color:var(--muted-2);display:flex;justify-content:space-between;margin:10px 0 5px}
+.price-est label b{color:var(--text);font-weight:600;font-family:var(--mono)}
+.price-est input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border:none;border-radius:var(--radius-pill);background:transparent;cursor:pointer;outline:none}
+.price-est input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border:none;border-radius:50%;background:var(--app,var(--cyan));margin-top:-6px;box-shadow:0 0 0 4px var(--app-soft,var(--cyan-soft))}
+.price-est input[type=range]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--app,var(--cyan))}
+.price-est input[type=range]::-webkit-slider-runnable-track{height:6px;border:none;border-radius:var(--radius-pill);background:var(--line-strong)}
+.price-est input[type=range]::-moz-range-track{height:6px;border:none;border-radius:var(--radius-pill);background:var(--line-strong)}
+.price-est input[type=range]:focus-visible{box-shadow:var(--glow)}
+.est-out{margin-top:14px;padding:12px 14px;background:var(--app-soft,var(--cyan-soft));border-radius:var(--radius-sm);text-align:center}
+.est-out .n{font:800 26px var(--display);color:var(--text)}
+.est-out .lbl{font:500 11px var(--sans);color:var(--muted-2)}
+.est-note{font:400 10.5px/1.4 var(--sans);color:var(--muted-2);margin-top:8px;text-align:center}
+.aside .fa-btn{width:100%;justify-content:center;margin-top:14px}
+.consulta-note{font:400 11.5px/1.45 var(--sans);color:var(--muted-2);margin-top:12px;display:flex;gap:7px;align-items:flex-start}
+.consulta-note svg{color:var(--app,var(--cyan));flex-shrink:0;margin-top:1px}
+.card h4{font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px}
+.meta-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font:400 12.5px var(--sans);border-bottom:1px solid var(--line)}
+.meta-row:last-child{border-bottom:none}
+.meta-row span:first-child{color:var(--muted-2)}
+.meta-row span:last-child{color:var(--text);text-align:right;font-weight:500}
+.prov{display:flex;align-items:center;gap:11px}
+.prov-logo{width:38px;height:38px;border-radius:var(--radius-xs);background:var(--bg-soft);display:grid;place-items:center;border:1px solid var(--line);color:var(--muted)}
+.prov-name{font:600 13px var(--sans)}
+.prov-sub{font:400 11.5px var(--sans);color:var(--muted-2)}
+
+/* Footer */
+.foot{border-top:1px solid var(--line);padding:24px 0;font:400 12px var(--sans);color:var(--muted-2);text-align:center}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-elev-2);border:1px solid var(--green);color:var(--text);font:500 13px var(--sans);padding:10px 18px;border-radius:var(--radius-pill);box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all var(--tr)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.demo-tag{position:fixed;top:60px;right:14px;z-index:90;font:600 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber);border-radius:var(--radius-pill);padding:4px 10px}
+
+@media(max-width:560px){
+  .wrap{padding:0 16px}
+  .crumb{font-size:11px}
+  .app-head{gap:14px}
+  .app-icon{width:58px;height:58px;border-radius:14px}
+  .app-h1{font-size:22px}
+  .tagline{font-size:15px}
+  .cta-row{gap:8px}
+  .cta-row .fa-btn{flex:1 1 auto;justify-content:center}
+  .cta-row .fa-btn-icon{flex:0 0 44px}
+  .sec h2{font-size:16px}
+  .rev-big{font-size:34px}
+}
+@media(max-width:440px){
+  .nav-back-t{display:none}
+  .mp-badge{display:none}
+}
+
+  /* Menú compartir */
+  .share-pop{position:fixed;z-index:300;min-width:226px;background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:8px;display:none;flex-direction:column;gap:2px}
+  .share-pop.open{display:flex}
+  .share-head{font:700 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);padding:6px 10px 8px}
+  .share-opt{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:var(--radius-sm);background:none;border:none;color:var(--text);font:500 13px var(--sans);text-align:left;cursor:pointer;transition:background var(--tr);text-decoration:none;width:100%}
+  .share-opt:hover{background:var(--bg-soft)}
+  .share-opt svg{width:18px;height:18px;color:var(--muted);flex-shrink:0;transition:color var(--tr)}
+  .share-opt:hover svg{color:var(--cyan)}
+  .share-opt[hidden]{display:none}
+  .share-sep{height:1px;background:var(--line);margin:4px 6px}
+</style>
+<script src="./components/clarity.js"></script>
+</head>
+<body>
+
+<div class="demo-tag" title="Maqueta — datos de ejemplo">Maqueta · datos de ejemplo</div>
+
+<site-header base="./" current-page="marketplace"></site-header>
+
+<div class="wrap">
+  <a href="marketplace.html" class="fa-back"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Volver al catálogo</a>
+  <div class="crumb"><a href="marketplace.html">Marketplace</a> › <a href="#">Inventario</a> › <span>Inventariado Mobile</span></div>
+
+  <div class="ficha">
+    <!-- ══ MAIN ══ -->
+    <main>
+      <div class="app-head">
+        <div class="app-icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#15d49c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/><path d="M12 13l2 2 4-4"/></svg>
+        </div>
+        <div class="app-titles">
+          <div class="app-cat">Inventario</div>
+          <h1 class="app-h1">Inventariado Mobile</h1>
+          <div class="app-by">
+            <span class="by-prov">por <span class="app-prov-logo"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></span></span><span class="dot"></span>
+            <span class="badge badge-homo"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Homologado por YiQi</span>
+            <span class="stars">★ 4.6</span><span style="color:var(--muted-2);font-size:12px">(124)</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="tagline">Relevá y controlá el stock de tus depósitos desde el celular: escaneo de códigos, ajustes de inventario y sincronización en tiempo real con YiQi ERP.</p>
+
+      <div class="cta-row">
+        <button class="fa-btn fa-btn-primary">Probar gratis</button>
+        <button class="fa-btn fa-btn-ghost">Pedir asesoramiento</button>
+        <button class="fa-btn fa-btn-icon" id="shareBtn" aria-label="Compartir o recomendar esta app" title="Compartir / recomendar">
+          <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+        </button>
+      </div>
+
+      <div class="trust-row">
+        <span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Homologado · 12/05/2026</span>
+        <span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/></svg>Soporte por iAready</span>
+        <span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Compatible con YiQi ERP</span>
+      </div>
+
+      <!-- Gallery -->
+      <div class="gallery" aria-label="Capturas de la app" data-carousel data-carousel-interval="4000">
+        <div>
+          <div class="shot">
+            <svg viewBox="0 0 420 236" xmlns="http://www.w3.org/2000/svg"><rect width="420" height="236" fill="#060e0d"/><rect x="20" y="16" width="120" height="204" rx="12" fill="#0a1a18" stroke="rgba(21,212,156,.18)"/><rect x="28" y="30" width="104" height="176" rx="7" fill="#0d2420"/><rect x="40" y="60" width="80" height="46" rx="6" fill="none" stroke="rgba(21,212,156,.3)" stroke-dasharray="4 3"/><line x1="44" y1="84" x2="116" y2="84" stroke="rgba(21,212,156,.7)"/><rect x="36" y="120" width="88" height="14" rx="3" fill="rgba(255,255,255,.06)"/><rect x="36" y="140" width="88" height="14" rx="3" fill="rgba(255,255,255,.04)"/><rect x="170" y="24" width="230" height="90" rx="10" fill="rgba(255,255,255,.03)"/><text x="184" y="48" fill="rgba(21,212,156,.6)" font-size="9" font-family="monospace">RELEVADOS</text><text x="184" y="74" fill="#f3f5f7" font-size="22" font-weight="700" font-family="sans-serif">1.248</text><rect x="170" y="126" width="230" height="86" rx="10" fill="rgba(255,255,255,.03)"/><rect x="184" y="142" width="120" height="8" rx="4" fill="rgba(255,255,255,.12)"/><rect x="184" y="160" width="202" height="8" rx="4" fill="rgba(0,204,255,.35)"/><rect x="184" y="178" width="202" height="8" rx="4" fill="rgba(255,176,32,.3)"/><rect x="184" y="196" width="140" height="8" rx="4" fill="rgba(21,212,156,.4)"/></svg>
+          </div>
+          <div class="shot-cap">Escaneo y stock en tiempo real desde el depósito</div>
+        </div>
+        <div>
+          <div class="shot">
+            <svg viewBox="0 0 420 236" xmlns="http://www.w3.org/2000/svg"><rect width="420" height="236" fill="#060e0d"/><rect x="20" y="20" width="380" height="30" rx="6" fill="rgba(0,204,255,.08)"/><rect x="32" y="30" width="120" height="10" rx="5" fill="rgba(0,204,255,.4)"/><rect x="20" y="62" width="380" height="150" rx="10" fill="rgba(255,255,255,.03)"/><rect x="34" y="78" width="352" height="22" rx="4" fill="rgba(255,255,255,.06)"/><rect x="34" y="108" width="352" height="18" rx="4" fill="rgba(255,255,255,.03)"/><rect x="34" y="132" width="352" height="18" rx="4" fill="rgba(255,255,255,.03)"/><rect x="34" y="156" width="352" height="18" rx="4" fill="rgba(255,255,255,.03)"/><rect x="300" y="80" width="78" height="14" rx="7" fill="rgba(21,212,156,.25)"/></svg>
+          </div>
+          <div class="shot-cap">Conteo y ajuste de diferencias por depósito</div>
+        </div>
+        <div>
+          <div class="shot">
+            <svg viewBox="0 0 420 236" xmlns="http://www.w3.org/2000/svg"><rect width="420" height="236" fill="#060e0d"/><rect x="20" y="20" width="180" height="80" rx="10" fill="rgba(0,204,255,.06)"/><text x="34" y="46" fill="rgba(0,204,255,.6)" font-size="9" font-family="monospace">DIFERENCIAS</text><text x="34" y="78" fill="#f3f5f7" font-size="24" font-weight="700" font-family="sans-serif">14</text><rect x="220" y="20" width="180" height="80" rx="10" fill="rgba(21,212,156,.06)"/><text x="234" y="46" fill="rgba(21,212,156,.6)" font-size="9" font-family="monospace">SYNC OK</text><text x="234" y="78" fill="#f3f5f7" font-size="24" font-weight="700" font-family="sans-serif">100%</text><rect x="20" y="116" width="380" height="96" rx="10" fill="rgba(255,255,255,.03)"/><rect x="34" y="156" width="60" height="40" rx="3" fill="rgba(0,204,255,.3)"/><rect x="110" y="136" width="60" height="60" rx="3" fill="rgba(0,204,255,.45)"/><rect x="186" y="146" width="60" height="50" rx="3" fill="rgba(0,204,255,.35)"/><rect x="262" y="126" width="60" height="70" rx="3" fill="rgba(0,204,255,.55)"/><rect x="338" y="166" width="48" height="30" rx="3" fill="rgba(0,204,255,.25)"/></svg>
+          </div>
+          <div class="shot-cap">Exportá el relevamiento directo a YiQi ERP</div>
+        </div>
+      </div>
+
+      <!-- Highlights -->
+      <div class="highlights">
+        <div class="hl"><div class="hl-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><h3>Escaneo sin fricción</h3><p>Cámara del celular como lector de códigos: cero hardware extra.</p></div>
+        <div class="hl"><div class="hl-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.8-3.4L23 10M1 14l4.7 4.4A9 9 0 0 0 20.5 15"/></svg></div><h3>Sync en tiempo real</h3><p>Cada conteo se refleja al instante en el stock del ERP.</p></div>
+        <div class="hl"><div class="hl-ic" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Control de diferencias</h3><p>Detecta faltantes y sobrantes por depósito en una vista.</p></div>
+      </div>
+
+      <section class="sec">
+        <h2>Descripción</h2>
+        <p>Inventariado Mobile convierte cualquier celular en una terminal de relevamiento de stock. El operario escanea, cuenta y ajusta directamente en el depósito, y los datos viajan en tiempo real al ERP YiQi: sin planillas intermedias, sin recargas manuales y sin esperar a volver a la oficina.</p>
+        <p>Pensada para inventarios completos, conteos cíclicos y control de recepción, reduce el tiempo de relevamiento y elimina los errores de transcripción. Cada movimiento queda trazado por usuario, depósito y fecha.</p>
+      </section>
+
+      <section class="sec">
+        <h2>Cómo funciona</h2>
+        <div class="feat"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span>El operario inicia sesión con su usuario de YiQi y elige el depósito a relevar.</span></div>
+        <div class="feat"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span>Escanea el código de cada producto e ingresa la cantidad contada.</span></div>
+        <div class="feat"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span>El sistema compara contra el stock teórico y marca las diferencias.</span></div>
+        <div class="feat"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg><span>Al confirmar, los ajustes impactan en el ERP y quedan auditados.</span></div>
+      </section>
+
+      <!-- Seguridad / homologación -->
+      <section class="sec">
+        <h2>Seguridad y datos</h2>
+        <div class="sec-sec">
+          <div class="seal"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><b>Homologada por YiQi</b></div>
+          <dl class="kv">
+            <dt>Estado de homologación</dt><dd style="color:var(--green)">Aprobada</dd>
+            <dt>Fecha de homologación</dt><dd>12/05/2026</dd>
+            <dt>Acceso a datos</dt><dd>Stock y productos (lectura/escritura)</dd>
+            <dt>Autenticación</dt><dd>OAuth 2.0 · usuario YiQi</dd>
+            <dt>Alojamiento de datos</dt><dd>Infraestructura YiQi (Argentina)</dd>
+          </dl>
+        </div>
+      </section>
+
+      <section class="sec">
+        <h2>Soporte</h2>
+        <p><strong style="color:var(--text)">Responsable:</strong> iAready (desarrollador homologado). YiQi garantiza la integración con el ERP.</p>
+        <p><strong style="color:var(--text)">SLA:</strong> respuesta a incidentes críticos dentro de 24 h hábiles. Canales: tickets, mail y centro de ayuda.</p>
+      </section>
+
+      <!-- Reviews -->
+      <section class="sec">
+        <h2>Reseñas</h2>
+        <div class="rev-summary">
+          <div class="rev-big">4.6</div>
+          <div><div class="stars" style="font-size:16px">★★★★★</div><div class="rev-meta">124 reseñas · solo de clientes que la usan</div></div>
+        </div>
+        <div class="rev"><div class="rev-top"><b>Distribuidora del Sur</b><span class="rev-ver">Cliente verificado</span><span class="stars">★ 5.0</span></div><p>Bajamos el inventario anual de 3 días a 1. El escaneo con el celular nos ahorró comprar lectoras.</p></div>
+        <div class="rev"><div class="rev-top"><b>Importadora Pampa</b><span class="rev-ver">Cliente verificado</span><span class="stars">★ 4.0</span></div><p>Muy útil para conteos cíclicos. Nos gustaría que sume conteo por lote, pero el soporte respondió rápido.</p></div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="sec">
+        <h2>Preguntas frecuentes</h2>
+        <details class="faq"><summary>¿Necesito ser cliente de YiQi para usarla?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>La app sincroniza con el ERP YiQi, por eso funciona sobre tu instalación de YiQi. Si todavía no sos cliente, podés pedir asesoramiento y el equipo te arma la activación.</p></details>
+        <details class="faq"><summary>¿Qué pasa al terminar la prueba gratis?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>Te avisamos antes de que termine. Si seguís, se activa el abono mensual; si no, la app se da de baja sin cargo. No se pide tarjeta para probar.</p></details>
+        <details class="faq"><summary>¿Quién da soporte si algo falla?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>El soporte funcional lo da iAready (el desarrollador homologado); la integración con el ERP la garantiza YiQi. El SLA de incidentes críticos es 24 h hábiles.</p></details>
+        <details class="faq"><summary>¿Cómo se factura?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>Se suma a tu abono de YiQi: un cargo de activación (financiable en cuotas) y el abono mensual según módulos y usuarios activos. Consultar es gratis; se cobra la operación.</p></details>
+      </section>
+    </main>
+
+    <!-- ══ ASIDE ══ -->
+    <aside class="aside">
+      <div class="card">
+        <span class="price-trial"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Prueba gratis 30 días · sin tarjeta</span>
+        <div class="price-line"><span>Activación (única vez)</span><b>Financiable en cuotas</b></div>
+        <div class="price-line"><span>Abono mensual</span><b>Según uso</b></div>
+
+        <div class="price-est">
+          <div style="font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px">Estimá tu abono</div>
+          <label>Módulos activos <b id="vMod">3</b></label>
+          <input type="range" id="mod" min="1" max="10" value="3" aria-label="Cantidad de módulos">
+          <label>Usuarios activos <b id="vUsr">8</b></label>
+          <input type="range" id="usr" min="1" max="50" value="8" aria-label="Cantidad de usuarios activos">
+          <div class="est-out"><div class="n" id="estN">$—</div><div class="lbl">por mes (estimado)</div></div>
+          <div class="est-note">Valores de ejemplo para la maqueta. El precio final lo define YiQi según tu configuración.</div>
+        </div>
+
+        <button class="fa-btn fa-btn-primary">Probar gratis</button>
+        <button class="fa-btn fa-btn-ghost">Pedir asesoramiento</button>
+        <div class="consulta-note"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Consultar el stock es gratis; se cobra la operación (ajustes y sincronización).</span></div>
+      </div>
+
+      <div class="card">
+        <h4>Detalles</h4>
+        <div class="meta-row"><span>Categoría</span><span>Inventario</span></div>
+        <div class="meta-row"><span>Tipo</span><span>App operativa</span></div>
+        <div class="meta-row"><span>Compatible con</span><span>YiQi ERP v1.9+</span></div>
+        <div class="meta-row"><span>Integraciones</span><span>Stock · Compras</span></div>
+        <div class="meta-row"><span>Plataforma</span><span>Android · iOS</span></div>
+        <div class="meta-row"><span>Idioma</span><span>Español</span></div>
+        <div class="meta-row"><span>Versión</span><span>2.3.1</span></div>
+        <div class="meta-row"><span>Actualizada</span><span>10/06/2026</span></div>
+      </div>
+
+      <div class="card">
+        <h4>Desarrollador</h4>
+        <div class="prov">
+          <span class="app-prov-logo big"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></span>
+          <div class="prov-sub">Partner homologado · 9 apps</div>
+        </div>
+        <button class="fa-btn fa-btn-icon" id="shareBtn2" style="width:100%;margin-top:14px;gap:8px" aria-label="Compartir o recomendar esta app">
+          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+          <span style="font:600 13px var(--sans)">Compartir / recomendar</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<site-footer base="./"></site-footer>
+<div class="share-pop" id="sharePop" role="menu" aria-hidden="true"><div class="share-head">Compartir</div><button class="share-opt" data-act="native" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>Compartir…</button><button class="share-opt" data-act="copy" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar enlace</button><div class="share-sep"></div><a class="share-opt" data-net="wa" target="_blank" rel="noopener" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"/></svg>WhatsApp</a><a class="share-opt" data-net="email" target="_blank" rel="noopener" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>Email</a><a class="share-opt" data-net="li" target="_blank" rel="noopener" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4"/></svg>LinkedIn</a><a class="share-opt" data-net="x" target="_blank" rel="noopener" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l16 16M20 4 4 20"/></svg>X</a><a class="share-opt" data-net="tg" target="_blank" rel="noopener" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Telegram</a><a class="share-opt" data-net="fb" target="_blank" rel="noopener" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a></div>
+<div class="toast" id="toast">Enlace copiado ✓</div>
+
+<script>
+/* Theme — dark | system | light (compat. site-header) */
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+function resolveTheme(v){ return v==='system' ? (mq.matches?'dark':'light') : v; }
+function applyTheme(v){ document.documentElement.dataset.theme = resolveTheme(v); }
+function updateSwitch(v){ document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active', b.dataset.val===v)); }
+function setTheme(v){ localStorage.setItem('yiqi-theme', v); applyTheme(v); updateSwitch(v); }
+(function(){
+  const sv = localStorage.getItem('yiqi-theme') || 'system';
+  applyTheme(sv);
+  document.addEventListener('DOMContentLoaded', () => {
+    updateSwitch(sv);
+    document.querySelectorAll('.theme-opt').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.val)));
+  });
+  mq.addEventListener('change', () => { if((localStorage.getItem('yiqi-theme')||'system')==='system') applyTheme('system'); });
+})();
+
+/* Estimador (valores de ejemplo) */
+const fmt=new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0});
+const BASE=18000, PER_MOD=9000, PER_USR=2500; // ejemplo
+function est(){
+  const m=+mod.value, u=+usr.value;
+  vMod.textContent=m; vUsr.textContent=u;
+  estN.textContent=fmt.format(BASE+m*PER_MOD+u*PER_USR);
+}
+['mod','usr'].forEach(id=>document.getElementById(id).addEventListener('input',est)); est();
+
+/* Compartir — menú enriquecido */
+(function(){
+  const pop=document.getElementById('sharePop'); if(!pop) return;
+  const data=()=>({url:location.href,title:document.title,text:document.title.split('·')[0].trim()});
+  function buildLinks(){
+    const {url,text}=data(); const u=encodeURIComponent(url), t=encodeURIComponent(text);
+    const map={ wa:`https://wa.me/?text=${t}%20${u}`,
+      email:`mailto:?subject=${t}&body=${t}%0A${u}`,
+      li:`https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
+      x:`https://twitter.com/intent/tweet?text=${t}&url=${u}`,
+      tg:`https://t.me/share/url?url=${u}&text=${t}`,
+      fb:`https://www.facebook.com/sharer/sharer.php?u=${u}` };
+    pop.querySelectorAll('a[data-net]').forEach(a=>a.href=map[a.dataset.net]);
+  }
+  function open(btn){
+    buildLinks();
+    pop.querySelector('[data-act="native"]').hidden=!navigator.share;
+    pop.classList.add('open'); pop.setAttribute('aria-hidden','false');
+    const r=btn.getBoundingClientRect(), pw=pop.offsetWidth||230, ph=pop.offsetHeight||320;
+    let left=Math.max(12,Math.min(r.left,window.innerWidth-pw-12));
+    let top=r.bottom+8; if(top+ph>window.innerHeight-12) top=Math.max(12,r.top-ph-8);
+    pop.style.left=left+'px'; pop.style.top=top+'px';
+  }
+  function close(){pop.classList.remove('open');pop.setAttribute('aria-hidden','true');}
+  function toastShow(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+  ['shareBtn','shareBtn2'].forEach(id=>{const e=document.getElementById(id);if(e){e.setAttribute('aria-haspopup','menu');e.addEventListener('click',ev=>{ev.stopPropagation();pop.classList.contains('open')?close():open(e);});}});
+  pop.querySelector('[data-act="copy"]').addEventListener('click',()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(toastShow).catch(()=>prompt('Copiá el enlace:',u));close();});
+  pop.querySelector('[data-act="native"]').addEventListener('click',()=>{if(navigator.share)navigator.share(data()).catch(()=>{});close();});
+  pop.querySelectorAll('a[data-net]').forEach(a=>a.addEventListener('click',close));
+  document.addEventListener('click',e=>{if(pop.classList.contains('open')&&!pop.contains(e.target))close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  window.addEventListener('resize',close);
+})();
+</script>
+
+<script>
+/* ── Ficha data-driven: arma la app según ?id= ── */
+(function(){
+  var G={
+    ana:'<path d="M3 3v18h18"/><polyline points="7 13 11 9 14 12 20 6"/>',
+    prov:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/>',
+    inv:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/><path d="M12 13l2 2 4-4"/>',
+    pos:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/>',
+    pick:'<path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M8.5 13.5l2 2 4-4"/>',
+    cons:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'
+  };
+  var APPS={
+    "yiqi-analytics-pro":{cat:"Analytics",name:"YiQi Analytics Pro",acc:"violet",icon:"ana",prov:"iAready",rating:"4.8",count:86,state:"Disponible",
+      tagline:"Tablero gerencial con KPIs en tiempo real, cohortes y forecast de cashflow. Para directivos que deciden con datos.",
+      hl:[["23 KPIs out-of-the-box","facturación, margen, conversión, stock"],["Drill-down + cohortes","del KPI al ticket sin salir del panel"],["Forecast con IA","proyección de cashflow a 90 días"]],
+      desc:["Analytics Pro unifica en una sola pantalla los indicadores de todas las áreas: ventas del día, márgenes por canal, stock crítico y cashflow proyectado.","Pensado para la toma de decisiones gerencial, permite ir del indicador al detalle (drill-down) y comparar por período, canal y cohorte."],
+      steps:["Se conecta a tu instalación de YiQi y lee los datos en tiempo real.","Elegís los KPIs y armás tableros por área o por rol.","Filtrás por período, canal y cliente, con drill-down al detalle.","Exportás o compartís la vista con tu equipo."],
+      sec:[["Acceso a datos","Lectura de ventas, stock y finanzas"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      support:["YiQi (producto propio).","Respuesta a incidentes críticos en 8 h hábiles."],
+      reviews:[["Grupo Andina","5.0","Pasamos de planillas a decisiones en minutos. El forecast nos cambió la planificación."],["Textil Norte","4.0","Muy completo. Sumaría más plantillas de tablero por industria."]],
+      faq:[["¿Necesito todos los módulos?","No. Analytics Pro lee lo que tengas activo en YiQi; cuantos más módulos, más rico el tablero."],["¿Los datos salen de YiQi?","Sí, en tiempo real desde tu instalación; no se duplican en otro lado."]],
+      details:[["Categoría","Analytics"],["Tipo","App de decisión"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Todos los módulos"],["Plataforma","Web"],["Idioma","Español"],["Versión","3.1.0"],["Actualizada","09/06/2026"]],
+      devSub:"Partner homologado", trial:"Add-on · demo guiada", consulta:"Se cotiza como add-on premium; pedí una demo para ver tu caso."},
+    "front-de-proveedores-ocr":{cat:"Proveedores",name:"Front de Proveedores OCR",acc:"orange",icon:"prov",prov:"iAready",rating:"4.6",count:61,state:"En desarrollo",
+      tagline:"Portal de autogestión para proveedores: carga de facturas y órdenes de compra con OCR, integrado a YiQi.",
+      hl:[["Carga con OCR","factura y OC sin tipeo manual"],["Autogestión","el proveedor ve estados y comprobantes"],["Integrado a YiQi","todo cae en el módulo de Compras"]],
+      desc:["Un portal web donde tus proveedores cargan facturas y órdenes de compra; el OCR extrae los datos y los deja listos en YiQi.","Reduce el ingreso manual y los errores de transcripción, y le da visibilidad al proveedor sobre el estado de sus comprobantes."],
+      steps:["El proveedor ingresa al portal con su usuario.","Sube la factura u OC; el OCR reconoce los campos.","Revisa y confirma los datos detectados.","El comprobante queda en Compras de YiQi para su circuito."],
+      sec:[["Acceso a datos","Compras y proveedores (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario de proveedor"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      support:["iAready (desarrollador homologado); la integración la garantiza YiQi.","Incidentes críticos en 24 h hábiles."],
+      reviews:[["Distribuidora Litoral","5.0","Los proveedores cargan solos; bajó muchísimo el trabajo de data entry."],["Mayorista Cuyo","4.0","El OCR anda muy bien. Esperamos la carga masiva."]],
+      faq:[["¿El proveedor necesita ser usuario de YiQi?","No, accede a un portal aparte con su propio usuario."],["¿Qué pasa si el OCR se equivoca?","El proveedor revisa y corrige antes de confirmar; nada entra sin validar."]],
+      details:[["Categoría","Proveedores"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Compras"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.9.0 (beta)"],["Actualizada","12/06/2026"]],
+      devSub:"Partner homologado · 9 apps", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar comprobantes es gratis; se cobra la operación (carga e integración)."},
+    "inventariado-mobile":{cat:"Inventario",name:"Inventariado Mobile",acc:"green",icon:"inv",prov:"iAready",rating:"4.6",count:124,state:"En desarrollo",
+      tagline:"Relevá y controlá el stock de tus depósitos desde el celular: escaneo de códigos, ajustes y sincronización en tiempo real con YiQi.",
+      hl:[["Escaneo sin fricción","la cámara del celular como lector"],["Sync en tiempo real","cada conteo impacta en el stock del ERP"],["Control de diferencias","faltantes y sobrantes por depósito"]],
+      desc:["Convierte cualquier celular en una terminal de relevamiento de stock: el operario escanea, cuenta y ajusta directamente en el depósito.","Los datos viajan en tiempo real a YiQi, sin planillas intermedias ni recargas manuales. Cada movimiento queda trazado por usuario y fecha."],
+      steps:["El operario inicia sesión con su usuario de YiQi y elige el depósito.","Escanea el código de cada producto e ingresa la cantidad.","El sistema compara contra el stock teórico y marca diferencias.","Al confirmar, los ajustes impactan en el ERP y quedan auditados."],
+      sec:[["Acceso a datos","Stock y productos (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      support:["iAready (desarrollador homologado); la integración la garantiza YiQi.","Incidentes críticos en 24 h hábiles."],
+      reviews:[["Distribuidora del Sur","5.0","Bajamos el inventario anual de 3 días a 1. Nos ahorró comprar lectoras."],["Importadora Pampa","4.0","Muy útil para conteos cíclicos. Sumaría conteo por lote."]],
+      faq:[["¿Necesito ser cliente de YiQi?","Sí, sincroniza con tu instalación de YiQi. Si no sos cliente, pedí asesoramiento."],["¿Sirve sin internet?","El conteo queda en cola y sincroniza al recuperar señal."]],
+      details:[["Categoría","Inventario"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Stock · Compras"],["Plataforma","Android · iOS"],["Idioma","Español"],["Versión","2.3.1"],["Actualizada","10/06/2026"]],
+      devSub:"Partner homologado · 9 apps", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar el stock es gratis; se cobra la operación (ajustes y sincronización)."},
+    "yiqi-pos":{cat:"Punto de venta",name:"YiQi POS",acc:"amber",icon:"pos",prov:"iAready",rating:"4.7",count:210,state:"Disponible",
+      tagline:"Punto de venta para Windows: modo offline, multi-caja, medios de pago e impresión fiscal, integrado al ERP.",
+      hl:[["Funciona offline","vendés aunque se caiga internet"],["Multi-caja y turnos","cierres y arqueos por caja"],["Impresión fiscal","Epson y Hasar integradas"]],
+      desc:["El punto de venta de YiQi para mostrador: rápido, con modo offline y sincronización automática cuando vuelve la conexión.","Soporta múltiples cajas, turnos, medios de pago, descuentos y promociones, con facturación electrónica y fiscal integrada."],
+      steps:["Instalás el POS en Windows e instalás el certificado.","Configurás cajas, medios de pago e impresoras fiscales.","Vendés, incluso sin internet (modo offline).","Hacés cierre de caja; todo sincroniza con YiQi."],
+      sec:[["Acceso a datos","Ventas, stock y caja (lectura/escritura)"],["Autenticación","Certificado + usuario YiQi"],["Alojamiento","Local + sincronización con YiQi"]],
+      support:["YiQi (producto propio). Documentación y tutoriales en el centro de ayuda.","Incidentes críticos en 8 h hábiles."],
+      reviews:[["Indumentaria Sur","5.0","El modo offline nos salvó más de una vez. Cierres clarísimos."],["Kiosco Central","4.0","Muy rápido. La instalación del certificado podría ser más simple."]],
+      faq:[["¿Anda sin internet?","Sí, vende offline y sincroniza al recuperar conexión."],["¿Qué impresoras soporta?","Fiscales Epson y Hasar, además de comandas térmicas."]],
+      details:[["Categoría","Punto de venta"],["Tipo","App de escritorio"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Ventas · Stock · Caja"],["Plataforma","Windows (MSIX)"],["Idioma","Español"],["Versión","1.15.10"],["Actualizada","11/06/2026"]],
+      devSub:"Partner homologado", trial:"Incluido en el servicio YiQi", consulta:"Se activa con tu servicio YiQi; pedí asesoramiento para tu configuración."},
+    "picking-list":{cat:"Operaciones",name:"Picking List",acc:"magenta",icon:"pick",prov:"iAready",rating:"4.5",count:38,state:"En desarrollo",
+      tagline:"Listas de preparación para depósito: armá el picking de varios pedidos y controlá la salida de mercadería.",
+      hl:[["Picking multi-pedido","preparás varios pedidos a la vez"],["Por ubicación","recorrido optimizado del depósito"],["Control de salida","remitos y etiquetas al despachar"]],
+      desc:["Genera listas de preparación a partir de los pedidos de YiQi, agrupando por ubicación para optimizar el recorrido del depósito.","Al preparar, marca cada ítem y controla la salida con remitos y etiquetas, dejando trazada la operación."],
+      steps:["Seleccionás los pedidos a preparar.","El sistema arma la lista por ubicación.","El operario marca cada ítem al pickearlo.","Se generan remito y etiquetas para el despacho."],
+      sec:[["Acceso a datos","Pedidos y stock (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      support:["YiQi (producto propio). Integración garantizada con el ERP.","Incidentes críticos en 24 h hábiles."],
+      reviews:[["Logística Delta","5.0","Preparamos por ola y el recorrido por ubicación nos aceleró un montón."],["E-shop Pampa","4.0","Muy práctico. Esperamos la app mobile para el operario."]],
+      faq:[["¿Puedo preparar varios pedidos juntos?","Sí, arma una lista consolidada por ubicación."],["¿Genera remito?","Sí, remito y etiquetas al confirmar la salida."]],
+      details:[["Categoría","Operaciones"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Stock"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.7.0 (beta)"],["Actualizada","08/06/2026"]],
+      devSub:"Partner homologado", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar pedidos es gratis; se cobra la operación (preparación y despacho)."},
+    "consulta-de-pedidos":{cat:"Pedidos",name:"Consulta de pedidos",acc:"blue",icon:"cons",prov:"iAready",rating:"4.4",count:52,state:"En desarrollo",
+      tagline:"Búsqueda y seguimiento ágil de pedidos por estado, canal y cliente, sincronizado con YiQi en tiempo real.",
+      hl:[["Búsqueda al instante","por estado, canal o cliente"],["Seguimiento en vivo","del pedido a la entrega"],["Sincronizado","datos reales de YiQi"]],
+      desc:["Una vista rápida para encontrar y seguir pedidos: filtrás por estado, canal y cliente y ves el detalle al instante.","Pensada para atención y ventas, evita entrar a buscar pedido por pedido en el ERP."],
+      steps:["Buscás por número, cliente o canal.","Filtrás por estado (preparado, pendiente, entregado).","Abrís el detalle del pedido y su trazabilidad.","Compartís el estado con el cliente."],
+      sec:[["Acceso a datos","Pedidos y clientes (lectura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      support:["YiQi (producto propio).","Incidentes críticos en 24 h hábiles."],
+      reviews:[["Atención Norte","5.0","Respondemos al cliente sin entrar al ERP. Rapidísimo."],["Ventas Online","4.0","Muy útil. Sumaría exportar la búsqueda."]],
+      faq:[["¿Modifica pedidos?","No, es de consulta y seguimiento; los cambios se hacen en YiQi."],["¿Filtra por canal?","Sí, por estado, canal y cliente."]],
+      details:[["Categoría","Pedidos"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Clientes"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.6.0 (beta)"],["Actualizada","07/06/2026"]],
+      devSub:"Partner homologado", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"La consulta es gratis; se cobra según el plan del servicio."}
+  };
+
+  function q(s){return document.querySelector(s);}
+  function ico(g){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+g+'</svg>';}
+  function check(){return '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>';}
+  function chev(){return '<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';}
+  function setSection(t,html){var hs=document.querySelectorAll('.sec h2');for(var i=0;i<hs.length;i++){if(hs[i].textContent.trim().indexOf(t)===0){var h=hs[i],n=h.nextElementSibling;while(n){var x=n.nextElementSibling;n.remove();n=x;}h.insertAdjacentHTML('afterend',html);return;}}}
+
+  var params=new URLSearchParams(location.search);
+  var id=params.get('id'); if(!APPS[id]) id='inventariado-mobile';
+  var c=APPS[id], g=G[c.icon]||G.inv;
+
+  document.documentElement.style.setProperty('--app','var(--'+c.acc+')');
+  document.documentElement.style.setProperty('--app-soft','var(--'+c.acc+'-soft)');
+  document.documentElement.style.setProperty('--app-ink', '#ffffff');
+  document.title=c.name+' — Ficha de app · YiQi Marketplace';
+
+  // breadcrumb
+  var crumb=q('.crumb'); if(crumb) crumb.innerHTML='<a href="marketplace.html">Marketplace</a> › <a href="marketplace.html">'+c.cat+'</a> › <span>'+c.name+'</span>';
+  // icon, cat, name
+  if(q('.app-icon')) q('.app-icon').innerHTML=ico(g);
+  if(q('.app-cat')) q('.app-cat').textContent=c.cat;
+  if(q('.app-h1')) q('.app-h1').textContent=c.name;
+  // by-line
+  var IA='<svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg>';
+  var provHTML = (c.prov==='iAready') ? '<a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready">'+IA+'</a>' : '<strong style="color:var(--text)">'+c.prov+'</strong>';
+  var by=q('.app-by'); if(by) by.innerHTML='<span>por '+provHTML+'</span><span class="dot"></span><span class="badge badge-homo"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Homologado por YiQi</span><span class="stars">★ '+c.rating+'</span><span style="color:var(--muted-2);font-size:12px">('+c.count+')</span>';
+  if(q('.tagline')) q('.tagline').textContent=c.tagline;
+  // trust row
+  var tr=q('.trust-row'); if(tr) tr.innerHTML='<span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Homologado</span><span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/></svg>Soporte por '+c.prov+'</span><span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Compatible con YiQi ERP</span>';
+  // gallery placeholders (3) tinted con --app
+  var gal=q('.gallery'); if(gal){var shots='';for(var i=0;i<3;i++){shots+='<div><div class="shot" style="display:grid;place-items:center;background:linear-gradient(135deg,var(--app-soft),transparent 70%),#060e0d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="width:90px;height:90px;color:var(--app);opacity:.30" aria-hidden="true">'+g+'</svg></div><div class="shot-cap">Captura '+(i+1)+' · se reemplaza por imagen Gemini</div></div>';}gal.innerHTML=shots;}
+  // highlights
+  var hl=q('.highlights'); if(hl){hl.innerHTML=c.hl.map(function(h){return '<div class="hl"><div class="hl-ic" aria-hidden="true">'+ico(g)+'</div><h3>'+h[0]+'</h3><p>'+h[1]+'</p></div>';}).join('');}
+  // sections
+  setSection('Descripción', c.desc.map(function(p){return '<p>'+p+'</p>';}).join(''));
+  setSection('Cómo funciona', c.steps.map(function(s){return '<div class="feat">'+check()+'<span>'+s+'</span></div>';}).join(''));
+  setSection('Seguridad', '<div class="sec-sec"><div class="seal"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><b>Homologada por YiQi</b></div><dl class="kv"><dt>Estado de homologación</dt><dd style="color:var(--green)">Aprobada</dd>'+c.sec.map(function(kv){return '<dt>'+kv[0]+'</dt><dd>'+kv[1]+'</dd>';}).join('')+'</dl></div>');
+  setSection('Soporte', '<p><strong style="color:var(--text)">Responsable:</strong> '+c.support[0]+'</p><p><strong style="color:var(--text)">SLA:</strong> '+c.support[1]+'</p>');
+  setSection('Reseñas', '<div class="rev-summary"><div class="rev-big">'+c.rating+'</div><div><div class="stars" style="font-size:16px">★★★★★</div><div class="rev-meta">'+c.count+' reseñas · solo de clientes que la usan</div></div></div>'+c.reviews.map(function(r){return '<div class="rev"><div class="rev-top"><b>'+r[0]+'</b><span class="rev-ver">Cliente verificado</span><span class="stars">★ '+r[1]+'</span></div><p>'+r[2]+'</p></div>';}).join(''));
+  setSection('Preguntas frecuentes', c.faq.map(function(f){return '<details class="faq"><summary>'+f[0]+chev()+'</summary><p>'+f[1]+'</p></details>';}).join(''));
+  // pricing: trial + nota (estimador queda igual)
+  var trial=q('.price-trial'); if(trial) trial.innerHTML='<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'+c.trial;
+  var note=q('.consulta-note span'); if(note) note.textContent=c.consulta;
+  // details
+  var det=document.querySelectorAll('.aside .card h4'); for(var d=0;d<det.length;d++){ if(det[d].textContent.trim()==='Detalles'){ var card=det[d].parentElement; var old=card.querySelectorAll('.meta-row'); for(var k=0;k<old.length;k++) old[k].remove(); det[d].insertAdjacentHTML('afterend', c.details.map(function(r){return '<div class="meta-row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>';}).join('')); } }
+  // dev sub + prov name
+  var prov=q('.prov');
+  if(prov){ var dlogo=(c.prov==='iAready') ? '<a href="ia-ready.html" class="app-prov-logo big" aria-label="iAready">'+IA+'</a>' : '<span style="font:800 17px var(--display);color:var(--text)">YiQi</span>'; prov.innerHTML = dlogo + '<div class="prov-sub">'+c.devSub+'</div>'; }
+})();
+</script>
+</body>
+</html>

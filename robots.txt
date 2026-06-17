@@ -7,6 +7,7 @@ Disallow: /gracias.html
 Disallow: /propuesta-iaready-hero.html
 Disallow: /efecto-splittext.html
 Disallow: /marketplace.html
+Disallow: /app.html
 Disallow: /tiendanube.html
 Disallow: /enviopack.html
 Disallow: /interbanking.html
