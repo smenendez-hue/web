@@ -316,9 +316,14 @@ html[data-theme="light"] .site-topbar {
 .mobile-nav .nav-link     { display: block; font-size: var(--fs-panel-title, 14px); padding: 10px 14px; }
 .mobile-nav .nav-link-dev { display: flex;  font-size: var(--fs-panel-title, 14px); padding: 10px 14px; }
 .mobile-nav .nav-sep      { width: 100%; height: 1px; background: var(--line); margin: 6px 0; }
-/* Theme switch al pie del menú mobile — separado y siempre visible */
-.mobile-nav .theme-switch { margin-top: auto; width: 100%; justify-content: flex-start; gap: 4px; padding: 14px 4px 4px; border-top: 1px solid var(--line); }
-.mobile-nav .theme-opt { width: 40px; height: 34px; }
+/* Menú mobile: links scrolleables + theme switch FIJO al pie (segmentado, estilo DS) */
+.mobile-nav { overflow: hidden; }
+.mobile-nav-links { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+.mobile-nav .theme-switch { flex-shrink: 0; width: 100%; display: flex; gap: 2px; margin-top: 14px; padding: 3px; background: var(--bg-elev-2); border-radius: var(--radius-pill, 999px); }
+.mobile-nav .theme-opt { flex: 1; width: auto; height: 38px; border-radius: var(--radius-pill, 999px); color: var(--muted); }
+.mobile-nav .theme-opt:hover:not(.active) { background: var(--bg-soft); color: var(--text); }
+.mobile-nav .theme-opt.active { background: var(--cyan-soft); color: var(--cyan); }
+.mobile-nav .theme-opt svg { width: 16px; height: 16px; }
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 860px) {
