@@ -81,6 +81,7 @@ img,svg{max-width:100%}
 .gallery>div{flex:0 0 100%;min-width:0;scroll-snap-align:start}
 .shot{width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#060e0d}
 .shot svg{width:100%;height:100%;display:block}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
 .shot-cap{font:500 11px var(--sans);color:var(--muted-2);padding:6px 2px 0}
 
 /* Sections */
@@ -511,6 +512,7 @@ function est(){
       reviews:[["Logística Delta","5.0","Preparamos por ola y el recorrido por ubicación nos aceleró un montón."],["E-shop Pampa","4.0","Muy práctico. Esperamos la app mobile para el operario."]],
       faq:[["¿Puedo preparar varios pedidos juntos?","Sí, arma una lista consolidada por ubicación."],["¿Genera remito?","Sí, remito y etiquetas al confirmar la salida."]],
       details:[["Categoría","Operaciones"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Stock"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.7.0 (beta)"],["Actualizada","08/06/2026"]],
+      imgs:[["img/apps/picking-list-horiz.webp","Preparación de pedidos por ubicación en el depósito"]],
       devSub:"Partner homologado", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar pedidos es gratis; se cobra la operación (preparación y despacho)."},
     "consulta-de-pedidos":{cat:"Pedidos",name:"Consulta de pedidos",acc:"blue",icon:"cons",prov:"iAready",rating:"4.4",count:52,state:"En desarrollo",
       tagline:"Búsqueda y seguimiento ágil de pedidos por estado, canal y cliente, sincronizado con YiQi en tiempo real.",
@@ -522,6 +524,7 @@ function est(){
       reviews:[["Atención Norte","5.0","Respondemos al cliente sin entrar al ERP. Rapidísimo."],["Ventas Online","4.0","Muy útil. Sumaría exportar la búsqueda."]],
       faq:[["¿Modifica pedidos?","No, es de consulta y seguimiento; los cambios se hacen en YiQi."],["¿Filtra por canal?","Sí, por estado, canal y cliente."]],
       details:[["Categoría","Pedidos"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Clientes"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.6.0 (beta)"],["Actualizada","07/06/2026"]],
+      imgs:[["img/apps/consulta-de-pedidos-horiz.webp","Atención y seguimiento de pedidos en tiempo real"]],
       devSub:"Partner homologado", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"La consulta es gratis; se cobra según el plan del servicio."}
   };
 
@@ -554,7 +557,10 @@ function est(){
   // trust row
   var tr=q('.trust-row'); if(tr) tr.innerHTML='<span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Homologado</span><span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/></svg>Soporte por '+c.prov+'</span><span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Compatible con YiQi ERP</span>';
   // gallery placeholders (3) tinted con --app
-  var gal=q('.gallery'); if(gal){var shots='';for(var i=0;i<3;i++){shots+='<div><div class="shot" style="display:grid;place-items:center;background:linear-gradient(135deg,var(--app-soft),transparent 70%),#060e0d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="width:90px;height:90px;color:var(--app);opacity:.30" aria-hidden="true">'+g+'</svg></div><div class="shot-cap">Captura '+(i+1)+' · se reemplaza por imagen Gemini</div></div>';}gal.innerHTML=shots;}
+  var gal=q('.gallery'); if(gal){var shots='';
+    if(c.imgs&&c.imgs.length){c.imgs.forEach(function(im){shots+='<div><div class="shot"><img src="'+im[0]+'" alt="'+im[1]+'" loading="lazy"></div><div class="shot-cap">'+im[1]+'</div></div>';});}
+    else{for(var i=0;i<3;i++){shots+='<div><div class="shot" style="display:grid;place-items:center;background:linear-gradient(135deg,var(--app-soft),transparent 70%),#060e0d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="width:90px;height:90px;color:var(--app);opacity:.30" aria-hidden="true">'+g+'</svg></div><div class="shot-cap">Captura '+(i+1)+' · se reemplaza por imagen Gemini</div></div>';}}
+    gal.innerHTML=shots;}
   // highlights
   var hl=q('.highlights'); if(hl){hl.innerHTML=c.hl.map(function(h){return '<div class="hl"><div class="hl-ic" aria-hidden="true">'+ico(g)+'</div><h3>'+h[0]+'</h3><p>'+h[1]+'</p></div>';}).join('');}
   // sections
