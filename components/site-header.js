@@ -11,6 +11,7 @@ class SiteHeader extends HTMLElement {
     const r = (path) => base + path;
 
     const navItems = [
+      { label: 'IA Ready',      href: r('ia-ready.html'),       page: 'ia-ready'              },
       { label: 'API Docs',      href: r('api-docs.html'),      page: 'api-docs'               },
       { label: 'Novedades',     href: r('novedades.html'),      page: 'novedades'             },
       { label: 'Capacitaciones',href: r('capacitaciones.html'), page: 'capacitaciones'        },
