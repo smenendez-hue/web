@@ -68,6 +68,13 @@ body {
 }
 
 /* ── Filtros ── */
+.nov-featured { background: var(--cyan-soft); border-radius: 16px; padding: 24px 26px; margin-bottom: 28px; }
+.nov-feat-badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.nov-feat-tag { font: 600 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); background: var(--cyan-soft-2, rgba(0,204,255,.16)); padding: 4px 10px; border-radius: 999px; }
+.nov-feat-title { font: 700 22px/1.2 var(--display, var(--sans)); letter-spacing: -.01em; color: var(--text); margin: 0 0 8px; }
+.nov-feat-desc { font: 400 14px/1.55 var(--sans); color: var(--muted); margin: 0; white-space: pre-line; max-width: 62ch; }
+.nov-featured .nov-link { margin-top: 14px; }
+@media (max-width: 560px){ .nov-feat-title{ font-size: 19px; } .nov-featured{ padding: 18px; } }
 .nov-filters {
   display: flex;
   flex-direction: column;
@@ -322,6 +329,9 @@ body {
     <p class="nov-sub">Mejoras, nuevas funciones y optimizaciones de rendimiento que lanzamos en YiQi ERP.</p>
   </div>
 
+  <!-- Última novedad (destacada · se actualiza sola) -->
+  <div class="nov-featured" id="nov-featured" hidden></div>
+
   <!-- Filtros -->
   <div class="nov-filters" aria-label="Filtros">
     <div class="search-wrap nov-search-wrap">
@@ -503,6 +513,19 @@ function populateModuleFilters(items) {
   });
 }
 
+function cardFeaturedHtml(item) {
+  const {day, month, year} = formatDate(item.fecha);
+  const desc = (item.descripcion || '').replace(/\r\n/g, '\n').trim();
+  const linkHtml = item.linkWiki
+    ? `<a class="nov-link" href="${escapeHtml(item.linkWiki)}" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Ver documentación</a>`
+    : '';
+  return `
+    <div class="nov-feat-badges"><span class="nov-feat-tag">Última novedad · ${day} ${month} ${year}</span>${badgeHtml(item.tipo, item.modulo)}</div>
+    <h2 class="nov-feat-title">${escapeHtml(item.titulo || 'Sin titulo')}</h2>
+    <p class="nov-feat-desc">${escapeHtml(desc)}</p>
+    ${linkHtml}`.trim();
+}
+
 function applyFilters() {
   const cards = document.querySelectorAll('.nov-card');
   const normalizedSearch = searchTerm.trim().toLowerCase();
@@ -522,7 +545,7 @@ function applyFilters() {
   });
   const countEl = document.getElementById('nov-count');
   countEl.style.display = '';
-  countEl.innerHTML = `Mostrando <strong>${visible}</strong> de <strong>${allItems.length}</strong> novedades`;
+  countEl.innerHTML = `Mostrando <strong>${visible}</strong> de <strong>${cards.length}</strong> novedades`;
 
   // Empty state
   let emptyEl = document.getElementById('nov-empty');
@@ -636,7 +659,17 @@ async function loadNovedades() {
       return;
     }
 
-    list.innerHTML = renderItems(allItems);
+    allItems.sort((a, b) => {
+      const da = a.fecha ? new Date(a.fecha).getTime() : 0;
+      const db = b.fecha ? new Date(b.fecha).getTime() : 0;
+      return (db || 0) - (da || 0);
+    });
+
+    const feat = document.getElementById('nov-featured');
+    feat.innerHTML = cardFeaturedHtml(allItems[0]);
+    feat.hidden = false;
+
+    list.innerHTML = renderItems(allItems.slice(1));
 
     applyFilters();
   } catch (err) {
