@@ -68,13 +68,14 @@ body {
 }
 
 /* ── Filtros ── */
-.nov-featured { background: var(--cyan-soft); border-radius: 16px; padding: 24px 26px; margin-bottom: 28px; }
+.nov-featured { background: var(--cyan-soft); border-radius: 16px; padding: 24px 26px; margin-bottom: 28px; display: flex; gap: 20px; align-items: flex-start; }
+.nov-feat-body { flex: 1; min-width: 0; }
 .nov-feat-badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .nov-feat-tag { font: 600 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); background: var(--cyan-soft-2, rgba(0,204,255,.16)); padding: 4px 10px; border-radius: 999px; }
 .nov-feat-title { font: 700 22px/1.2 var(--display, var(--sans)); letter-spacing: -.01em; color: var(--text); margin: 0 0 8px; }
 .nov-feat-desc { font: 400 14px/1.55 var(--sans); color: var(--muted); margin: 0; white-space: pre-line; max-width: 62ch; }
 .nov-featured .nov-link { margin-top: 14px; }
-@media (max-width: 560px){ .nov-feat-title{ font-size: 19px; } .nov-featured{ padding: 18px; } }
+@media (max-width: 560px){ .nov-feat-title{ font-size: 19px; } .nov-featured{ padding: 18px; gap: 14px; } }
 .nov-filters {
   display: flex;
   flex-direction: column;
@@ -520,10 +521,17 @@ function cardFeaturedHtml(item) {
     ? `<a class="nov-link" href="${escapeHtml(item.linkWiki)}" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H4M11 1V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Ver documentación</a>`
     : '';
   return `
-    <div class="nov-feat-badges"><span class="nov-feat-tag">Última novedad · ${day} ${month} ${year}</span>${badgeHtml(item.tipo, item.modulo)}</div>
-    <h2 class="nov-feat-title">${escapeHtml(item.titulo || 'Sin titulo')}</h2>
-    <p class="nov-feat-desc">${escapeHtml(desc)}</p>
-    ${linkHtml}`.trim();
+    <div class="nov-date-col">
+      <span class="nov-date-day">${day}</span>
+      <span class="nov-date-month">${month}</span>
+      <span class="nov-date-year">${year}</span>
+    </div>
+    <div class="nov-feat-body">
+      <div class="nov-feat-badges"><span class="nov-feat-tag">Última novedad</span>${badgeHtml(item.tipo, item.modulo)}</div>
+      <h2 class="nov-feat-title">${escapeHtml(item.titulo || 'Sin titulo')}</h2>
+      <p class="nov-feat-desc">${escapeHtml(desc)}</p>
+      ${linkHtml}
+    </div>`.trim();
 }
 
 function applyFilters() {
