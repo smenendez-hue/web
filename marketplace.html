@@ -95,13 +95,12 @@
   }
   .nav-btn-ghost:hover { color: var(--cyan); background: var(--cyan-soft); }
   .nav-btn-primary {
-    font: 600 13px var(--sans); color: #7ec8e3;
-    background: var(--cyan-soft-2); border-radius: var(--radius-xs);
+    font: 600 13px var(--sans); color: var(--cyan);
+    background: var(--cyan-soft); border-radius: var(--radius-xs);
     padding: 6px 16px; border: none;
     transition: all var(--tr);
   }
-  .nav-btn-primary:hover { background: rgba(0,204,255,.22); }
-  html[data-theme="light"] .nav-btn-primary { color: #2a7a96; }
+  .nav-btn-primary:hover { background: var(--cyan-soft-2); }
 
 
   /* ═══ HERO ═══ */
@@ -154,14 +153,6 @@
     color: var(--muted-2); pointer-events: none;
   }
   .mkt-search-input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,204,255,.08); }
-  .mkt-search-btn {
-    height: 44px; padding: 0 22px; border-radius: var(--radius-sm);
-    background: var(--cyan-soft-2); color: #7ec8e3;
-    font: 600 13px var(--sans); border: none;
-    transition: all var(--tr); white-space: nowrap; flex-shrink: 0;
-  }
-  .mkt-search-btn:hover { background: rgba(0,204,255,.22); }
-  html[data-theme="light"] .mkt-search-btn { color: #2a7a96; }
 
   /* Trust badges */
   .mkt-trust {
@@ -335,21 +326,16 @@
     font: 400 15px/1.4 var(--sans); color: var(--muted); margin-bottom: 28px;
   }
   .dev-btns { display: flex; gap: 10px; margin-bottom: 0; }
-  .dev-btn-primary {
-    height: 38px; padding: 0 20px; border-radius: var(--radius-sm);
-    background: var(--cyan-soft-2); color: #7ec8e3;
-    font: 600 13px var(--sans); border: none;
-    transition: all var(--tr);
+  .dev-btn-primary, .dev-btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 11px 20px; border-radius: var(--radius);
+    font: 600 13px var(--sans); cursor: pointer;
+    border: 1px solid transparent; transition: all var(--tr); text-decoration: none;
   }
-  .dev-btn-primary:hover { background: rgba(0,204,255,.22); }
-  html[data-theme="light"] .dev-btn-primary { color: #2a7a96; }
-  .dev-btn-ghost {
-    height: 38px; padding: 0 20px; border-radius: var(--radius-sm);
-    background: none; border: 1px solid var(--line-strong); color: var(--muted);
-    font: 600 13px var(--sans);
-    transition: color var(--tr), border-color var(--tr);
-  }
-  .dev-btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,.2); }
+  .dev-btn-primary { background: var(--cyan-soft); border-color: rgba(0,204,255,.28); color: var(--cyan); }
+  .dev-btn-primary:hover { background: var(--cyan-soft-2); }
+  .dev-btn-ghost { background: transparent; color: var(--muted); border-color: var(--line-strong); }
+  .dev-btn-ghost:hover { background: var(--bg-soft); color: var(--text); }
   /* Dev features list */
   .dev-features { display: flex; flex-direction: column; gap: 0; }
   .dev-feat {
@@ -559,7 +545,6 @@
         <svg aria-hidden="true" class="mkt-search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input class="mkt-search-input" type="text" placeholder="Buscar apps, integraciones..." aria-label="Buscar apps e integraciones">
       </div>
-      <button class="mkt-search-btn">Buscar</button>
     </div>
     <div class="mkt-trust">
       <div class="mkt-trust-item">
@@ -760,8 +745,8 @@
         <h2 class="dev-title">Construye tu app<br>sobre YiQi Platform</h2>
         <div class="dev-desc">APIs públicas con OAuth, SDKs, documentación completa y entorno sandbox. Accede al ecosistema YiQi y lleva tu solución a miles de empresas.</div>
         <div class="dev-btns">
-          <button class="dev-btn-primary">Ver documentación</button>
-          <button class="dev-btn-ghost">Homologación</button>
+          <button type="button" class="dev-btn-primary" data-tally-open="81rY7k" data-tally-layout="modal" data-tally-width="720" data-tally-overlay="1" data-tally-emoji-text="">Cargar mi caso</button>
+          <a class="dev-btn-ghost" href="api-docs.html">Ver documentación</a>
         </div>
       </div>
       <div class="dev-features">
@@ -922,6 +907,7 @@
   }
 </script>
 <script src="./components/meta-pixel-events.js" defer></script>
+<script async src="https://tally.so/widgets/embed.js"></script>
 <script>
   /* Card → ficha de app */
   document.querySelectorAll('.app-card[data-href]').forEach(c => {
