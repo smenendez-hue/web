@@ -1,4 +1,3 @@
--_+
 # YiQi ERP — Contexto para IA
 
 YiQi es un ERP cloud diseñado para centralizar, conectar y automatizar toda la operación de una empresa en una sola plataforma.
