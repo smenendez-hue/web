@@ -134,25 +134,7 @@ img,svg{max-width:100%}
 .aside{position:sticky;top:68px;display:flex;flex-direction:column;gap:16px}
 @media(max-width:880px){.aside{position:static}}
 .card{background:var(--bg-elev-2);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-md)}
-.price-trial{font:600 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:var(--green-soft);border-radius:var(--radius-pill);padding:4px 10px;display:inline-flex;align-items:center;gap:6px;margin-bottom:14px}
-.price-line{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font:400 13px var(--sans);color:var(--muted)}
-.price-line b{font:600 13px var(--sans);color:var(--text)}
-.price-est{margin:14px 0 4px}
-.price-est label{font:500 12px var(--sans);color:var(--muted-2);display:flex;justify-content:space-between;margin:10px 0 5px}
-.price-est label b{color:var(--text);font-weight:600;font-family:var(--mono)}
-.price-est input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border:none;border-radius:var(--radius-pill);background:transparent;cursor:pointer;outline:none}
-.price-est input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border:none;border-radius:50%;background:var(--app,var(--cyan));margin-top:-6px;box-shadow:0 0 0 4px var(--app-soft,var(--cyan-soft))}
-.price-est input[type=range]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--app,var(--cyan))}
-.price-est input[type=range]::-webkit-slider-runnable-track{height:6px;border:none;border-radius:var(--radius-pill);background:var(--line-strong)}
-.price-est input[type=range]::-moz-range-track{height:6px;border:none;border-radius:var(--radius-pill);background:var(--line-strong)}
-.price-est input[type=range]:focus-visible{box-shadow:var(--glow)}
-.est-out{margin-top:14px;padding:12px 14px;background:var(--app-soft,var(--cyan-soft));border-radius:var(--radius-sm);text-align:center}
-.est-out .n{font:800 26px var(--display);color:var(--text)}
-.est-out .lbl{font:500 11px var(--sans);color:var(--muted-2)}
-.est-note{font:400 10.5px/1.4 var(--sans);color:var(--muted-2);margin-top:8px;text-align:center}
 .aside .fa-btn{width:100%;justify-content:center;margin-top:14px}
-.consulta-note{font:400 11.5px/1.45 var(--sans);color:var(--muted-2);margin-top:12px;display:flex;gap:7px;align-items:flex-start}
-.consulta-note svg{color:var(--app,var(--cyan));flex-shrink:0;margin-top:1px}
 .card h4{font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px}
 .meta-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font:400 12.5px var(--sans);border-bottom:1px solid var(--line)}
 .meta-row:last-child{border-bottom:none}
@@ -334,26 +316,6 @@ img,svg{max-width:100%}
     <!-- ══ ASIDE ══ -->
     <aside class="aside">
       <div class="card">
-        <span class="price-trial"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Prueba gratis 30 días · sin tarjeta</span>
-        <div class="price-line"><span>Activación (única vez)</span><b>Financiable en cuotas</b></div>
-        <div class="price-line"><span>Abono mensual</span><b>Según uso</b></div>
-
-        <div class="price-est">
-          <div style="font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);margin-bottom:4px">Estimá tu abono</div>
-          <label>Módulos activos <b id="vMod">3</b></label>
-          <input type="range" id="mod" min="1" max="10" value="3" aria-label="Cantidad de módulos">
-          <label>Usuarios activos <b id="vUsr">8</b></label>
-          <input type="range" id="usr" min="1" max="50" value="8" aria-label="Cantidad de usuarios activos">
-          <div class="est-out"><div class="n" id="estN">$—</div><div class="lbl">por mes (estimado)</div></div>
-          <div class="est-note">Valores de ejemplo para la maqueta. El precio final lo define YiQi según tu configuración.</div>
-        </div>
-
-        <button class="fa-btn fa-btn-primary">Probar gratis</button>
-        <button class="fa-btn fa-btn-ghost">Pedir asesoramiento</button>
-        <div class="consulta-note"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Consultar el stock es gratis; se cobra la operación (ajustes y sincronización).</span></div>
-      </div>
-
-      <div class="card">
         <h4>Detalles</h4>
         <div class="meta-row"><span>Categoría</span><span>Inventario</span></div>
         <div class="meta-row"><span>Tipo</span><span>App operativa</span></div>
@@ -401,15 +363,6 @@ function setTheme(v){ localStorage.setItem('yiqi-theme', v); applyTheme(v); upda
   mq.addEventListener('change', () => { if((localStorage.getItem('yiqi-theme')||'system')==='system') applyTheme('system'); });
 })();
 
-/* Estimador (valores de ejemplo) */
-const fmt=new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0});
-const BASE=18000, PER_MOD=9000, PER_USR=2500; // ejemplo
-function est(){
-  const m=+mod.value, u=+usr.value;
-  vMod.textContent=m; vUsr.textContent=u;
-  estN.textContent=fmt.format(BASE+m*PER_MOD+u*PER_USR);
-}
-['mod','usr'].forEach(id=>document.getElementById(id).addEventListener('input',est)); est();
 
 /* Compartir — menú enriquecido */
 (function(){
@@ -482,7 +435,7 @@ function est(){
       details:[["Categoría","Proveedores"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Compras"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.9.0 (beta)"],["Actualizada","12/06/2026"]],
       imgs:[["img/apps/front-de-proveedores-ocr-horiz.webp","Captura de facturas y comprobantes con OCR"]],
       devSub:"Partner homologado · 9 apps", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar comprobantes es gratis; se cobra la operación (carga e integración)."},
-    "inventariado-mobile":{cat:"Inventario",name:"Inventariado Mobile",acc:"green",icon:"inv",prov:"iAready",rating:"4.6",count:124,state:"En desarrollo",
+    "inventariado-mobile":{cat:"Inventario",name:"Inventariado Mobile",acc:"magenta",icon:"inv",prov:"iAready",rating:"4.6",count:124,state:"En desarrollo",
       tagline:"Relevá y controlá el stock de tus depósitos desde el celular: escaneo de códigos, ajustes y sincronización en tiempo real con YiQi.",
       hl:[["Escaneo sin fricción","la cámara del celular como lector"],["Sync en tiempo real","cada conteo impacta en el stock del ERP"],["Control de diferencias","faltantes y sobrantes por depósito"]],
       desc:["Convierte cualquier celular en una terminal de relevamiento de stock: el operario escanea, cuenta y ajusta directamente en el depósito.","Los datos viajan en tiempo real a YiQi, sin planillas intermedias ni recargas manuales. Cada movimiento queda trazado por usuario y fecha."],
@@ -492,7 +445,7 @@ function est(){
       reviews:[["Distribuidora del Sur","5.0","Bajamos el inventario anual de 3 días a 1. Nos ahorró comprar lectoras."],["Importadora Pampa","4.0","Muy útil para conteos cíclicos. Sumaría conteo por lote."]],
       faq:[["¿Necesito ser cliente de YiQi?","Sí, sincroniza con tu instalación de YiQi. Si no sos cliente, pedí asesoramiento."],["¿Sirve sin internet?","El conteo queda en cola y sincroniza al recuperar señal."]],
       details:[["Categoría","Inventario"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Stock · Compras"],["Plataforma","Android · iOS"],["Idioma","Español"],["Versión","2.3.1"],["Actualizada","10/06/2026"]],
-      imgs:[["img/apps/inventariado-mobile-horiz.webp","Escaneo y control de stock desde el depósito"]],
+      imgs:[["img/apps/inventariado-mobile-horiz.webp","Control de stock en el depósito"]],
       devSub:"Partner homologado · 9 apps", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar el stock es gratis; se cobra la operación (ajustes y sincronización)."},
     "yiqi-pos":{cat:"Punto de venta",name:"YiQi POS",acc:"amber",icon:"pos",prov:"iAready",rating:"4.7",count:210,state:"Disponible",
       tagline:"Punto de venta para Windows: modo offline, multi-caja, medios de pago e impresión fiscal, integrado al ERP.",
@@ -506,7 +459,7 @@ function est(){
       details:[["Categoría","Punto de venta"],["Tipo","App de escritorio"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Ventas · Stock · Caja"],["Plataforma","Windows (MSIX)"],["Idioma","Español"],["Versión","1.15.10"],["Actualizada","11/06/2026"]],
       imgs:[["img/apps/yiqi-pos-horiz.webp","Cobro en mostrador con terminal en tiempo real"]],
       devSub:"Partner homologado", trial:"Incluido en el servicio YiQi", consulta:"Se activa con tu servicio YiQi; pedí asesoramiento para tu configuración."},
-    "picking-list":{cat:"Operaciones",name:"Picking List",acc:"magenta",icon:"pick",prov:"iAready",rating:"4.5",count:38,state:"En desarrollo",
+    "picking-list":{cat:"Operaciones",name:"Picking List",acc:"green",icon:"pick",prov:"iAready",rating:"4.5",count:38,state:"En desarrollo",
       tagline:"Listas de preparación para depósito: armá el picking de varios pedidos y controlá la salida de mercadería.",
       hl:[["Picking multi-pedido","preparás varios pedidos a la vez"],["Por ubicación","recorrido optimizado del depósito"],["Control de salida","remitos y etiquetas al despachar"]],
       desc:["Genera listas de preparación a partir de los pedidos de YiQi, agrupando por ubicación para optimizar el recorrido del depósito.","Al preparar, marca cada ítem y controla la salida con remitos y etiquetas, dejando trazada la operación."],
@@ -516,7 +469,7 @@ function est(){
       reviews:[["Logística Delta","5.0","Preparamos por ola y el recorrido por ubicación nos aceleró un montón."],["E-shop Pampa","4.0","Muy práctico. Esperamos la app mobile para el operario."]],
       faq:[["¿Puedo preparar varios pedidos juntos?","Sí, arma una lista consolidada por ubicación."],["¿Genera remito?","Sí, remito y etiquetas al confirmar la salida."]],
       details:[["Categoría","Operaciones"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Stock"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.7.0 (beta)"],["Actualizada","08/06/2026"]],
-      imgs:[["img/apps/picking-list-horiz.webp","Preparación de pedidos por ubicación en el depósito"]],
+      imgs:[["img/apps/picking-list-horiz.webp","Preparación de pedidos en el depósito"]],
       devSub:"Partner homologado", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar pedidos es gratis; se cobra la operación (preparación y despacho)."},
     "consulta-de-pedidos":{cat:"Pedidos",name:"Consulta de pedidos",acc:"blue",icon:"cons",prov:"iAready",rating:"4.4",count:52,state:"En desarrollo",
       tagline:"Búsqueda y seguimiento ágil de pedidos por estado, canal y cliente, sincronizado con YiQi en tiempo real.",
@@ -575,8 +528,6 @@ function est(){
   setSection('Reseñas', '<div class="rev-summary"><div class="rev-big">'+c.rating+'</div><div><div class="stars" style="font-size:16px">★★★★★</div><div class="rev-meta">'+c.count+' reseñas · solo de clientes que la usan</div></div></div>'+c.reviews.map(function(r){return '<div class="rev"><div class="rev-top"><b>'+r[0]+'</b><span class="rev-ver">Cliente verificado</span><span class="stars">★ '+r[1]+'</span></div><p>'+r[2]+'</p></div>';}).join(''));
   setSection('Preguntas frecuentes', c.faq.map(function(f){return '<details class="faq"><summary>'+f[0]+chev()+'</summary><p>'+f[1]+'</p></details>';}).join(''));
   // pricing: trial + nota (estimador queda igual)
-  var trial=q('.price-trial'); if(trial) trial.innerHTML='<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'+c.trial;
-  var note=q('.consulta-note span'); if(note) note.textContent=c.consulta;
   // details
   var det=document.querySelectorAll('.aside .card h4'); for(var d=0;d<det.length;d++){ if(det[d].textContent.trim()==='Detalles'){ var card=det[d].parentElement; var old=card.querySelectorAll('.meta-row'); for(var k=0;k<old.length;k++) old[k].remove(); det[d].insertAdjacentHTML('afterend', c.details.map(function(r){return '<div class="meta-row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>';}).join('')); } }
   // dev sub + prov name
