@@ -1,0 +1,78 @@
+/* apps-grid.css — Grilla "Apps del ecosistema YiQi" (compartida: marketplace + ia-ready) */
+
+/* Header de sección */
+.mkt-section { padding: 64px 24px; }
+.mkt-section-inner { max-width: 1100px; margin: 0 auto; }
+.mkt-section-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.mkt-eyebrow-sm { font: 700 9px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); display: block; margin-bottom: 6px; }
+.mkt-section-title { font: 700 22px/1.2 var(--display); letter-spacing: -.02em; color: var(--text); }
+
+/* Grid */
+.app-grid-featured { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+/* Card */
+.app-card { background: var(--bg-elev-2); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 14px rgba(0,0,0,.24); transition: box-shadow var(--tr), transform .22s ease; cursor: pointer; }
+.app-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.28), inset 0 0 0 1px rgba(0,204,255,.28); transform: translateY(-3px); }
+html[data-theme="light"] .app-card { box-shadow: 0 1px 8px rgba(0,0,0,.07); }
+
+/* Thumbnail (foto real) */
+.app-thumb { width: 100%; aspect-ratio: 14/5; position: relative; overflow: hidden; background: #060d1c; flex-shrink: 0; }
+.app-thumb .thumb-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+.app-thumb.has-photo .thumb-ico, .app-thumb.has-photo .thumb-wm { display:none; }
+
+/* Estado */
+.app-state { position:absolute; top:10px; right:10px; z-index:2; font:700 9px var(--mono); letter-spacing:.08em; text-transform:uppercase; border-radius:var(--radius-pill); padding:4px 9px; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+.app-state.live { color:var(--green); background:rgba(21,212,156,.18); }
+.app-state.dev  { color:var(--amber); background:rgba(255,176,32,.20); }
+.app-state.soon { color:var(--blue);  background:rgba(77,159,255,.20); }
+
+/* Body */
+.app-body { padding: 18px 20px 16px; flex: 1; display: flex; flex-direction: column; }
+.app-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.app-name { font: 600 15px/1.2 var(--sans); color: var(--text); flex: 1; letter-spacing: -.01em; }
+.app-category { font: 700 9px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+.app-desc { font: 400 13px/1.4 var(--sans); color: var(--muted); flex: 1; margin-bottom: 16px; }
+.app-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--line); }
+
+/* Botón "Ver app" */
+.app-install-btn { font: 600 12px var(--sans); color: var(--cyan); background: var(--cyan-soft); border-radius: var(--radius-xs); padding: 6px 14px; border: none; transition: background var(--tr); }
+.app-install-btn:hover { background: var(--cyan-soft-2); }
+
+/* Color por app — texto de categoría */
+.c-ana-txt  { color:#7c5cf0; }
+.c-prov-txt { color:#e07628; }
+.c-inv-txt  { color:#12b486; }
+.c-pos-txt  { color:#d98e00; }
+.c-pick-txt { color:#e0457f; }
+.c-cons-txt { color:#2f86f0; }
+
+/* Color por app — botón "Ver app" */
+.app-card:has(.c-ana)  .app-install-btn { color:#8b5cf6; background:rgba(139,92,246,.12); }
+.app-card:has(.c-ana)  .app-install-btn:hover { background:rgba(139,92,246,.20); }
+.app-card:has(.c-prov) .app-install-btn { color:#ff8a3d; background:rgba(255,138,61,.12); }
+.app-card:has(.c-prov) .app-install-btn:hover { background:rgba(255,138,61,.20); }
+.app-card:has(.c-inv)  .app-install-btn { color:#15d49c; background:rgba(21,212,156,.12); }
+.app-card:has(.c-inv)  .app-install-btn:hover { background:rgba(21,212,156,.20); }
+.app-card:has(.c-pos)  .app-install-btn { color:#ffb020; background:rgba(255,176,32,.12); }
+.app-card:has(.c-pos)  .app-install-btn:hover { background:rgba(255,176,32,.20); }
+.app-card:has(.c-pick) .app-install-btn { color:#ff5da2; background:rgba(255,93,162,.12); }
+.app-card:has(.c-pick) .app-install-btn:hover { background:rgba(255,93,162,.20); }
+.app-card:has(.c-cons) .app-install-btn { color:#4d9fff; background:rgba(77,159,255,.12); }
+.app-card:has(.c-cons) .app-install-btn:hover { background:rgba(77,159,255,.20); }
+.app-card:has(.c-ana)  .app-install-btn:focus-visible,
+.app-card:has(.c-prov) .app-install-btn:focus-visible,
+.app-card:has(.c-inv)  .app-install-btn:focus-visible,
+.app-card:has(.c-pos)  .app-install-btn:focus-visible,
+.app-card:has(.c-pick) .app-install-btn:focus-visible,
+.app-card:has(.c-cons) .app-install-btn:focus-visible { outline-color: currentColor; }
+
+/* Responsive */
+@media (max-width: 920px) { .app-grid-featured { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .app-grid-featured { grid-template-columns: 1fr; } }
+
+/* Bajada + chips de confianza + link al marketplace (header de sección) */
+.mkt-section-sub { font: 400 14px/1.6 var(--sans); color: var(--muted); max-width: 62ch; margin-top: 10px; }
+.apps-trust { display: flex; align-items: center; gap: 16px; margin-top: 14px; font: 500 12px var(--sans); color: var(--muted); }
+.apps-trust-item { display: inline-flex; align-items: center; gap: 6px; }
+.apps-trust-item svg { color: var(--cyan); opacity: .8; }
+.apps-trust-sep { width: 1px; height: 14px; background: var(--line-strong); }

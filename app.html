@@ -54,7 +54,7 @@ img,svg{max-width:100%}
 
 /* CTA row */
 .cta-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
-.fa-btn{height:44px;padding:0 22px;border-radius:var(--radius-sm);font:600 14px var(--sans);border:none;display:inline-flex;align-items:center;gap:8px;transition:all var(--tr)}
+.fa-btn{height:44px;padding:0 22px;border-radius:var(--radius-sm);font:600 14px var(--sans);border:none;display:inline-flex;align-items:center;gap:8px;transition:all var(--tr);text-decoration:none;cursor:pointer}
 .fa-btn-primary{background:var(--app,var(--cyan));color:var(--app-ink,#04222b);font-weight:700;box-shadow:0 1px 0 rgba(255,255,255,.18) inset}
 .fa-btn-primary:hover{filter:brightness(1.07)}
 .fa-btn-primary:active{transform:translateY(1px)}
@@ -79,9 +79,11 @@ img,svg{max-width:100%}
 .gallery::-webkit-scrollbar-thumb:hover{background:var(--muted-2)}
 .by-prov{display:inline-flex;align-items:center;gap:5px}
 .gallery>div{flex:0 0 100%;min-width:0;scroll-snap-align:start}
-.shot{width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#060e0d}
+.shot{width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;background:#060e0d}
 .shot svg{width:100%;height:100%;display:block}
 .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.app-prov-logo .yq-logo{height:22px;width:auto;display:block}
+.app-prov-logo.big .yq-logo{height:22px}
 .shot-cap{font:500 11px var(--sans);color:var(--muted-2);padding:6px 2px 0}
 
 /* Sections */
@@ -206,17 +208,17 @@ img,svg{max-width:100%}
           <h1 class="app-h1">Inventariado Mobile</h1>
           <div class="app-by">
             <span class="by-prov">por <span class="app-prov-logo"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></span></span><span class="dot"></span>
-            <span class="badge badge-homo"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Homologado por YiQi</span>
+            <span class="badge badge-homo"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Homologado</span>
             <span class="stars">★ 4.6</span><span style="color:var(--muted-2);font-size:12px">(124)</span>
           </div>
         </div>
       </div>
 
-      <p class="tagline">Relevá y controlá el stock de tus depósitos desde el celular: escaneo de códigos, ajustes de inventario y sincronización en tiempo real con YiQi ERP.</p>
+      <p class="tagline">Releva y controla el stock de tus depósitos desde el celular: escaneo de códigos, ajustes de inventario y sincronización en tiempo real con YiQi ERP.</p>
 
       <div class="cta-row">
-        <button class="fa-btn fa-btn-primary">Probar gratis</button>
-        <button class="fa-btn fa-btn-ghost">Pedir asesoramiento</button>
+        <a class="fa-btn fa-btn-primary" id="tryBtn">Probar gratis</a>
+        <a class="fa-btn fa-btn-ghost" href="mailto:comercial@yiqi.com.ar">Pedir asesoramiento</a>
         <button class="fa-btn fa-btn-icon" id="shareBtn" aria-label="Compartir o recomendar esta app" title="Compartir / recomendar">
           <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
         </button>
@@ -292,21 +294,10 @@ img,svg{max-width:100%}
         <p><strong style="color:var(--text)">SLA:</strong> respuesta a incidentes críticos dentro de 24 h hábiles. Canales: tickets, mail y centro de ayuda.</p>
       </section>
 
-      <!-- Reviews -->
-      <section class="sec">
-        <h2>Reseñas</h2>
-        <div class="rev-summary">
-          <div class="rev-big">4.6</div>
-          <div><div class="stars" style="font-size:16px">★★★★★</div><div class="rev-meta">124 reseñas · solo de clientes que la usan</div></div>
-        </div>
-        <div class="rev"><div class="rev-top"><b>Distribuidora del Sur</b><span class="rev-ver">Cliente verificado</span><span class="stars">★ 5.0</span></div><p>Bajamos el inventario anual de 3 días a 1. El escaneo con el celular nos ahorró comprar lectoras.</p></div>
-        <div class="rev"><div class="rev-top"><b>Importadora Pampa</b><span class="rev-ver">Cliente verificado</span><span class="stars">★ 4.0</span></div><p>Muy útil para conteos cíclicos. Nos gustaría que sume conteo por lote, pero el soporte respondió rápido.</p></div>
-      </section>
-
       <!-- FAQ -->
       <section class="sec">
         <h2>Preguntas frecuentes</h2>
-        <details class="faq"><summary>¿Necesito ser cliente de YiQi para usarla?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>La app sincroniza con el ERP YiQi, por eso funciona sobre tu instalación de YiQi. Si todavía no sos cliente, podés pedir asesoramiento y el equipo te arma la activación.</p></details>
+        <details class="faq"><summary>¿Necesito ser cliente de YiQi para usarla?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>La app sincroniza con el ERP YiQi, por eso funciona sobre tu instalación de YiQi. Si todavía no eres cliente, puedes pedir asesoramiento y el equipo te arma la activación.</p></details>
         <details class="faq"><summary>¿Qué pasa al terminar la prueba gratis?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>Te avisamos antes de que termine. Si seguís, se activa el abono mensual; si no, la app se da de baja sin cargo. No se pide tarjeta para probar.</p></details>
         <details class="faq"><summary>¿Quién da soporte si algo falla?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>El soporte funcional lo da iAready (el desarrollador homologado); la integración con el ERP la garantiza YiQi. El SLA de incidentes críticos es 24 h hábiles.</p></details>
         <details class="faq"><summary>¿Cómo se factura?<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></summary><p>Se suma a tu abono de YiQi: un cargo de activación (financiable en cuotas) y el abono mensual según módulos y usuarios activos. Consultar es gratis; se cobra la operación.</p></details>
@@ -331,7 +322,7 @@ img,svg{max-width:100%}
         <h4>Desarrollador</h4>
         <div class="prov">
           <span class="app-prov-logo big"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></span>
-          <div class="prov-sub">Partner homologado · 9 apps</div>
+          <div class="prov-sub">Producto propio de YiQi</div>
         </div>
         <button class="fa-btn fa-btn-icon" id="shareBtn2" style="width:100%;margin-top:14px;gap:8px" aria-label="Compartir o recomendar esta app">
           <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
@@ -411,43 +402,43 @@ function setTheme(v){ localStorage.setItem('yiqi-theme', v); applyTheme(v); upda
     cons:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'
   };
   var APPS={
-    "yiqi-analytics-pro":{cat:"Analytics",name:"YiQi Analytics Pro",acc:"violet",icon:"ana",prov:"iAready",rating:"4.8",count:86,state:"Disponible",
-      tagline:"Tablero gerencial con KPIs en tiempo real, cohortes y forecast de cashflow. Para directivos que deciden con datos.",
+    "yiqi-analytics-pro":{cat:"Analytics",name:"YiQi Analytics Pro",acc:"violet",icon:"ana",prov:"YiQi",rating:"4.8",count:86,state:"Disponible",tryUrl:"https://analytics.yiqi.com.ar/",
+      tagline:"Tablero gerencial con KPIs en tiempo real. Para directivos que deciden con datos.",
       hl:[["23 KPIs out-of-the-box","facturación, margen, conversión, stock"],["Drill-down + cohortes","del KPI al ticket sin salir del panel"],["Forecast con IA","proyección de cashflow a 90 días"]],
-      desc:["Analytics Pro unifica en una sola pantalla los indicadores de todas las áreas: ventas del día, márgenes por canal, stock crítico y cashflow proyectado.","Pensado para la toma de decisiones gerencial, permite ir del indicador al detalle (drill-down) y comparar por período, canal y cohorte."],
-      steps:["Se conecta a tu instalación de YiQi y lee los datos en tiempo real.","Elegís los KPIs y armás tableros por área o por rol.","Filtrás por período, canal y cliente, con drill-down al detalle.","Exportás o compartís la vista con tu equipo."],
-      sec:[["Acceso a datos","Lectura de ventas, stock y finanzas"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      desc:["Analytics Pro unifica en una sola pantalla los indicadores de todas las áreas: ventas del día, márgenes por canal, stock crítico y cashflow.","Pensado para la toma de decisiones gerencial, permite ir del indicador al detalle (drill-down) y comparar por período, canal y cohorte."],
+      steps:["Se conecta a tu instalación de YiQi y lee los datos en tiempo real.","Eliges las áreas de la empresa.","Puedes compartir el panel con tu equipo."],
+      sec:[["Acceso a datos","Lectura de ventas, stock y finanzas"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi"],["Permisos","Solo lectura — no modifica datos del ERP"],["Residencia de datos","No se copian ni salen de tu instalación de YiQi"],["Cifrado","TLS en tránsito · cifrado en reposo"],["Aislamiento","Multiesquema — datos aislados por cliente"],["Auditoría","Registro de accesos y consultas"]],
       support:["YiQi (producto propio).","Respuesta a incidentes críticos en 8 h hábiles."],
       reviews:[["Grupo Andina","5.0","Pasamos de planillas a decisiones en minutos. El forecast nos cambió la planificación."],["Textil Norte","4.0","Muy completo. Sumaría más plantillas de tablero por industria."]],
       faq:[["¿Necesito todos los módulos?","No. Analytics Pro lee lo que tengas activo en YiQi; cuantos más módulos, más rico el tablero."],["¿Los datos salen de YiQi?","Sí, en tiempo real desde tu instalación; no se duplican en otro lado."]],
-      details:[["Categoría","Analytics"],["Tipo","App de decisión"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Todos los módulos"],["Plataforma","Web"],["Idioma","Español"],["Versión","3.1.0"],["Actualizada","09/06/2026"]],
+      details:[["Categoría","Analytics"],["Tipo","App de decisión"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Todos los módulos"],["Plataforma","Web"],["Idioma","Español"],["Versión","3.1.0"],["Actualizada","01/07/2026"]],
       imgs:[["img/apps/yiqi-analytics-pro-horiz.webp","Tablero gerencial con KPIs en tiempo real"]],
-      devSub:"Partner homologado", trial:"Add-on · demo guiada", consulta:"Se cotiza como add-on premium; pedí una demo para ver tu caso."},
-    "front-de-proveedores-ocr":{cat:"Proveedores",name:"Front de Proveedores OCR",acc:"orange",icon:"prov",prov:"iAready",rating:"4.6",count:61,state:"En desarrollo",
+      devSub:"Producto propio de YiQi"},
+    "front-de-proveedores-ocr":{cat:"Proveedores",name:"Front de Proveedores OCR",acc:"orange",icon:"prov",prov:"YiQi",rating:"4.6",count:61,state:"En desarrollo",
       tagline:"Portal de autogestión para proveedores: carga de facturas y órdenes de compra con OCR, integrado a YiQi.",
       hl:[["Carga con OCR","factura y OC sin tipeo manual"],["Autogestión","el proveedor ve estados y comprobantes"],["Integrado a YiQi","todo cae en el módulo de Compras"]],
       desc:["Un portal web donde tus proveedores cargan facturas y órdenes de compra; el OCR extrae los datos y los deja listos en YiQi.","Reduce el ingreso manual y los errores de transcripción, y le da visibilidad al proveedor sobre el estado de sus comprobantes."],
       steps:["El proveedor ingresa al portal con su usuario.","Sube la factura u OC; el OCR reconoce los campos.","Revisa y confirma los datos detectados.","El comprobante queda en Compras de YiQi para su circuito."],
-      sec:[["Acceso a datos","Compras y proveedores (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario de proveedor"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      sec:[["Acceso a datos","Compras y proveedores (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario de proveedor"],["Alojamiento","Infraestructura YiQi"],["Residencia de datos","No se copian ni salen de tu instalación de YiQi"],["Cifrado","TLS en tránsito · cifrado en reposo"],["Aislamiento","Multiesquema — datos aislados por cliente"],["Auditoría","Registro de accesos y consultas"]],
       support:["iAready (desarrollador homologado); la integración la garantiza YiQi.","Incidentes críticos en 24 h hábiles."],
       reviews:[["Distribuidora Litoral","5.0","Los proveedores cargan solos; bajó muchísimo el trabajo de data entry."],["Mayorista Cuyo","4.0","El OCR anda muy bien. Esperamos la carga masiva."]],
       faq:[["¿El proveedor necesita ser usuario de YiQi?","No, accede a un portal aparte con su propio usuario."],["¿Qué pasa si el OCR se equivoca?","El proveedor revisa y corrige antes de confirmar; nada entra sin validar."]],
-      details:[["Categoría","Proveedores"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Compras"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.9.0 (beta)"],["Actualizada","12/06/2026"]],
+      details:[["Categoría","Proveedores"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Compras"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.9.0 (beta)"],["Actualizada","01/07/2026"]],
       imgs:[["img/apps/front-de-proveedores-ocr-horiz.webp","Captura de facturas y comprobantes con OCR"]],
-      devSub:"Partner homologado · 9 apps", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar comprobantes es gratis; se cobra la operación (carga e integración)."},
-    "inventariado-mobile":{cat:"Inventario",name:"Inventariado Mobile",acc:"magenta",icon:"inv",prov:"iAready",rating:"4.6",count:124,state:"En desarrollo",
-      tagline:"Relevá y controlá el stock de tus depósitos desde el celular: escaneo de códigos, ajustes y sincronización en tiempo real con YiQi.",
+      devSub:"Producto propio de YiQi"},
+    "inventariado-mobile":{cat:"Inventario",name:"Inventariado Mobile",acc:"magenta",icon:"inv",prov:"YiQi",rating:"4.6",count:124,state:"En desarrollo",
+      tagline:"Releva y controla el stock de tus depósitos desde el celular: escaneo de códigos, ajustes y sincronización en tiempo real con YiQi.",
       hl:[["Escaneo sin fricción","la cámara del celular como lector"],["Sync en tiempo real","cada conteo impacta en el stock del ERP"],["Control de diferencias","faltantes y sobrantes por depósito"]],
       desc:["Convierte cualquier celular en una terminal de relevamiento de stock: el operario escanea, cuenta y ajusta directamente en el depósito.","Los datos viajan en tiempo real a YiQi, sin planillas intermedias ni recargas manuales. Cada movimiento queda trazado por usuario y fecha."],
       steps:["El operario inicia sesión con su usuario de YiQi y elige el depósito.","Escanea el código de cada producto e ingresa la cantidad.","El sistema compara contra el stock teórico y marca diferencias.","Al confirmar, los ajustes impactan en el ERP y quedan auditados."],
-      sec:[["Acceso a datos","Stock y productos (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      sec:[["Acceso a datos","Stock y productos (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi"],["Residencia de datos","No se copian ni salen de tu instalación de YiQi"],["Cifrado","TLS en tránsito · cifrado en reposo"],["Aislamiento","Multiesquema — datos aislados por cliente"],["Auditoría","Registro de accesos y consultas"]],
       support:["iAready (desarrollador homologado); la integración la garantiza YiQi.","Incidentes críticos en 24 h hábiles."],
       reviews:[["Distribuidora del Sur","5.0","Bajamos el inventario anual de 3 días a 1. Nos ahorró comprar lectoras."],["Importadora Pampa","4.0","Muy útil para conteos cíclicos. Sumaría conteo por lote."]],
-      faq:[["¿Necesito ser cliente de YiQi?","Sí, sincroniza con tu instalación de YiQi. Si no sos cliente, pedí asesoramiento."],["¿Sirve sin internet?","El conteo queda en cola y sincroniza al recuperar señal."]],
-      details:[["Categoría","Inventario"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Stock · Compras"],["Plataforma","Android · iOS"],["Idioma","Español"],["Versión","2.3.1"],["Actualizada","10/06/2026"]],
+      faq:[["¿Necesito ser cliente de YiQi?","Sí, sincroniza con tu instalación de YiQi. Si no eres cliente, pide asesoramiento."],["¿Sirve sin internet?","El conteo queda en cola y sincroniza al recuperar señal."]],
+      details:[["Categoría","Inventario"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Stock · Compras"],["Plataforma","Android · iOS"],["Idioma","Español"],["Versión","2.3.1"],["Actualizada","01/07/2026"]],
       imgs:[["img/apps/inventariado-mobile-horiz.webp","Control de stock en el depósito"]],
-      devSub:"Partner homologado · 9 apps", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar el stock es gratis; se cobra la operación (ajustes y sincronización)."},
-    "yiqi-pos":{cat:"Punto de venta",name:"YiQi POS",acc:"amber",icon:"pos",prov:"iAready",rating:"4.7",count:210,state:"Disponible",
+      devSub:"Producto propio de YiQi"},
+    "yiqi-pos":{cat:"Punto de venta",name:"YiQi POS",acc:"amber",icon:"pos",prov:"YiQi",rating:"4.7",count:210,state:"Disponible",
       tagline:"Punto de venta para Windows: modo offline, multi-caja, medios de pago e impresión fiscal, integrado al ERP.",
       hl:[["Funciona offline","vendés aunque se caiga internet"],["Multi-caja y turnos","cierres y arqueos por caja"],["Impresión fiscal","Epson y Hasar integradas"]],
       desc:["El punto de venta de YiQi para mostrador: rápido, con modo offline y sincronización automática cuando vuelve la conexión.","Soporta múltiples cajas, turnos, medios de pago, descuentos y promociones, con facturación electrónica y fiscal integrada."],
@@ -456,33 +447,33 @@ function setTheme(v){ localStorage.setItem('yiqi-theme', v); applyTheme(v); upda
       support:["YiQi (producto propio). Documentación y tutoriales en el centro de ayuda.","Incidentes críticos en 8 h hábiles."],
       reviews:[["Indumentaria Sur","5.0","El modo offline nos salvó más de una vez. Cierres clarísimos."],["Kiosco Central","4.0","Muy rápido. La instalación del certificado podría ser más simple."]],
       faq:[["¿Anda sin internet?","Sí, vende offline y sincroniza al recuperar conexión."],["¿Qué impresoras soporta?","Fiscales Epson y Hasar, además de comandas térmicas."]],
-      details:[["Categoría","Punto de venta"],["Tipo","App de escritorio"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Ventas · Stock · Caja"],["Plataforma","Windows (MSIX)"],["Idioma","Español"],["Versión","1.15.10"],["Actualizada","11/06/2026"]],
+      details:[["Categoría","Punto de venta"],["Tipo","App de escritorio"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Ventas · Stock · Caja"],["Plataforma","Windows (MSIX)"],["Idioma","Español"],["Versión","1.15.10"],["Actualizada","01/07/2026"]],
       imgs:[["img/apps/yiqi-pos-horiz.webp","Cobro en mostrador con terminal en tiempo real"]],
-      devSub:"Partner homologado", trial:"Incluido en el servicio YiQi", consulta:"Se activa con tu servicio YiQi; pedí asesoramiento para tu configuración."},
-    "picking-list":{cat:"Operaciones",name:"Picking List",acc:"green",icon:"pick",prov:"iAready",rating:"4.5",count:38,state:"En desarrollo",
-      tagline:"Listas de preparación para depósito: armá el picking de varios pedidos y controlá la salida de mercadería.",
+      devSub:"Producto propio de YiQi"},
+    "picking-list":{cat:"Operaciones",name:"Picking List",acc:"green",icon:"pick",prov:"YiQi",rating:"4.5",count:38,state:"En desarrollo",
+      tagline:"Listas de preparación para depósito: arma el picking de varios pedidos y controla la salida de mercadería.",
       hl:[["Picking multi-pedido","preparás varios pedidos a la vez"],["Por ubicación","recorrido optimizado del depósito"],["Control de salida","remitos y etiquetas al despachar"]],
       desc:["Genera listas de preparación a partir de los pedidos de YiQi, agrupando por ubicación para optimizar el recorrido del depósito.","Al preparar, marca cada ítem y controla la salida con remitos y etiquetas, dejando trazada la operación."],
       steps:["Seleccionás los pedidos a preparar.","El sistema arma la lista por ubicación.","El operario marca cada ítem al pickearlo.","Se generan remito y etiquetas para el despacho."],
-      sec:[["Acceso a datos","Pedidos y stock (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      sec:[["Acceso a datos","Pedidos y stock (lectura/escritura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi"],["Residencia de datos","No se copian ni salen de tu instalación de YiQi"],["Cifrado","TLS en tránsito · cifrado en reposo"],["Aislamiento","Multiesquema — datos aislados por cliente"],["Auditoría","Registro de accesos y consultas"]],
       support:["YiQi (producto propio). Integración garantizada con el ERP.","Incidentes críticos en 24 h hábiles."],
       reviews:[["Logística Delta","5.0","Preparamos por ola y el recorrido por ubicación nos aceleró un montón."],["E-shop Pampa","4.0","Muy práctico. Esperamos la app mobile para el operario."]],
       faq:[["¿Puedo preparar varios pedidos juntos?","Sí, arma una lista consolidada por ubicación."],["¿Genera remito?","Sí, remito y etiquetas al confirmar la salida."]],
-      details:[["Categoría","Operaciones"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Stock"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.7.0 (beta)"],["Actualizada","08/06/2026"]],
+      details:[["Categoría","Operaciones"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Stock"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.7.0 (beta)"],["Actualizada","01/07/2026"]],
       imgs:[["img/apps/picking-list-horiz.webp","Preparación de pedidos en el depósito"]],
-      devSub:"Partner homologado", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"Consultar pedidos es gratis; se cobra la operación (preparación y despacho)."},
-    "consulta-de-pedidos":{cat:"Pedidos",name:"Consulta de pedidos",acc:"blue",icon:"cons",prov:"iAready",rating:"4.4",count:52,state:"En desarrollo",
+      devSub:"Producto propio de YiQi"},
+    "consulta-de-pedidos":{cat:"Pedidos",name:"Consulta de pedidos",acc:"blue",icon:"cons",prov:"YiQi",rating:"4.4",count:52,state:"En desarrollo",
       tagline:"Búsqueda y seguimiento ágil de pedidos por estado, canal y cliente, sincronizado con YiQi en tiempo real.",
       hl:[["Búsqueda al instante","por estado, canal o cliente"],["Seguimiento en vivo","del pedido a la entrega"],["Sincronizado","datos reales de YiQi"]],
       desc:["Una vista rápida para encontrar y seguir pedidos: filtrás por estado, canal y cliente y ves el detalle al instante.","Pensada para atención y ventas, evita entrar a buscar pedido por pedido en el ERP."],
       steps:["Buscás por número, cliente o canal.","Filtrás por estado (preparado, pendiente, entregado).","Abrís el detalle del pedido y su trazabilidad.","Compartís el estado con el cliente."],
-      sec:[["Acceso a datos","Pedidos y clientes (lectura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi (Argentina)"]],
+      sec:[["Acceso a datos","Pedidos y clientes (lectura)"],["Autenticación","OAuth 2.0 · usuario YiQi"],["Alojamiento","Infraestructura YiQi"],["Residencia de datos","No se copian ni salen de tu instalación de YiQi"],["Cifrado","TLS en tránsito · cifrado en reposo"],["Aislamiento","Multiesquema — datos aislados por cliente"],["Auditoría","Registro de accesos y consultas"]],
       support:["YiQi (producto propio).","Incidentes críticos en 24 h hábiles."],
       reviews:[["Atención Norte","5.0","Respondemos al cliente sin entrar al ERP. Rapidísimo."],["Ventas Online","4.0","Muy útil. Sumaría exportar la búsqueda."]],
       faq:[["¿Modifica pedidos?","No, es de consulta y seguimiento; los cambios se hacen en YiQi."],["¿Filtra por canal?","Sí, por estado, canal y cliente."]],
-      details:[["Categoría","Pedidos"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Clientes"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.6.0 (beta)"],["Actualizada","07/06/2026"]],
+      details:[["Categoría","Pedidos"],["Tipo","App operativa"],["Compatible con","YiQi ERP v1.9+"],["Integraciones","Pedidos · Clientes"],["Plataforma","Web"],["Idioma","Español"],["Versión","0.6.0 (beta)"],["Actualizada","01/07/2026"]],
       imgs:[["img/apps/consulta-de-pedidos-horiz.webp","Atención y seguimiento de pedidos en tiempo real"]],
-      devSub:"Partner homologado", trial:"Prueba gratis 30 días · sin tarjeta", consulta:"La consulta es gratis; se cobra según el plan del servicio."}
+      devSub:"Producto propio de YiQi"}
   };
 
   function q(s){return document.querySelector(s);}
@@ -500,16 +491,27 @@ function setTheme(v){ localStorage.setItem('yiqi-theme', v); applyTheme(v); upda
   document.documentElement.style.setProperty('--app-ink', '#ffffff');
   document.title=c.name+' — Ficha de app · YiQi Marketplace';
 
+  // origen de navegación: volver a donde vino (ia-ready o marketplace)
+  var fromIa = /ia-ready\.html/.test(document.referrer||'');
+  var backHref = fromIa ? 'ia-ready.html#apps' : 'marketplace.html';
+  var backRoot = fromIa ? 'iAready' : 'Marketplace';
+  var back=q('.fa-back');
+  if(back){ back.setAttribute('href', backHref);
+    var bsvg=back.querySelector('svg');
+    back.textContent=''; if(bsvg) back.appendChild(bsvg);
+    back.appendChild(document.createTextNode(fromIa ? 'Volver a iAready' : 'Volver al catálogo')); }
   // breadcrumb
-  var crumb=q('.crumb'); if(crumb) crumb.innerHTML='<a href="marketplace.html">Marketplace</a> › <a href="marketplace.html">'+c.cat+'</a> › <span>'+c.name+'</span>';
+  var crumb=q('.crumb'); if(crumb) crumb.innerHTML='<a href="'+backHref+'">'+backRoot+'</a> › <a href="'+backHref+'">'+c.cat+'</a> › <span>'+c.name+'</span>';
   // icon, cat, name
   if(q('.app-icon')) q('.app-icon').innerHTML=ico(g);
   if(q('.app-cat')) q('.app-cat').textContent=c.cat;
   if(q('.app-h1')) q('.app-h1').textContent=c.name;
   // by-line
   var IA='<svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg>';
-  var provHTML = (c.prov==='iAready') ? '<a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready">'+IA+'</a>' : '<strong style="color:var(--text)">'+c.prov+'</strong>';
-  var by=q('.app-by'); if(by) by.innerHTML='<span>por '+provHTML+'</span><span class="dot"></span><span class="badge badge-homo"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Homologado por YiQi</span><span class="stars">★ '+c.rating+'</span><span style="color:var(--muted-2);font-size:12px">('+c.count+')</span>';
+  var YQ='<svg class="yq-logo" aria-hidden="true" viewBox="11 13 78 40" xmlns="http://www.w3.org/2000/svg"><path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/><path class="yql" d="M38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/><path class="yql" d="M77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/><path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/><path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/></svg>';
+  var provHTML = (c.prov==='iAready') ? '<a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready">'+IA+'</a>' : (c.prov==='YiQi') ? '<a href="./" class="app-prov-logo" aria-label="por YiQi">'+YQ+'</a>' : '<strong style="color:var(--text)">'+c.prov+'</strong>';
+  var by=q('.app-by'); if(by) by.innerHTML='<span>por '+provHTML+'</span><span class="dot"></span><span class="badge badge-homo"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Homologado</span><span class="stars">★★★★</span>';
+  var tb=document.getElementById('tryBtn'); if(tb&&c.tryUrl){ tb.setAttribute('href',c.tryUrl); tb.setAttribute('target','_blank'); tb.setAttribute('rel','noopener'); }
   if(q('.tagline')) q('.tagline').textContent=c.tagline;
   // trust row
   var tr=q('.trust-row'); if(tr) tr.innerHTML='<span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Homologado</span><span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/></svg>Soporte por '+c.prov+'</span><span class="trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Compatible con YiQi ERP</span>';
@@ -525,14 +527,13 @@ function setTheme(v){ localStorage.setItem('yiqi-theme', v); applyTheme(v); upda
   setSection('Cómo funciona', c.steps.map(function(s){return '<div class="feat">'+check()+'<span>'+s+'</span></div>';}).join(''));
   setSection('Seguridad', '<div class="sec-sec"><div class="seal"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg><b>Homologada por YiQi</b></div><dl class="kv"><dt>Estado de homologación</dt><dd style="color:var(--green)">Aprobada</dd>'+c.sec.map(function(kv){return '<dt>'+kv[0]+'</dt><dd>'+kv[1]+'</dd>';}).join('')+'</dl></div>');
   setSection('Soporte', '<p><strong style="color:var(--text)">Responsable:</strong> '+c.support[0]+'</p><p><strong style="color:var(--text)">SLA:</strong> '+c.support[1]+'</p>');
-  setSection('Reseñas', '<div class="rev-summary"><div class="rev-big">'+c.rating+'</div><div><div class="stars" style="font-size:16px">★★★★★</div><div class="rev-meta">'+c.count+' reseñas · solo de clientes que la usan</div></div></div>'+c.reviews.map(function(r){return '<div class="rev"><div class="rev-top"><b>'+r[0]+'</b><span class="rev-ver">Cliente verificado</span><span class="stars">★ '+r[1]+'</span></div><p>'+r[2]+'</p></div>';}).join(''));
   setSection('Preguntas frecuentes', c.faq.map(function(f){return '<details class="faq"><summary>'+f[0]+chev()+'</summary><p>'+f[1]+'</p></details>';}).join(''));
   // pricing: trial + nota (estimador queda igual)
   // details
   var det=document.querySelectorAll('.aside .card h4'); for(var d=0;d<det.length;d++){ if(det[d].textContent.trim()==='Detalles'){ var card=det[d].parentElement; var old=card.querySelectorAll('.meta-row'); for(var k=0;k<old.length;k++) old[k].remove(); det[d].insertAdjacentHTML('afterend', c.details.map(function(r){return '<div class="meta-row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>';}).join('')); } }
   // dev sub + prov name
   var prov=q('.prov');
-  if(prov){ var dlogo=(c.prov==='iAready') ? '<a href="ia-ready.html" class="app-prov-logo big" aria-label="iAready">'+IA+'</a>' : '<span style="font:800 17px var(--display);color:var(--text)">YiQi</span>'; prov.innerHTML = dlogo + '<div class="prov-sub">'+c.devSub+'</div>'; }
+  if(prov){ var dlogo=(c.prov==='iAready') ? '<a href="ia-ready.html" class="app-prov-logo big" aria-label="iAready">'+IA+'</a>' : (c.prov==='YiQi') ? '<a href="./" class="app-prov-logo big" aria-label="YiQi">'+YQ+'</a>' : '<span style="font:800 17px var(--display);color:var(--text)">'+c.prov+'</span>'; prov.innerHTML = dlogo + '<div class="prov-sub">'+c.devSub+'</div>'; }
 })();
 </script>
 </body>
