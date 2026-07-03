@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./site.css">
+  <link rel="stylesheet" href="./apps-grid.css">
   <script src="./components/site-header.js" defer></script>
   <script src="./components/site-footer.js" defer></script>
-  <script src="https://diguardia.github.io/yiqi-imagen/components/analytics-pro-banner.js" defer></script>
   <style>
 [data-theme="light"] {
     --bg:          #f5f4f0;
@@ -63,7 +63,8 @@
   .page-wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
 
   /* ── HERO ── */
-  .hero { padding: 96px 0 72px; text-align: center; }
+  .hero { padding: 96px 24px 72px; text-align: center; }
+  .hero-inner { max-width: 720px; margin: 0 auto; }
   .hero-ia-logo {
     display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
     margin-bottom: 32px;
@@ -120,58 +121,32 @@
   /* ── QUÉ ES ── */
   .what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
   .what-visual {
-    border-radius: var(--radius-xl); background: var(--bg-elev);
-    box-shadow: var(--shadow-md); padding: 32px;
-    display: flex; flex-direction: column; gap: 12px;
+    background: transparent; box-shadow: none; padding: 0;
+    display: flex; flex-direction: column; gap: 0;
   }
   .what-visual-row {
     display: flex; align-items: center; gap: 12px;
-    padding: 14px 16px; border-radius: var(--radius);
-    background: var(--bg-elev-2);
+    padding: 12px 2px; border-bottom: 1px solid var(--line);
   }
-  a.what-visual-row { text-decoration: none; color: inherit; cursor: pointer;
-    transition: background .16s ease, box-shadow .16s ease, transform .16s ease; }
-  a.what-visual-row:hover { background: var(--bg-soft);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cyan) 30%, transparent);
-    transform: translateY(-1px); }
-  a.what-visual-row:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 28%, transparent); }
+  .what-visual-row:last-child { border-bottom: none; }
+  a.what-visual-row { text-decoration: none; color: inherit; cursor: pointer; transition: color .16s ease; }
+  a.what-visual-row:hover .what-visual-label { color: var(--cyan); }
+  a.what-visual-row:focus-visible { outline: none; border-radius: var(--radius-sm); box-shadow: 0 0 0 2px color-mix(in srgb, var(--cyan) 26%, transparent); }
   .what-visual-icon {
-    width: 32px; height: 32px; border-radius: var(--radius-sm);
-    background: var(--cyan-soft);
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 26px; height: 26px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan); opacity: .85;
   }
   .what-visual-icon svg { color: var(--cyan); }
-  .what-visual-label { font: 500 13px var(--sans); color: var(--text); }
+  .what-visual-label { font: 500 13px var(--sans); color: var(--text); transition: color .16s ease; }
   .what-visual-badge {
-    margin-left: auto; font: 600 10px var(--mono); letter-spacing: .06em;
-    color: var(--cyan); background: var(--cyan-soft);
-    padding: 3px 8px; border-radius: var(--radius-pill); white-space: nowrap;
+    margin-left: auto; font: 500 11px var(--mono); letter-spacing: .04em;
+    color: var(--muted-2); white-space: nowrap;
   }
-  .what-visual-badge.green { color: var(--green); background: var(--green-soft); }
+  .what-visual-badge.green { color: var(--green); }
   @media (max-width: 768px) { .what-grid { grid-template-columns: 1fr; } }
 
   /* ── FEATURES ── */
-  .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; }
-  .feature-card {
-    background: var(--bg-elev); border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm); padding: 28px; border: none; transition: box-shadow var(--tr);
-  }
-  .feature-card:hover { box-shadow: 0 0 0 1px var(--cyan-soft) inset, var(--shadow-md); }
-  .feature-icon {
-    width: 40px; height: 40px; border-radius: var(--radius);
-    background: var(--cyan-soft);
-    display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
-  }
-  .feature-icon svg { color: var(--cyan); }
-  .feature-title { font: 600 16px var(--sans); color: var(--text); margin-bottom: 8px; }
-  .feature-desc { font: 400 14px/1.6 var(--sans); color: var(--muted); }
-  .feature-tag {
-    display: inline-block; margin-top: 14px;
-    font: 600 10px var(--mono); letter-spacing: .06em;
-    color: var(--cyan); background: var(--cyan-soft);
-    padding: 3px 8px; border-radius: var(--radius-pill);
-  }
-  @media (max-width: 640px) { .features-grid { grid-template-columns: 1fr; } }
 
   /* ── 3 FORMAS ── */
   .ways-section { padding: 80px 0; border-top: 1px solid var(--line); }
@@ -218,11 +193,11 @@
     .page-wrap { padding: 0 20px; }
 
     /* Hero */
-    .hero { padding: 40px 0 36px; text-align: left; }
-    .hero-headline { font-size: 36px; margin-left: 0; margin-right: 0; }
-    .hero-sub { font-size: 15px; margin: 0 0 28px; max-width: 100%; }
-    .hero-actions { justify-content: flex-start; }
-    .hero-ia-logo { margin-bottom: 24px; align-items: flex-start; }
+    .hero { padding: 64px 20px 48px; text-align: center; }
+    .hero-headline { font-size: 34px; margin-left: 0; margin-right: 0; }
+    .hero-sub { font-size: 15px; margin: 0 auto 28px; max-width: 100%; }
+    .hero-actions { justify-content: center; }
+    .hero-ia-logo { margin-bottom: 20px; align-items: center; }
 
     /* Stats */
     .stats-strip { margin: 40px 0; }
@@ -239,15 +214,12 @@
     .integrations-logos { justify-content: flex-start; margin-top: 28px; }
 
     /* Features */
-    .features-grid { margin-top: 32px; gap: 12px; }
-    .feature-card { padding: 20px; }
 
     /* Ways */
     .ways-grid { margin-top: 32px; gap: 12px; }
     .way-card { padding: 20px; }
 
     /* What */
-    .what-visual { padding: 18px; }
     .what-visual-row { flex-wrap: wrap; gap: 6px 8px; }
     .what-visual-badge { margin-left: 0; }
 
@@ -264,6 +236,33 @@
     .section-title { font-size: 24px; }
   }
   
+
+  /* ── Encabezado de carril (developers) ── */
+  .lane-head { padding: 40px 0 4px; margin-top: 12px; text-align: center; }
+  .lane-tag { font: 700 9px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted-2); }
+  .lane-title { font: 800 30px/1.1 var(--display); letter-spacing: -.025em; color: var(--text); margin-top: 8px; }
+  @media (max-width: 768px) { .lane-title { font-size: 26px; } }
+
+  /* ── Grupo de apps: banda sutil (misma paleta, apenas elevada) ── */
+  #apps { border-radius: var(--radius-xl); background: var(--bg-elev); }
+
+  /* ── Encabezado del grupo de apps: centrado y más grande (hero "Para tu empresa") ── */
+  #apps .mkt-section-header { flex-direction: column; align-items: center; text-align: center; gap: 0; margin-bottom: 34px; }
+  #apps .mkt-section-header > div { max-width: 720px; }
+  #apps .mkt-section-title { font-size: 38px; line-height: 1.08; margin-top: 4px; }
+  #apps .mkt-section-sub { margin-left: auto; margin-right: auto; }
+  #apps .apps-trust { justify-content: center; margin-top: 24px; }
+  @media (max-width: 640px) { #apps .mkt-section-title { font-size: 28px; } }
+
+  /* ── Motion: reveal on-scroll (gate .anim; off en prefers-reduced-motion) ── */
+  @keyframes rvUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform:none; } }
+  @keyframes rvFade { from { opacity:0; } to { opacity:1; } }
+  .anim .hero-inner > *, .anim .stat-cell, .anim .mkt-section-header, .anim .lane-head,
+  .anim .what-grid > *, .anim .way-card, .anim .int-pill, .anim .conv-box, .anim .app-card { opacity: 0; }
+  .anim .hero-inner > *.in, .anim .stat-cell.in, .anim .mkt-section-header.in, .anim .lane-head.in,
+  .anim .what-grid > *.in, .anim .way-card.in, .anim .int-pill.in, .anim .conv-box.in { animation: rvUp .6s cubic-bezier(.22,.61,.36,1) both; }
+  .anim .app-card.in { animation: rvFade .55s ease both; }
+
 </style>
 
   <link rel="preload" href="./system/fonts/Greycliff-CF-Heavy.otf" as="font" type="font/otf" crossorigin>
@@ -271,16 +270,17 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <script>try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("anim");}catch(e){}</script>
 </head>
 <body>
 
 <site-header base="./" current-page="ia-ready"></site-header>
 
 <main>
-<div class="page-wrap">
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-inner">
     <div class="hero-ia-logo">
       <svg viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path class="ia-letters" d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z"/>
@@ -300,12 +300,123 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
         Cargar mi caso
       </button>
-      <a href="api-docs.html" class="btn btn-ghost">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        Ver documentación API
+      <a href="#apps" class="btn btn-ghost">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Ver las apps
       </a>
     </div>
+    </div>
   </section>
+
+<div class="page-wrap">
+
+
+<!-- ══ APPS DEL ECOSISTEMA (merge desde marketplace) ══ -->
+<section class="mkt-section" id="apps" style="padding-top:48px;">
+  <div class="mkt-section-inner">
+    <div class="mkt-section-header">
+      <div>
+        <span class="mkt-eyebrow-sm">Para tu empresa</span>
+        <h2 class="mkt-section-title">Extiende tu negocio con apps homologadas</h2>
+        <p class="mkt-section-sub">Conecta YiQi ERP con soluciones especializadas. Analytics, proveedores, inventario y más — construidas por partners homologados sobre la plataforma abierta de YiQi.</p>
+        <div class="apps-trust">
+          <span class="apps-trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Homologadas</span>
+          <span class="apps-trust-sep"></span>
+          <span class="apps-trust-item"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Integradas al ERP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ratings e instalaciones de las cards son datos de demostración -->
+    <div class="app-grid-featured">
+
+      <div class="app-card" role="link" tabindex="0" data-href="app.html?id=yiqi-analytics-pro" aria-label="Ver YiQi Analytics Pro">
+        <div class="app-thumb c-ana has-photo"><img class="thumb-photo" src="img/apps/yiqi-analytics-pro-horiz.webp" alt="" loading="lazy"><span class="app-state live">Disponible</span><svg class="thumb-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><polyline points="7 13 11 9 14 12 20 6"/></svg><span class="thumb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><polyline points="7 13 11 9 14 12 20 6"/></svg></span></div>
+        <div class="app-body">
+          <div class="app-category c-ana-txt">Analytics</div>
+          <div class="app-meta"><h3 class="app-name">YiQi Analytics Pro</h3></div>
+          <div class="app-desc">Tablero gerencial con KPIs en tiempo real con IA: ventas, stock, finanzas, canales y márgenes en una sola vista.</div>
+          <div class="app-footer">
+            <span class="app-install-btn">Ver app</span>
+            <a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-card" role="link" tabindex="0" data-href="app.html?id=front-de-proveedores-ocr" aria-label="Ver Front de Proveedores OCR">
+        <div class="app-thumb c-prov has-photo"><img class="thumb-photo" src="img/apps/front-de-proveedores-ocr-horiz.webp" alt="" loading="lazy"><span class="app-state dev">En desarrollo</span><svg class="thumb-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg><span class="thumb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg></span></div>
+        <div class="app-body">
+          <div class="app-category c-prov-txt">Proveedores</div>
+          <div class="app-meta"><h3 class="app-name">Front de Proveedores OCR</h3></div>
+          <div class="app-desc">Portal de autogestión para proveedores: carga de facturas y órdenes de compra con OCR, integrado a YiQi.</div>
+          <div class="app-footer">
+            <span class="app-install-btn">Ver app</span>
+            <a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-card" role="link" tabindex="0" data-href="app.html?id=inventariado-mobile" aria-label="Ver Inventariado Mobile">
+        <div class="app-thumb c-pick has-photo"><img class="thumb-photo" src="img/apps/inventariado-mobile-horiz.webp" alt="" loading="lazy"><span class="app-state dev">En desarrollo</span><svg class="thumb-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/><path d="M12 13l2 2 4-4"/></svg><span class="thumb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/><path d="M12 13l2 2 4-4"/></svg></span></div>
+        <div class="app-body">
+          <div class="app-category c-pick-txt">Inventario</div>
+          <div class="app-meta"><h3 class="app-name">Inventariado Mobile</h3></div>
+          <div class="app-desc">Relevamiento y control de stock desde el celular: escaneo de códigos y sincronización en tiempo real con YiQi.</div>
+          <div class="app-footer">
+            <span class="app-install-btn">Ver app</span>
+            <a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-card" role="link" tabindex="0" data-href="app.html?id=yiqi-pos" aria-label="Ver YiQi POS">
+        <div class="app-thumb c-pos has-photo"><img class="thumb-photo" src="img/apps/yiqi-pos-horiz.webp" alt="" loading="lazy"><span class="app-state live">Disponible</span><svg class="thumb-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg><span class="thumb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></span></div>
+        <div class="app-body">
+          <div class="app-category c-pos-txt">Punto de venta</div>
+          <div class="app-meta"><h3 class="app-name">YiQi POS</h3></div>
+          <div class="app-desc">Punto de venta para Windows: modo offline, multi-caja, medios de pago e impresión fiscal, integrado al ERP.</div>
+          <div class="app-footer">
+            <span class="app-install-btn">Ver app</span>
+            <a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-card" role="link" tabindex="0" data-href="app.html?id=picking-list" aria-label="Ver Picking List">
+        <div class="app-thumb c-inv has-photo"><img class="thumb-photo" src="img/apps/picking-list-horiz.webp" alt="" loading="lazy"><span class="app-state dev">En desarrollo</span><svg class="thumb-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M8.5 13.5l2 2 4-4"/></svg><span class="thumb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M8.5 13.5l2 2 4-4"/></svg></span></div>
+        <div class="app-body">
+          <div class="app-category c-inv-txt">Operaciones</div>
+          <div class="app-meta"><h3 class="app-name">Picking List</h3></div>
+          <div class="app-desc">Listas de preparación para depósito: arma el picking de varios pedidos y controla la salida de mercadería.</div>
+          <div class="app-footer">
+            <span class="app-install-btn">Ver app</span>
+            <a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-card" role="link" tabindex="0" data-href="app.html?id=consulta-de-pedidos" aria-label="Ver Consulta de pedidos">
+        <div class="app-thumb c-cons has-photo"><img class="thumb-photo" src="img/apps/consulta-de-pedidos-horiz.webp" alt="" loading="lazy"><span class="app-state dev">En desarrollo</span><svg class="thumb-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="thumb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span></div>
+        <div class="app-body">
+          <div class="app-category c-cons-txt">Pedidos</div>
+          <div class="app-meta"><h3 class="app-name">Consulta de pedidos</h3></div>
+          <div class="app-desc">Búsqueda y seguimiento ágil de pedidos por estado, canal y cliente, sincronizado con YiQi en tiempo real.</div>
+          <div class="app-footer">
+            <span class="app-install-btn">Ver app</span>
+            <a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready"><svg class="ia-logo" aria-hidden="true" viewBox="0 0 256 68" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M225.626 67.89C224.75 67.89 224.239 67.452 224.677 66.576L229.933 54.02L216.063 19.491C215.771 18.688 216.209 18.25 217.012 18.25H227.159C227.743 18.25 228.327 18.542 228.546 19.126L235.846 39.712L243.219 19.126C243.438 18.542 244.022 18.25 244.606 18.25H254.753C255.556 18.25 255.921 18.688 255.629 19.491L236.722 67.014C236.503 67.598 235.919 67.89 235.335 67.89H225.626Z" fill="currentColor"/> <path d="M190.294 54.896C180.439 54.896 173.65 46.7199 173.65 36.1349C173.65 25.6229 180.439 17.3739 190.294 17.3739C194.747 17.3739 197.886 18.688 200.222 21.243V2.99295C200.222 2.33595 200.733 1.82495 201.39 1.82495H211.391C212.048 1.82495 212.559 2.33595 212.559 2.99295V52.852C212.559 53.509 211.975 54.02 211.318 54.02H202.339C201.682 54.02 201.171 53.509 201.171 52.852L201.025 49.8589C198.616 52.9979 195.185 54.896 190.294 54.896ZM185.622 36.1349C185.622 40.8069 188.834 43.7999 193.068 43.7999C197.375 43.7999 200.368 40.734 200.368 36.062C200.368 31.463 197.375 28.4699 193.068 28.4699C188.834 28.4699 185.622 31.5359 185.622 36.1349Z" fill="currentColor"/> <path d="M147.515 54.896C137.66 54.896 130.871 46.72 130.871 36.135C130.871 25.623 137.66 17.374 147.515 17.374C152.552 17.374 155.983 19.199 158.246 22.338L158.392 19.418C158.392 18.761 158.903 18.25 159.56 18.25H168.612C169.269 18.25 169.78 18.761 169.78 19.418V52.852C169.78 53.509 169.196 54.02 168.539 54.02H159.56C158.903 54.02 158.392 53.509 158.392 52.852L158.246 49.859C155.837 52.998 152.406 54.896 147.515 54.896ZM142.843 36.135C142.843 40.807 146.055 43.8 150.289 43.8C154.596 43.8 157.589 40.734 157.589 36.062C157.589 31.463 154.596 28.47 150.289 28.47C146.055 28.47 142.843 31.536 142.843 36.135Z" fill="currentColor"/> <path d="M112.868 54.896C101.115 54.896 93.0117 47.012 93.0117 35.989C93.0117 25.477 100.385 17.374 111.554 17.374C122.504 17.374 128.855 25.331 128.855 34.529C128.855 38.398 127.906 40.807 124.329 40.807H104.984C106.298 44.092 109.437 45.333 113.89 45.333C115.934 45.333 118.27 45.26 121.263 43.654C121.847 43.362 122.212 43.508 122.577 44.092L125.935 48.764C126.227 49.202 126.3 49.786 125.57 50.443C122.577 53.509 117.978 54.896 112.868 54.896ZM104.765 32.412H117.978C117.248 28.616 114.62 27.375 111.627 27.375C108.488 27.375 105.714 28.762 104.765 32.412Z" fill="currentColor"/> <path d="M69.2676 54.02C68.6106 54.02 68.0996 53.509 68.0996 52.852V19.418C68.0996 18.761 68.6106 18.25 69.2676 18.25H78.9036C79.4876 18.25 79.9256 18.542 79.9986 19.491L80.3636 24.309C81.5316 20.294 83.7216 17.374 87.8096 17.374C89.6346 17.374 90.5836 17.885 91.0946 18.323C91.6786 18.761 91.8246 19.272 91.8246 19.929V28.032C91.8246 28.908 91.3136 29.2 90.2916 28.981C89.5616 28.762 88.8316 28.616 87.5906 28.616C83.2836 28.616 80.3636 30.879 80.3636 36.427V52.852C80.3636 53.509 79.8526 54.02 79.1956 54.02H69.2676Z" fill="currentColor"/> <path d="M17.7429 54.0199C16.9399 54.0199 16.5019 53.5089 16.7939 52.7789L33.5839 3.79593C33.8029 3.21192 34.3869 2.91992 34.9709 2.91992H45.9939C46.5779 2.91992 47.2349 3.21192 47.4539 3.79593L64.2439 52.7789C64.5359 53.5089 64.0979 54.0199 63.2949 54.0199H52.4179C51.8339 54.0199 51.3229 53.8009 51.1039 53.1439L49.2059 47.0119H31.7589L29.8609 53.1439C29.6419 53.8009 29.2039 54.0199 28.6199 54.0199H17.7429ZM35.2629 35.7699H45.7019L40.5189 19.0529L35.2629 35.7699Z" fill="var(--cyan)"/> <path d="M6.64301 13.213C2.774 13.213 0 10.293 0 6.57C0 2.92 2.774 0 6.64301 0C10.439 0 13.286 2.92 13.286 6.57C13.286 10.293 10.439 13.213 6.64301 13.213ZM0.438004 52.852V19.418C0.438004 18.761 0.949003 18.25 1.606 18.25H11.68C12.337 18.25 12.848 18.761 12.848 19.418V52.852C12.848 53.509 12.337 54.02 11.68 54.02H1.606C0.949003 54.02 0.438004 53.509 0.438004 52.852Z" fill="currentColor"/> </svg></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- CARRIL: CONSTRUIR (developers) -->
+  <div class="lane-head" id="construir">
+    <span class="lane-tag">Para desarrolladores · partners</span>
+    <h2 class="lane-title">Construye sobre YiQi</h2>
+  </div>
 
   <!-- STATS -->
   <section class="stats-strip" aria-label="Estadísticas">
@@ -315,8 +426,9 @@
     <div class="stat-cell"><div class="stat-val">+20</div><div class="stat-lbl">Eventos automatizables</div></div>
   </section>
 
-  <!-- Banner Analytics Pro (componente DS) -->
-  <analytics-pro-banner base="./" preview="examples/panel-gerencial.html"></analytics-pro-banner>
+
+
+
 
 
   <!-- QUÉ ES -->
@@ -333,6 +445,11 @@
           <span class="what-visual-label">API REST pública</span>
           <span class="what-visual-badge">OpenAPI v2.5</span>
         </a>
+        <a class="what-visual-row" href="#conectores">
+          <div class="what-visual-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <span class="what-visual-label">Conectores preconfigurados</span>
+          <span class="what-visual-badge">+10 listos</span>
+        </a>
         <div class="what-visual-row">
           <div class="what-visual-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
           <span class="what-visual-label">Webhooks y eventos</span>
@@ -346,37 +463,8 @@
         <div class="what-visual-row">
           <div class="what-visual-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
           <span class="what-visual-label">Marketplace de apps</span>
-          <span class="what-visual-badge">Próximamente</span>
+          <span class="what-visual-badge">6 apps</span>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CAPACIDADES -->
-  <section class="section" style="padding-top:64px; border-top: 1px solid var(--line)">
-    <div class="section-kicker">Capacidades</div>
-    <h2 class="section-title">Todo lo que habilita.</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-        <div class="feature-title">Conectores preconfigurados</div>
-        <div class="feature-desc">Integraciones listas con marketplaces, e-commerce, plataformas de logística, bancos y sistemas de pago. Sin desarrollo desde cero.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-        <div class="feature-title">API REST documentada</div>
-        <div class="feature-desc">16 módulos expuestos con especificación OpenAPI. Patrón consistente en todos los endpoints para reducir la curva de adopción.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <div class="feature-title">Datos en tiempo real</div>
-        <div class="feature-desc">Acceso a los datos operativos del ERP desde aplicaciones externas o automatizaciones. Stock, ventas, finanzas y más, siempre actualizados.</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <div class="feature-title">Marketplace de apps</div>
-        <div class="feature-desc">Ecosistema de soluciones construidas sobre YiQi por partners, desarrolladores y equipos internos. Extiende el ERP según tu industria.</div>
-        <span class="feature-tag">En desarrollo</span>
       </div>
     </div>
   </section>
@@ -424,7 +512,7 @@
 </section>
 
 <!-- INTEGRACIONES -->
-<section class="integrations-section">
+<section class="integrations-section" id="conectores">
   <div class="page-wrap">
     <div class="section-kicker">Ecosistema</div>
     <h2 class="section-title" style="margin-bottom:8px">Conectores disponibles.</h2>
@@ -444,7 +532,7 @@
   </div>
 </section>
 
-<!-- ══ CONVOCATORIA ══ -->
+  <!-- ══ CONVOCATORIA ══ -->
   <section class="convocatoria-section" id="convocatoria">
     <div class="page-wrap">
       <div class="conv-box">
@@ -483,5 +571,35 @@ _mq.addEventListener('change', () => {
 <script src="./components/meta-pixel-events.js" defer></script>
 <script async src="https://tally.so/widgets/embed.js"></script>
 
+<script>
+  document.querySelectorAll(".app-card[data-href]").forEach(function(c){
+    c.addEventListener("click",function(){ location.href=c.dataset.href; });
+    c.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); location.href=c.dataset.href; } });
+  });
+</script>
+<script>
+(function(){
+  if(!document.documentElement.classList.contains('anim')) return;
+  var sel='.hero-inner > *, .stat-cell, .mkt-section-header, .app-card, .lane-head, .what-grid > *, .way-card, .int-pill, .conv-box';
+  var grids=['hero-inner','stats-strip','app-grid-featured','what-grid','ways-grid','integrations-logos'];
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  Array.prototype.forEach.call(document.querySelectorAll(sel),function(el){
+    var p=el.parentElement,idx=0;
+    if(p&&grids.some(function(c){return p.classList.contains(c);})) idx=Array.prototype.indexOf.call(p.children,el);
+    el.style.animationDelay=Math.min(idx,7)*65+'ms';
+    io.observe(el);
+  });
+  var strip=document.querySelector('.stats-strip');
+  if(strip){var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){countUp();so.disconnect();}});},{threshold:.4});so.observe(strip);}
+  function easeOut(t){return 1-Math.pow(1-t,3);}
+  function countUp(){
+    Array.prototype.forEach.call(document.querySelectorAll('.stat-val'),function(el){
+      var m=el.textContent.trim().match(/^(\D*)(\d+)(\D*)$/); if(!m) return;
+      var pre=m[1],target=parseInt(m[2],10),post=m[3],dur=1000,t0=performance.now();
+      (function tick(now){var pr=Math.min((now-t0)/dur,1);el.textContent=pre+Math.round(easeOut(pr)*target)+post;if(pr<1)requestAnimationFrame(tick);})(t0);
+    });
+  }
+})();
+</script>
 </body>
 </html>
