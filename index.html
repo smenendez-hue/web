@@ -28,7 +28,8 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
- <link rel="stylesheet" href="./site.css"> <script src="./components/site-header.js" defer></script> <script src="./components/site-footer.js" defer></script>
+ <link rel="stylesheet" href="./site.css"> <script src="./components/site-header.js" defer></script>
+<script src="./components/apps-data.js"></script> <script src="./components/site-footer.js" defer></script>
   <style>
 
   /* ═══════════════════════════════════════════
@@ -187,7 +188,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-wrap {
     width: 100%; max-width: 440px;
     margin-top: 0;
-    background: rgba(35,36,42,.6);
+    background: var(--bg-elev-2);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: none;
@@ -231,7 +232,6 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .hero-form-wrap .input::placeholder { color: var(--muted-2); }
   .hero-form-wrap .input:focus { box-shadow: var(--glow); }
   .hero-form-wrap .input.error { box-shadow: 0 0 0 1.5px rgba(255,99,125,.4) inset; }
-  html[data-theme="light"] .hero-form-wrap { background: rgba(255,255,255,.55); }
   html[data-theme="light"] .hero-form-wrap .input {
     background: var(--bg-soft); box-shadow: 0 0 0 1px var(--line);
   }
@@ -291,18 +291,18 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   }
   /* CTA — DS v1.2.5 .btn-primary */
   .hf-btn-cta {
-    padding: 9px 16px;
-    background: var(--cyan-soft-2);
-    border: 1px solid rgba(0,204,255,.28);
+    padding: 10px 16px;
+    background: var(--bg-elev-2);
+    border: 1px solid transparent;
     border-radius: var(--radius);
-    color: var(--cyan); font: 500 13px var(--sans);
-    cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text); font: 600 13px var(--sans);
+    cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
     transition: all var(--tr);
     margin-left: auto;
   }
-  .hf-btn-cta:hover { background: rgba(0,204,255,.24); border-color: rgba(0,204,255,.40); color: var(--cyan); }
-  html[data-theme="light"] .hf-btn-cta { background: var(--cyan-soft-2); border-color: rgba(0,159,199,.28); color: var(--cyan); }
-  html[data-theme="light"] .hf-btn-cta:hover { background: rgba(0,159,199,.24); border-color: rgba(0,159,199,.40); color: var(--cyan); }
+  .hf-btn-cta:hover { background: var(--bg-soft); }
+  .hf-btn-cta.hf-primary { background: var(--cyan-soft); border-color: var(--cyan-a28); color: var(--cyan); }
+  .hf-btn-cta.hf-primary:hover { background: var(--cyan-soft-2); border-color: var(--cyan-a28); }
   html[data-theme="light"] .hf-btn-ghost { color: var(--muted-2); }
   html[data-theme="light"] .hf-btn-back  { color: var(--muted-2); }
   /* Ghost — texto */
@@ -1304,9 +1304,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .pricing-sub   { font: 400 14px/1.1 var(--sans); color: var(--muted); }
   .pricing-card {
     width: 100%; max-width: 500px;
-    border: 1px solid rgba(0,204,255,.12); border-radius: var(--radius-xl);
-    overflow: hidden; box-shadow: var(--shadow-lg), 0 0 60px rgba(0,204,255,.06);
-    background: radial-gradient(circle at 50% 0%, rgba(0,204,255,.05), transparent 55%);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--bg-elev-2);
   }
   .pcard-header {
     background: var(--bg-elev-2); border-bottom: 1px solid var(--line);
@@ -1547,6 +1547,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
   .cta-final-sub {
     font: 400 15px/1.4 var(--sans); color: var(--muted); max-width: 420px;
   }
+  .cta-final-actions { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; }
 
   /* ═══════════════════════════════════════════
      FOOTER
@@ -2216,6 +2217,11 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     aspect-ratio: 280 / 120;
     flex-shrink: 0;
   }
+  .mkt-bp-card .mkt-bp-photo {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 280 / 120; object-fit: cover; flex-shrink: 0;
+    background: #eef5fc;
+  }
   .mkt-bp-info {
     padding: 10px 14px 12px;
     background: rgba(238,245,252,.98);
@@ -2384,6 +2390,9 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <a href="#modulos" class="btn btn-ghost btn-lg">
       Ver módulos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
     </a>
+    <a href="precotizador.html" class="btn btn-ghost btn-lg">
+      Precotización en 2 min <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
   </div>
   </div><!-- /hero-left -->
 
@@ -2516,7 +2525,7 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <!-- Divider + Footer paso 3 -->
     <div class="hf-divider" id="hf-divider-3"></div>
     <div class="hf-footer" id="hf-footer-3">
-      <button class="hf-btn-cta" onclick="hfSubmit()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitud</button>
+      <button class="hf-btn-cta hf-primary" onclick="hfSubmit()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Enviar solicitud</button>
       <button class="hf-btn-ghost" onclick="hfGoStep(2)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Volver</button>
       <p class="hf-legal">Tu información es confidencial y no se comparte con terceros.</p>
     </div>
@@ -3210,258 +3219,13 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <div class="mkt-banner-right">
       <div class="mkt-banner-right::before"></div>
       <div class="mkt-banner-preview">
-        <div class="mkt-bp-track">
-        <!-- Analytics -->
-        <div class="mkt-bp-card">
-          <svg class="mkt-bp-svg-dark" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-            <rect width="280" height="150" fill="#060d1c"/>
-            <!-- topbar -->
-            <rect x="0" y="0" width="280" height="18" fill="#050b17"/>
-            <rect x="8" y="5" width="36" height="8" rx="3" fill="rgba(0,204,255,.18)"/>
-            <rect x="54" y="7" width="20" height="4" rx="2" fill="rgba(255,255,255,.05)"/>
-            <rect x="80" y="7" width="16" height="4" rx="2" fill="rgba(255,255,255,.04)"/>
-            <!-- sidebar: desde topbar hasta el fondo -->
-            <rect x="0" y="18" width="54" height="132" fill="#050b17"/>
-            <rect x="8" y="28" width="36" height="4" rx="2" fill="rgba(0,204,255,.2)"/>
-            <rect x="8" y="38" width="28" height="3" rx="1.5" fill="rgba(255,255,255,.07)"/>
-            <rect x="8" y="47" width="32" height="3" rx="1.5" fill="rgba(255,255,255,.05)"/>
-            <rect x="8" y="56" width="24" height="3" rx="1.5" fill="rgba(255,255,255,.04)"/>
-            <!-- KPI izquierdo: desde y=18, sin gap -->
-            <rect x="54" y="18" width="111" height="42" fill="#0d1f3a"/>
-            <text x="62" y="33" fill="rgba(0,204,255,.55)" font-size="6" font-family="monospace">INGRESOS</text>
-            <text x="62" y="50" fill="#f3f5f7" font-size="14" font-weight="700" font-family="sans-serif">$2.4M</text>
-            <!-- separador vertical entre KPIs -->
-            <rect x="165" y="18" width="2" height="42" fill="#060d1c"/>
-            <!-- KPI derecho: desde y=18, hasta x=280 -->
-            <rect x="167" y="18" width="113" height="42" fill="#0d1f3a"/>
-            <text x="175" y="33" fill="rgba(21,212,156,.55)" font-size="6" font-family="monospace">PEDIDOS</text>
-            <text x="175" y="50" fill="#f3f5f7" font-size="14" font-weight="700" font-family="sans-serif">1,847</text>
-            <!-- separador horizontal -->
-            <rect x="54" y="60" width="226" height="2" fill="#060d1c"/>
-            <!-- área chart: hasta el fondo -->
-            <rect x="54" y="62" width="226" height="88" fill="#0a1828"/>
-            <defs><linearGradient id="bG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00ccff" stop-opacity=".2"/><stop offset="100%" stop-color="#00ccff" stop-opacity="0"/></linearGradient></defs>
-            <polygon points="54,150 90,124 132,130 174,105 216,113 280,84 280,150" fill="url(#bG)"/>
-            <polyline points="54,150 90,124 132,130 174,105 216,113 280,84" fill="none" stroke="#00ccff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <svg class="mkt-bp-svg-light" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-            <rect width="280" height="150" fill="#f0f5fa"/>
-            <!-- topbar -->
-            <rect x="0" y="0" width="280" height="18" fill="#ddeaf5"/>
-            <rect x="8" y="5" width="36" height="8" rx="3" fill="rgba(0,159,199,.3)"/>
-            <rect x="54" y="7" width="20" height="4" rx="2" fill="rgba(0,0,0,.07)"/>
-            <rect x="80" y="7" width="16" height="4" rx="2" fill="rgba(0,0,0,.05)"/>
-            <!-- sidebar: desde topbar hasta el fondo -->
-            <rect x="0" y="18" width="54" height="132" fill="#ddeaf5"/>
-            <rect x="8" y="28" width="36" height="4" rx="2" fill="rgba(0,159,199,.35)"/>
-            <rect x="8" y="38" width="28" height="3" rx="1.5" fill="rgba(0,0,0,.1)"/>
-            <rect x="8" y="47" width="32" height="3" rx="1.5" fill="rgba(0,0,0,.07)"/>
-            <rect x="8" y="56" width="24" height="3" rx="1.5" fill="rgba(0,0,0,.06)"/>
-            <!-- KPI izquierdo: desde y=18, sin gap -->
-            <rect x="54" y="18" width="111" height="42" fill="#ffffff"/>
-            <text x="62" y="33" fill="#009fc7" font-size="6" font-family="monospace">INGRESOS</text>
-            <text x="62" y="50" fill="#0f1a2e" font-size="14" font-weight="700" font-family="sans-serif">$2.4M</text>
-            <!-- separador vertical -->
-            <rect x="165" y="18" width="2" height="42" fill="#f0f5fa"/>
-            <!-- KPI derecho -->
-            <rect x="167" y="18" width="113" height="42" fill="#ffffff"/>
-            <text x="175" y="33" fill="#12a876" font-size="6" font-family="monospace">PEDIDOS</text>
-            <text x="175" y="50" fill="#0f1a2e" font-size="14" font-weight="700" font-family="sans-serif">1,847</text>
-            <!-- separador horizontal -->
-            <rect x="54" y="60" width="226" height="2" fill="#f0f5fa"/>
-            <!-- área chart: hasta el fondo -->
-            <rect x="54" y="62" width="226" height="88" fill="#e8f2f9"/>
-            <defs><linearGradient id="bGL" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#009fc7" stop-opacity=".15"/><stop offset="100%" stop-color="#009fc7" stop-opacity="0"/></linearGradient></defs>
-            <polygon points="54,150 90,124 132,130 174,105 216,113 280,84 280,150" fill="url(#bGL)"/>
-            <polyline points="54,150 90,124 132,130 174,105 216,113 280,84" fill="none" stroke="#009fc7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div class="mkt-bp-info">
-            <span class="mkt-bp-kicker">Analytics</span>
-            <strong class="mkt-bp-name">YiQi Analytics Pro</strong>
-            <p class="mkt-bp-desc">Dashboards en tiempo real con IA, segmentación por canal y KPIs.</p>
-          </div>
-        </div>
-        <!-- Depósito -->
-        <div class="mkt-bp-card">
-          <svg class="mkt-bp-svg-dark" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-            <rect width="280" height="150" fill="#060d18"/>
-            <!-- topbar full width -->
-            <rect x="0" y="0" width="280" height="18" fill="#071020"/>
-            <rect x="8" y="5" width="48" height="8" rx="3" fill="rgba(122,183,255,.18)"/>
-            <rect x="64" y="7" width="24" height="4" rx="2" fill="rgba(255,255,255,.05)"/>
-            <!-- KPI izquierdo: edge-to-edge desde topbar -->
-            <rect x="0" y="18" width="139" height="64" fill="#0d1f3a"/>
-            <text x="10" y="34" fill="rgba(21,212,156,.6)" font-size="6" font-family="monospace">STOCK</text>
-            <text x="10" y="56" fill="#f3f5f7" font-size="22" font-weight="700" font-family="sans-serif">94%</text>
-            <!-- divider vertical -->
-            <rect x="139" y="18" width="2" height="64" fill="#060d18"/>
-            <!-- KPI derecho -->
-            <rect x="141" y="18" width="139" height="64" fill="#0d1f3a"/>
-            <text x="151" y="34" fill="rgba(255,176,32,.65)" font-size="6" font-family="monospace">PENDIENTES</text>
-            <text x="151" y="56" fill="#f3f5f7" font-size="22" font-weight="700" font-family="sans-serif">23</text>
-            <!-- divider horizontal -->
-            <rect x="0" y="82" width="280" height="2" fill="#060d18"/>
-            <!-- sección barras: full width hasta el fondo -->
-            <rect x="0" y="84" width="280" height="66" fill="#0a1828"/>
-            <rect x="10" y="93" width="80" height="5" rx="2.5" fill="rgba(255,255,255,.08)"/>
-            <rect x="10" y="106" width="240" height="4" rx="2" fill="rgba(21,212,156,.12)"/>
-            <rect x="10" y="106" width="168" height="4" rx="2" fill="rgba(21,212,156,.55)"/>
-            <rect x="10" y="118" width="240" height="4" rx="2" fill="rgba(255,255,255,.06)"/>
-            <rect x="10" y="118" width="105" height="4" rx="2" fill="rgba(255,176,32,.5)"/>
-            <rect x="10" y="130" width="240" height="4" rx="2" fill="rgba(255,255,255,.05)"/>
-            <rect x="10" y="130" width="64" height="4" rx="2" fill="rgba(122,183,255,.4)"/>
-            <rect x="10" y="142" width="240" height="4" rx="2" fill="rgba(255,255,255,.03)"/>
-            <rect x="10" y="142" width="192" height="4" rx="2" fill="rgba(255,100,100,.25)"/>
-          </svg>
-          <svg class="mkt-bp-svg-light" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-            <rect width="280" height="150" fill="#f0f5fa"/>
-            <!-- topbar full width -->
-            <rect x="0" y="0" width="280" height="18" fill="#ddeaf5"/>
-            <rect x="8" y="5" width="48" height="8" rx="3" fill="rgba(0,159,199,.3)"/>
-            <rect x="64" y="7" width="24" height="4" rx="2" fill="rgba(0,0,0,.07)"/>
-            <!-- KPI izquierdo -->
-            <rect x="0" y="18" width="139" height="64" fill="#ffffff"/>
-            <text x="10" y="34" fill="#12a876" font-size="6" font-family="monospace">STOCK</text>
-            <text x="10" y="56" fill="#0f1a2e" font-size="22" font-weight="700" font-family="sans-serif">94%</text>
-            <!-- divider vertical -->
-            <rect x="139" y="18" width="2" height="64" fill="#f0f5fa"/>
-            <!-- KPI derecho -->
-            <rect x="141" y="18" width="139" height="64" fill="#ffffff"/>
-            <text x="151" y="34" fill="#c8820a" font-size="6" font-family="monospace">PENDIENTES</text>
-            <text x="151" y="56" fill="#0f1a2e" font-size="22" font-weight="700" font-family="sans-serif">23</text>
-            <!-- divider horizontal -->
-            <rect x="0" y="82" width="280" height="2" fill="#f0f5fa"/>
-            <!-- sección barras: full width hasta el fondo -->
-            <rect x="0" y="84" width="280" height="66" fill="#e8f2f9"/>
-            <rect x="10" y="93" width="80" height="5" rx="2.5" fill="rgba(0,0,0,.07)"/>
-            <rect x="10" y="106" width="240" height="4" rx="2" fill="rgba(18,168,118,.12)"/>
-            <rect x="10" y="106" width="168" height="4" rx="2" fill="rgba(18,168,118,.55)"/>
-            <rect x="10" y="118" width="240" height="4" rx="2" fill="#ddeaf5"/>
-            <rect x="10" y="118" width="105" height="4" rx="2" fill="rgba(200,130,10,.5)"/>
-            <rect x="10" y="130" width="240" height="4" rx="2" fill="#ddeaf5"/>
-            <rect x="10" y="130" width="64" height="4" rx="2" fill="rgba(0,100,180,.3)"/>
-            <rect x="10" y="142" width="240" height="4" rx="2" fill="rgba(0,0,0,.03)"/>
-            <rect x="10" y="142" width="192" height="4" rx="2" fill="rgba(200,60,60,.2)"/>
-          </svg>
-          <div class="mkt-bp-info">
-            <span class="mkt-bp-kicker">Proveedores</span>
-            <strong class="mkt-bp-name">Front de Proveedores OCR</strong>
-            <p class="mkt-bp-desc">Portal de proveedores con reconocimiento óptico de facturas y órdenes de compra.</p>
-          </div>
-        </div>
-        <!-- Inventariado Mobile -->
-        <div class="mkt-bp-card">
-          <svg class="mkt-bp-svg-dark" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-            <rect width="280" height="150" fill="#060e0d"/>
-            <!-- topbar -->
-            <rect x="0" y="0" width="280" height="18" fill="#071510"/>
-            <rect x="8" y="5" width="40" height="8" rx="3" fill="rgba(21,212,156,.2)"/>
-            <rect x="56" y="7" width="20" height="4" rx="2" fill="rgba(255,255,255,.05)"/>
-            <!-- panel izquierdo: phone, edge-to-edge -->
-            <rect x="0" y="18" width="84" height="132" fill="#0a1a18"/>
-            <rect x="4" y="22" width="76" height="124" rx="10" fill="#0d2420" stroke="rgba(21,212,156,.18)" stroke-width="1"/>
-            <rect x="10" y="34" width="64" height="108" rx="5" fill="#0a1a18"/>
-            <rect x="30" y="25" width="24" height="5" rx="2.5" fill="#0a1a18"/>
-            <rect x="10" y="34" width="64" height="18" fill="rgba(21,212,156,.1)"/>
-            <rect x="16" y="40" width="34" height="5" rx="2.5" fill="rgba(21,212,156,.4)"/>
-            <rect x="14" y="56" width="56" height="48" rx="4" fill="rgba(255,255,255,.02)" stroke="rgba(21,212,156,.2)" stroke-width="1" stroke-dasharray="3 2"/>
-            <path d="M14,63 L14,56 L21,56" fill="none" stroke="#15d49c" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M63,56 L70,56 L70,63" fill="none" stroke="#15d49c" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M14,97 L14,104 L21,104" fill="none" stroke="#15d49c" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M70,97 L70,104 L63,104" fill="none" stroke="#15d49c" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="18" y1="80" x2="66" y2="80" stroke="rgba(21,212,156,.75)" stroke-width="1"/>
-            <rect x="14" y="110" width="56" height="11" rx="3" fill="rgba(255,255,255,.05)"/>
-            <rect x="18" y="114" width="28" height="4" rx="2" fill="rgba(255,255,255,.12)"/>
-            <rect x="58" y="113" width="8" height="5" rx="2.5" fill="rgba(21,212,156,.35)"/>
-            <rect x="14" y="124" width="56" height="11" rx="3" fill="rgba(255,255,255,.03)"/>
-            <rect x="18" y="128" width="22" height="4" rx="2" fill="rgba(255,255,255,.08)"/>
-            <rect x="58" y="127" width="8" height="5" rx="2.5" fill="rgba(255,176,32,.35)"/>
-            <!-- divider vertical -->
-            <rect x="84" y="18" width="2" height="132" fill="#060e0d"/>
-            <!-- panel derecho top: KPIs -->
-            <rect x="86" y="18" width="194" height="62" fill="#0a1828"/>
-            <text x="94" y="34" fill="rgba(21,212,156,.55)" font-size="6" font-family="monospace">RELEVADOS</text>
-            <text x="94" y="52" fill="#f3f5f7" font-size="16" font-weight="700" font-family="sans-serif">1,248</text>
-            <rect x="170" y="24" width="48" height="22" rx="4" fill="rgba(0,204,255,.07)"/>
-            <text x="176" y="33" fill="rgba(0,204,255,.55)" font-size="6" font-family="monospace">PEND.</text>
-            <text x="176" y="43" fill="#f3f5f7" font-size="9" font-weight="700" font-family="sans-serif">382</text>
-            <rect x="224" y="24" width="52" height="22" rx="4" fill="rgba(255,176,32,.07)"/>
-            <text x="230" y="33" fill="rgba(255,176,32,.55)" font-size="6" font-family="monospace">DIFF</text>
-            <text x="230" y="43" fill="#f3f5f7" font-size="9" font-weight="700" font-family="sans-serif">14</text>
-            <!-- divider horizontal -->
-            <rect x="86" y="80" width="194" height="2" fill="#060e0d"/>
-            <!-- panel derecho bottom: barras -->
-            <rect x="86" y="82" width="194" height="68" fill="#0a1828"/>
-            <rect x="94" y="91" width="65" height="5" rx="2.5" fill="rgba(255,255,255,.1)"/>
-            <rect x="94" y="103" width="172" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
-            <rect x="94" y="103" width="136" height="5" rx="2" fill="rgba(21,212,156,.4)"/>
-            <rect x="94" y="114" width="172" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
-            <rect x="94" y="114" width="94" height="5" rx="2" fill="rgba(0,204,255,.35)"/>
-            <rect x="94" y="125" width="172" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
-            <rect x="94" y="125" width="120" height="5" rx="2" fill="rgba(122,183,255,.3)"/>
-            <rect x="94" y="136" width="172" height="5" rx="2" fill="rgba(255,255,255,.05)"/>
-            <rect x="94" y="136" width="65" height="5" rx="2" fill="rgba(255,176,32,.3)"/>
-          </svg>
-          <svg class="mkt-bp-svg-light" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
-            <rect width="280" height="150" fill="#f0f5fa"/>
-            <!-- topbar -->
-            <rect x="0" y="0" width="280" height="18" fill="#ddeaf5"/>
-            <rect x="8" y="5" width="40" height="8" rx="3" fill="rgba(18,168,118,.3)"/>
-            <rect x="56" y="7" width="20" height="4" rx="2" fill="rgba(0,0,0,.07)"/>
-            <!-- panel izquierdo: phone, edge-to-edge -->
-            <rect x="0" y="18" width="84" height="132" fill="#d4e8f5"/>
-            <rect x="4" y="22" width="76" height="124" rx="10" fill="#c8e0f0" stroke="rgba(18,168,118,.3)" stroke-width="1"/>
-            <rect x="10" y="34" width="64" height="108" rx="5" fill="#ddeaf5"/>
-            <rect x="30" y="25" width="24" height="5" rx="2.5" fill="#d4e8f5"/>
-            <rect x="10" y="34" width="64" height="18" fill="rgba(18,168,118,.12)"/>
-            <rect x="16" y="40" width="34" height="5" rx="2.5" fill="rgba(18,168,118,.5)"/>
-            <rect x="14" y="56" width="56" height="48" rx="4" fill="rgba(255,255,255,.5)" stroke="rgba(18,168,118,.3)" stroke-width="1" stroke-dasharray="3 2"/>
-            <path d="M14,63 L14,56 L21,56" fill="none" stroke="#12a876" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M63,56 L70,56 L70,63" fill="none" stroke="#12a876" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M14,97 L14,104 L21,104" fill="none" stroke="#12a876" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M70,97 L70,104 L63,104" fill="none" stroke="#12a876" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="18" y1="80" x2="66" y2="80" stroke="rgba(18,168,118,.75)" stroke-width="1"/>
-            <rect x="14" y="110" width="56" height="11" rx="3" fill="rgba(255,255,255,.7)"/>
-            <rect x="18" y="114" width="28" height="4" rx="2" fill="rgba(0,0,0,.12)"/>
-            <rect x="58" y="113" width="8" height="5" rx="2.5" fill="rgba(18,168,118,.4)"/>
-            <rect x="14" y="124" width="56" height="11" rx="3" fill="rgba(255,255,255,.5)"/>
-            <rect x="18" y="128" width="22" height="4" rx="2" fill="rgba(0,0,0,.08)"/>
-            <rect x="58" y="127" width="8" height="5" rx="2.5" fill="rgba(200,130,10,.4)"/>
-            <!-- divider vertical -->
-            <rect x="84" y="18" width="2" height="132" fill="#f0f5fa"/>
-            <!-- panel derecho top: KPIs -->
-            <rect x="86" y="18" width="194" height="62" fill="#ffffff"/>
-            <text x="94" y="34" fill="#12a876" font-size="6" font-family="monospace">RELEVADOS</text>
-            <text x="94" y="52" fill="#0f1a2e" font-size="16" font-weight="700" font-family="sans-serif">1,248</text>
-            <rect x="170" y="24" width="48" height="22" rx="4" fill="rgba(0,159,199,.1)"/>
-            <text x="176" y="33" fill="#009fc7" font-size="6" font-family="monospace">PEND.</text>
-            <text x="176" y="43" fill="#0f1a2e" font-size="9" font-weight="700" font-family="sans-serif">382</text>
-            <rect x="224" y="24" width="52" height="22" rx="4" fill="rgba(200,130,10,.1)"/>
-            <text x="230" y="33" fill="#c8820a" font-size="6" font-family="monospace">DIFF</text>
-            <text x="230" y="43" fill="#0f1a2e" font-size="9" font-weight="700" font-family="sans-serif">14</text>
-            <!-- divider horizontal -->
-            <rect x="86" y="80" width="194" height="2" fill="#f0f5fa"/>
-            <!-- panel derecho bottom: barras -->
-            <rect x="86" y="82" width="194" height="68" fill="#e8f2f9"/>
-            <rect x="94" y="91" width="65" height="5" rx="2.5" fill="rgba(0,0,0,.1)"/>
-            <rect x="94" y="103" width="172" height="5" rx="3" fill="#ddeaf5"/>
-            <rect x="94" y="103" width="136" height="5" rx="3" fill="rgba(18,168,118,.45)"/>
-            <rect x="94" y="114" width="172" height="5" rx="3" fill="#ddeaf5"/>
-            <rect x="94" y="114" width="94" height="5" rx="3" fill="rgba(0,159,199,.4)"/>
-            <rect x="94" y="125" width="172" height="5" rx="3" fill="#ddeaf5"/>
-            <rect x="94" y="125" width="120" height="5" rx="3" fill="rgba(0,100,200,.25)"/>
-            <rect x="94" y="136" width="172" height="5" rx="3" fill="#ddeaf5"/>
-            <rect x="94" y="136" width="65" height="5" rx="3" fill="rgba(200,130,10,.35)"/>
-          </svg>
-          <div class="mkt-bp-info">
-            <span class="mkt-bp-kicker">Inventario</span>
-            <strong class="mkt-bp-name">Inventariado Mobile</strong>
-            <p class="mkt-bp-desc">App mobile para escaneo de stock, ajustes de inventario y sincronización en tiempo real con YiQi.</p>
-          </div>
-        </div>
-
-    </div>
-        </div><!-- /mkt-bp-track -->
+        <div class="mkt-bp-track" id="bpTrack"></div>
+        <script>
+          document.getElementById("bpTrack").innerHTML = (window.YIQI_APPS||[]).map(function(a){
+            return '<div class="mkt-bp-card"><img class="mkt-bp-photo" src="'+a.img+'" alt="" loading="lazy"><div class="mkt-bp-info"><span class="mkt-bp-kicker">'+a.category+'</span><strong class="mkt-bp-name">'+a.name+'</strong><p class="mkt-bp-desc">'+a.desc+'</p></div></div>';
+          }).join("");
+        </script>
+        <!-- /mkt-bp-track -->
 
   </div>
 </div>
@@ -3610,9 +3374,14 @@ src="https://www.facebook.com/tr?id=455192279196875&ev=PageView&noscript=1"
     <span class="cta-final-kicker">// empieza hoy</span>
     <h2 class="cta-final-headline">Tu operación merece<br>un sistema a su altura.</h2>
     <p class="cta-final-sub">Coordina una reunión y en 30 minutos te mostramos cómo YiQi se adapta a tu operación.</p>
-    <a href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener" class="btn btn-primary btn-xl">
-      Coordina una reunión <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+    <div class="cta-final-actions">
+      <a href="https://calendly.com/javierperez/meet-30-demo" target="_blank" rel="noopener" class="btn btn-primary btn-xl">
+        Coordina una reunión <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="precotizador.html" class="btn btn-ghost btn-xl">
+        Precotización en 2 min <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 

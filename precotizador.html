@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Precotizador · YiQi ERP</title>
+
+<!--
+  =========================================================================
+  PRECOTIZADOR YiQi — v1 (MVP, Google Sheets)
+  -------------------------------------------------------------------------
+  1) Reemplazá ENDPOINT_URL (abajo) por la URL de tu Apps Script Web App.
+     El backend (archivo apps_script_backend.gs) escribe la fila en la Sheet
+     y manda el mail de aviso. La credencial de YiQi NO vive acá: cuando
+     conectemos YiQi, va dentro del Apps Script (server-side).
+  2) Los CTAs ya están cargados: WhatsApp 5491138531655, Calendly, mail.
+     Ajustá si cambian.
+  3) La banda se calcula en el navegador; el resultado se muestra al instante
+     sin esperar al backend (los datos se envían en segundo plano).
+  =========================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<script>
+(function(){
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  function resolve(v){ return v==='system' ? (mq.matches?'dark':'light') : v; }
+  function apply(){ document.documentElement.dataset.theme = resolve(localStorage.getItem('yiqi-theme') || 'system'); }
+  apply();
+  mq.addEventListener('change', function(){ if((localStorage.getItem('yiqi-theme')||'system')==='system') apply(); });
+})();
+</script>
+
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --surface:#0f1013;
+    --surface-2:#14161b;
+    --bg-soft:#181b21;
+    --line:rgba(255,255,255,.08);
+    --line-strong:rgba(255,255,255,.14);
+    --cyan:#00ccff;
+    --cyan-soft:rgba(0,204,255,.14);
+    --cyan-soft-2:rgba(0,204,255,.22);
+    --violet:#8b5cf6;
+    --gold:#ffb020;
+    --gold-soft:rgba(255,176,32,.14);
+    --text:#f3f5f7;
+    --muted:#908e8e;
+    --ok:#15d49c;
+    --muted-2:#7d7c82;
+    --red:#e5868e;
+    --red-soft:rgba(229,100,110,.18);
+    --wa:#37d871;
+    --wa-soft:rgba(37,211,102,.15);
+    --wa-soft-2:rgba(37,211,102,.24);
+    --display:"Greycliff CF","Plus Jakarta Sans","Inter",ui-sans-serif,system-ui,sans-serif;
+    --sans:"Inter",ui-sans-serif,system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --radius:14px;
+    --maxw:560px;
+    font-synthesis:none;
+  }
+  /* ── Appearance: sigue el tema del sitio (localStorage yiqi-theme) o el sistema — paleta light del DS ── */
+  html[data-theme="light"]{
+    --bg:#eeece7;
+    --surface:#f6f4ef;
+    --surface-2:#ffffff;
+    --bg-soft:#ece9e2;
+    --line:rgba(0,0,0,.08);
+    --line-strong:rgba(0,0,0,.13);
+    --cyan:#009fc7;
+    --cyan-soft:rgba(0,159,199,.12);
+    --cyan-soft-2:rgba(0,159,199,.20);
+    --text:#17191c;
+    --muted:#5e5a57;
+    --muted-2:#636875;
+    --violet:#7c3aed;
+    --gold:#c78000;
+    --gold-soft:rgba(199,128,0,.12);
+    --ok:#0c9b6d;
+    --red:#c0392b;
+    --red-soft:rgba(192,57,43,.12);
+    --wa:#128c4b;
+    --wa-soft:rgba(37,211,102,.14);
+    --wa-soft-2:rgba(37,211,102,.22);
+  }
+  html[data-theme="light"] .card{ box-shadow:0 12px 34px -20px rgba(0,0,0,.22); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:44px 44px, 44px 44px;
+    background-position:-1px -1px,-1px -1px;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px 16px;
+  }
+  .app{width:100%;max-width:var(--maxw)}
+
+  /* Wordmark */
+  .brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .logo{display:inline-flex;align-items:center;line-height:0}
+  .logo svg{height:39px;width:auto;display:block}
+  .logo .yql{fill:var(--text)}
+  .logo .yqs{fill:var(--cyan)}
+  .logo .yql,.logo .yqs{animation:logoRise .55s cubic-bezier(.2,.7,.2,1) both}
+  .logo .yqs{transform-box:fill-box;transform-origin:center;animation:logoSpin .7s cubic-bezier(.2,.7,.2,1) both}
+  .logo path:nth-child(2){animation-delay:.05s}
+  .logo path:nth-child(3){animation-delay:.12s}
+  .logo path:nth-child(4){animation-delay:.18s}
+  .logo path:nth-child(5){animation-delay:.24s}
+  .logo path:nth-child(6){animation-delay:.24s}
+  @keyframes logoRise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  @keyframes logoSpin{from{opacity:0;transform:rotate(-160deg) scale(.5)}to{opacity:1;transform:none}}
+  .brand .tag{font-size:12px;color:var(--muted);letter-spacing:.02em}
+
+  /* Card */
+  .card{
+    background:var(--surface);
+    border:1px solid transparent;
+    border-radius:20px;
+    padding:26px 24px 22px;
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.8);
+  }
+
+  /* Progress */
+  .progress{display:flex;gap:4px;margin-bottom:22px}
+  .progress > i{flex:1;height:5px;border-radius:99px;background:var(--line-strong);transition:background .35s ease}
+  .progress > i.on{background:var(--cyan-soft-2)}
+  .step-count{font:500 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+
+  /* Question */
+  .q-wrap{animation:rise .38s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .eyebrow{font:600 11px var(--mono);color:var(--cyan);text-transform:uppercase;letter-spacing:.14em;margin-bottom:12px}
+  .meta{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .meta .step-count,.meta .eyebrow{margin-bottom:0}
+  .meta-dot{color:var(--muted-2);font:600 11px var(--mono)}
+  h1.q{font-family:var(--display);font-weight:700;font-size:23px;line-height:1.22;letter-spacing:-.02em;margin-bottom:7px}
+  .hint{font-size:13.5px;color:var(--muted);margin-bottom:18px}
+
+  /* Fields */
+  .field{margin-bottom:12px}
+  input[type=text],input[type=email],input[type=tel],input[type=url]{
+    width:100%;background:var(--bg);border:1px solid transparent;border-radius:11px;
+    padding:13px 14px;color:var(--text);font-size:15px;font-family:inherit;transition:background .15s, box-shadow .15s;
+  }
+  input::placeholder{color:var(--muted-2)}
+  input:focus{outline:none;background:var(--bg-soft);box-shadow:0 0 0 3px var(--cyan-soft)}
+  input.err{box-shadow:0 0 0 3px var(--red-soft)}
+  textarea{width:100%;background:var(--bg);border:1px solid transparent;border-radius:11px;padding:12px 14px;color:var(--text);font-size:15px;font-family:inherit;line-height:1.5;resize:vertical;min-height:76px;transition:background .15s,box-shadow .15s}
+  textarea::placeholder{color:var(--muted-2)}
+  textarea:focus{outline:none;background:var(--bg-soft);box-shadow:0 0 0 3px var(--cyan-soft)}
+
+  /* Options */
+  .opts{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+  .opt-btn{
+    display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+    background:var(--surface-2);border:1px solid transparent;border-radius:12px;
+    padding:13px 15px;color:var(--text);font-size:15px;font-family:inherit;transition:background .15s,transform .05s;
+  }
+  .opt-btn:hover{background:var(--bg-soft)}
+  .opt-btn:active{transform:scale(.995)}
+  .opt-btn .mark{flex:0 0 20px;height:20px;border-radius:6px;border:1.5px solid var(--line-strong);display:flex;align-items:center;justify-content:center;transition:all .15s}
+  .opt-btn.multi .mark{border-radius:6px}
+  .opt-btn.single .mark{border-radius:50%}
+  .opt-btn[aria-checked=true]{background:var(--cyan-soft);color:var(--cyan)}
+  .opt-btn[aria-checked=true] .mark{border-color:var(--cyan);background:var(--cyan)}
+  .opt-btn[aria-checked=true] .mark svg{opacity:1}
+  .opt-btn .mark svg{width:12px;height:12px;opacity:0;transition:opacity .12s}
+  .field-err{font-size:12.5px;color:var(--red);margin-top:9px;min-height:1em}
+
+  /* Nav */
+  .nav{display:flex;align-items:center;gap:10px;margin-top:22px}
+  .btn{font:600 13px var(--sans);border:1px solid transparent;border-radius:12px;padding:13px 20px;cursor:pointer;transition:filter .15s,transform .05s,opacity .15s}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--cyan-soft);border:1px solid rgba(0,204,255,.28);color:var(--cyan);flex:1}
+  .btn-primary:hover{background:var(--cyan-soft-2)}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid transparent}
+  .btn-ghost:hover{color:var(--text);background:var(--bg-soft)}
+
+  /* ---------- RESULT ---------- */
+  .result{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;text-align:center}
+  .r-eyebrow{font:500 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:28px}
+
+  /* Band meter: three ascending tiers */
+  .meter{display:grid;gap:10px;margin:6px 0 20px;align-items:stretch}
+  .meter.on-0{grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) minmax(0,.8fr)}
+  .meter.on-1{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr) minmax(0,.8fr)}
+  .meter.on-2{grid-template-columns:minmax(0,.8fr) minmax(0,.8fr) minmax(0,1.4fr)}
+  .tier{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+        padding:16px 8px;border-radius:12px;background:var(--surface-2);
+        opacity:.6;transition:all .45s cubic-bezier(.2,.7,.2,1)}
+  .tier .t-name{font:600 12px var(--sans);color:var(--muted)}
+  .tier .t-desc{font:400 10.5px/1.3 var(--sans);color:var(--muted);text-align:center}
+  .tier.on{opacity:1;background:var(--cyan-soft);text-align:center;padding:18px 12px;
+           transform:translateY(-8px);box-shadow:0 14px 30px -16px rgba(0,0,0,.55)}
+  .tier.on .t-flag{font:600 9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+  .tier.on .t-name{font:800 24px var(--display);color:var(--text);line-height:1.05;white-space:nowrap}
+  .tier.on .t-desc{color:var(--muted);margin-top:4px}
+
+  /* A-medida badge (relevamiento) */
+  .badge-medida{display:inline-flex;align-items:center;gap:9px;margin:6px 0 18px;padding:11px 20px;border-radius:99px;
+    background:var(--gold-soft);border:1px solid transparent;
+    font:700 14px var(--display);color:var(--gold);letter-spacing:.02em;animation:bmIn .5s cubic-bezier(.2,.7,.2,1) both}
+  .bm-spark{display:inline-block;animation:bmSpark 2.6s ease-in-out infinite}
+  .bm-text{display:inline-block;white-space:nowrap;text-align:center;overflow:hidden}
+  @keyframes bmIn{from{opacity:0;transform:translateY(6px) scale(.96)}to{opacity:1;transform:none}}
+  @keyframes bmSpark{0%,100%{transform:rotate(0) scale(1);opacity:.85}50%{transform:rotate(90deg) scale(1.22);opacity:1}}
+
+  h2.r-title{font-family:var(--display);font-weight:600;font-size:22px;line-height:1.3;letter-spacing:-.01em;margin-bottom:9px}
+  .r-emp{color:var(--cyan)}
+  .r-value{font-size:14.5px;color:var(--muted);max-width:400px;margin:0 auto 22px}
+
+  .r-lead{font-size:13px;color:var(--muted);margin-bottom:11px}
+  .ctas{display:flex;flex-direction:column;gap:9px}
+  .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;
+       font:700 14px var(--sans);height:44px;padding:0 20px;border-radius:10px;border:1px solid transparent;
+       cursor:pointer;transition:filter .15s,background .15s,transform .05s}
+  .cta:active{transform:translateY(1px)}
+  .cta svg{width:17px;height:17px;flex:0 0 auto}
+  .cta-wa{background:var(--wa-soft);color:var(--wa)}
+  .cta-wa:hover{background:var(--wa-soft-2)}
+  .cta-row{display:flex;gap:9px}
+  .cta-row .cta{flex:1}
+  .cta-2{background:var(--bg-soft);color:var(--text)}
+  .cta-2:hover{background:#20242c}
+  .cta-ghost{background:transparent;color:var(--muted);font:600 13px var(--sans);height:auto;padding:10px;border-radius:8px}
+  .cta-ghost:hover{color:var(--text);background:var(--bg-soft)}
+
+  .foot{margin-top:20px;padding-top:16px;font-size:11.5px;color:var(--muted-2);text-align:center}
+
+  .privacy{font-size:11.5px;color:var(--muted-2);text-align:center;margin-top:14px}
+
+  @media (max-width:480px){
+    .card{padding:22px 18px 18px;border-radius:16px}
+    h1.q{font-size:21px}
+    .meter{gap:7px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .tier{opacity:1;transform:none}
+  }
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="brand">
+    <a class="logo" href="https://www.yiqi.com.ar" target="_blank" rel="noopener" aria-label="YiQi">
+      <svg viewBox="0 0 100 65" width="52" height="34" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="yql" d="M20.44,48.34l2.57-6.15-6.79-16.91c-.14-.39.07-.61.46-.61h4.97c.29,0,.57.14.68.43l3.58,10.08,3.61-10.08c.11-.29.39-.43.68-.43h4.97c.39,0,.57.21.43.61l-9.26,23.27c-.11.29-.39.43-.68.43h-4.75c-.43,0-.68-.21-.47-.64Z"/>
+        <path class="yql" d="M38.72,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        <path class="yqs" d="M57.91,44.78v-2.66c-2.18-.53-4.21-1.66-5.92-3.36-4.97-4.97-5.09-13.02-.03-18.08,5.09-5.09,13.14-4.97,18.11,0s5.09,13.02,0,18.11c-1.78,1.78-3.94,2.93-6.22,3.46v2.51c0,.35-.18.53-.58.53h-4.82c-.3,0-.55-.2-.55-.5ZM56.28,34.47c.5.5,1.05.9,1.65,1.2v-3.36c0-.35.18-.53.53-.53h4.87c.25,0,.53.18.53.53v3.36c.63-.33,1.23-.78,1.78-1.33,2.73-2.73,2.78-6.75.15-9.38s-6.67-2.61-9.41.13c-2.71,2.71-2.73,6.75-.1,9.38Z"/>
+        <path class="yql" d="M77.44,25.24c0-.32.25-.57.57-.57h4.89c.32,0,.57.25.57.57v16.24c0,.32-.25.57-.57.57h-4.89c-.32,0-.57-.25-.57-.57v-16.24Z"/>
+        <path class="yql" d="M38.5,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/>
+        <path class="yql" d="M77.22,18.99c0-1.77,1.35-3.19,3.23-3.19s3.23,1.42,3.23,3.19-1.38,3.23-3.23,3.23-3.23-1.42-3.23-3.23Z"/>
+      </svg>
+    </a>
+    <div class="tag">Precotización · 2 min</div>
+  </div>
+
+  <div class="card" id="card"><!-- rendered by JS --></div>
+
+  <p class="privacy" id="privacy">Tus datos quedan solo con nuestro equipo comercial. Sin spam.</p>
+</div>
+
+<script>
+"use strict";
+
+/* ======= CONFIG ======= */
+const ENDPOINT_URL = "https://script.google.com/a/macros/yiqi.com.ar/s/AKfycbxZ6pSRJaQZ6ClKuAx_nonZTCEKJ6YNDVKj8QlK_0z93m5z6jni_CtC9-75i_GNeOyJ/exec";
+const WHATSAPP  = "5491138531655";
+const CALENDLY  = "https://calendly.com/javierperez/meet-30-demo";
+const EMAIL     = "comercial@yiqi.com.ar";
+const SITE       = "https://www.yiqi.com.ar";
+
+/* ======= SURVEY ======= */
+const QUESTIONS = [
+  { id:'contact', type:'contact' },
+  { id:'rubro', type:'text', q:'¿A qué se dedica tu empresa?', ph:'Ej: distribución de artículos de limpieza', required:true },
+  { id:'opera', type:'single', q:'¿Cómo opera tu negocio?', options:['B2B (a empresas)','B2C (a consumidor final)','Ambos'], required:true },
+  { id:'usuarios', type:'single', q:'¿Cuántas personas usarían el sistema?', options:['3 a 10','11 a 25','Más de 25'], required:true },
+  { id:'modulos', type:'multi', q:'¿Qué necesitas gestionar?', hint:'Elige todo lo que aplique. Finanzas, Contabilidad y Stock se apoyan en Ventas; Producción, en Stock — lo ajustamos solo.',
+    options:['Ventas y facturación','Stock e inventario','Compras y proveedores','Finanzas y cobranzas','Contabilidad e impuestos','Clientes y oportunidades (CRM)','RRHH y sueldos','Producción','Calidad / ISO'], required:true },
+  { id:'carritos', type:'multi', q:'¿Tienes tienda online propia?', hint:'¿En qué plataforma?',
+    options:['Tienda Nube','WooCommerce','Shopify','VTEX','Magento','Otra plataforma','Ninguna por ahora'], none:'Ninguna por ahora', required:true },
+  { id:'marketplaces', type:'multi', q:'¿En qué marketplaces vendes o quieres vender?', hint:'Vender, publicar catálogo y correr campañas en canales de terceros.',
+    options:['Mercado Libre','Provincia Compras','OnCity','Frávega','Megatone','Tienda BNA','Otro marketplace','No vendo en marketplaces'], none:'No vendo en marketplaces', required:true },
+  { id:'logistica', type:'single', q:'¿Necesitas integrar logística o ruteo de envíos?', options:['No','Sí'], required:true },
+  { id:'locales', type:'single', q:'¿Tienes locales físicos o puntos de venta? ¿Cuántos?', options:['0','1','2 a 3','4 a 6','7 o más'], required:true },
+  { id:'esquemas', type:'single', q:'¿Operas con más de una razón social o franquicias?', options:['No, una sola','Sí, 2 a 3','Sí, 4 a 6','Sí, 7 o más'], required:true },
+  { id:'amedida', type:'single', q:'¿Buscas algún desarrollo a medida o una integración que no figure arriba?', options:['No','Sí'], required:true },
+];
+
+/* ======= STATE ======= */
+const answers = { modulos:[], carritos:[], marketplaces:[] };
+let step = 0;
+const card = document.getElementById('card');
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#04121a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+
+/* ======= DEPENDENCIAS DE MÓDULOS ======= */
+const VENTAS='Ventas y facturación', STOCK='Stock e inventario';
+const MOD_DEP = {
+  'Finanzas y cobranzas':[VENTAS],
+  'Contabilidad e impuestos':[VENTAS],
+  'Stock e inventario':[VENTAS],
+  'Producción':[STOCK]           // Stock arrastra Ventas
+};
+function addMod(arr,op){
+  if(!arr.includes(op)) arr.push(op);
+  (MOD_DEP[op]||[]).forEach(dep=>addMod(arr,dep));
+}
+function removeMod(arr,op){
+  const i=arr.indexOf(op); if(i>-1) arr.splice(i,1);
+  let changed=true;                       // cascada: quitar lo que quede sin su prerequisito
+  while(changed){ changed=false;
+    for(const m of [...arr]){
+      if((MOD_DEP[m]||[]).some(d=>!arr.includes(d))){ arr.splice(arr.indexOf(m),1); changed=true; }
+    }
+  }
+}
+function toggleMedidaDetalle(show){
+  const w=document.getElementById('medida-wrap'); if(!w) return;
+  w.style.display = show?'block':'none';
+  if(show){ const ta=document.getElementById('f_medida'); if(ta) ta.focus(); }
+  else { answers.amedida_detalle=''; const fe=document.getElementById('ferr'); if(fe) fe.textContent=''; }
+}
+
+/* ======= RENDER ======= */
+function render(){
+  const total = QUESTIONS.length;
+  const Q = QUESTIONS[step];
+  let html = '';
+  let segs = '';
+  for(let k=0;k<total;k++) segs += `<i class="${k<=step?'on':''}"></i>`;
+  html += `<div class="progress">${segs}</div>`;
+  html += `<div class="q-wrap">`;
+  const eyebrow = Q.type==='contact' ? 'Empecemos' : Q.type==='text' ? 'Tu negocio' : 'Tu operación';
+  html += `<div class="meta"><span class="step-count">Paso ${step+1} de ${total}</span><span class="meta-dot">·</span><span class="eyebrow">${eyebrow}</span></div>`;
+
+  if(Q.type==='contact'){
+    html += `<h1 class="q">¿Con quién estamos hablando?</h1>`;
+    html += `<p class="hint">Con esto te preparamos una propuesta a tu medida y te la acercamos.</p>`;
+    html += field('nombre','Nombre completo','text',true,'Tu nombre');
+    html += field('empresa','Empresa','text',true,'Nombre de tu empresa');
+    html += field('email','Email','email',true,'nombre@empresa.com');
+    html += field('telefono','Teléfono / WhatsApp','tel',false,'+54 9 11 ...');
+    html += field('sitio_web','Sitio web','url',false,'www.tuempresa.com');
+    html += `<div class="field-err" id="ferr"></div>`;
+  } else if(Q.type==='text'){
+    html += `<h1 class="q">${Q.q}</h1>`;
+    html += `<div class="field"><input type="text" id="f_${Q.id}" placeholder="${Q.ph||''}" value="${escapeAttr(answers[Q.id]||'')}"></div>`;
+    html += `<div class="field-err" id="ferr"></div>`;
+  } else {
+    html += `<h1 class="q">${Q.q}</h1>`;
+    if(Q.hint) html += `<p class="hint">${Q.hint}</p>`;
+    html += `<div class="opts" id="opts">`;
+    Q.options.forEach((op,i)=>{
+      const checked = Q.type==='multi' ? answers[Q.id].includes(op) : answers[Q.id]===op;
+      html += `<button type="button" class="opt-btn ${Q.type}" data-op="${escapeAttr(op)}" aria-checked="${checked}">
+                 <span class="mark">${CHECK}</span><span>${op}</span></button>`;
+    });
+    html += `</div>`;
+    if(Q.id==='amedida'){
+      html += `<div id="medida-wrap" style="display:${answers.amedida==='Sí'?'block':'none'};margin-top:14px">
+        <label for="f_medida" style="display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:6px">Cuéntanos qué necesitas a medida <span style="color:var(--cyan)">*</span></label>
+        <textarea id="f_medida" rows="3" placeholder="Ej: integración con un sistema propio, un reporte específico, un flujo particular…">${escapeHtml(answers.amedida_detalle||'')}</textarea></div>`;
+    }
+    html += `<div class="field-err" id="ferr"></div>`;
+  }
+
+  // nav
+  html += `<div class="nav">`;
+  if(step>0) html += `<button class="btn btn-ghost" id="back">Atrás</button>`;
+  const last = step===total-1;
+  html += `<button class="btn btn-primary" id="next">${last?'Ver mi resultado':'Siguiente'}</button>`;
+  html += `</div></div>`;
+
+  card.innerHTML = html;
+  wire(Q);
+}
+
+function field(id,label,type,req){
+  const ph = req ? label : label + ' (opcional)';
+  return `<div class="field"><input type="${type}" id="f_${id}" placeholder="${ph}" aria-label="${label}" value="${escapeAttr(answers[id]||'')}" ${req?'data-req="1"':''}></div>`;
+}
+
+function wire(Q){
+  const next = document.getElementById('next');
+  const back = document.getElementById('back');
+  if(back) back.onclick = ()=>{ step--; render(); };
+  next.onclick = ()=> advance(Q);
+
+  if(Q.type==='single'||Q.type==='multi'){
+    document.querySelectorAll('.opt-btn').forEach(b=>{
+      b.onclick = ()=>{
+        const op = b.dataset.op;
+        if(Q.type==='single'){
+          answers[Q.id]=op;
+          document.querySelectorAll('.opt-btn').forEach(x=>x.setAttribute('aria-checked','false'));
+          b.setAttribute('aria-checked','true');
+          if(Q.id==='amedida'){ toggleMedidaDetalle(op==='Sí'); if(op!=='Sí') setTimeout(()=>advance(Q),160); }
+          else setTimeout(()=>advance(Q),160); // auto-advance on single
+        } else {
+          const arr = answers[Q.id];
+          if(Q.id==='modulos'){ // dependencias: Finanzas/Contab/Stock→Ventas, Producción→Stock
+            arr.includes(op) ? removeMod(arr,op) : addMod(arr,op);
+          } else if(Q.none){ // "none" option is exclusive
+            if(op===Q.none){ answers[Q.id]=[op]; }
+            else { const i=arr.indexOf(Q.none); if(i>-1)arr.splice(i,1);
+                   const j=arr.indexOf(op); j>-1?arr.splice(j,1):arr.push(op); }
+          } else {
+            const j=arr.indexOf(op); j>-1?arr.splice(j,1):arr.push(op);
+          }
+          // refresh checks
+          document.querySelectorAll('.opt-btn').forEach(x=>
+            x.setAttribute('aria-checked', answers[Q.id].includes(x.dataset.op)));
+          document.getElementById('ferr').textContent='';
+        }
+      };
+    });
+  }
+  // Enter key advances (text/contact)
+  card.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); advance(Q); }});
+  });
+
+  // Nombre completo: Title Case automático + solo letras/espacios/'-  (igual que el form de contacto)
+  const _nom = document.getElementById('f_nombre');
+  if(_nom){
+    const NOT_LETTER = /[^\p{L}\s'\-]/gu;
+    const capWords = v => v.split(' ').map(w => w ? w[0].toUpperCase()+w.slice(1) : w).join(' ');
+    _nom.addEventListener('input', function(){
+      const start = this.selectionStart;
+      const clean = this.value.replace(NOT_LETTER,'');
+      const capped = capWords(clean);
+      const removed = this.value.length - clean.length;
+      if(capped !== this.value){ this.value = capped; try{ this.setSelectionRange(start-removed, start-removed); }catch(e){} }
+    });
+  }
+  // Teléfono: sin caracteres alfabéticos (solo dígitos, +, espacio, -, paréntesis, punto)
+  const _tel = document.getElementById('f_telefono');
+  if(_tel){
+    _tel.addEventListener('input', function(){
+      const start = this.selectionStart;
+      const clean = this.value.replace(/[^0-9+\s().\-]/g,'');
+      const removed = this.value.length - clean.length;
+      if(clean !== this.value){ this.value = clean; try{ this.setSelectionRange(start-removed, start-removed); }catch(e){} }
+    });
+  }
+}
+
+function advance(Q){
+  const err = document.getElementById('ferr');
+  if(Q.type==='contact'){
+    for(const f of ['nombre','empresa','email']){
+      const el=document.getElementById('f_'+f); answers[f]=el.value.trim();
+      if(!answers[f]){ el.classList.add('err'); err.textContent='Completa nombre, empresa y email para seguir.'; el.focus(); return; }
+      el.classList.remove('err');
+    }
+    const em=document.getElementById('f_email');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email)){ em.classList.add('err'); err.textContent='Revisa el email, no parece válido.'; em.focus(); return; }
+    answers.telefono=document.getElementById('f_telefono').value.trim();
+    answers.sitio_web=document.getElementById('f_sitio_web').value.trim();
+  } else if(Q.type==='text'){
+    answers[Q.id]=document.getElementById('f_'+Q.id).value.trim();
+    if(Q.required && !answers[Q.id]){ err.textContent='Cuéntanos brevemente para seguir.'; return; }
+  } else {
+    const v=answers[Q.id];
+    if(Q.required && (Q.type==='single'? !v : v.length===0)){ err.textContent='Elige una opción para seguir.'; return; }
+    if(Q.id==='amedida' && answers.amedida==='Sí'){
+      const ta=document.getElementById('f_medida'); answers.amedida_detalle = ta?ta.value.trim():'';
+      if(!answers.amedida_detalle){ err.textContent='Cuéntanos brevemente qué necesitas a medida.'; if(ta) ta.focus(); return; }
+    }
+  }
+  if(step===QUESTIONS.length-1){ finish(); }
+  else { step++; render(); }
+}
+
+/* ======= BAND LOGIC ======= */
+function idx(id){ return QUESTIONS.find(q=>q.id===id).options.indexOf(answers[id]); }
+function computeBand(){
+  if(answers.amedida==='Sí') return 'relevamiento';
+  let band = answers.usuarios==='3 a 10' ? 'accesible' : answers.usuarios==='11 a 25' ? 'media' : 'enterprise';
+  const mod = answers.modulos.length;
+  const integ = answers.carritos.filter(x=>x!=='Ninguna por ahora').length
+              + answers.marketplaces.filter(x=>x!=='No vendo en marketplaces').length
+              + (answers.logistica==='Sí'?1:0);
+  const esq = idx('esquemas');   // 0 una sola, 1 =2-3, 2 =4-6, 3 =7+
+  const loc = idx('locales');    // 0..4  (3 = 4-6, 4 = 7+)
+  if(band==='accesible' && (mod>=5 || integ>=3 || esq>=1 || loc>=3)) band='media';
+  if(band==='media'     && (mod>=7 || integ>=4 || esq>=2 || loc>=4)) band='enterprise';
+  return band;
+}
+
+/* ======= FINISH ======= */
+function finish(){
+  if(idx('locales')>=1 && !answers.modulos.includes(VENTAS)) addMod(answers.modulos, VENTAS); // puntos de venta requieren Ventas
+  const band = computeBand();
+  answers.banda = band;
+  sendLead(band);
+  showResult(band);
+}
+
+function buildResumen(){
+  return [
+    'Rubro: '+(answers.rubro||'—'),
+    'Opera: '+(answers.opera||'—'),
+    'Usuarios: '+(answers.usuarios||'—'),
+    'Módulos: '+(answers.modulos.join(', ')||'—'),
+    'Tiendas online: '+(answers.carritos.join(', ')||'—'),
+    'Marketplaces: '+(answers.marketplaces.join(', ')||'—'),
+    'Logística: '+(answers.logistica||'—'),
+    'Locales: '+(answers.locales||'—'),
+    'Razones sociales / franquicias: '+(answers.esquemas||'—'),
+    'A medida: '+(answers.amedida||'—')+(answers.amedida==='Sí'?(' — '+(answers.amedida_detalle||'(sin detalle)')):''),
+    'BANDA: '+answers.banda
+  ].join('\n');
+}
+
+function sendLead(band){
+  const payload = {
+    fecha:new Date().toISOString(),
+    nombre:answers.nombre, empresa:answers.empresa, email:answers.email,
+    telefono:answers.telefono||'', sitio_web:answers.sitio_web||'',
+    rubro:answers.rubro||'', opera:answers.opera||'', usuarios:answers.usuarios||'',
+    modulos:answers.modulos, carritos:answers.carritos, marketplaces:answers.marketplaces,
+    logistica:answers.logistica||'', locales:answers.locales||'', esquemas:answers.esquemas||'',
+    a_medida:answers.amedida||'', amedida_detalle:answers.amedida_detalle||'', banda:band, resumen:buildResumen(), origen:'Precotizador web'
+  };
+  if(ENDPOINT_URL.startsWith('http')){
+    const body = JSON.stringify(payload);
+    try{
+      // sendBeacon: fire-and-forget, sin problemas de CORS de lectura
+      if(navigator.sendBeacon){
+        navigator.sendBeacon(ENDPOINT_URL, new Blob([body],{type:'text/plain;charset=utf-8'}));
+      } else {
+        fetch(ENDPOINT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+      }
+    }catch(e){ /* el resultado igual se muestra; el backup por mail cubre el envío */ }
+  } else {
+    console.warn('ENDPOINT_URL sin configurar — lead no enviado:', payload);
+  }
+}
+
+const TIER_META = { accesible:'Lo esencial, en orden', media:'Orden + automatización', enterprise:'Escala multi-operación' };
+function scrambleText(el, finalText, dur, col){
+  dur = dur || 650; col = col || 'var(--cyan)';
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent = finalText; return; }
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  const len = finalText.length, start = performance.now();
+  (function frame(now){
+    const pr = Math.min((now - start) / dur, 1), reveal = Math.floor(pr * len);
+    let html = '';
+    for(let i=0;i<len;i++){
+      const ch = finalText[i];
+      if(i < reveal || ch === ' ') html += ch.replace('&','&amp;').replace('<','&lt;');
+      else html += '<span style="color:' + col + '">' + chars[Math.floor(Math.random()*chars.length)] + '</span>';
+    }
+    el.innerHTML = html;
+    if(pr < 1) requestAnimationFrame(frame); else el.textContent = finalText;
+  })(start);
+}
+function showResult(band){
+  const emp = '<span class="r-emp">'+(escapeHtml(answers.empresa)||'tu empresa')+'</span>';
+  const copy = {
+    accesible:{ t:`Listo, ${emp}.<br>Te preparamos una propuesta.`,
+      v:`Por lo que nos contaste, tu proyecto entra en nuestra franja más accesible. Te escribimos en menos de 24 h hábiles.` },
+    media:{ t:`Listo, ${emp}.<br>Preparamos algo a tu medida.`,
+      v:`Tu operación entra en una franja intermedia: ya necesitas orden y automatización de verdad. Te escribimos en menos de 24 h hábiles.` },
+    enterprise:{ t:`Listo, ${emp}.<br>Vamos a armar algo a tu altura.`,
+      v:`Tienes una operación de mayor escala, justo donde YiQi más rinde. Te contactamos a la brevedad para afinar la propuesta contigo.` },
+    relevamiento:{ t:`Gracias, ${emp}.<br>Queremos entender bien tu caso.`,
+      v:`Tu proyecto tiene componentes a medida. Coordinamos un relevamiento corto y te armamos una propuesta hecha a tu medida.` }
+  }[band];
+
+  const tiers = ['accesible','media','enterprise'];
+  const onIdx = tiers.indexOf(band);
+  let visual;
+  if(band==='relevamiento'){
+    visual = `<div class="badge-medida"><span class="bm-spark">✦</span> <span class="bm-text">Propuesta a medida</span></div>`;
+  } else {
+    visual = `<div class="meter on-${onIdx}">` + tiers.map((t,i)=>
+      `<div class="tier t${i} ${i===onIdx?'on':''}">${i===onIdx?'<span class="t-flag">Tu franja</span>':''}<span class="t-name">${cap(t)}</span><span class="t-desc">${TIER_META[t]}</span></div>`
+    ).join('') + `</div>`;
+  }
+
+  const waText = encodeURIComponent(`Hola, soy ${answers.nombre} de ${answers.empresa} y completé la precotización en YiQi (franja ${band}). Quiero avanzar.`);
+  const waHref = `https://wa.me/${WHATSAPP}?text=${waText}`;
+  const mailHref = `mailto:${EMAIL}?subject=${encodeURIComponent('Avanzar con YiQi — '+answers.empresa)}`;
+
+  const waPrimary = band!=='relevamiento';
+  const wa = `<a class="cta cta-wa" href="${waHref}" target="_blank" rel="noopener">${icon('wa')} Hablar por WhatsApp</a>`;
+  const call = `<a class="cta cta-2" href="${CALENDLY}" target="_blank" rel="noopener">Agendar una llamada</a>`;
+  const mail = `<a class="cta cta-2" href="${mailHref}">Escribirnos</a>`;
+
+  const ctas = waPrimary
+    ? `${wa}<div class="cta-row">${call}${mail}</div>`
+    : `${call}<div class="cta-row">${wa}${mail}</div>`; // relevamiento: la llamada manda
+
+  card.innerHTML = `
+    <div class="result">
+      <div class="r-eyebrow">Tu proyecto en YiQi</div>
+      ${visual}
+      <h2 class="r-title">${copy.t}</h2>
+      <p class="r-value">${copy.v}</p>
+      <p class="r-lead">¿No quieres esperar? Habla con nosotros ahora.</p>
+      <div class="ctas">
+        ${ctas}
+        <a class="cta cta-ghost" href="${SITE}" target="_blank" rel="noopener">Conoce YiQi mientras tanto →</a>
+      </div>
+      <div class="foot">YiQi ERP · 15 años ordenando operaciones · yiqi.com.ar</div>
+    </div>`;
+  document.getElementById('privacy').style.display='none';
+  // trigger meter animation + scramble del nombre de la franja
+  requestAnimationFrame(()=>document.querySelectorAll('.tier').forEach(t=>t.style.opacity=''));
+  const nmEl=document.querySelector('.tier.on .t-name');
+  if(nmEl){ nmEl.style.display='inline-block'; nmEl.style.whiteSpace='nowrap'; nmEl.style.overflow='hidden'; nmEl.style.width=nmEl.offsetWidth+'px'; scrambleText(nmEl, cap(band), 700); }
+  const bmEl=document.querySelector('.bm-text');
+  if(bmEl){ const bt=bmEl.textContent.trim(); bmEl.style.width=bmEl.offsetWidth+'px'; scrambleText(bmEl, bt, 700, 'var(--text)'); }
+}
+
+/* ======= ICONS & HELPERS ======= */
+function icon(k){
+  const p={
+    wa:'<path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 7.5c-.3 0-.7.1-.9.5-.3.5-1 1.1-1 2.6s1.1 3 1.2 3.2c.2.2 2.1 3.4 5.2 4.6 2.6 1 3.1.8 3.7.8.6-.1 1.8-.8 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.7-.4l-2-1c-.3-.1-.5-.2-.8.2l-.7 1c-.2.2-.4.3-.7.1-.4-.2-1.5-.6-2.8-1.7-1-.9-1.7-2-1.9-2.4-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-.9-2c-.2-.6-.5-.5-.7-.5Z" fill="currentColor"/>',
+    cal:'<rect x="3" y="4.5" width="18" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+    mail:'<rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>'
+  }[k];
+  return `<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+}
+function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+function escapeAttr(s){ return String(s).replace(/"/g,'&quot;'); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+render();
+</script>
+</body>
+</html>
