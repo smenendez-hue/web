@@ -1,80 +1,24 @@
 /* ============================================================
-   YiQi Apps — FUENTE ÚNICA de datos del Marketplace
-   Consumida por: <app-card> (grid del marketplace + carrusel del
-   banner iAready). Actualizá una app acá y se refleja en todos lados.
-   Campos: id, name, category, accent (clase c-*), state (live|dev),
-   stateLabel, desc, glyph (SVG inner). img y url se derivan del id.
+   YiQi Apps — FUENTE ÚNICA de datos (cards + fichas)
+   Consumida por: app-card.js (grid marketplace/index/ia-ready + banner)
+   y app.html (ficha). Actualizá una app acá y se refleja en todos lados.
+   acc (token) se deriva de accent (clase c-*). img/url del id.
    ============================================================ */
 (function () {
+  const ACCENT_TOKEN = { "c-ana":"violet","c-prov":"orange","c-inv":"green","c-pos":"amber","c-pick":"magenta","c-cons":"blue" };
   const APPS = [
-    {
-      id: 'yiqi-analytics-pro',
-      name: 'YiQi Analytics Pro',
-      category: 'Analytics',
-      accent: 'c-ana',
-      state: 'live',
-      stateLabel: 'Disponible',
-      desc: 'Tablero gerencial con KPIs en tiempo real con IA: ventas, stock, finanzas, canales y márgenes en una sola vista.',
-      glyph: '<path d="M3 3v18h18"/><polyline points="7 13 11 9 14 12 20 6"/>'
-    },
-    {
-      id: 'front-de-proveedores-ocr',
-      name: 'Front de Proveedores OCR',
-      category: 'Proveedores',
-      accent: 'c-prov',
-      state: 'dev',
-      stateLabel: 'En desarrollo',
-      desc: 'Portal de autogestión para proveedores: carga de facturas y órdenes de compra con OCR, integrado a YiQi.',
-      glyph: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/>'
-    },
-    {
-      id: 'inventariado-mobile',
-      name: 'Inventariado Mobile',
-      category: 'Inventario',
-      accent: 'c-pick',
-      state: 'dev',
-      stateLabel: 'En desarrollo',
-      desc: 'Relevamiento y control de stock desde el celular: escaneo de códigos y sincronización en tiempo real con YiQi.',
-      glyph: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/><path d="M12 13l2 2 4-4"/>'
-    },
-    {
-      id: 'yiqi-pos',
-      name: 'YiQi POS',
-      category: 'Punto de venta',
-      accent: 'c-pos',
-      state: 'live',
-      stateLabel: 'Disponible',
-      desc: 'Punto de venta para Windows: modo offline, multi-caja, medios de pago e impresión fiscal, integrado al ERP.',
-      glyph: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/>'
-    },
-    {
-      id: 'picking-list',
-      name: 'Picking List',
-      category: 'Operaciones',
-      accent: 'c-inv',
-      state: 'dev',
-      stateLabel: 'En desarrollo',
-      desc: 'Listas de preparación para depósito: arma el picking de varios pedidos y controla la salida de mercadería.',
-      glyph: '<path d="M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M8.5 13.5l2 2 4-4"/>'
-    },
-    {
-      id: 'consulta-de-pedidos',
-      name: 'Consulta de pedidos',
-      category: 'Pedidos',
-      accent: 'c-cons',
-      state: 'dev',
-      stateLabel: 'En desarrollo',
-      desc: 'Búsqueda y seguimiento ágil de pedidos por estado, canal y cliente, sincronizado con YiQi en tiempo real.',
-      glyph: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'
-    }
+    {"id": "yiqi-analytics-pro", "name": "YiQi Analytics Pro", "cat": "Analytics", "accent": "c-ana", "state": "live", "stateLabel": "Disponible", "glyph": "<path d=\"M3 3v18h18\"/><polyline points=\"7 13 11 9 14 12 20 6\"/>", "icon": "ana", "prov": "YiQi", "tagline": "Tablero gerencial con KPIs en tiempo real. Para directivos que deciden con datos.", "hl": [["23 KPIs out-of-the-box", "facturación, margen, conversión, stock"], ["Drill-down", "del KPI a la venta"]], "desc": ["Analytics Pro unifica en una sola pantalla los indicadores de todas las áreas: ventas del día, márgenes por canal, stock crítico y cashflow.", "Pensado para la toma de decisiones gerencial, permite ir del indicador al detalle (drill-down) y comparar por período, canal, etc."], "steps": ["Se conecta a tu instalación de YiQi ERP y lee los datos en tiempo real.", "Eliges las áreas de la empresa.", "Puedes compartir el panel con tu equipo."], "sec": [["Acceso a datos", "Lectura de ventas, stock y finanzas"], ["Autenticación", "OAuth 2.0 · usuario YiQi"], ["Alojamiento", "Infraestructura YiQi"], ["Residencia de datos", "YiQi ERP"], ["Cifrado", "TLS en tránsito · cifrado en reposo"], ["Aislamiento", "Multiesquema — datos aislados por cliente"], ["Auditoría", "Registro de accesos y consultas"]], "support": ["YiQi (producto propio).", "YiQi Tickets para tu atención."], "faq": [["¿Necesito todos los módulos?", "No. Analytics Pro lee lo que tengas activo en YiQi ERP; cuantos más módulos, más rico el tablero."], ["¿Los datos salen de YiQi?", "Sí, en tiempo real desde tu instalación; no se duplican en otro lado."]], "details": [["Categoría", "Analytics"], ["Tipo", "App de decisión"], ["Compatible con", "YiQi ERP v1.9+"], ["Integraciones", "Todos los módulos"], ["Plataforma", "Web"], ["Idioma", "Español"], ["Versión", "3.1.0"], ["Actualizada", "01/07/2026"]], "imgs": [["img/apps/yiqi-analytics-pro-horiz.webp", "Tablero gerencial con KPIs en tiempo real"]], "devSub": "Producto propio de YiQi", "tryUrl": "https://analytics.yiqi.com.ar/"},
+    {"id": "front-de-proveedores-ocr", "name": "Front de Proveedores OCR", "cat": "Proveedores", "accent": "c-prov", "state": "dev", "stateLabel": "En desarrollo", "glyph": "<path d=\"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z\"/><path d=\"M14 2v6h6\"/><path d=\"M8 13h8M8 17h8M8 9h2\"/>", "icon": "prov", "prov": "YiQi", "tagline": "Portal de autogestión para proveedores: carga de facturas y órdenes de compra con OCR, integrado a YiQi.", "hl": [["Carga con OCR", "factura y OC sin tipeo manual"], ["Autogestión", "el proveedor ve estados y comprobantes"], ["Integrado a YiQi", "todo se crea en el módulo de Compras"]], "desc": ["Un portal web donde tus proveedores cargan facturas y órdenes de compra; el OCR extrae los datos y los deja listos en YiQi.", "Reduce el ingreso manual y los errores de transcripción, y le da visibilidad al proveedor sobre el estado de sus comprobantes."], "steps": ["El proveedor ingresa al portal con su usuario.", "Sube la factura u OC; el OCR reconoce los campos.", "Revisa y confirma los datos detectados.", "El comprobante queda en Compras de YiQi para su circuito."], "sec": [["Acceso a datos", "Compras y proveedores (lectura/escritura)"], ["Autenticación", "OAuth 2.0 · usuario de proveedor"], ["Alojamiento", "Infraestructura YiQi"], ["Residencia de datos", "YiQi ERP"], ["Cifrado", "TLS en tránsito · cifrado en reposo"], ["Aislamiento", "Multiesquema — datos aislados por cliente"], ["Auditoría", "Registro de accesos y consultas"]], "support": ["YiQi (producto propio).", "YiQi Tickets para tu atención."], "faq": [["¿El proveedor necesita ser usuario de YiQi?", "No, accede a un portal aparte con su propio usuario."], ["¿Qué pasa si el OCR se equivoca?", "El proveedor revisa y corrige antes de confirmar; nada entra sin validar."]], "details": [["Categoría", "Proveedores"], ["Tipo", "App operativa"], ["Compatible con", "YiQi ERP v1.9+"], ["Integraciones", "Compras"], ["Plataforma", "Web"], ["Idioma", "Español"], ["Versión", "0.9.0 (beta)"], ["Actualizada", "01/07/2026"]], "imgs": [["img/apps/front-de-proveedores-ocr-horiz.webp", "Captura de facturas y comprobantes con OCR"]], "devSub": "Producto propio de YiQi"},
+    {"id": "inventariado-mobile", "name": "Inventariado Mobile", "cat": "Inventario", "accent": "c-pick", "state": "dev", "stateLabel": "En desarrollo", "glyph": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 9h18M8 4v16\"/><path d=\"M12 13l2 2 4-4\"/>", "icon": "inv", "prov": "YiQi", "tagline": "Releva y controla el stock de tus depósitos desde el celular: escaneo de códigos, ajustes y sincronización en tiempo real con YiQi.", "hl": [["Escaneo sin fricción", "la cámara del celular como lector"], ["Sync en tiempo real", "cada conteo impacta en el stock de YiQi ERP"], ["Control de diferencias", "faltantes y sobrantes por depósito"]], "desc": ["Convierte cualquier celular en una terminal de relevamiento de stock: el operario escanea, cuenta y ajusta directamente en el depósito.", "Los datos viajan en tiempo real a YiQi, sin planillas intermedias ni recargas manuales. Cada movimiento queda trazado por usuario y fecha."], "steps": ["El operario inicia sesión con su usuario de YiQi y elige el depósito.", "Escanea el código de cada producto e ingresa la cantidad.", "El sistema compara contra el stock teórico y marca diferencias.", "Al confirmar, los ajustes impactan en YiQi ERP y quedan auditados."], "sec": [["Acceso a datos", "Stock y productos (lectura/escritura)"], ["Autenticación", "OAuth 2.0 · usuario YiQi"], ["Alojamiento", "Infraestructura YiQi"], ["Residencia de datos", "YiQi ERP"], ["Cifrado", "TLS en tránsito · cifrado en reposo"], ["Aislamiento", "Multiesquema — datos aislados por cliente"], ["Auditoría", "Registro de accesos y consultas"]], "support": ["YiQi (producto propio).", "YiQi Tickets para tu atención."], "faq": [["¿Necesito ser cliente de YiQi?", "Sí, sincroniza con tu instalación de YiQi ERP. Si no eres cliente, pide asesoramiento."], ["¿Sirve sin internet?", "El conteo queda en cola y sincroniza al recuperar señal."]], "details": [["Categoría", "Inventario"], ["Tipo", "App operativa"], ["Compatible con", "YiQi ERP v1.9+"], ["Integraciones", "Stock · Compras"], ["Plataforma", "Android · iOS"], ["Idioma", "Español"], ["Versión", "2.3.1"], ["Actualizada", "01/07/2026"]], "imgs": [["img/apps/inventariado-mobile-horiz.webp", "Control de stock en el depósito"]], "devSub": "Producto propio de YiQi"},
+    {"id": "yiqi-pos", "name": "YiQi POS", "cat": "Punto de venta", "accent": "c-pos", "state": "live", "stateLabel": "Disponible", "glyph": "<rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M2 10h20M6 15h4\"/>", "icon": "pos", "prov": "YiQi", "tagline": "Punto de venta para Windows: modo offline, multi-caja, medios de pago e impresión fiscal, integrado al ERP.", "hl": [["Funciona offline", "vendes aunque se caiga internet"], ["Multi-caja y turnos", "cierres y arqueos por caja"], ["Impresión fiscal", "Epson y Hasar integradas"]], "desc": ["El punto de venta de YiQi para mostrador: rápido, con modo offline y sincronización automática cuando vuelve la conexión.", "Soporta múltiples cajas, turnos, medios de pago, descuentos y promociones, con facturación electrónica y fiscal integrada."], "steps": ["Instalas el POS en Windows e instalas el certificado.", "Configuras cajas, medios de pago e impresoras fiscales.", "Vendes, incluso sin internet (modo offline).", "Haces cierre de caja; todo sincroniza con YiQi."], "sec": [["Acceso a datos", "Ventas, stock y caja (lectura/escritura)"], ["Autenticación", "Certificado + usuario YiQi"], ["Alojamiento", "Local + sincronización con YiQi"]], "support": ["YiQi (producto propio).", "YiQi Tickets para tu atención."], "faq": [["¿Anda sin internet?", "Sí, vende offline y sincroniza al recuperar conexión."], ["¿Qué impresoras soporta?", "Fiscales Epson y Hasar, además de comandas térmicas."]], "details": [["Categoría", "Punto de venta"], ["Tipo", "App de escritorio"], ["Compatible con", "YiQi ERP v1.9+"], ["Integraciones", "Ventas · Stock · Caja"], ["Plataforma", "Windows (MSIX)"], ["Idioma", "Español"], ["Versión", "1.15.10"], ["Actualizada", "01/07/2026"]], "imgs": [["img/apps/yiqi-pos-horiz.webp", "Cobro en mostrador con terminal en tiempo real"]], "devSub": "Producto propio de YiQi", "tryUrl": "https://pos.yiqi.com.ar/publish.htm"},
+    {"id": "picking-list", "name": "Picking List", "cat": "Operaciones", "accent": "c-inv", "state": "dev", "stateLabel": "En desarrollo", "glyph": "<path d=\"M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2\"/><rect x=\"9\" y=\"2.5\" width=\"6\" height=\"4\" rx=\"1\"/><path d=\"M8.5 13.5l2 2 4-4\"/>", "icon": "pick", "prov": "YiQi", "tagline": "Listas de preparación para depósito: arma el picking de varios pedidos y controla la salida de mercadería.", "hl": [["Picking multi-pedido", "preparas varios pedidos a la vez"], ["Por ubicación", "recorrido optimizado del depósito"], ["Control de salida", "remitos y etiquetas al despachar"]], "desc": ["Genera listas de piqueo a partir de los pedidos de YiQi, agrupando por ubicación para optimizar el recorrido del depósito.", "Al preparar, marca cada ítem y controla la salida con remitos y etiquetas, dejando trazada la operación."], "steps": ["Seleccionas los pedidos a preparar.", "El sistema arma la lista por ubicación.", "El operario marca cada ítem al pickearlo.", "Se generan remito y etiquetas para el despacho."], "sec": [["Acceso a datos", "Pedidos y stock (lectura/escritura)"], ["Autenticación", "OAuth 2.0 · usuario YiQi"], ["Alojamiento", "Infraestructura YiQi"], ["Residencia de datos", "YiQi ERP"], ["Cifrado", "TLS en tránsito · cifrado en reposo"], ["Aislamiento", "Multiesquema — datos aislados por cliente"], ["Auditoría", "Registro de accesos y consultas"]], "support": ["YiQi (producto propio).", "YiQi Tickets para tu atención."], "faq": [["¿Puedo preparar varios pedidos juntos?", "Sí, arma una lista consolidada por ubicación."], ["¿Genera remito?", "Sí, remito y etiquetas al confirmar la salida."]], "details": [["Categoría", "Operaciones"], ["Tipo", "App operativa"], ["Compatible con", "YiQi ERP v1.9+"], ["Integraciones", "Pedidos · Stock"], ["Plataforma", "Web"], ["Idioma", "Español"], ["Versión", "0.7.0 (beta)"], ["Actualizada", "01/07/2026"]], "imgs": [["img/apps/picking-list-horiz.webp", "Preparación de pedidos en el depósito"]], "devSub": "Producto propio de YiQi"},
+    {"id": "consulta-de-pedidos", "name": "Consulta de pedidos", "cat": "Pedidos", "accent": "c-cons", "state": "dev", "stateLabel": "En desarrollo", "glyph": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M21 21l-4.3-4.3\"/>", "icon": "cons", "prov": "YiQi", "tagline": "Búsqueda y seguimiento ágil de pedidos por estado, canal y cliente, sincronizado con YiQi en tiempo real.", "hl": [["Búsqueda al instante", "por estado, canal o cliente"], ["Seguimiento en vivo", "del pedido a la entrega"], ["Sincronizado", "datos reales de YiQi"]], "desc": ["Una vista rápida para encontrar y seguir pedidos: filtras por estado, canal y cliente y ves el detalle al instante.", "Pensada para atención y ventas, evita buscar pedido por pedido."], "steps": ["Buscas por número, cliente o canal.", "Filtras por estado (preparado, pendiente, entregado).", "Abres el detalle del pedido y su trazabilidad.", "Compartes el estado con el cliente."], "sec": [["Acceso a datos", "Pedidos y clientes (lectura)"], ["Autenticación", "OAuth 2.0 · usuario YiQi"], ["Alojamiento", "Infraestructura YiQi"], ["Residencia de datos", "YiQi ERP"], ["Cifrado", "TLS en tránsito · cifrado en reposo"], ["Aislamiento", "Multiesquema — datos aislados por cliente"], ["Auditoría", "Registro de accesos y consultas"]], "support": ["YiQi (producto propio).", "YiQi Tickets para tu atención."], "faq": [["¿Modifica pedidos?", "No, es de consulta y seguimiento; los cambios se hacen en YiQi ERP."], ["¿Filtra por canal?", "Sí, por estado, canal y cliente."]], "details": [["Categoría", "Pedidos"], ["Tipo", "App operativa"], ["Compatible con", "YiQi ERP v1.9+"], ["Integraciones", "Pedidos · Clientes"], ["Plataforma", "Web"], ["Idioma", "Español"], ["Versión", "0.6.0 (beta)"], ["Actualizada", "01/07/2026"]], "imgs": [["img/apps/consulta-de-pedidos-horiz.webp", "Atención y seguimiento de pedidos en tiempo real"]], "devSub": "Producto propio de YiQi"}
   ];
-
-  // Derivados
   APPS.forEach(a => {
     a.img = 'img/apps/' + a.id + '-horiz.webp';
     a.url = 'app.html?id=' + a.id;
+    a.acc = ACCENT_TOKEN[a.accent];
   });
-
   window.YIQI_APPS = APPS;
   window.YIQI_APP_BY_ID = Object.fromEntries(APPS.map(a => [a.id, a]));
 })();

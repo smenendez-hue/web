@@ -13,9 +13,9 @@
     return `<div class="app-card" role="link" tabindex="0" data-href="${a.url}" aria-label="Ver ${a.name}">
       <div class="app-thumb ${a.accent} has-photo"><img class="thumb-photo" src="${a.img}" alt="" loading="lazy"><span class="app-state ${a.state}">${a.stateLabel}</span>${wm}${ico}</div>
       <div class="app-body">
-        <div class="app-category ${a.accent}-txt">${a.category}</div>
+        <div class="app-category ${a.accent}-txt">${a.cat}</div>
         <div class="app-meta"><h3 class="app-name">${a.name}</h3></div>
-        <div class="app-desc">${a.desc}</div>
+        <div class="app-desc">${a.desc[0]}</div>
         <div class="app-footer">
           <span class="app-install-btn">Ver app</span>
           <a href="ia-ready.html" class="app-prov-logo" aria-label="por iAready">${IA}</a>
