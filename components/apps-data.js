@@ -19,6 +19,8 @@
     a.url = 'app.html?id=' + a.id;
     a.acc = ACCENT_TOKEN[a.accent];
   });
+  // Disponibles ('live') primero en el layout; resto conserva su orden
+  APPS.sort((a, b) => (a.state === 'live' ? 0 : 1) - (b.state === 'live' ? 0 : 1));
   window.YIQI_APPS = APPS;
   window.YIQI_APP_BY_ID = Object.fromEntries(APPS.map(a => [a.id, a]));
 })();

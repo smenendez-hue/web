@@ -33,8 +33,10 @@
     st.id = 'app-card-host-style';
     st.textContent = 'app-card{display:contents}'
       + '.app-state{left:10px;right:auto}'
-      + '.app-card--soon{filter:grayscale(1) brightness(.78);cursor:default}'
-      + '.app-card--soon:hover{transform:none}';
+      + '.app-card--soon{position:relative;cursor:default}'
+      + '.app-card--soon:hover{transform:none}'
+      + '.app-card--soon::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.66);border-radius:inherit;pointer-events:none;z-index:4}'
+      + '.app-card--soon .app-state{z-index:5}';
     document.head.appendChild(st);
   }
 
