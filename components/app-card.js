@@ -10,7 +10,11 @@
   function cardHTML(a) {
     const wm  = `<svg class="thumb-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${a.glyph}</svg>`;
     const ico = `<span class="thumb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${a.glyph}</svg></span>`;
-    return `<div class="app-card" role="link" tabindex="0" data-href="${a.url}" aria-label="Ver ${a.name}">
+    const soon = a.state !== 'live';
+    const cls  = soon ? 'app-card app-card--soon' : 'app-card';
+    const nav  = soon ? '' : ` role="link" tabindex="0" data-href="${a.url}"`;
+    const lbl  = soon ? `${a.name} — en desarrollo` : `Ver ${a.name}`;
+    return `<div class="${cls}"${nav} aria-label="${lbl}">
       <div class="app-thumb ${a.accent} has-photo"><img class="thumb-photo" src="${a.img}" alt="" loading="lazy"><span class="app-state ${a.state}">${a.stateLabel}</span>${wm}${ico}</div>
       <div class="app-body">
         <div class="app-category ${a.accent}-txt">${a.cat}</div>
@@ -27,7 +31,10 @@
   if (!document.getElementById('app-card-host-style')) {
     const st = document.createElement('style');
     st.id = 'app-card-host-style';
-    st.textContent = 'app-card{display:contents}';
+    st.textContent = 'app-card{display:contents}'
+      + '.app-state{left:10px;right:auto}'
+      + '.app-card--soon{filter:grayscale(1) brightness(.78);cursor:default}'
+      + '.app-card--soon:hover{transform:none}';
     document.head.appendChild(st);
   }
 

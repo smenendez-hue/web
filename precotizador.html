@@ -7,12 +7,10 @@
 
 <!--
   =========================================================================
-  PRECOTIZADOR YiQi — v1 (MVP, Google Sheets)
+  PRECOTIZADOR YiQi
   -------------------------------------------------------------------------
-  1) Reemplazá ENDPOINT_URL (abajo) por la URL de tu Apps Script Web App.
-     El backend (archivo apps_script_backend.gs) escribe la fila en la Sheet
-     y manda el mail de aviso. La credencial de YiQi NO vive acá: cuando
-     conectemos YiQi, va dentro del Apps Script (server-side).
+  1) Este formulario envía JSON a /api/precotizador.
+    El backend toma ese payload y crea la consulta comercial en YiQi.
   2) Los CTAs ya están cargados: WhatsApp 5491138531655, Calendly, mail.
      Ajustá si cambian.
   3) La banda se calcula en el navegador; el resultado se muestra al instante
@@ -279,7 +277,7 @@
 "use strict";
 
 /* ======= CONFIG ======= */
-const ENDPOINT_URL = "https://script.google.com/a/macros/yiqi.com.ar/s/AKfycbxZ6pSRJaQZ6ClKuAx_nonZTCEKJ6YNDVKj8QlK_0z93m5z6jni_CtC9-75i_GNeOyJ/exec";
+const API_LEAD_ENDPOINT = '/api/precotizador';
 const WHATSAPP  = "5491138531655";
 const CALENDLY  = "https://calendly.com/javierperez/meet-30-demo";
 const EMAIL     = "comercial@yiqi.com.ar";
@@ -529,6 +527,26 @@ function buildResumen(){
   ].join('\n');
 }
 
+function buildPreguntas(){
+  const fmt = v => Array.isArray(v) ? (v.join(', ')||'—') : (v||'—');
+  const pares = [
+    { pregunta:'Nombre y apellido', respuesta: answers.nombre||'—' },
+    { pregunta:'Empresa',           respuesta: answers.empresa||'—' },
+    { pregunta:'Email',             respuesta: answers.email||'—' },
+    { pregunta:'Teléfono',          respuesta: answers.telefono||'—' },
+    { pregunta:'Sitio web',         respuesta: answers.sitio_web||'—' }
+  ];
+  QUESTIONS.forEach(Q=>{
+    if(!Q.q) return;                       // saltar el paso de contacto
+    let r = fmt(answers[Q.id]);
+    if(Q.id==='amedida' && answers.amedida==='Sí'){
+      r += ' — ' + (answers.amedida_detalle || '(sin detalle)');
+    }
+    pares.push({ pregunta:Q.q, respuesta:r });
+  });
+  return pares;
+}
+
 function sendLead(band){
   const payload = {
     fecha:new Date().toISOString(),
@@ -537,21 +555,16 @@ function sendLead(band){
     rubro:answers.rubro||'', opera:answers.opera||'', usuarios:answers.usuarios||'',
     modulos:answers.modulos, carritos:answers.carritos, marketplaces:answers.marketplaces,
     logistica:answers.logistica||'', locales:answers.locales||'', esquemas:answers.esquemas||'',
-    a_medida:answers.amedida||'', amedida_detalle:answers.amedida_detalle||'', banda:band, resumen:buildResumen(), origen:'Precotizador web'
+    a_medida:answers.amedida||'', amedida_detalle:answers.amedida_detalle||'', banda:band, preguntas:buildPreguntas(), resumen:buildResumen(), origen:'Precotizador web'
   };
-  if(ENDPOINT_URL.startsWith('http')){
-    const body = JSON.stringify(payload);
-    try{
-      // sendBeacon: fire-and-forget, sin problemas de CORS de lectura
-      if(navigator.sendBeacon){
-        navigator.sendBeacon(ENDPOINT_URL, new Blob([body],{type:'text/plain;charset=utf-8'}));
-      } else {
-        fetch(ENDPOINT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
-      }
-    }catch(e){ /* el resultado igual se muestra; el backup por mail cubre el envío */ }
-  } else {
-    console.warn('ENDPOINT_URL sin configurar — lead no enviado:', payload);
-  }
+  fetch(API_LEAD_ENDPOINT,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload),
+    keepalive:true,
+  })
+    .then((res)=>{ if(!res.ok) console.warn('[precotizador] backend respondió', res.status); })
+    .catch((e)=>{ console.warn('[precotizador] error de red al enviar lead:', e); });
 }
 
 const TIER_META = { accesible:'Lo esencial, en orden', media:'Orden + automatización', enterprise:'Escala multi-operación' };
